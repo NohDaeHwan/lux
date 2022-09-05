@@ -92,4 +92,35 @@ public class Auction extends AuditingFields {
 	@JoinColumn(name = "img_url")
 	private Image image;
 
+	protected Auction() {}
+
+	private Auction(String productName, String brandName, String bigCategory, String smallCategory, int size, String gender,
+				   String state, int price, int startPrice, int presentPrice, int closingPrice, LocalDateTime auctionStartDate,
+				   LocalDateTime auctionClosingDate, int viewCount, int biddingCount, String bidder, Image image) {
+		this.productName = productName;
+		this.brandName = brandName;
+		this.bigCategory = bigCategory;
+		this.smallCategory = smallCategory;
+		this.size = size;
+		this.gender = gender;
+		this.state = state;
+		this.price = price;
+		this.startPrice = startPrice;
+		this.presentPrice = presentPrice;
+		this.closingPrice = closingPrice;
+		this.auctionStartDate = auctionStartDate;
+		this.auctionClosingDate = auctionClosingDate;
+		this.viewCount = viewCount;
+		this.biddingCount = biddingCount;
+		this.bidder = bidder;
+		this.image = image;
+	}
+
+	public static Auction of(String productName, String brandName, String bigCategory, String smallCategory, int size, String gender,
+					String state, int price, int startPrice, int presentPrice, int closingPrice, LocalDateTime auctionStartDate,
+					LocalDateTime auctionClosingDate, int viewCount, int biddingCount, String bidder, Image image) {
+		return new Auction(productName, brandName, bigCategory, smallCategory, size, gender, state, price, startPrice,
+				presentPrice, closingPrice, auctionStartDate, auctionClosingDate, viewCount, biddingCount, bidder, image);
+	}
+
 }
