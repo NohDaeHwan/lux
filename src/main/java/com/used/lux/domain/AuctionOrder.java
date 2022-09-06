@@ -28,7 +28,7 @@ public class AuctionOrder extends AuditingFields {
 	private String name;
 
 	@Setter
-	@Column(nullable = false, length = 11)
+	@Column(name="phone_number", nullable = false, length = 11)
 	private String phoneNumber;
 
 	@Setter
@@ -40,14 +40,15 @@ public class AuctionOrder extends AuditingFields {
 	private String email;
 
 	@Setter
-	@Column(length = 100)
+	@Column(name="requested_term", length = 100)
 	private String requestedTerm;
 
 	@Setter
+	@Column(name="invoice_number")
 	private Long invoiceNumber;
 
 	@Setter
-	@Column(nullable = false, length = 100)
+	@Column(name="payment_method", nullable = false, length = 100)
 	private String paymentMethod;
 
 	@Setter

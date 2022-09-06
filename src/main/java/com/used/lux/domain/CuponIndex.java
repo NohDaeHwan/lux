@@ -31,6 +31,7 @@ public class CuponIndex {
 	@Column(length = 100)
 	private String award;
 
+	@Column(name = "cupon_validity")
 	private LocalDateTime cuponValidity;
 	
 }

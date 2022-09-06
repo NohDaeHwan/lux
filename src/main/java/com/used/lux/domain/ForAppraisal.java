@@ -30,11 +30,11 @@ public class ForAppraisal extends AuditingFields {
 	private Long id;
 
 	@Setter
-	@Column(nullable = false, length = 100)
+	@Column(name="product_name", nullable = false, length = 100)
 	private String productName;
 
 	@Setter
-	@Column(nullable = false, length = 100)
+	@Column(name="brand_name", nullable = false, length = 100)
 	private String brandName;
 
 	@Setter
@@ -50,16 +50,16 @@ public class ForAppraisal extends AuditingFields {
 	private String purchase;
 
 	@Setter
-	@Column(nullable = false)
+	@Column(name="purchase_price", nullable = false)
 	private int purchasePrice;
 
 	@Setter
-	@Column(nullable = false)
+	@Column(name="whether_apprisal", nullable = false)
 	private boolean whetherApprisal;
 
 	@Setter
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "user_account__id")
+	@JoinColumn(name = "user_account_id")
 	private UserAccount userAccount;
 
 	@ToString.Exclude

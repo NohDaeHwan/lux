@@ -28,7 +28,7 @@ public class AppraisalComent extends AuditingFields {
 	private String content;
 
 	@Setter
-	@Column(nullable = false, length = 100)
+	@Column(name="appraisal_img_url", nullable = false, length = 100)
 	private String appraisalImgUrl;
 
 	@Setter

@@ -27,19 +27,19 @@ public class Auction extends AuditingFields {
 	private Long id;
 
 	@Setter
-	@Column(nullable = false, length = 100)
+	@Column(name="product_name", nullable = false, length = 100)
 	private String productName;
 
 	@Setter
-	@Column(nullable = false, length = 100)
+	@Column(name="brand_name", nullable = false, length = 100)
 	private String brandName;
 
 	@Setter
-	@Column(nullable = false, length = 100)
+	@Column(name="big_category", nullable = false, length = 100)
 	private String bigCategory;
 
 	@Setter
-	@Column(nullable = false, length = 100)
+	@Column(name="small_category", nullable = false, length = 100)
 	private String smallCategory;
 
 	@Setter
@@ -59,28 +59,31 @@ public class Auction extends AuditingFields {
 	private int price;
 
 	@Setter
-	@Column(nullable = false)
+	@Column(name="start_price", nullable = false)
 	private int startPrice;
 
 	@Setter
-	@Column(nullable = false)
+	@Column(name="present_price", nullable = false)
 	private int presentPrice;
 
 	@Setter
+	@Column(name="closing_price")
 	private int closingPrice;
 
 	@Setter
-	@Column(nullable = false)
+	@Column(name="auction_start_date", nullable = false)
 	private LocalDateTime auctionStartDate;
 
 	@Setter
-	@Column(nullable = false)
+	@Column(name="auction_closing_date", nullable = false)
 	private LocalDateTime auctionClosingDate;
 
 	@Setter
+	@Column(name="view_count")
 	private int viewCount;
 
 	@Setter
+	@Column(name="bidding_count")
 	private int biddingCount;
 
 	@Setter

@@ -25,19 +25,19 @@ public class RentalProduct extends AuditingFields {
 	private Long id;
 
 	@Setter
-	@Column(nullable = false, length = 100)
+	@Column(name = "product_name", nullable = false, length = 100)
 	private String productName;
 
 	@Setter
-	@Column(nullable = false, length = 100)
+	@Column(name = "brand_name", nullable = false, length = 100)
 	private String brandName;
 
 	@Setter
-	@Column(nullable = false, length = 100)
+	@Column(name = "big_category", nullable = false, length = 100)
 	private String bigCategory;
 
 	@Setter
-	@Column(nullable = false, length = 100)
+	@Column(name = "small_category", nullable = false, length = 100)
 	private String smallCategory;
 
 	@Setter
@@ -54,11 +54,11 @@ public class RentalProduct extends AuditingFields {
 	private Image image;
 
 	@Setter
-	@Column(length = 100)
+	@Column(name = "rental_status", length = 100)
 	private String rentalStatus;
 
 	@Setter
-	@Column(nullable = false)
+	@Column(name = "rental_price", nullable = false)
 	private Integer rentalPrice;
 	
 }
