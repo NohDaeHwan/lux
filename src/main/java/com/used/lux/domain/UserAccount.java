@@ -12,6 +12,8 @@ import javax.persistence.Table;
 import com.used.lux.domain.constant.RoleType;
 import lombok.*;
 
+import java.util.Objects;
+
 @Getter
 @ToString(callSuper = true)
 @Table(name = "user_account")
@@ -63,5 +65,39 @@ public class UserAccount extends AuditingFields {
 	@Setter
 	@Enumerated(EnumType.STRING)
 	private RoleType role;
+
+	protected UserAccount() {}
+
+	private UserAccount(String userEmail, String userPassword, String userName, String phoneNumber, String address, int age,
+						String gender, String nickName, String memberGrade, int reserveFund, RoleType role) {
+		this.userEmail = userEmail;
+		this.userPassword = userPassword;
+		this.userName = userName;
+		this.phoneNumber = phoneNumber;
+		this.address = address;
+		this.age = age;
+		this.gender = gender;
+		this.nickName = nickName;
+		this.memberGrade = memberGrade;
+		this.reserveFund = reserveFund;
+		this.role = role;
+	}
+
+	public static UserAccount of(String userEmail, String userPassword, String userName, String phoneNumber, String address, int age,
+						String gender, String nickName, String memberGrade, int reserveFund, RoleType role) {
+		return new UserAccount(userEmail, userPassword, userName, phoneNumber, address, age, gender, nickName, memberGrade, reserveFund, role);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof UserAccount that)) return false;
+		return id != null && id.equals(that.id);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
 
 }

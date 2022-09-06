@@ -1,7 +1,6 @@
 package com.used.lux.dto;
 
 import com.used.lux.domain.Auction;
-import com.used.lux.domain.Image;
 
 import java.time.LocalDateTime;
 
@@ -38,6 +37,12 @@ public record AuctionDto(
         return new AuctionDto(id, imageDto, productName, brandName, bigCategory, smallCategory, size, gender, state,
                 price, startPrice, presentPrice, closingPrice, auctionStartDate, auctionClosingDate, viewCount,
                 biddingCount, bidder, createdAt, createdBy, modifiedAt, modifiedBy);
+    }
+
+    public static AuctionDto of(int price) {
+        return new AuctionDto(null, null, null, null, null, null,
+                0, null, null, 0, 0, price, 0, null,
+                null, 0, 0, null, null, null, null, null);
     }
 
     public static AuctionDto from(Auction entity) {

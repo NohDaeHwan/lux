@@ -2,20 +2,16 @@ package com.used.lux.response;
 
 import com.used.lux.dto.ProductDto;
 
-import java.time.LocalDateTime;
-
 public record ProductsResponse(
         Long id,
         ImageResponse imageResponse,
         String productName,
         String state,
-        int price,
-        LocalDateTime createdAt,
-        String createdBy
+        int price
 )  {
 
-    public static ProductsResponse of(Long id, ImageResponse imageResponse, String productName, String state, int price, LocalDateTime createdAt, String createdBy) {
-        return new ProductsResponse(id, imageResponse, productName, state, price, createdAt, createdBy);
+    public static ProductsResponse of(Long id, ImageResponse imageResponse, String productName, String state, int price) {
+        return new ProductsResponse(id, imageResponse, productName, state, price);
     }
 
     public static ProductsResponse from(ProductDto productDto) {
@@ -24,9 +20,7 @@ public record ProductsResponse(
                 ImageResponse.from(productDto.imageDto()),
                 productDto.productName(),
                 productDto.state(),
-                productDto.price(),
-                productDto.createdAt(),
-                productDto.createdBy()
+                productDto.price()
         );
     }
 

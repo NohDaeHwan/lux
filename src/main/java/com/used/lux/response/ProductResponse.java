@@ -2,8 +2,6 @@ package com.used.lux.response;
 
 import com.used.lux.dto.ProductDto;
 
-import java.time.LocalDateTime;
-
 public record ProductResponse(
         Long id,
         String productName,
@@ -14,14 +12,12 @@ public record ProductResponse(
         String gender,
         String state,
         int price,
-        int paymentComple,
-        LocalDateTime createdAt,
-        String createdBy
+        int paymentComple
 ) {
 
     public static ProductResponse of(Long id, String productName, String brandName, String bigCategory, String smallCategory, int size,
-                           String gender, String state, int price, int paymentComple, LocalDateTime createdAt, String createdBy) {
-        return new ProductResponse(id, productName, brandName, bigCategory, smallCategory, size, gender, state, price, paymentComple, createdAt, createdBy);
+                           String gender, String state, int price, int paymentComple) {
+        return new ProductResponse(id, productName, brandName, bigCategory, smallCategory, size, gender, state, price, paymentComple);
     }
 
     public static ProductResponse from(ProductDto productDto) {
@@ -35,9 +31,7 @@ public record ProductResponse(
                 productDto.gender(),
                 productDto.state(),
                 productDto.price(),
-                productDto.paymentComple(),
-                productDto.createdAt(),
-                productDto.createdBy()
+                productDto.paymentComple()
         );
     }
 

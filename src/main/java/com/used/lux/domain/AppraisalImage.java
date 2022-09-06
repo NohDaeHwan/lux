@@ -29,15 +29,15 @@ public class AppraisalImage extends AuditingFields {
     private ForAppraisal forAppraisal;
 
 	@Setter
-	@Column(nullable = false, length = 500)
+	@Column(name = "orig_file_name", nullable = false, length = 500)
 	private String origFileName;
 
 	@Setter
-	@Column(nullable = false, length = 100)
+	@Column(name = "file_path", nullable = false, length = 500)
 	private String filePath;
 
 	@Setter
-	@Column(nullable = false)
+	@Column(name = "file_size", nullable = false)
 	private Long fileSize;
 
     public AppraisalImage(String origFileName, String filePath, Long fileSize){

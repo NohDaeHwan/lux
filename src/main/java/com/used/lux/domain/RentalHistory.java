@@ -26,28 +26,28 @@ public class RentalHistory extends AuditingFields {
 	private Long id;
 
 	@Setter
-	@Column(length = 100)
+	@Column(name="damage_detail", length = 100)
 	private String damageDetail;
 
 	@Setter
-	@Column(length = 100)
+	@Column(name="damage_status", length = 100)
 	private String damageStatus;
 
 	@Setter
-	@Column(nullable = false)
+	@Column(name="rental_start", nullable = false)
 	private Date rentalStart;
 
 	@Setter
-	@Column(nullable = false)
+	@Column(name="rental_end", nullable = false)
 	private Date rentalEnd;
 
 	@Setter
-	@Column(nullable = false, length = 100)
+	@Column(name="rental_status", nullable = false, length = 100)
 	private String rentalStatus;
 
 	@Setter
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "user_account__id")
+	@JoinColumn(name = "user_account_id")
 	private UserAccount userAccount;
 
 	@Setter

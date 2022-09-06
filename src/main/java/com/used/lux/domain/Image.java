@@ -22,15 +22,15 @@ public class Image {
 	private Long id;
 
 	@Setter
-	@Column(nullable = true, length = 100)
+	@Column(nullable = true, length = 500)
 	private String img1;
 
 	@Setter
-	@Column(nullable = true, length = 100)
+	@Column(nullable = true, length = 500)
 	private String img2;
 
 	@Setter
-	@Column(nullable = true, length = 100)
+	@Column(nullable = true, length = 500)
 	private String img3;
 
 	protected Image() {}

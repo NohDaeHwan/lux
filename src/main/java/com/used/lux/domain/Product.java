@@ -28,19 +28,19 @@ public class Product extends AuditingFields {
 	private Long id;
 
 	@Setter
-	@Column(nullable = false, length = 100)
+	@Column(name = "product_name", nullable = false, length = 100)
 	private String productName;
 
 	@Setter
-	@Column(nullable = false, length = 100)
+	@Column(name = "brand_name", nullable = false, length = 100)
 	private String brandName;
 
 	@Setter
-	@Column(nullable = false, length = 100)
+	@Column(name = "big_category", nullable = false, length = 100)
 	private String bigCategory;
 
 	@Setter
-	@Column(nullable = false, length = 100)
+	@Column(name = "small_category", nullable = false, length = 100)
 	private String smallCategory;
 
 	@Setter
@@ -60,6 +60,7 @@ public class Product extends AuditingFields {
 	private int price;
 
 	@Setter
+	@Column(name = "payment_comple")
 	@ColumnDefault("0")
 	private int paymentComple;
 

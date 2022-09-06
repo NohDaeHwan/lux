@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface UsedluxRepository extends JpaRepository<Product, Long> {
 
-    @Query(nativeQuery = true, value = "SELECT * FROM product WHERE brand_name LIKE %:brandName% AND "
+    @Query(nativeQuery = true, value = "SELECT * FROM product WHERE brand_name LIKE '%:brandName%' AND "
             + "big_category LIKE '%:bigCategory%' AND small_category LIKE '%:smallCategory%' AND gender LIKE '%:gender%' AND "
             + "state LIKE '%:state%' AND size LIKE '%:size%' AND product_name LIKE '%:productName%' "
             + "ORDER BY created_at DESC, product_name",
