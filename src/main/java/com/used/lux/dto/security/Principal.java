@@ -13,26 +13,52 @@ import java.util.stream.Collectors;
 
 public record Principal(
         Long id,
-        RoleType role,
         String userEmail,
-        String userPassword
+        String userPassword,
+        String userName,
+        String phoneNumber,
+        String address,
+        int age,
+        String gender,
+        String nickName,
+        String memberGrade,
+        int reserve_fund,
+        RoleType role
 ) implements UserDetails {
 
-    public static Principal of(Long id, RoleType role, String userEmail, String userPassword) {
+    public static Principal of(Long id, String userEmail, String userPassword, String userName, String phoneNumber,
+                               String address, int age, String gender, String nickName, String memberGrade,
+                               int reserve_fund, RoleType role) {
         return new Principal(
                 id,
-                role,
                 userEmail,
-                userPassword
+                userPassword,
+                userName,
+                phoneNumber,
+                address,
+                age,
+                gender,
+                nickName,
+                memberGrade,
+                reserve_fund,
+                role
         );
     }
 
     public static Principal from(UserAccountDto dto) {
         return Principal.of(
                 dto.id(),
-                dto.role(),
                 dto.userEmail(),
-                dto.userPassword()
+                dto.userPassword(),
+                dto.userName(),
+                dto.phoneNumber(),
+                dto.address(),
+                dto.age(),
+                dto.gender(),
+                dto.nickName(),
+                dto.memberGrade(),
+                dto.reserveFund(),
+                dto.role()
         );
     }
 
@@ -41,6 +67,14 @@ public record Principal(
                 id,
                 userEmail,
                 userPassword,
+                userName,
+                phoneNumber,
+                address,
+                age,
+                gender,
+                nickName,
+                memberGrade,
+                reserve_fund,
                 role
         );
     }
