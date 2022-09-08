@@ -1,4 +1,4 @@
-package com.used.lux.response;
+package com.used.lux.response.product;
 
 import com.used.lux.dto.ProductDto;
 
