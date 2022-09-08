@@ -24,10 +24,11 @@ public record UserAccountDto(
         String modifiedBy
 ) {
 
-    public static UserAccountDto of(Long id, String userEmail, String userPassword, RoleType role)
+    public static UserAccountDto of(Long id, String userEmail, String userPassword, String userName, String phoneNumber,
+                                    String address, int age, String gender, String nickName, String memberGrade, int reserveFund, RoleType role)
     {
-        return new UserAccountDto(id, userEmail, userPassword, null, null, null, 0, null,
-                null, null, 0, role, null, null, null, null);
+        return new UserAccountDto(id, userEmail, userPassword, userName, phoneNumber, address, age, gender,
+                nickName, memberGrade, reserveFund, role, null, null, null, null);
     }
 
     public static UserAccountDto of(
