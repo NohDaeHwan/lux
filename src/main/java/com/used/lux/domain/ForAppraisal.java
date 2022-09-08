@@ -66,12 +66,9 @@ public class ForAppraisal extends AuditingFields {
 	@OneToMany(mappedBy = "forAppraisal", cascade = CascadeType.ALL)
 	private final Set<AppraisalImage> appraisalImage = new LinkedHashSet<>();
 
-	@ToString.Exclude
-	@OneToMany(mappedBy = "forAppraisal", cascade = CascadeType.ALL)
-	private final Set<AppraisalComent> appraisalComents = new LinkedHashSet<>();
-	
-	@Builder
-    public ForAppraisal(UserAccount userAccount, String productName, String brandName, String content,
+	protected ForAppraisal() {}
+
+    private ForAppraisal(UserAccount userAccount, String productName, String brandName, String content,
                         String lived, String purchase, int purchasePrice) {
         this.userAccount = userAccount;
         this.productName = productName;
@@ -83,7 +80,10 @@ public class ForAppraisal extends AuditingFields {
         this.whetherApprisal = false;
     }
 
-	public ForAppraisal() {}
+	public static ForAppraisal of(UserAccount userAccount, String productName, String brandName, String content,
+						 String lived, String purchase, int purchasePrice) {
+		return new ForAppraisal(userAccount, productName, brandName, content, lived, purchase, purchasePrice);
+	}
 
 	// 감정에서 파일 처리 위함
     public void addImage(AppraisalImage appraisalImage) {
