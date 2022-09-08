@@ -29,6 +29,11 @@ public class AppraisalImage extends AuditingFields {
     private ForAppraisal forAppraisal;
 
 	@Setter
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "user_account_id")
+	private UserAccount userAccount;
+
+	@Setter
 	@Column(name = "orig_file_name", nullable = false, length = 500)
 	private String origFileName;
 
@@ -40,13 +45,21 @@ public class AppraisalImage extends AuditingFields {
 	@Column(name = "file_size", nullable = false)
 	private Long fileSize;
 
-    public AppraisalImage(String origFileName, String filePath, Long fileSize){
+	protected AppraisalImage() {}
+
+    private AppraisalImage(ForAppraisal forAppraisal, UserAccount userAccount, String origFileName,
+						  String filePath, Long fileSize){
+		this.forAppraisal = forAppraisal;
+		this.userAccount = userAccount;
         this.origFileName = origFileName;
         this.filePath = filePath;
         this.fileSize = fileSize;
     }
 
-	public AppraisalImage() {}
+	public static AppraisalImage of(ForAppraisal forAppraisal, UserAccount userAccount, String origFileName,
+						   String filePath, Long fileSize){
+		return new AppraisalImage(forAppraisal, userAccount, origFileName, filePath, fileSize);
+	}
 
 	public void setAppraisal(ForAppraisal forAppraisal){
         this.forAppraisal = forAppraisal;
