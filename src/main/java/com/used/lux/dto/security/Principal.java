@@ -44,7 +44,7 @@ public record Principal(
                 role
         );
     }
-
+    //dto -> principal
     public static Principal from(UserAccountDto dto) {
         return Principal.of(
                 dto.id(),
@@ -61,7 +61,7 @@ public record Principal(
                 dto.role()
         );
     }
-
+    //dto를 만들어주는거
     public UserAccountDto toDto() {
         return UserAccountDto.of(
                 id,
