@@ -84,12 +84,13 @@ public class Product extends AuditingFields {
 		this.paymentComple = paymentComple;
 		this.image = image;
 	}
-
+	//생성자
 	public static Product of(String productName, String brandName, String bigCategory, String smallCategory, int size,
 					String gender, String state, int price, int paymentComple, Image image) {
 		return new Product(productName, brandName, bigCategory, smallCategory, size, gender, state, price, paymentComple, image);
 	}
 
+	//영속성
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;

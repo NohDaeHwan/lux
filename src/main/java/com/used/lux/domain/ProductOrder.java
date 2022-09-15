@@ -64,5 +64,20 @@ public class ProductOrder extends AuditingFields {
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "user_account_id")
 	private UserAccount userAccount;
-	
+
+	public ProductOrder(Long id, String name, String phoneNumber, String address, String email, String requestedTerm, Long invoiceNumber, String paymentMethod, int payment, Product product, UserAccount userAccount) {
+		super();
+	}
+
+	public ProductOrder() {
+
+	}
+
+
+	public static ProductOrder of(Long id, String name, String phoneNumber, String address, String email, String requestedTerm, Long invoiceNumber, String paymentMethod, int payment, Product product, UserAccount userAccount) {
+		return  new ProductOrder(id,name,phoneNumber,address,email,
+				requestedTerm,invoiceNumber, paymentMethod, payment,product,userAccount);
+	}
+
+
 }
