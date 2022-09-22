@@ -41,19 +41,7 @@ public class ProductOrder extends AuditingFields {
 
 	@Setter
 	@Column(name="requested_term", length = 100)
-	private String requestedTerm;
-
-	@Setter
-	@Column(name="invoice_number")
-	private Long invoiceNumber;
-
-	@Setter
-	@Column(name="payment_method", nullable = false, length = 100)
-	private String paymentMethod;
-
-	@Setter
-	@Column(nullable = false)
-	private int payment;
+	private String requestedTerm; // 요청사항
 
 	@Setter
 	@ManyToOne(optional = false)
@@ -73,11 +61,9 @@ public class ProductOrder extends AuditingFields {
 
 	}
 
-
 	public static ProductOrder of(Long id, String name, String phoneNumber, String address, String email, String requestedTerm, Long invoiceNumber, String paymentMethod, int payment, Product product, UserAccount userAccount) {
 		return  new ProductOrder(id,name,phoneNumber,address,email,
 				requestedTerm,invoiceNumber, paymentMethod, payment,product,userAccount);
 	}
-
 
 }

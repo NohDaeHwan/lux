@@ -5,56 +5,63 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import lombok.*;
-
-import java.util.Objects;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 @Getter
-@ToString()
+@ToString(callSuper = true)
 @Table(name = "image")
 @Entity
-public class Image {
+public class Image extends AuditingFields {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@Setter
-	@Column(nullable = true, length = 500)
-	private String img1;
+	@ManyToOne(optional = false)
+    @JoinColumn(name = "product_id")
+    private Product product;
 
 	@Setter
-	@Column(nullable = true, length = 500)
-	private String img2;
+	@Column(name = "orig_file_name", nullable = false, length = 500)
+	private String origFileName;
 
 	@Setter
-	@Column(nullable = true, length = 500)
-	private String img3;
+	@Column(name = "file_path", nullable = false, length = 500)
+	private String filePath;
+
+	@Setter
+	@Column(name = "file_size", nullable = false)
+	private Long fileSize;
 
 	protected Image() {}
 
-	private Image(String img1, String img2, String img3) {
-		this.img1 = img1;
-		this.img2 = img2;
-		this.img3 = img3;
+    private Image(Product product, String origFileName,
+                           String filePath, Long fileSize){
+		this.product = product;
+        this.origFileName = origFileName;
+        this.filePath = filePath;
+        this.fileSize = fileSize;
+    }
+
+	public static Image of(Product product, String origFileName,
+                                    String filePath, Long fileSize){
+		return new Image(product, origFileName, filePath, fileSize);
 	}
 
-	public static Image of(String img1, String img2, String img3) {
-		return new Image(img1, img2, img3);
-	}
+	/*public void setProduct(Product product){
+        this.product = product;
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (!(o instanceof Image image)) return false;
-		return id != null && id.equals(image.id);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
+	// 감정에 현재 파일이 존재하지 않는다면
+        if(!product.getProductImage().contains(this))
+            // 파일 추가
+			product.getProductImage().add(this);
+    }*/
 
 }
