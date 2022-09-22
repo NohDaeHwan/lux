@@ -1,21 +1,15 @@
 package com.used.lux.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @ToString(callSuper = true)
@@ -28,66 +22,63 @@ public class Product extends AuditingFields {
 	private Long id;
 
 	@Setter
-	@Column(name = "product_name", nullable = false, length = 100)
-	private String productName;
-
-	@Setter
-	@Column(name = "brand_name", nullable = false, length = 100)
-	private String brandName;
-
-	@Setter
-	@Column(name = "big_category", nullable = false, length = 100)
-	private String bigCategory;
-
-	@Setter
-	@Column(name = "small_category", nullable = false, length = 100)
-	private String smallCategory;
-
-	@Setter
-	@Column(nullable = false)
-	private int size;
-
-	@Setter
-	@Column(nullable = false, length = 100)
-	private String gender;
-
-	@Setter
-	@Column(nullable = false, length = 100)
-	private String state;
-
-	@Setter
-	@Column(nullable = false)
-	private int price;
-
-	@Setter
-	@Column(name = "payment_comple")
-	@ColumnDefault("0")
-	private int paymentComple;
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "appraisal_id")
+	private Appraisal appraisal;
 
 	@Setter
 	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "img_url")
-	private Image image;
+	@JoinColumn(name = "category_b_id")
+	private CategoryB categoryB;
+
+	@Setter
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "category_m_id")
+	private CategoryM categoryM;
+
+	@Setter
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "state_id")
+	private State state;
+
+	@Setter
+	@Column(name = "product_price", nullable = false)
+	private int productPrice;
+
+	@Setter
+	@Column(name = "product_sell_type", nullable = false, length = 100)
+	private String productSellType; // 중고, 경매
+
+	@Setter
+	@Column(name = "product_content", nullable = false, length = 1000)
+	private String productContent;
+
+	@Setter
+	@Column(name="product_view_count")
+	private int productViewCount; // 조회수
+
+	@ToString.Exclude
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+	private final Set<Image> images = new LinkedHashSet<>();
 
 	protected Product() {}
 
-	private Product(String productName, String brandName, String bigCategory, String smallCategory, int size,
-				   String gender, String state, int price, int paymentComple, Image image) {
-		this.productName = productName;
-		this.brandName = brandName;
-		this.bigCategory = bigCategory;
-		this.smallCategory = smallCategory;
-		this.size = size;
-		this.gender = gender;
+	private Product(Appraisal appraisal, CategoryB categoryB, CategoryM categoryM, State state, int productPrice, String productSellType,
+					String productContent, int productViewCount) {
+		this.appraisal = appraisal;
+		this.categoryB = categoryB;
+		this.categoryM = categoryM;
 		this.state = state;
-		this.price = price;
-		this.paymentComple = paymentComple;
-		this.image = image;
+		this.productPrice = productPrice;
+		this.productSellType = productSellType;
+		this.productContent = productContent;
+		this.productViewCount = productViewCount;
 	}
+
 	//생성자
-	public static Product of(String productName, String brandName, String bigCategory, String smallCategory, int size,
-					String gender, String state, int price, int paymentComple, Image image) {
-		return new Product(productName, brandName, bigCategory, smallCategory, size, gender, state, price, paymentComple, image);
+	public static Product of(Appraisal appraisal, CategoryB categoryB, CategoryM categoryM, State state, int productPrice, String productSellType,
+							 String productContent, int productViewCount) {
+		return new Product(appraisal, categoryB, categoryM, state, productPrice, productSellType, productContent, productViewCount);
 	}
 
 	//영속성

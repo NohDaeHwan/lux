@@ -1,13 +1,6 @@
 package com.used.lux.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.used.lux.domain.constant.RoleType;
 import lombok.*;
@@ -25,7 +18,7 @@ public class UserAccount extends AuditingFields {
 	private Long id;
 
 	@Setter
-	@Column(nullable = false, length = 100)
+	@Column(nullable = false, length = 100, unique = true)
 	private String userEmail;
 
 	@Setter
@@ -41,10 +34,6 @@ public class UserAccount extends AuditingFields {
 	private String phoneNumber;
 
 	@Setter
-	@Column(length = 100)
-	private String address;
-
-	@Setter
 	private int age;
 
 	@Setter
@@ -52,15 +41,12 @@ public class UserAccount extends AuditingFields {
 	private String gender;
 
 	@Setter
-	@Column(length = 100)
-	private String nickName;
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "user_grade")
+	private UserGrade userGrade;
 
 	@Setter
-	@Column(nullable = false, length = 100)
-	private String memberGrade;
-
-	@Setter
-	private int reserveFund;
+	private int point;
 
 	@Setter
 	@Enumerated(EnumType.STRING)
@@ -68,24 +54,22 @@ public class UserAccount extends AuditingFields {
 
 	protected UserAccount() {}
 
-	private UserAccount(String userEmail, String userPassword, String userName, String phoneNumber, String address, int age,
-						String gender, String nickName, String memberGrade, int reserveFund, RoleType role) {
+	private UserAccount(String userEmail, String userPassword, String userName, String phoneNumber, int age,
+						String gender, int point, UserGrade userGrade, RoleType role) {
 		this.userEmail = userEmail;
 		this.userPassword = userPassword;
 		this.userName = userName;
 		this.phoneNumber = phoneNumber;
-		this.address = address;
 		this.age = age;
 		this.gender = gender;
-		this.nickName = nickName;
-		this.memberGrade = memberGrade;
-		this.reserveFund = reserveFund;
+		this.point = point;
+		this.userGrade = userGrade;
 		this.role = role;
 	}
 
-	public static UserAccount of(String userEmail, String userPassword, String userName, String phoneNumber, String address, int age,
-						String gender, String nickName, String memberGrade, int reserveFund, RoleType role) {
-		return new UserAccount(userEmail, userPassword, userName, phoneNumber, address, age, gender, nickName, memberGrade, reserveFund, role);
+	public static UserAccount of(String userEmail, String userPassword, String userName, String phoneNumber, int age,
+						String gender, int point, UserGrade userGrade, RoleType role) {
+		return new UserAccount(userEmail, userPassword, userName, phoneNumber, age, gender, point, userGrade, role);
 	}
 
 	@Override
