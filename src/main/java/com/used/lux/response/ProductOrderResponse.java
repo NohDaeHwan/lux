@@ -1,42 +1,52 @@
 package com.used.lux.response;
 
+import com.used.lux.domain.State;
+import com.used.lux.dto.ProductOrderDto;
 
-import com.used.lux.domain.ProductOrder;
-import org.springframework.data.domain.Page;
+import java.time.LocalDateTime;
 
 public record ProductOrderResponse(
         Long id,
-        String name,
-        String phoneNumber,
-        String address,
-        String email,
+        String orderName,
+        String orderPhoneNumber,
+        String orderAddress,
+        String orderEmail,
         String requestedTerm,
-        Long invoiceNumber,
-        String paymentMethod,
-        int payment
+        String productName,
+        State productState,
+        int productPrice,
+        String productSellType,
+        String userEmail,
+        String userName,
+        LocalDateTime createdAt,
+        String createdBy
 ) {
 
-    public  static ProductOrderResponse of(Long id,
-                                           String name,
-                                           String phoneNumber,
-                                           String address,
-                                           String email,
-                                           String requestedTerm,
-                                           Long invoiceNumber,
-                                           String paymentMethod,
-                                           int payment){
-        return new ProductOrderResponse (id,
-                 name,
-                 phoneNumber,
-                 address,
-                 email,
-                 requestedTerm,
-                 invoiceNumber,
-                 paymentMethod,
-                 payment);
-
+    public static ProductOrderResponse of(Long id, String orderName, String orderPhoneNumber, String orderAddress,
+                                String orderEmail, String requestedTerm, String productName, State productState,
+                                int productPrice, String productSellType, String userEmail, String userName,
+                                LocalDateTime createdAt, String createdBy) {
+        return new ProductOrderResponse(id, orderName, orderPhoneNumber, orderAddress, orderEmail, requestedTerm,
+                productName, productState, productPrice, productSellType, userEmail, userName, createdAt, createdBy);
     }
 
-
+    public  static ProductOrderResponse from(ProductOrderDto dto){
+        return new ProductOrderResponse (
+                dto.id(),
+                dto.name(),
+                dto.phoneNumber(),
+                dto.address(),
+                dto.email(),
+                dto.requestedTerm(),
+                dto.productDto().productName(),
+                dto.productDto().productState(),
+                dto.productDto().productPrice(),
+                dto.productDto().productSellType(),
+                dto.userAccountDto().userEmail(),
+                dto.userAccountDto().userName(),
+                dto.createdAt(),
+                dto.createdBy()
+        );
+    }
 
 }
