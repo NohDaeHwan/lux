@@ -1,6 +1,7 @@
 package com.used.lux.dto;
 
 import com.used.lux.domain.UserAccount;
+import com.used.lux.domain.UserGrade;
 import com.used.lux.domain.constant.RoleType;
 
 import java.time.LocalDateTime;
@@ -11,12 +12,10 @@ public record UserAccountDto(
         String userPassword,
         String userName,
         String phoneNumber,
-        String address,
         int age,
         String gender,
-        String nickName,
-        String memberGrade,
-        int reserveFund,
+        int userPoint,
+        UserGrade userGrade,
         RoleType role,
         LocalDateTime createdAt,
         String createdBy,
@@ -25,19 +24,19 @@ public record UserAccountDto(
 ) {
 
     public static UserAccountDto of(Long id, String userEmail, String userPassword, String userName, String phoneNumber,
-                                    String address, int age, String gender, String nickName, String memberGrade, int reserveFund, RoleType role)
+                                    int age, String gender, int userPoint, UserGrade userGrade, RoleType role)
     {
-        return new UserAccountDto(id, userEmail, userPassword, userName, phoneNumber, address, age, gender,
-                nickName, memberGrade, reserveFund, role, null, null, null, null);
+        return new UserAccountDto(id, userEmail, userPassword, userName, phoneNumber, age, gender,
+                userPoint, userGrade, role, null, null, null, null);
     }
 
     public static UserAccountDto of(
-            Long id, String userEmail, String userPassword, String userName, String phoneNumber, String address,
-            int age, String gender, String nickName, String memberGrade, int reserveFund, RoleType role,
+            Long id, String userEmail, String userPassword, String userName, String phoneNumber,
+            int age, String gender, int userPoint, UserGrade userGrade, RoleType role,
             LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy
     ) {
-        return new UserAccountDto(id, userEmail, userPassword, userName, phoneNumber, address, age, gender, nickName, memberGrade,
-                reserveFund, role, createdAt, createdBy, modifiedAt, modifiedBy);
+        return new UserAccountDto(id, userEmail, userPassword, userName, phoneNumber, age, gender, userPoint,
+                userGrade, role, createdAt, createdBy, modifiedAt, modifiedBy);
     }
 
     public static UserAccountDto from(UserAccount entity) {
@@ -47,12 +46,10 @@ public record UserAccountDto(
                 entity.getUserPassword(),
                 entity.getUserName(),
                 entity.getPhoneNumber(),
-                entity.getAddress(),
                 entity.getAge(),
                 entity.getGender(),
-                entity.getNickName(),
-                entity.getMemberGrade(),
-                entity.getReserveFund(),
+                entity.getPoint(),
+                entity.getUserGrade(),
                 entity.getRole(),
                 entity.getCreatedAt(),
                 entity.getCreatedBy(),
@@ -62,7 +59,7 @@ public record UserAccountDto(
     }
 
     public UserAccount toEntity() {
-        return UserAccount.of(userEmail, userPassword, userName, phoneNumber, address, age, gender, nickName, memberGrade, reserveFund, role);
+        return UserAccount.of(userEmail, userPassword, userName, phoneNumber, age, gender, userPoint, userGrade, role);
     }
 
 }
