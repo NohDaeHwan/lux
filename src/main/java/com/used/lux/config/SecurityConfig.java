@@ -33,7 +33,7 @@ public class SecurityConfig {
                 .and()
                 .build();
     }
-/*
+
     @Bean
     public UserDetailsService userDetailsService(UserAccountRepository userAccountRepository) {
         return username -> userAccountRepository
@@ -47,5 +47,5 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
-*/
+
 }
