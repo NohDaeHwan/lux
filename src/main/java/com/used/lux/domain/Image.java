@@ -23,7 +23,6 @@ public class Image extends AuditingFields {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Setter
 	@ManyToOne(optional = false)
     @JoinColumn(name = "product_id")
     private Product product;
@@ -55,13 +54,13 @@ public class Image extends AuditingFields {
 		return new Image(product, origFileName, filePath, fileSize);
 	}
 
-	/*public void setProduct(Product product){
+	public void setProduct(Product product){
         this.product = product;
 
 	// 감정에 현재 파일이 존재하지 않는다면
-        if(!product.getProductImage().contains(this))
+        if(!product.getImages().contains(this))
             // 파일 추가
-			product.getProductImage().add(this);
-    }*/
+			product.getImages().add(this);
+    }
 
 }

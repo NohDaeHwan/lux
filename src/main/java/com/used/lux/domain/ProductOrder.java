@@ -53,17 +53,22 @@ public class ProductOrder extends AuditingFields {
 	@JoinColumn(name = "user_account_id")
 	private UserAccount userAccount;
 
-	public ProductOrder(Long id, String name, String phoneNumber, String address, String email, String requestedTerm, Long invoiceNumber, String paymentMethod, int payment, Product product, UserAccount userAccount) {
-		super();
+	protected ProductOrder() {}
+
+	private ProductOrder(String name, String phoneNumber, String address, String email, String requestedTerm,
+						Product product, UserAccount userAccount) {
+		this.name = name;
+		this.phoneNumber = phoneNumber;
+		this.address = address;
+		this.email = email;
+		this.requestedTerm = requestedTerm;
+		this.product = product;
+		this.userAccount = userAccount;
 	}
 
-	public ProductOrder() {
-
-	}
-
-	public static ProductOrder of(Long id, String name, String phoneNumber, String address, String email, String requestedTerm, Long invoiceNumber, String paymentMethod, int payment, Product product, UserAccount userAccount) {
-		return  new ProductOrder(id,name,phoneNumber,address,email,
-				requestedTerm,invoiceNumber, paymentMethod, payment,product,userAccount);
+	public static ProductOrder of(String name, String phoneNumber, String address, String email,
+								  String requestedTerm, Product product, UserAccount userAccount) {
+		return new ProductOrder(name, phoneNumber, address, email, requestedTerm, product, userAccount);
 	}
 
 }

@@ -41,9 +41,10 @@ public class Appraisal extends AuditingFields {
 	@Column(name="appraisal_size", nullable = false, length = 100)
 	private String appraisalSize;
 
+	// 관리자 컬럼
 	@Setter
 	@Column(name="appraisal_grade", nullable = false, length = 100)
-	private String appraisalGrade;
+	private String appraisalGrade; // A, B, C, F
 
 	@Setter
 	@OneToOne(fetch = FetchType.EAGER)
@@ -65,11 +66,13 @@ public class Appraisal extends AuditingFields {
 
 	protected Appraisal() {}
 
-	private Appraisal(String appraisalProductName, Brand appraisalBrand, String appraisalContent, String appraisalColor, String appraisalSize,
-					 String appraisalGrade, State appraisalState, String appraisalComment, int appraisalPrice, UserAccount userAccount) {
+	private Appraisal(String appraisalProductName, Brand appraisalBrand, String appraisalContent,
+					 String appraisalGender, String appraisalColor, String appraisalSize, String appraisalGrade,
+					 State appraisalState, String appraisalComment, int appraisalPrice, UserAccount userAccount) {
 		this.appraisalProductName = appraisalProductName;
 		this.appraisalBrand = appraisalBrand;
 		this.appraisalContent = appraisalContent;
+		this.appraisalGender = appraisalGender;
 		this.appraisalColor = appraisalColor;
 		this.appraisalSize = appraisalSize;
 		this.appraisalGrade = appraisalGrade;
@@ -79,9 +82,12 @@ public class Appraisal extends AuditingFields {
 		this.userAccount = userAccount;
 	}
 
-	public static Appraisal of(String appraisalProductName, Brand appraisalBrandName, String appraisalContent, String appraisalColor, String appraisalSize,
-					  String appraisalGrade, State appraisalState, String appraisalComment, int appraisalPrice, UserAccount userAccount) {
-		return new Appraisal();
+	public static Appraisal of(String appraisalProductName, Brand appraisalBrandName, String appraisalContent,
+							   String appraisalGender, String appraisalColor, String appraisalSize, String appraisalGrade,
+							   State appraisalState, String appraisalComment, int appraisalPrice,
+							   UserAccount userAccount) {
+		return new Appraisal(appraisalProductName, appraisalBrandName, appraisalContent, appraisalGender, appraisalColor,
+				appraisalSize, appraisalGrade, appraisalState, appraisalComment, appraisalPrice, userAccount);
 	}
 
 }
