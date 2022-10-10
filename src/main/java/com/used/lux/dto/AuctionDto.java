@@ -1,26 +1,18 @@
 package com.used.lux.dto;
 
 import com.used.lux.domain.Auction;
+import com.used.lux.domain.Product;
 
 import java.time.LocalDateTime;
 
 public record AuctionDto(
         Long id,
-        ImageDto imageDto,
-        String productName,
-        String brandName,
-        String bigCategory,
-        String smallCategory,
-        int size,
-        String gender,
-        String state,
-        int price,
+        ProductDto productDto,
         int startPrice,
         int presentPrice,
         int closingPrice,
         LocalDateTime auctionStartDate,
         LocalDateTime auctionClosingDate,
-        int viewCount,
         int biddingCount,
         String bidder,
         LocalDateTime createdAt,
@@ -29,40 +21,29 @@ public record AuctionDto(
         String modifiedBy
 ) {
 
-    public static AuctionDto of(Long id, ImageDto imageDto, String productName, String brandName, String bigCategory,
-                                String smallCategory, int size, String gender, String state, int price, int startPrice,
-                                int presentPrice, int closingPrice, LocalDateTime auctionStartDate, LocalDateTime auctionClosingDate,
-                                int viewCount, int biddingCount, String bidder, LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt,
-                                String modifiedBy) {
-        return new AuctionDto(id, imageDto, productName, brandName, bigCategory, smallCategory, size, gender, state,
-                price, startPrice, presentPrice, closingPrice, auctionStartDate, auctionClosingDate, viewCount,
-                biddingCount, bidder, createdAt, createdBy, modifiedAt, modifiedBy);
+    public static AuctionDto of(Long id, ProductDto productDto, int startPrice, int presentPrice, int closingPrice,
+                      LocalDateTime auctionStartDate, LocalDateTime auctionClosingDate, int biddingCount,
+                      String bidder, LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt,
+                      String modifiedBy) {
+        return new AuctionDto(id, productDto, startPrice, presentPrice, closingPrice, auctionStartDate,
+                auctionClosingDate, biddingCount, bidder, createdAt, createdBy, modifiedAt, modifiedBy);
     }
 
     public static AuctionDto of(int price) {
-        return new AuctionDto(null, null, null, null, null, null,
-                0, null, null, 0, 0, price, 0, null,
-                null, 0, 0, null, null, null, null, null);
+        return new AuctionDto(null, null, 0, price, 0,
+                null, null, 0, null, null,
+                null, null, null);
     }
 
     public static AuctionDto from(Auction entity) {
         return new AuctionDto(
                 entity.getId(),
-                ImageDto.from(entity.getImage()),
-                entity.getProductName(),
-                entity.getBrandName(),
-                entity.getBigCategory(),
-                entity.getSmallCategory(),
-                entity.getSize(),
-                entity.getGender(),
-                entity.getState(),
-                entity.getPrice(),
+                ProductDto.from(entity.getProduct()),
                 entity.getStartPrice(),
                 entity.getPresentPrice(),
                 entity.getClosingPrice(),
                 entity.getAuctionStartDate(),
                 entity.getAuctionClosingDate(),
-                entity.getViewCount(),
                 entity.getBiddingCount(),
                 entity.getBidder(),
                 entity.getCreatedAt(),
@@ -72,8 +53,9 @@ public record AuctionDto(
         );
     }
 
-    public Auction toEntity() {
-        return Auction.of(productName, brandName, bigCategory, smallCategory, size, gender, state, price, startPrice, presentPrice,
-                closingPrice, auctionStartDate, auctionClosingDate, viewCount, biddingCount, bidder, imageDto.toEntity());
+    public Auction toEntity(Product product) {
+        return Auction.of(product, startPrice, presentPrice, closingPrice, auctionStartDate, auctionClosingDate,
+                biddingCount, bidder);
     }
+
 }

@@ -2,7 +2,6 @@ package com.used.lux.service;
 
 
 import com.used.lux.domain.ProductOrder;
-import com.used.lux.dto.ProductDto;
 import com.used.lux.repository.ProductOrderRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

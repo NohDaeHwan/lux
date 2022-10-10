@@ -1,7 +1,10 @@
 package com.used.lux.service;
 
 import com.used.lux.domain.ProductOrder;
+import com.used.lux.dto.ProductOrderDto;
+import com.used.lux.dto.UserAccountDto;
 import com.used.lux.repository.ProductOrderRepository;
+import com.used.lux.repository.UserAccountRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -17,16 +20,16 @@ public class UserAccountService {
 
     private final ProductOrderRepository productOrderRepository;
 
+    private final UserAccountRepository userAccountRepository;
+
     public Page<ProductOrder> orderlistAll(Long id, Pageable pageable){
         Page<ProductOrder> orders = productOrderRepository.findByProductId(id,pageable);
         return orders;
     }
 
-
-    public  Page<ProductOrder> orderlistPage(Long id,Pageable pageable){
-        Page<ProductOrder>  paging= productOrderRepository.findByProductId(id,pageable);
+    public  Page<ProductOrderDto> orderlistPage(UserAccountDto userAccountDto, Pageable pageable){
+        Page<ProductOrderDto> paging = productOrderRepository.findByProductId(userAccountDto.id(),pageable).map(ProductOrderDto::from);
         return  paging;
     }
-
 
 }

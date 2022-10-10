@@ -1,47 +1,55 @@
 package com.used.lux.dto;
 
-import com.used.lux.domain.Product;
+import com.used.lux.domain.*;
 
 import java.time.LocalDateTime;
 
 public record ProductDto(
         Long id,
-        ImageDto imageDto,
         String productName,
-        String brandName,
-        String bigCategory,
-        String smallCategory,
-        int size,
-        String gender,
-        String state,
-        int price,
-        int paymentComple,
+        String productBrandName,
+        String productGender,
+        String productColor,
+        String productSize,
+        String productGrade,
+        CategoryB categoryB,
+        CategoryM categoryM,
+        State productState,
+        int productPrice,
+        String productSellType,
+        String productContent,
+        int productViewCount,
         LocalDateTime createdAt,
         String createdBy,
         LocalDateTime modifiedAt,
         String modifiedBy
 ) {
 
-    public static ProductDto of(Long id, ImageDto imageDto, String productName, String brandName, String bigCategory, String smallCategory,
-                                int size, String gender, String state, int price, int paymentComple, LocalDateTime createdAt,
+    public static ProductDto of(Long id, String productName, String brandName, String gender, String color, String size, String grade,
+                                CategoryB categoryB, CategoryM categoryM, State productState, int productPrice,
+                                String productSellType, String productContent, int productViewCount, LocalDateTime createdAt,
                                 String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
-        return new ProductDto(id, imageDto, productName, brandName, bigCategory, smallCategory, size, gender, state,
-                price, paymentComple, createdAt, createdBy, modifiedAt, modifiedBy);
+        return new ProductDto(id, productName, brandName, gender, color, size, grade, categoryB, categoryM, productState,
+                productPrice, productSellType, productContent, productViewCount, createdAt, createdBy,
+                modifiedAt, modifiedBy);
     }
 
     public static ProductDto from(Product entity) {
         return new ProductDto(
                 entity.getId(),
-                ImageDto.from(entity.getImage()),
-                entity.getProductName(),
-                entity.getBrandName(),
-                entity.getBigCategory(),
-                entity.getSmallCategory(),
-                entity.getSize(),
-                entity.getGender(),
+                entity.getAppraisal().getAppraisalProductName(),
+                entity.getAppraisal().getAppraisalBrand().getBrandName(),
+                entity.getAppraisal().getAppraisalGender(),
+                entity.getAppraisal().getAppraisalColor(),
+                entity.getAppraisal().getAppraisalSize(),
+                entity.getAppraisal().getAppraisalGrade(),
+                entity.getCategoryB(),
+                entity.getCategoryM(),
                 entity.getState(),
-                entity.getPrice(),
-                entity.getPaymentComple(),
+                entity.getProductPrice(),
+                entity.getProductSellType(),
+                entity.getProductContent(),
+                entity.getProductViewCount(),
                 entity.getCreatedAt(),
                 entity.getCreatedBy(),
                 entity.getModifiedAt(),
@@ -49,8 +57,9 @@ public record ProductDto(
         );
     }
 
-    public Product toEntity() {
-        return Product.of(productName, brandName, bigCategory, smallCategory, size, gender, state, price, paymentComple, imageDto.toEntity());
+    public Product toEntity(Appraisal appraisal) {
+        return Product.of(appraisal, categoryB, categoryM, productState, productPrice, productSellType, productContent,
+                productViewCount);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.used.lux.dto.security;
 
+import com.used.lux.domain.UserGrade;
 import com.used.lux.domain.constant.RoleType;
 import com.used.lux.dto.UserAccountDto;
 import lombok.Getter;
@@ -17,33 +18,18 @@ public record Principal(
         String userPassword,
         String userName,
         String phoneNumber,
-        String address,
         int age,
         String gender,
-        String nickName,
-        String memberGrade,
-        int reserve_fund,
+        int point,
+        UserGrade userGrade,
         RoleType role
 ) implements UserDetails {
 
     public static Principal of(Long id, String userEmail, String userPassword, String userName, String phoneNumber,
-                               String address, int age, String gender, String nickName, String memberGrade,
-                               int reserve_fund, RoleType role) {
-        return new Principal(
-                id,
-                userEmail,
-                userPassword,
-                userName,
-                phoneNumber,
-                address,
-                age,
-                gender,
-                nickName,
-                memberGrade,
-                reserve_fund,
-                role
-        );
+                     int age, String gender, int point, UserGrade userGrade, RoleType role) {
+        return new Principal(id, userEmail, userPassword, userName, phoneNumber, age, gender, point, userGrade, role);
     }
+
     //dto -> principal
     public static Principal from(UserAccountDto dto) {
         return Principal.of(
@@ -52,12 +38,10 @@ public record Principal(
                 dto.userPassword(),
                 dto.userName(),
                 dto.phoneNumber(),
-                dto.address(),
                 dto.age(),
                 dto.gender(),
-                dto.nickName(),
-                dto.memberGrade(),
-                dto.reserveFund(),
+                dto.userPoint(),
+                dto.userGrade(),
                 dto.role()
         );
     }
@@ -69,12 +53,10 @@ public record Principal(
                 userPassword,
                 userName,
                 phoneNumber,
-                address,
                 age,
                 gender,
-                nickName,
-                memberGrade,
-                reserve_fund,
+                point,
+                userGrade,
                 role
         );
     }

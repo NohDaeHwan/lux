@@ -13,18 +13,16 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
+@RequestMapping("/auction")
 @RestController
 public class AuctionController {
 
     private final AuctionService auctionService;
 
-    @GetMapping("/auction_list")
+    @GetMapping
     public ResponseEntity<Page<AuctionsResponse>> auctionList(
             @PageableDefault(size = 30, sort = "created_at", direction = Sort.Direction.DESC) Pageable pageable
     ) {
@@ -32,13 +30,13 @@ public class AuctionController {
         return ResponseEntity.status(HttpStatus.OK).body(auctions); // 경매 리스트 페이지
     }
 
-    @GetMapping("/auction_detail/{id}")
+    @GetMapping("/detail/{id}")
     public ResponseEntity<AuctionResponse> auctionDetail(@PathVariable Long id) {
         AuctionResponse auction = AuctionResponse.from(auctionService.auctionFind(id));
         return ResponseEntity.status(HttpStatus.OK).body(auction); // 경매 상세 페이지
     }
 
-    @GetMapping("/auction_result")
+    @GetMapping("/result")
     public ResponseEntity<Page<AuctionsResponse>> auctionResult(
             @PageableDefault(size = 30, sort = "created_at", direction = Sort.Direction.DESC) Pageable pageable
     ) {
@@ -46,13 +44,13 @@ public class AuctionController {
         return ResponseEntity.status(HttpStatus.OK).body(auctions); // 종료된 경매 리스트 페이지
     }
 
-    @GetMapping("/auction_result/{id}")
+    @GetMapping("/result/detail/{id}")
     public ResponseEntity<AuctionResponse> auctionResult(@PathVariable Long id) {
         AuctionResponse auction = AuctionResponse.from(auctionService.resultFind(id));
         return ResponseEntity.status(HttpStatus.OK).body(auction); // 종료된 경매 상세 페이지
     }
 
-    @GetMapping("/auction_info")
+    @GetMapping("/info")
     public ResponseEntity<Integer> auctionInfo() {
         return ResponseEntity.status(HttpStatus.OK).body(1); // 경매 정보 페이지 View를 보여줘야 함
     }

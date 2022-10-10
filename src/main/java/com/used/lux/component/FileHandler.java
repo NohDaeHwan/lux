@@ -1,18 +1,6 @@
 package com.used.lux.component;
 
-import java.io.File;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-
-import com.used.lux.domain.Appraisal;
-import com.used.lux.domain.UserAccount;
-import com.used.lux.dto.ForAppraisalDto;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.ObjectUtils;
-import org.springframework.web.multipart.MultipartFile;
 
 @Component
 public class FileHandler {
