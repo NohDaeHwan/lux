@@ -1,7 +1,6 @@
 package com.used.lux.repository;
 
 import com.used.lux.config.JpaConfig;
-import com.used.lux.domain.Image;
 import com.used.lux.domain.Product;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Import(JpaConfig.class)
 @DataJpaTest
 class JpaRepositoryTest {
-
+/*
     private final UsedluxRepository usedluxRepository;
 
     private final ImageRepository imageRepository;
@@ -113,5 +112,5 @@ class JpaRepositoryTest {
         ReflectionTestUtils.setField(product, "id", 1L);
         return product;
     }
-
+*/
 }
