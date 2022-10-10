@@ -3,6 +3,7 @@ package com.used.lux.service;
 import com.used.lux.domain.Auction;
 import com.used.lux.dto.AuctionDto;
 import com.used.lux.repository.AuctionRepository;
+import com.used.lux.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -20,13 +21,16 @@ public class AuctionService {
 
     private final AuctionRepository auctionRepository;
 
+    private final ProductRepository productRepository;
+
     public Page<AuctionDto> auctionListFind(Pageable pageable) {
         return auctionRepository.findList(pageable).map(AuctionDto::from);
     }
 
     public AuctionDto auctionFind(Long id) {
         Auction auction = auctionRepository.getReferenceById(id);
-        auction.setViewCount(auction.getViewCount()+1);
+        auction.getProduct().setProductViewCount(auction.getProduct().getProductViewCount()+1);
+        productRepository.save(auction.getProduct());
         return AuctionDto.from(auctionRepository.save(auction));
     }
 
@@ -54,4 +58,5 @@ public class AuctionService {
         }
         return -1; // 경매 입찰 실패
     }
+
 }
