@@ -9,7 +9,8 @@ import org.springframework.data.repository.query.Param;
 
 public interface ProductOrderRepository extends JpaRepository<ProductOrder,Long> {
 
-    @Query(nativeQuery = true,value ="select * from product_order where orderedMember=:id order by id",
-            countQuery="select count(*) from product_order where orderedMember=:id")
+    @Query(nativeQuery = true,value ="select * from product_order where user_account_id=:id order by id",
+            countQuery="select count(*) from product_order where user_account_id=:id")
     Page<ProductOrder> findByProductId(@Param("id") Long id, Pageable pageable);
+
 }
