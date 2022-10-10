@@ -1,19 +1,21 @@
 package com.used.lux.controller;
 
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 public class MainController {
 
     @GetMapping("/")
-    public String index() {
-        return "index"; // 뷰 아직 구현 안됨
+    public ResponseEntity<Integer> index() {
+        return ResponseEntity.status(HttpStatus.OK).body(1); // 루트 페이지를 보여줄 뷰 필요
     }
 
     @GetMapping("/login")
-    public String login() {
-        return "login"; // 뷰 아직 구현 안됨
+    public ResponseEntity<Integer> login() {
+        return ResponseEntity.status(HttpStatus.OK).body(1); // 로그인 페이지를 보여줄 뷰 필요
     }
 
 }
