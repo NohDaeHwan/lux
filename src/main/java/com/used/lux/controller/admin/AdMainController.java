@@ -12,7 +12,15 @@ public class AdMainController {
 
     @GetMapping
     public String index() {
+
         return "/admin/index";
     }
+
+    @GetMapping("/userdetail")
+    public String a(){
+
+        return "/admin/users-profile";
+    }
+
 
 }
