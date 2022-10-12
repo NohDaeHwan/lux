@@ -1,4 +1,4 @@
-package com.used.lux.controller;
+package com.used.lux.controller.admin;
 
 import com.used.lux.dto.admin.AdUserAccountDto;
 import com.used.lux.dto.security.Principal;
