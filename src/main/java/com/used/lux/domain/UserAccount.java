@@ -26,11 +26,11 @@ public class UserAccount extends AuditingFields {
 	private String userPassword;
 
 	@Setter
-	@Column(length = 100)
+	@Column(nullable = false, length = 100, unique = true)
 	private String userName;
 
 	@Setter
-	@Column(length = 11)
+	@Column(nullable = false, length = 13, unique = true)
 	private String phoneNumber;
 
 	@Setter
