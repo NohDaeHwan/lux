@@ -3,7 +3,7 @@ package com.used.lux.service;
 import com.used.lux.domain.Appraisal;
 import com.used.lux.domain.UserAccount;
 import com.used.lux.dto.AppraisalDto;
-import com.used.lux.repository.AppraiseRepository;
+import com.used.lux.repository.AppraisalRepository;
 import com.used.lux.repository.UserAccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,19 +16,19 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class AppraiseService {
 
-    private final AppraiseRepository appraiseRepository;
+    private final AppraisalRepository appraisalRepository;
 
     private final UserAccountRepository userAccountRepository;
 
     @Transactional(readOnly = true)
     public Page<AppraisalDto> findAllList(Pageable pageable) {
-        return appraiseRepository.findAll(pageable).map(AppraisalDto::from);
+        return appraisalRepository.findAll(pageable).map(AppraisalDto::from);
     }
 
     @Transactional
     public void create(AppraisalDto dto) throws Exception {
         UserAccount userAccount = userAccountRepository.getReferenceById(dto.userAccountDto().id());
-        Appraisal appraisal = appraiseRepository.save(dto.toEntity(userAccount)); // 감정신청서 DB에 저장
+        Appraisal appraisal = appraisalRepository.save(dto.toEntity(userAccount)); // 감정신청서 DB에 저장
     }
 
     /*
