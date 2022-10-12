@@ -1,5 +1,6 @@
 package com.used.lux.controller;
 
+import com.used.lux.dto.admin.AdUserAccountDto;
 import com.used.lux.dto.security.Principal;
 import com.used.lux.response.UserAccountResponse;
 import com.used.lux.service.AdUserAccountService;
@@ -46,8 +47,8 @@ public class AdUserAccountController {
         if (principal.role().getName() != "ROLE_ADMIN") {
             return ResponseEntity.status(HttpStatus.OK).body("ADMIN 권한이 없음");
         }
-        UserAccountResponse userList = UserAccountResponse.from(adUserAccountService.getUserDetail(userId));
-        return ResponseEntity.status(HttpStatus.OK).body(userList);
+        AdUserAccountDto userDetail = adUserAccountService.getUserDetail(userId);
+        return ResponseEntity.status(HttpStatus.OK).body(userDetail);
     }
 
 }
