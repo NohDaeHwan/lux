@@ -25,12 +25,12 @@ public class AdProductController {
     public String appraise(@AuthenticationPrincipal Principal principal,
                            @PageableDefault(size = 30) Pageable pageable,
                            ModelMap mm) {
-        if (principal == null) {
-            return "redirect:/login";
-        }
-        if (principal.role().getName() != "ROLE_ADMIN") {
-            return "redirect:/";
-        }
+//        if (principal == null) {
+//            return "redirect:/login";
+//        }
+//        if (principal.role().getName() != "ROLE_ADMIN") {
+//            return "redirect:/";
+//        }
         Page<ProductResponse> productResponses = adProductService.getProductList(pageable).map(ProductResponse::from);
         mm.addAttribute("productResponses", productResponses);
         return "/admin/product";

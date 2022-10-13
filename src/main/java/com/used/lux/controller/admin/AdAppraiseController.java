@@ -25,12 +25,12 @@ public class AdAppraiseController {
     public String appraise(@AuthenticationPrincipal Principal principal,
                            @PageableDefault(size = 30) Pageable pageable,
                            ModelMap mm) {
-        if (principal == null) {
-            return "redirect:/login";
-        }
-        if (principal.role().getName() != "ROLE_ADMIN") {
-            return "redirect:/";
-        }
+//        if (principal == null) {
+//            return "redirect:/login";
+//        }
+//        if (principal.role().getName() != "ROLE_ADMIN") {
+//            return "redirect:/";
+//        }
         Page<AppraisalResponse> appraisalResponse = adAppraiseService.getAppraiseList(pageable).map(AppraisalResponse::from);
         mm.addAttribute("appraisalResponse", appraisalResponse);
         return "/admin/appraise";
