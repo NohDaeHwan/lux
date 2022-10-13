@@ -129,43 +129,6 @@
 <th:block th:replace="layout/footer :: #footer">
 
 </th:block>
-<!-- 검색폼 스크립트 (user용) -->
-<script th:inline="javascript">
-
-    /*<![CDATA[*/
-
-    function g_by(column) {
-        columnArr = ["gender","age","gradeName"];
-        let num;
-        let fine_index = columnArr.map((item,index)=>{
-            if (item === column) {
-                num = index;
-            }
-        })
-        console.log(num)
-        let userList = [[${userList.content}]]
-        console.log(userList)
-        let newArr = [];
-        let cls = document.querySelectorAll(".form-select")[num];
-        console.log("functioncall",cls);
-        userList.map((item,index)=>{
-            newArr.push(item[column]);
-        })
-        let groupby = newArr.filter((item,index)=> {
-            return newArr.indexOf(item) === index
-        });
-        let result = groupby.sort().map((item,index)=>{
-            cls.innerHTML += `<option value="${index}">${item}</option>`;
-            return cls.innerHTML;
-        })
-        return cls.innerHTML
-    }
-    g_by("gender");
-    g_by("age");
-    g_by("userGrade");
-    /*]]>*/
-
-</script>
 </body>
 
 </html>

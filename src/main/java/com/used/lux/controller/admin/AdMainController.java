@@ -13,8 +13,8 @@ public class AdMainController {
 
     @GetMapping
     public String test(ModelMap mm) {
-        mm.addAttribute("hello","ㅇㅏㄴ녕");
-        return "/admin/test";
+        mm.addAttribute("hello","대시보드");
+        return "/admin/index";
     }
 
 }

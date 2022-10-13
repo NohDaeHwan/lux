@@ -23,17 +23,17 @@
                 </a>
                 <ul id="components-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
                     <li>
-                        <a href="#">
+                        <a th:href="@{/admin/user/}">
                             <i class="bi bi-circle"></i><span>회원목록</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a th:href="@{/admin/user/grade}">
                             <i class="bi bi-circle"></i><span>등급설정</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a th:href="@{/admin/user/withdrawal}">
                             <i class="bi bi-circle"></i><span>탈퇴회원</span>
                         </a>
                     </li>
@@ -46,7 +46,7 @@
                 </a>
                 <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
-                        <a href="#">
+                        <a th:href="@{/admin/product}">
                             <i class="bi bi-circle"></i><span>상품목록</span>
                         </a>
                     </li>
@@ -64,7 +64,7 @@
             </li><!-- End Forms Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#">
+                <a class="nav-link collapsed" th:href="@{/admin/appraise}">
                     <i class="bi bi-journal-text"></i>
                     <span>검수목록</span>
                 </a>
