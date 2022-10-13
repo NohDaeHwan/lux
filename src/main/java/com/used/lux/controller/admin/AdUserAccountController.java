@@ -62,12 +62,12 @@ public class AdUserAccountController {
     @GetMapping("/grade")
     public String userGrade(@AuthenticationPrincipal Principal principal,
                             ModelMap mm){
-        if (principal == null) {
-            return "redirect:/login";
-        }
-        if (principal.role().getName() != "ROLE_ADMIN") {
-            return "redirect:/";
-        }
+//        if (principal == null) {
+//            return "redirect:/login";
+//        }
+//        if (principal.role().getName() != "ROLE_ADMIN") {
+//            return "redirect:/";
+//        }
         List<UserGradeDto> userGrades = adUserAccountService.getUserGrade();
         mm.addAttribute("userGrade", userGrades);
         return "/admin/user-grade";
@@ -77,12 +77,12 @@ public class AdUserAccountController {
     @GetMapping("/withdrawal")
     public String userWithdrawal(@AuthenticationPrincipal Principal principal,
                                 ModelMap mm){
-        if (principal == null) {
-            return "redirect:/login";
-        }
-        if (principal.role().getName() != "ROLE_ADMIN") {
-            return "redirect:/";
-        }
+//        if (principal == null) {
+//            return "redirect:/login";
+//        }
+//        if (principal.role().getName() != "ROLE_ADMIN") {
+//            return "redirect:/";
+//        }
         List<UserWithdrawalDto> userWithdrawals = adUserAccountService.getUserWithdrawal();
         mm.addAttribute("userWithdrawals", userWithdrawals);
         return "/admin/user-withdrawal";
