@@ -687,10 +687,13 @@ label {
 
 @media (min-width: 1200px) {
 
-  #main,
-  #footer {
+  #main {
     margin-left: 300px;
   }
+  .footer {
+    margin-left: 300px;
+  }
+
 }
 
 @media (max-width: 1199px) {

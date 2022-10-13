@@ -31,15 +31,15 @@ public class AdUserAccountController {
     public String userList(@AuthenticationPrincipal Principal principal,
                            @PageableDefault(size = 30) Pageable pageable,
                            ModelMap mm){
-        if (principal == null) {
+        /*if (principal == null) {
             return "redirect:/login";
         }
         if (principal.role().getName() != "ROLE_ADMIN") {
             return "redirect:/";
-        }
+        }*/
         Page<UserAccountResponse> userList = adUserAccountService.getUserList(pageable).map(UserAccountResponse::from);
         mm.addAttribute("userList", userList);
-        return "/admin/user-list";
+        return "/admin/test";
     }
 
     // 회원 상세정보
