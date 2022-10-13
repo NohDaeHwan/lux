@@ -13,19 +13,19 @@
 }
 
 body {
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Roboto',sans-serif;
   background: #f6f9ff;
   color: #444444;
 }
 
 a {
-  color: #4154f1;
+  font-weight: 300;
+  color: #616161;
   text-decoration: none;
 }
 
 a:hover {
-  color: #717ff5;
-  text-decoration: none;
+  color: #919cff;
 }
 
 h1,
@@ -34,9 +34,42 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Nunito", sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
+table {
+  letter-spacing: 0em;
+  font-weight: 300;
+  line-height: 1.5rem;
+  color: #616161;
+  font-family: 'Roboto',sans-serif;
+  /* font-size: 0.875rem; */
+  /* display: table-cell; */
+  vertical-align: inherit;
+  border-bottom: 1px solid rgba(224, 224, 224, 1);
+  text-align: left;
+  padding: 16px;
+}
+
+th {
+  font-weight: 400;
+}
+
+label {
+  font-weight: 300;
+}
+
+.form-select {
+  font-weight: 300;
+  border-radius: 12px;
+  background-color: #fafafa;
+}
+.form-control {
+  font-weight: 300;
+  border-radius: 12px;
+  background-color: #fafafa;
+  margin-right: 0;
+}
 /*--------------------------------------------------------------
 # Main
 --------------------------------------------------------------*/
@@ -62,7 +95,7 @@ h6 {
 .pagetitle h1 {
   font-size: 24px;
   margin-bottom: 0;
-  font-weight: 600;
+  font-weight: 300;
   color: #012970;
 }
 
@@ -251,7 +284,7 @@ h6 {
 .card-title {
   padding: 20px 0 15px 0;
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 300;
   color: #012970;
   font-family: "Poppins", sans-serif;
 }
@@ -272,7 +305,7 @@ h6 {
 
 /* Alerts */
 .alert-heading {
-  font-weight: 500;
+  font-weight: 400;
   font-family: "Poppins", sans-serif;
   font-size: 20px;
 }
@@ -322,9 +355,10 @@ h6 {
 /* Breadcrumbs */
 .breadcrumb {
   font-size: 14px;
-  font-family: "Nunito", sans-serif;
+  font-family: "Roboto", sans-serif;
   color: #899bbd;
-  font-weight: 600;
+  font-weight: 400;
+  justify-content: end;
 }
 
 .breadcrumb a {
@@ -342,7 +376,7 @@ h6 {
 
 .breadcrumb .active {
   color: #51678f;
-  font-weight: 600;
+  font-weight: 400;
 }
 
 /* Bordered Tabs */
@@ -376,18 +410,18 @@ h6 {
 
 @media (min-width: 1200px) {
   .logo {
-    width: 280px;
+    width: 235px;
   }
 }
 
 .logo img {
-  max-height: 26px;
+  max-height: 100px;
   margin-right: 6px;
 }
 
 .logo span {
-  font-size: 26px;
-  font-weight: 700;
+  font-size: 20px;
+  font-weight: 400;
   color: #012970;
   font-family: "Nunito", sans-serif;
 }
@@ -410,12 +444,13 @@ h6 {
   color: #012970;
 }
 
-.header .search-bar {
+.search-bar {
   min-width: 360px;
-  padding: 0 20px;
+  width: 100%;
+  /* padding: 0 12px; */
 }
 
-@media (max-width: 1199px) {
+/* @media (max-width: 1199px) {
   .header .search-bar {
     position: fixed;
     top: 50px;
@@ -435,38 +470,43 @@ h6 {
     visibility: visible;
     opacity: 1;
   }
-}
+} */
 
-.header .search-form {
+.search-form {
   width: 100%;
 }
 
-.header .search-form input {
+.search-form input {
+  font-weight: 300;
+  border-radius: 12px;
+  background-color: #fafafa;
   border: 0;
   font-size: 14px;
   color: #012970;
   border: 1px solid rgba(1, 41, 112, 0.2);
-  padding: 7px 38px 7px 8px;
-  border-radius: 3px;
+  padding: 7px 10px 7px 8px;
   transition: 0.3s;
   width: 100%;
 }
 
-.header .search-form input:focus,
-.header .search-form input:hover {
+.search-form input:focus,
+.search-form input:hover {
   outline: none;
   box-shadow: 0 0 10px 0 rgba(1, 41, 112, 0.15);
   border: 1px solid rgba(1, 41, 112, 0.3);
 }
 
-.header .search-form button {
+.search-form button {
   border: 0;
   padding: 0;
-  margin-left: -30px;
+  /* margin-left: -30px; */
   background: none;
+  position: absolute;
+  margin-top: 10px;
+  margin-left: -30px;
 }
 
-.header .search-form button i {
+.search-form button i {
   color: #012970;
 }
 
@@ -499,7 +539,7 @@ h6 {
 
 .header-nav .nav-profile span {
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 400;
 }
 
 .header-nav .badge-number {
@@ -528,7 +568,7 @@ h6 {
 
 .header-nav .notifications .notification-item h4 {
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 400;
   margin-bottom: 5px;
 }
 
@@ -562,7 +602,7 @@ h6 {
 
 .header-nav .messages .message-item h4 {
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 400;
   margin-bottom: 5px;
   color: #444444;
 }
@@ -586,7 +626,7 @@ h6 {
 .header-nav .profile .dropdown-header h6 {
   font-size: 18px;
   margin-bottom: 0;
-  font-weight: 600;
+  font-weight: 400;
   color: #444444;
 }
 
@@ -691,7 +731,7 @@ h6 {
   font-size: 11px;
   text-transform: uppercase;
   color: #899bbd;
-  font-weight: 600;
+  font-weight: 400;
   margin: 10px 0 5px 15px;
 }
 
@@ -699,7 +739,7 @@ h6 {
   display: flex;
   align-items: center;
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 300;
   color: #4154f1;
   transition: 0.3;
   background: #f6f9ff;
@@ -750,7 +790,7 @@ h6 {
   display: flex;
   align-items: center;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 300;
   color: #012970;
   transition: 0.3;
   padding: 10px 0 10px 40px;
@@ -803,7 +843,7 @@ h6 {
 .dashboard .filter .dropdown-header h6 {
   text-transform: uppercase;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 400;
   letter-spacing: 1px;
   color: #aab7cf;
   margin-bottom: 0;
@@ -822,7 +862,7 @@ h6 {
 .dashboard .info-card h6 {
   font-size: 28px;
   color: #012970;
-  font-weight: 700;
+  font-weight: 500;
   margin: 0;
   padding: 0;
 }
@@ -1019,7 +1059,7 @@ h6 {
 
 .profile .profile-card h2 {
   font-size: 24px;
-  font-weight: 700;
+  font-weight: 500;
   color: #2c384e;
   margin: 10px 0 0 0;
 }
@@ -1051,12 +1091,12 @@ h6 {
 }
 
 .profile .profile-overview .label {
-  font-weight: 600;
+  font-weight: 400;
   color: rgba(1, 41, 112, 0.6);
 }
 
 .profile .profile-edit label {
-  font-weight: 600;
+  font-weight: 400;
   color: rgba(1, 41, 112, 0.6);
 }
 
@@ -1069,7 +1109,7 @@ h6 {
 --------------------------------------------------------------*/
 .faq .basic h6 {
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 400;
   color: #4154f1;
 }
 
@@ -1093,7 +1133,7 @@ h6 {
 .contact .info-box h3 {
   font-size: 20px;
   color: #012970;
-  font-weight: 700;
+  font-weight: 500;
   margin: 20px 0 10px 0;
 }
 
@@ -1111,7 +1151,7 @@ h6 {
   text-align: left;
   padding: 15px;
   margin-bottom: 24px;
-  font-weight: 600;
+  font-weight: 400;
 }
 
 .contact .php-email-form .sent-message {
@@ -1121,7 +1161,7 @@ h6 {
   text-align: center;
   padding: 15px;
   margin-bottom: 24px;
-  font-weight: 600;
+  font-weight: 400;
 }
 
 .contact .php-email-form .loading {
@@ -1208,7 +1248,7 @@ h6 {
 
 .error-404 h1 {
   font-size: 180px;
-  font-weight: 700;
+  font-weight: 500;
   color: #4154f1;
   margin-bottom: 0;
   line-height: 150px;
@@ -1216,7 +1256,7 @@ h6 {
 
 .error-404 h2 {
   font-size: 24px;
-  font-weight: 700;
+  font-weight: 500;
   color: #012970;
   margin-bottom: 30px;
 }
