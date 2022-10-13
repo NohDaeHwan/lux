@@ -14,7 +14,7 @@ public class AdMainController {
     @GetMapping
     public String test(ModelMap mm) {
         mm.addAttribute("hello","ㅇㅏㄴ녕");
-        return "/admin/test";
+        return "/admin/index";
     }
 
 }
