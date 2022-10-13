@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <meta charset="utf-8">
@@ -270,7 +270,7 @@
       <li class="nav-item">
         <a class="nav-link " href="index.html">
           <i class="bi bi-grid"></i>
-          <span>Dashboard</span>
+          <span th:text="${hello}"></span>
         </a>
       </li><!-- End Dashboard Nav -->
 
