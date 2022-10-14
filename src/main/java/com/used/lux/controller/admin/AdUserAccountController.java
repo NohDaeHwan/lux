@@ -47,12 +47,12 @@ public class AdUserAccountController {
     public String userDetail(@PathVariable Long userId,
                              @AuthenticationPrincipal Principal principal,
                              ModelMap mm){
-        if (principal == null) {
+        /*if (principal == null) {
             return "redirect:/login";
         }
         if (principal.role().getName() != "ROLE_ADMIN") {
             return "redirect:/";
-        }
+        }*/
         AdUserAccountDto userDetail = adUserAccountService.getUserDetail(userId);
         mm.addAttribute("userDetail", userDetail);
         return "/admin/user-detail";
@@ -87,6 +87,5 @@ public class AdUserAccountController {
         mm.addAttribute("userWithdrawals", userWithdrawals);
         return "/admin/user-withdrawal";
     }
-
 
 }
