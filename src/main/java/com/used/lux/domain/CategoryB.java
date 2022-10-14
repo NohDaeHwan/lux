@@ -23,6 +23,6 @@ public class CategoryB {
 
     @ToString.Exclude
     @OneToMany(mappedBy = "categoryB", cascade = CascadeType.ALL)
-    private final Set<CategoryM> articleComments = new LinkedHashSet<>();
+    private final Set<CategoryM> categoryMs = new LinkedHashSet<>();
 
 }
