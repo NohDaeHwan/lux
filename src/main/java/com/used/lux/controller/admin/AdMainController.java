@@ -2,6 +2,7 @@ package com.used.lux.controller.admin;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -11,22 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AdMainController {
 
     @GetMapping
-    public String index() {
+    public String test(ModelMap mm) {
+        mm.addAttribute("hello","대시보드");
         return "/admin/index";
     }
-
-    @GetMapping("/userdetail")
-    public String a() {
-
-        return "/admin/userdetail";
-    }
-
-
-    @GetMapping("/productdetail")
-    public String productdetail() {
-
-        return "/admin/productdetail";
-    }
-
 
 }
