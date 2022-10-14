@@ -21,4 +21,12 @@ public class AdMainController {
         return "/admin/userdetail";
     }
 
+
+    @GetMapping("/productdetail")
+    public String productdetail() {
+
+        return "/admin/productdetail";
+    }
+
+
 }
