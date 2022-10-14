@@ -36,4 +36,10 @@ public class AdAppraiseController {
         return "/admin/appraise";
     }
 
+    @GetMapping("/new")
+    public String test(ModelMap mm) {
+        mm.addAttribute("hello","대시보드");
+        return "/admin/appraisal-create-form";
+    }
+
 }
