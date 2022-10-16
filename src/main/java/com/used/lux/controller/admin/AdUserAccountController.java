@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.swing.plaf.synth.SynthOptionPaneUI;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -43,20 +44,30 @@ public class AdUserAccountController {
     }
 
     // 회원 상세정보
-    @GetMapping("/{userId}")
+    @GetMapping("/user-detail/{userId}")
     public String userDetail(@PathVariable Long userId,
                              @AuthenticationPrincipal Principal principal,
                              ModelMap mm){
-        if (principal == null) {
+       /*if (principal == null) {
             return "redirect:/login";
         }
         if (principal.role().getName() != "ROLE_ADMIN") {
             return "redirect:/";
-        }
+        }*/
         AdUserAccountDto userDetail = adUserAccountService.getUserDetail(userId);
+
+        System.out.println(userDetail.userAccountDto().userName());
+
         mm.addAttribute("userDetail", userDetail);
+
         return "/admin/user-detail";
     }
+        //유저 상세정보 테스트
+    @GetMapping("/user-detail")
+    public String userDetailTest(){
+        return "/admin/user-detail";
+    }
+
 
     // 회원 등급 종류 설정 페이지
     @GetMapping("/grade")
