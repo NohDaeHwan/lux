@@ -39,6 +39,13 @@ public class AdProductController {
         return "/admin/product";
     }
 
+    // 상품 등록하기(상품 상세정보 부재시)
+    @GetMapping("/new")
+    public String productCreate(ModelMap mm) {
+        mm.addAttribute("hello","대시보드");
+        return "/admin/product-create-form";
+    }
+
     // 상품 상세정보
     @GetMapping("/{productId}")
     public String productDetail(@PathVariable Long productId,
