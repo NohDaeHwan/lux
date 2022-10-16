@@ -2,22 +2,18 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="layout/head :: .head"></head>
 <body>
-
   <header th:replace="layout/header :: .header">
      header
   </header>
-
   <th:block th:replace="layout/aside :: .sidebar">
     aside
   </th:block>
 
 
   <main id="main" class="main">
-
     <section class="section">
       <div class="row align-items-top">
         <div class="col-lg-12">
-
           <!-- Card with header and footer -->
           <div class="card">
             <div class="card-header">회원목록</div>
