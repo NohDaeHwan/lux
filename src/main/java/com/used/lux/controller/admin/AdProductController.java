@@ -62,9 +62,9 @@ public class AdProductController {
         return "/admin/product-detail";
     }
 
-    // 상품 카테고리
-    @GetMapping("/category")
-    public String productCategory(@AuthenticationPrincipal Principal principal,
+    // 상품 브랜드
+    @GetMapping("/brand")
+    public String productBrand(@AuthenticationPrincipal Principal principal,
                              ModelMap mm){
         /*if (principal == null) {
             return "redirect:/login";
@@ -72,9 +72,16 @@ public class AdProductController {
         if (principal.role().getName() != "ROLE_ADMIN") {
             return "redirect:/";
         }*/
-        AdCategoryDto CategoryList = adProductService.getCategoryList();
-        mm.addAttribute("CategoryList", CategoryList);
-        return "/admin/product-category";
+        AdCategoryDto BrandList = adProductService.getCategoryList();
+        mm.addAttribute("BrandList", BrandList);
+        return "/admin/brand";
     }
 
+    // 상품 브랜드 추가
+    @GetMapping("/brand/new")
+    public String productBrandCreate(@AuthenticationPrincipal Principal principal,
+                               ModelMap mm){
+
+        return "/admin/brand-create-form";
+    }
 }

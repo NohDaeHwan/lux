@@ -39,7 +39,7 @@ public class AdUserAccountController {
         }*/
         Page<UserAccountResponse> userList = adUserAccountService.getUserList(pageable).map(UserAccountResponse::from);
         mm.addAttribute("userList", userList);
-        return "/admin/test";
+        return "/admin/user";
     }
 
     // 회원 상세정보
