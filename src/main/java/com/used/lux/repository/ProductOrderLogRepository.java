@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface ProductOrderLogRepository extends JpaRepository<ProductOrderLog, Long> {
     List<ProductOrderLog> findByUserEmail(String userEmail);
+
+    List<ProductOrderLog> findByProductId(Long productId);
 }

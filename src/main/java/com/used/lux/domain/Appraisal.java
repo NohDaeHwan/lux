@@ -43,7 +43,7 @@ public class Appraisal extends AuditingFields {
 
 	// 관리자 컬럼
 	@Setter
-	@Column(name="appraisal_grade", nullable = false, length = 100)
+	@Column(name="appraisal_grade", length = 100)
 	private String appraisalGrade; // A, B, C, F
 
 	@Setter
@@ -52,11 +52,11 @@ public class Appraisal extends AuditingFields {
 	private State appraisalState;
 
 	@Setter
-	@Column(name="appraisal_comment", nullable = false, length = 100)
+	@Column(name="appraisal_comment", length = 100)
 	private String appraisalComment;
 
 	@Setter
-	@Column(name="appraisal_price", nullable = false)
+	@Column(name="appraisal_price")
 	private int appraisalPrice;
 
 	@Setter

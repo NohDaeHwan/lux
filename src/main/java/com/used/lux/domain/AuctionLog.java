@@ -21,6 +21,10 @@ public class AuctionLog extends AuditingFields {
     private String bidder; // 입찰자
 
     @Setter
+    @Column(name="product_Id", nullable = false)
+    private Long productId;
+
+    @Setter
     @Column(name="product_name", nullable = false, length = 100)
     private String productName; // 경매 제품 이름
 

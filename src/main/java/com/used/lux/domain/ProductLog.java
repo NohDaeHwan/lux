@@ -17,6 +17,10 @@ public class ProductLog extends AuditingFields {
     private Long id;
 
     @Setter
+    @Column(name="product_Id", nullable = false)
+    private Long productId;
+
+    @Setter
     @Column(name="product_name", nullable = false, length = 100)
     private String productName;
 

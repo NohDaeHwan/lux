@@ -20,7 +20,13 @@
 
                 <!-- Card with header and footer -->
                 <div class="card">
-                    <div class="card-header">검수목록</div>
+                    <div class="card-header">검수목록
+                        <button type="submit" class="btn btn-primary" style="float: right;">
+                            <a th:href="@{/admin/appraise/new}" stlye="color:#ffffff !important">
+                                새 검수등록
+                            </a>
+                        </button>
+                    </div>
                     <div class="card-body">
                         <h5 class="card-title">검색 조건</h5>
                         <form class="search-form" method="POST" action="#">

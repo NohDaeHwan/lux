@@ -21,6 +21,10 @@ public class ProductOrderLog extends AuditingFields {
     private String userEmail;
 
     @Setter
+    @Column(name="product_Id", nullable = false)
+    private Long productId;
+
+    @Setter
     @Column(name="product_name", nullable = false, length = 100)
     private String productName;
 

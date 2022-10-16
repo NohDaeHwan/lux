@@ -19,8 +19,33 @@ body {
 }
 
 a {
+  text-decoration: none;
+}
+
+button > a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+button > a:hover {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+div > a {
   font-weight: 300;
   color: #616161;
+  text-decoration: none;
+}
+
+th > a {
+  font-weight: 300;
+  color: #616161;
+  text-decoration: none;
+}
+
+th,td > a:hover{
+  color: #919cff;
   text-decoration: none;
 }
 
@@ -56,6 +81,10 @@ th {
 }
 
 label {
+  font-weight: 300;
+}
+
+legend {
   font-weight: 300;
 }
 
