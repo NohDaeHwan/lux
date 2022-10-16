@@ -47,7 +47,7 @@ public class AdProductController {
     }
 
     // 상품 상세정보
-    @GetMapping("/{productId}")
+    @GetMapping("/product-detail/{productId}")
     public String productDetail(@PathVariable Long productId,
                              @AuthenticationPrincipal Principal principal,
                              ModelMap mm){
@@ -57,10 +57,29 @@ public class AdProductController {
         if (principal.role().getName() != "ROLE_ADMIN") {
             return "redirect:/";
         }*/
+
         AdProductDto productDetail = adProductService.getProductDetail(productId);
         mm.addAttribute("productDetail", productDetail);
         return "/admin/product-detail";
     }
+
+    // 상품 상세정보
+    @GetMapping("/product-detail-update/{productId}")
+    public String productDetailUpdate(@PathVariable Long productId,
+                                @AuthenticationPrincipal Principal principal,
+                                ModelMap mm){
+        /*if (principal == null) {
+            return "redirect:/login";
+        }
+        if (principal.role().getName() != "ROLE_ADMIN") {
+            return "redirect:/";
+        }*/
+
+        AdProductDto productDetail = adProductService.getProductDetail(productId);
+        mm.addAttribute("productDetail", productDetail);
+        return "/admin/product-detail-update";
+    }
+
 
     // 상품 카테고리
     @GetMapping("/category")
