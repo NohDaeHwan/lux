@@ -73,6 +73,12 @@ public class AdUserAccountController {
         return "/admin/user-grade";
     }
 
+    @GetMapping("/grade/new")
+    public String userGradeCreate(@AuthenticationPrincipal Principal principal,
+                            ModelMap mm){
+        return "/admin/grade-create-form";
+    }
+
     // 탈퇴 회원
     @GetMapping("/withdrawal")
     public String userWithdrawal(@AuthenticationPrincipal Principal principal,
