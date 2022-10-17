@@ -2,9 +2,8 @@ package com.used.lux.controller.admin;
 
 import com.used.lux.dto.admin.AdAuctionDto;
 import com.used.lux.dto.security.Principal;
-import com.used.lux.response.UserAccountResponse;
 import com.used.lux.response.auction.AuctionResponse;
-import com.used.lux.service.AdAuctionService;
+import com.used.lux.service.admin.AdAuctionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

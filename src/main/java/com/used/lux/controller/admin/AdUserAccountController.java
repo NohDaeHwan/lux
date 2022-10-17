@@ -5,7 +5,7 @@ import com.used.lux.dto.UserWithdrawalDto;
 import com.used.lux.dto.admin.AdUserAccountDto;
 import com.used.lux.dto.security.Principal;
 import com.used.lux.response.UserAccountResponse;
-import com.used.lux.service.AdUserAccountService;
+import com.used.lux.service.admin.AdUserAccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
