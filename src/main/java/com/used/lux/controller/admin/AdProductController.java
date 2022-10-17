@@ -4,7 +4,9 @@ import com.used.lux.dto.BrandDto;
 import com.used.lux.dto.admin.AdCategoryDto;
 import com.used.lux.dto.admin.AdProductDto;
 import com.used.lux.dto.security.Principal;
+import com.used.lux.request.BrandCreateRequest;
 import com.used.lux.response.product.ProductResponse;
+import com.used.lux.service.BrandService;
 import com.used.lux.service.admin.AdProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -25,6 +27,8 @@ import java.util.List;
 public class AdProductController {
 
     private final AdProductService adProductService;
+
+    private final BrandService brandService;
 
     // 상품 리스트
     @GetMapping
@@ -83,8 +87,10 @@ public class AdProductController {
     // 상품 브랜드 추가
     @GetMapping("/brand/new")
     public String productBrandCreate(@AuthenticationPrincipal Principal principal,
-                               ModelMap mm){
-
+                                     BrandCreateRequest brandCreateRequest,
+                                     ModelMap mm){
+        BrandDto brandDto = brandService.createBrand(brandCreateRequest);
+        mm.addAttribute("brandDto", brandDto);
         return "/admin/brand-create-form";
     }
 

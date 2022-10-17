@@ -28,4 +28,8 @@ public class Brand {
     public static Brand of(Long id, String brandName) {
         return new Brand(id, brandName);
     }
+
+    public static Brand of(String brandName) {
+        return new Brand(null, brandName);
+    }
 }
