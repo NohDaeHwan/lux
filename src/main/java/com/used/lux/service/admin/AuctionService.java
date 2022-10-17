@@ -1,4 +1,4 @@
-package com.used.lux.service;
+package com.used.lux.service.admin;
 
 import com.used.lux.domain.Auction;
 import com.used.lux.dto.AuctionDto;

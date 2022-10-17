@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/head :: .head"></head>
+<body>
+
+<header th:replace="layout/header :: .header">
+    header
+</header>
+
+<th:block th:replace="layout/aside :: .sidebar">
+    aside
+</th:block>
+
+
+<main id="main" class="main">
+
+    <section class="section">
+        <div class="row align-items-top">
+            <div class="col-lg-12">
+
+                <!-- Card with header and footer -->
+                <div class="card">
+                    <div class="card-header">경매목록
+                        <button type="submit" class="btn btn-primary" style="float: right;">
+                            <a th:href="@{/admin/appraise/new}" stlye="color:#ffffff !important">
+                                새 경매등록
+                            </a>
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">검색 조건</h5>
+                        <form class="search-form" method="POST" action="#">
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">경매상태</label>
+                                <div class="col-sm-10">
+                                    <select class="form-select">
+                                        <!-- <option selected>Open this select menu</option> -->
+                                        <!--                      <option value="1">Male</option>-->
+                                        <!--                      <option value="2">Female</option>-->
+                                        <!-- <option value="3">Three</option> -->
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputDate" class="col-sm-2 col-form-label">기준날짜</label>
+                                <div class="col-sm-10">
+                                    <input type="date" class="form-control">
+                                </div>
+                            </div>
+                            <div class="search-bar mb-3">
+                                <input type="text" name="query" placeholder="경매상품명 혹은 가격 입력" title="Enter search keyword">
+                                <button type="submit"><i class="bi bi-search"></i></button>
+                            </div>
+                    </div>
+                    </form>
+                </div><!-- End Card with header and footer -->
+            </div>
+        </div>
+    </section>
+
+
+    <div class="pagetitle">
+        <nav style="--bs-breadcrumb-divider: '|';">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active">검색결과</li>
+                <li class="breadcrumb-item active" th:text="'('+${auctionList.totalElements}+') 건'">(3) 건</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">로그 내역</h5>
+
+                        <!-- Table with hoverable rows -->
+                        <table class="table table-hover ">
+                            <thead>
+                            <tr>
+                                <th scope="col">경매코드</th>
+                                <th scope="col">상품명</th>
+                                <th scope="col">기존가격</th>
+                                <th scope="col">시작가격</th>
+                                <th scope="col">종료가격</th>
+                                <th scope="col">경매상태</th>
+                                <th scope="col">경매시작날짜</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="auctionlist : ${auctionList}">
+                                <th scope="row"><a href="#" th:text="${auctionlist.id}">user1@mail.com</a></th>
+                                <td th:text="${auctionlist.productResponse.productName}">Brandon Jacob</td>
+                                <td th:text="${auctionlist.presentPrice}">dfd</td>
+                                <td th:text="${auctionlist.startPrice}">Designer</td>
+                                <td th:text="${auctionlist.closingPrice}">28</td>
+                                <td th:text="${auctionlist.auctionStartDate}">28</td>
+                                <td th:text="${auctionlist.auctionStartDate}">28</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <!-- End Table with hoverable rows -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <th:block th:replace="layout/pagination :: #pagination">
+
+    </th:block>
+
+</main><!-- End #main -->
+<script th:inline="javascript">
+    <!-- 검색폼 스크립트 (user용) -->
+
+    /*<![CDATA[*/
+
+    function g_by(column) {
+        columnArr = ["presentPrice"];
+        let num;
+        let fine_index = columnArr.map((item,index)=>{
+            if (item === column) {
+                num = index;
+            }
+        })
+        console.log(num)
+        let auctionList = [[${auctionList.content}]]
+        console.log(auctionList)
+        let newArr = [];
+        let cls = document.querySelectorAll(".form-select")[num];
+        console.log("functioncall",cls);
+        auctionList.map((item,index)=>{
+            newArr.push(item[column]);
+        })
+        let groupby = newArr.filter((item,index)=> {
+            return newArr.indexOf(item) === index
+        });
+        let result = groupby.sort().map((item,index)=>{
+            cls.innerHTML += `<option value="${index}">${item}</option>`;
+            return cls.innerHTML;
+        })
+        return cls.innerHTML
+    }
+    g_by("presentPrice");
+    /*]]>*/
+
+</script>
+<th:block th:replace="layout/footer :: #footer">
+
+</th:block>
+
+</body>
+
+</html>

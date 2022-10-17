@@ -1,7 +1,7 @@
 package com.used.lux.repository;
 
-import com.used.lux.dto.BrandDto;
-import org.springframework.data.jpa.repository.support.JpaRepositoryImplementation;
+import com.used.lux.domain.Brand;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface BrandRepository extends JpaRepositoryImplementation<BrandDto, Long> {
+public interface BrandRepository extends JpaRepository<Brand, Long> {
 }

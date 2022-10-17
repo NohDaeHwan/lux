@@ -1,6 +1,5 @@
 package com.used.lux.response.appraisal;
 
-import com.used.lux.domain.State;
 import com.used.lux.dto.AppraisalDto;
 
 import java.time.LocalDateTime;
@@ -14,7 +13,8 @@ public record AppraisalResponse(
         String appraisalColor,
         String appraisalSize,
         String appraisalGrade,
-        State appraisalState,
+        String appraisalStateName,
+        String appraisalStateStep,
         String appraisalComment,
         int appraisalPrice,
         String userEmail,
@@ -27,11 +27,11 @@ public record AppraisalResponse(
 
     public static AppraisalResponse of(Long id, String appraisalName, String appraisalBrandName, String appraisalContent,
                              String appraisalGender, String appraisalColor, String appraisalSize,
-                             String appraisalGrade, State appraisalState, String appraisalComment,
-                             int appraisalPrice, String userEmail, String userName, LocalDateTime createdAt,
+                             String appraisalGrade, String appraisalStateName, String appraisalStateStep, String appraisalComment,
+                                       int appraisalPrice, String userEmail, String userName, LocalDateTime createdAt,
                              String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
         return new AppraisalResponse(id, appraisalName, appraisalBrandName, appraisalContent, appraisalGender,
-                appraisalColor, appraisalSize, appraisalGrade, appraisalState, appraisalComment, appraisalPrice,
+                appraisalColor, appraisalSize, appraisalGrade, appraisalStateName, appraisalStateStep, appraisalComment, appraisalPrice,
                 userEmail, userName, createdAt, createdBy, modifiedAt, modifiedBy);
     }
 
@@ -45,7 +45,8 @@ public record AppraisalResponse(
                 dto.appraisalColor(),
                 dto.appraisalSize(),
                 dto.appraisalGrade(),
-                dto.appraisalState(),
+                dto.appraisalState().getStateName(),
+                dto.appraisalState().getStateStep(),
                 dto.appraisalComment(),
                 dto.appraisalPrice(),
                 dto.userAccountDto().userEmail(),

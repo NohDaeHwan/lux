@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/head :: .head"></head>
+<body>
+
+<header th:replace="layout/header :: .header">
+    header
+</header>
+
+<th:block th:replace="layout/aside :: .sidebar">
+    aside
+</th:block>
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item">등급설정</li>
+                <li class="breadcrumb-item active">새 회원등급 등록</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">새 회원등급 등록</h5>
+
+                        <!-- General Form Elements -->
+                        <form>
+                            <div class="row mb-3">
+                                <label for="inputText" class="col-sm-2 col-form-label">등급명</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputText" class="col-sm-2 col-form-label">할인율(%)</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label"></label>
+                                <div class="col-sm-10">
+                                    <button type="submit" class="btn btn-success" style="float: right;">
+                                        <a th:href="@{/admin/user/grade}">
+                                            뒤로가기
+                                        </a>
+                                    </button>
+                                    <button type="submit" class="btn btn-primary" style="float: right; margin-right: 8px;">등록하기</button>
+                                </div>
+                            </div>
+                        </form><!-- End General Form Elements -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main><!-- End #main -->
+
+
+<th:block th:replace="layout/footer :: #footer">
+
+</th:block>
+</body>
+
+</html>

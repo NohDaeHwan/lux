@@ -22,7 +22,7 @@ public class Product extends AuditingFields {
 	private Long id;
 
 	@Setter
-	@ManyToOne(optional = false)
+	@OneToOne(optional = false)
 	@JoinColumn(name = "appraisal_id")
 	private Appraisal appraisal;
 

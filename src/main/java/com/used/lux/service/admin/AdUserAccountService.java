@@ -1,4 +1,4 @@
-package com.used.lux.service;
+package com.used.lux.service.admin;
 
 import com.used.lux.dto.*;
 import com.used.lux.dto.admin.AdUserAccountDto;
@@ -28,6 +28,10 @@ public class AdUserAccountService {
 
     private final UserAccountLogRepository userAccountLogRepository;
 
+    private final UserGradeRepository userGradeRepository;
+
+    private final UserWithdrawalRepository userWithdrawalRepository;
+
     public Page<UserAccountDto> getUserList(Pageable pageable) {
         return userAccountRepository.findAll(pageable).map(UserAccountDto::from);
     }
@@ -53,5 +57,15 @@ public class AdUserAccountService {
 
         return AdUserAccountDto.of(userAccountDto, productOrderLogDtos, productOrderCancelDtos,
                 appraisalDtos, auctionLogDtos, userAccountLogDtos);
+    }
+
+    public List<UserGradeDto> getUserGrade() {
+        return userGradeRepository.findAll()
+                .stream().map(UserGradeDto::from).collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    public List<UserWithdrawalDto> getUserWithdrawal() {
+        return userWithdrawalRepository.findAll()
+                .stream().map(UserWithdrawalDto::from).collect(Collectors.toCollection(ArrayList::new));
     }
 }
