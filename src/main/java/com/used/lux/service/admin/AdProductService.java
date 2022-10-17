@@ -51,8 +51,11 @@ public class AdProductService {
     public AdCategoryDto getCategoryList() {
         List<CategoryBDto> categoryBDtos = categoryBRepository.findAll()
                 .stream().map(CategoryBDto::from).collect(Collectors.toCollection(ArrayList::new));
-        List<BrandDto> brandDtos = brandRepository.findAll()
+        return AdCategoryDto.of(categoryBDtos);
+    }
+
+    public List<BrandDto> getBrandList() {
+        return brandRepository.findAll()
                 .stream().map(BrandDto::from).collect(Collectors.toCollection(ArrayList::new));
-        return AdCategoryDto.of(categoryBDtos, brandDtos);
     }
 }

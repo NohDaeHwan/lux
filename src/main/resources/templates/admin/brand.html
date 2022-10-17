@@ -117,9 +117,9 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="brandList : ${BrandList.brandDtos}">
-                                <th scope="row"><a href="#" th:text="${brandList.id}">user1@mail.com</a></th>
-                                <td th:text="${brandList.brandName}">Brandon Jacob</td>
+                            <tr th:each="brandlist : ${brandList}">
+                                <th scope="row"><a href="#" th:text="${brandlist.id}">user1@mail.com</a></th>
+                                <td th:text="${brandlist.brandName}">Brandon Jacob</td>
                             </tr>
                             </tbody>
                         </table>
