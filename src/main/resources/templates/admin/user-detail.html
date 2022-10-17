@@ -88,6 +88,94 @@
     </section>
     <div>
         <div class="col-lg-12">
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">포인트내역(productlog)</h5>
+
+                    <!-- Default Table -->
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">날짜 </th>
+                            <th scope="col">사용내역</th>
+                            <th scope="col">등급내역</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="point : ${userDetail.userAccountLogDtos()}">
+                            <td th:text="${point.createdAt}"></td>
+                            <td th:text="${point.point}"></td>
+                            <td th:text="${point.gradeName}"></td>
+                        </tr>
+                        </tbody>
+
+                    </table>
+                    <!-- End Default Table Example -->
+                    <div class="float-lg-end">
+                        <nav aria-label="...">
+                            <ul class="pagination">
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                                </li>
+                                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item active" aria-current="page">
+                                    <a class="page-link" href="#">2</a>
+                                </li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">Next</a>
+                                </li>
+                            </ul>
+                        </nav><!-- End Disabled and active states -->
+                    </div>
+                </div>
+            </div>
+            <!--검수내역 -->
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">상품검수내역(apprisal)</h5>
+                    <!-- Default Table -->
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">검수상품명</th>
+                            <th scope="col">검수등급</th>
+                            <th scope="col">매입가격</th>
+                            <th scope="col">검수상태</th>
+                            <th scope="col">검수업데이트날짜</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="userapp : ${userDetail.appraisalDtos()}">
+                            <th scope="row"><a th:text="${userapp.appraisalName()}"></a></th>
+                            <td th:text="${userapp.appraisalGrade()}"></td>
+                            <td th:text="${userapp.appraisalPrice()}"></td>
+                            <td th:text="${userapp.appraisalState}"></td>
+                            <td th:text="${userapp.createdAt()}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <!-- End Default Table Example -->
+                    <div class="float-lg-end">
+                        <nav aria-label="...">
+                            <ul class="pagination">
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                                </li>
+                                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item active" aria-current="page">
+                                    <a class="page-link" href="#">2</a>
+                                </li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">Next</a>
+                                </li>
+                            </ul>
+                        </nav><!-- End Disabled and active states -->
+                    </div>
+                </div>
+            </div>
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">주문내역(productlog)</h5>
@@ -177,51 +265,6 @@
                 </div>
             </div>
 
-
-            <!--검수내역 -->
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">검수내역(apprisal)</h5>
-                    <!-- Default Table -->
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th scope="col">상품명</th>
-                            <th scope="col">상품등급</th>
-                            <th scope="col">판매가격</th>
-                            <th scope="col">검수날짜 </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="userapp : ${userDetail.appraisalDtos()}">
-                            <th scope="row"><a th:text="${userapp.appraisalName()}"></a></th>
-                            <td th:text="${userapp.appraisalGrade()}"></td>
-                            <td th:text="${userapp.appraisalPrice()}"></td>
-                            <td th:text="${userapp.createdAt()}"></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <!-- End Default Table Example -->
-                    <div class="float-lg-end">
-                        <nav aria-label="...">
-                            <ul class="pagination">
-                                <li class="page-item disabled">
-                                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item active" aria-current="page">
-                                    <a class="page-link" href="#">2</a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">Next</a>
-                                </li>
-                            </ul>
-                        </nav><!-- End Disabled and active states -->
-                    </div>
-                </div>
-            </div>
-
             <!--경매내역 -->
             <div class="card">
                 <div class="card-body">
@@ -268,72 +311,11 @@
             </div>
         </div>
 
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">포인트내역(productlog)</h5>
-
-                <!-- Default Table -->
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th scope="col">내역</th>
-                        <th scope="col">날짜 </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="point : ${userDetail.userAccountLogDtos()}">
-                        <th scope="row"><a th:text="${point.point()}"></a></th>
-                        <td th:text="${point.createdAt()}"></td>
-                    </tr>
-                    </tbody>
-
-
-                </table>
-                <!-- End Default Table Example -->
-                <div class="float-lg-end">
-                    <nav aria-label="...">
-                        <ul class="pagination">
-                            <li class="page-item disabled">
-                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item active" aria-current="page">
-                                <a class="page-link" href="#">2</a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">Next</a>
-                            </li>
-                        </ul>
-                    </nav><!-- End Disabled and active states -->
-                </div>
-            </div>
-        </div>
         <!-- Default Table -->
-
-        <!-- End Default Table Example -->
-        <div class="float-lg-end">
-            <nav aria-label="...">
-                <ul class="pagination">
-                    <li class="page-item disabled">
-                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item active" aria-current="page">
-                        <a class="page-link" href="#">2</a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">Next</a>
-                    </li>
-                </ul>
-            </nav><!-- End Disabled and active states -->
-        </div>
     </div>
     </div>
     </div>
 </main><!-- End #main -->
-
 <th:block th:replace="layout/footer :: #footer">
 
 </th:block>

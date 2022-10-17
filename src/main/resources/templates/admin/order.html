@@ -20,7 +20,7 @@
 
                 <!-- Card with header and footer -->
                 <div class="card">
-                    <div class="card-header">검수목록
+                    <div class="card-header">주문내역
                         <!--<button type="submit" class="btn btn-primary" style="float: right;">
                             <a th:href="@{/admin/appraise/new}" stlye="color:#ffffff !important">
                                 새 검수등록
@@ -62,8 +62,8 @@
                                 <input type="text" name="query" placeholder="상품명 혹은 고객휴대폰번호 입력" title="Enter search keyword">
                                 <button type="submit"><i class="bi bi-search"></i></button>
                             </div>
-                    </div>
                     </form>
+                    </div>
                 </div><!-- End Card with header and footer -->
             </div>
         </div>
@@ -108,6 +108,7 @@
                                 <td th:text="${orderlist.orderName}">Designer</td>
                                 <td th:text="${orderlist.orderPhoneNumber}">28</td>
                                 <td th:text="${orderlist.productSellType}">28</td>
+                                <td th:text="${orderlist.stateStep}">28</td>
                                 <td th:text="${orderlist.modifiedAt()}">2022-01-01</td>
                             </tr>
                             </tbody>
@@ -131,7 +132,7 @@
     /*<![CDATA[*/
 
     function g_by(column) {
-        columnArr = ["productSellType","productSellType"];
+        columnArr = ["stateStep","productSellType"];
         let num;
         let fine_index = columnArr.map((item,index)=>{
             if (item === column) {
@@ -156,7 +157,7 @@
         })
         return cls.innerHTML
     }
-    g_by("productSellType");
+    g_by("stateStep");
     g_by("productSellType");
     /*]]>*/
 
