@@ -18,10 +18,10 @@
             </li><!-- End Dashboard Nav -->
 
             <li class="nav-item">
-                <a class="nav-link " data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+                <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-person"></i><span>회원관리</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
-                <ul id="components-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+                <ul id="components-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                     <li>
                         <a th:href="@{/admin/user/}">
                             <i class="bi bi-circle"></i><span>회원목록</span>
@@ -44,7 +44,7 @@
                 <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-bucket"></i><span>상품관리</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
-                <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <ul id="forms-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                     <li>
                         <a th:href="@{/admin/product}">
                             <i class="bi bi-circle"></i><span>상품목록</span>
@@ -56,7 +56,7 @@
                         </a>
                     </li>
                     <li>
-                        <a th:href="@{/admin/brand}">
+                        <a th:href="@{/admin/product/brand}">
                             <i class="bi bi-circle"></i><span>브랜드설정</span>
                         </a>
                     </li>
@@ -78,10 +78,10 @@
             </li><!-- End Profile Page Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+                <a class="nav-link collapsed" data-bs-target="#icons-nav3" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-gem"></i><span>경매관리</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
-                <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <ul id="icons-nav3" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
                         <a th:href="@{/admin/auction}">
                             <i class="bi bi-circle"></i><span>경매목록</span>
