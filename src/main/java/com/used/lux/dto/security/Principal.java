@@ -72,12 +72,12 @@ public record Principal(
 
     @Override
     public String getPassword() {
-        return userEmail;
+        return userPassword;
     }
 
     @Override
     public String getUsername() {
-        return userPassword;
+        return userEmail;
     }
 
     @Override
