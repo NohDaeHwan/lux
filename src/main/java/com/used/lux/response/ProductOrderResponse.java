@@ -19,15 +19,17 @@ public record ProductOrderResponse(
         String userEmail,
         String userName,
         LocalDateTime createdAt,
-        String createdBy
+        String createdBy,
+        LocalDateTime modifiedAt,
+        String modifiedBy
 ) {
 
     public static ProductOrderResponse of(Long id, String orderName, String orderPhoneNumber, String orderAddress,
                                 String orderEmail, String requestedTerm, String productName, State productState,
                                 int productPrice, String productSellType, String userEmail, String userName,
-                                LocalDateTime createdAt, String createdBy) {
+                                LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
         return new ProductOrderResponse(id, orderName, orderPhoneNumber, orderAddress, orderEmail, requestedTerm,
-                productName, productState, productPrice, productSellType, userEmail, userName, createdAt, createdBy);
+                productName, productState, productPrice, productSellType, userEmail, userName, createdAt, createdBy, modifiedAt,modifiedBy);
     }
 
     public  static ProductOrderResponse from(ProductOrderDto dto){
@@ -45,7 +47,9 @@ public record ProductOrderResponse(
                 dto.userAccountDto().userEmail(),
                 dto.userAccountDto().userName(),
                 dto.createdAt(),
-                dto.createdBy()
+                dto.createdBy(),
+                dto.modifiedAt(),
+                dto.modifiedBy()
         );
     }
 

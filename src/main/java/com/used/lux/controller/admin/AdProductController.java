@@ -98,6 +98,7 @@ public class AdProductController {
         if (principal.role().getName() != "ROLE_ADMIN") {
             return "redirect:/";
         }*/
+        System.out.printf("test");
         AdCategoryDto categoryList = adProductService.getCategoryList();
         mm.addAttribute("categoryList", categoryList);
         return "/admin/category";
