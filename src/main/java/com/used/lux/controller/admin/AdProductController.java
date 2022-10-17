@@ -1,5 +1,6 @@
 package com.used.lux.controller.admin;
 
+import com.used.lux.dto.BrandDto;
 import com.used.lux.dto.admin.AdCategoryDto;
 import com.used.lux.dto.admin.AdProductDto;
 import com.used.lux.dto.security.Principal;
@@ -15,6 +16,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RequestMapping("/admin/product")
@@ -72,8 +75,8 @@ public class AdProductController {
         if (principal.role().getName() != "ROLE_ADMIN") {
             return "redirect:/";
         }*/
-        AdCategoryDto BrandList = adProductService.getCategoryList();
-        mm.addAttribute("BrandList", BrandList);
+        List<BrandDto> brandList = adProductService.getBrandList();
+        mm.addAttribute("brandList", brandList);
         return "/admin/brand";
     }
 
@@ -83,5 +86,20 @@ public class AdProductController {
                                ModelMap mm){
 
         return "/admin/brand-create-form";
+    }
+
+    // 상품 카테고리
+    @GetMapping("/category")
+    public String productCategory(@AuthenticationPrincipal Principal principal,
+                               ModelMap mm){
+        /*if (principal == null) {
+            return "redirect:/login";
+        }
+        if (principal.role().getName() != "ROLE_ADMIN") {
+            return "redirect:/";
+        }*/
+        AdCategoryDto categoryList = adProductService.getCategoryList();
+        mm.addAttribute("categoryList", categoryList);
+        return "/admin/category";
     }
 }
