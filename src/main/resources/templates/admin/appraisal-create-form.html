@@ -35,7 +35,7 @@
                             <div class="row mb-3">
                                 <label for="inputText" class="col-sm-2 col-form-label">검수상품명</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="appraisalGrade" class="form-control">
+                                    <input type="text" name="appraisalName" class="form-control">
                                 </div>
                             </div>
 
@@ -55,6 +55,7 @@
                                 </div>
                             </div>
 
+<<<<<<< Updated upstream
 <!--                            <div class="row mb-3">-->
 <!--                                <label class="col-sm-2 col-form-label">고객명/이메일</label>-->
 <!--                                <div class="col-sm-10" style="padding: 7px 12px;">-->
@@ -66,10 +67,27 @@
 <!--                                    </div>-->
 <!--                                </div>-->
 <!--                            </div>-->
+=======
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">고객명/이메일</label>
+                                <div class="col-sm-10" style="padding: 7px 12px;">
+                                    <div class="col-sm-10" style="font-weight: 300;" th:text="${appraisalResponse.userName}">
+                                        블라블라
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <a href="#" th:text="${appraisalResponse.userEmail}">rnskqkd@naver.com</a>
+                                    </div>
+                                </div>
+                            </div>
+>>>>>>> Stashed changes
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">검수코드</label>
                                 <div class="col-sm-10" style="padding: 7px 12px;">
                                     <div class="col-sm-10" style="font-weight: 300;" th:text="${appraisalResponse.id}">
+<<<<<<< Updated upstream
+=======
+                                        4
+>>>>>>> Stashed changes
                                     </div>
                                 </div>
                             </div>
@@ -84,7 +102,11 @@
                                         <button type="submit" class="btn btn-primary" style="float: right; margin-right: 8px;">등록하기</button>
                                 </div>
                             </div>
+<<<<<<< Updated upstream
                         </form><!-- End General Form Elements -->
+=======
+                        </form><!— End General Form Elements —>
+>>>>>>> Stashed changes
                     </div>
                 </div>
 
@@ -92,7 +114,7 @@
         </div>
     </section>
 
-</main><!-- End #main -->
+</main><!— End #main —>
 
 
 <th:block th:replace="layout/footer :: #footer">
