@@ -22,4 +22,17 @@ public class UserGrade {
     @Column(nullable = false)
     private int discount;
 
+    protected UserGrade() {}
+
+    private UserGrade(Long id, String gradeName, int discount) {
+        this.id = id;
+        this.gradeName = gradeName;
+        this.discount = discount;
+    }
+
+    public static UserGrade of(Long id, String gradeName, int discount) {
+        return new UserGrade(id, gradeName, discount);
+    }
+
+
 }

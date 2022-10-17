@@ -1,10 +1,14 @@
 package com.used.lux.controller.admin;
 
+import com.used.lux.dto.BrandDto;
 import com.used.lux.dto.UserGradeDto;
 import com.used.lux.dto.UserWithdrawalDto;
 import com.used.lux.dto.admin.AdUserAccountDto;
 import com.used.lux.dto.security.Principal;
+import com.used.lux.request.BrandCreateRequest;
+import com.used.lux.request.GradeCreateRequest;
 import com.used.lux.response.UserAccountResponse;
+import com.used.lux.service.UserGradeService;
 import com.used.lux.service.admin.AdUserAccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -15,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -25,6 +30,7 @@ import java.util.List;
 public class AdUserAccountController {
 
     private final AdUserAccountService adUserAccountService;
+    private final UserGradeService userGradeService;
 
     // 회원 리스트
     @GetMapping
@@ -74,9 +80,17 @@ public class AdUserAccountController {
     }
 
     @GetMapping("/grade/new")
-    public String userGradeCreate(@AuthenticationPrincipal Principal principal,
-                            ModelMap mm){
+    public String userGradeCreate(@AuthenticationPrincipal Principal principal){
         return "/admin/grade-create-form";
+    }
+
+    @PostMapping("/grade/new/create")
+    public String userGradeCreate(@AuthenticationPrincipal Principal principal,
+                                  GradeCreateRequest gradeCreateRequest,
+                                  ModelMap mm){
+        UserGradeDto userGradeDto = userGradeService.createGrade(gradeCreateRequest);
+        mm.addAttribute("userGradeDto", userGradeDto);
+        return "redirect:/admin/user/grade";
     }
 
     // 탈퇴 회원
