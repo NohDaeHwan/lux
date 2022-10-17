@@ -70,7 +70,7 @@ public class AdAppraiseController {
     }
 
     // 검수 결과 등록
-    @PostMapping("/{appraisalId}/new")
+    @PostMapping("/{appraisalId}/new/update")
     public String appraiseCommentAdd(@PathVariable Long appraisalId,
                                      @AuthenticationPrincipal Principal principal,
                                      AppraisalCommentRequest appraisalCommentRequest) {

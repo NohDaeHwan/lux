@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -86,12 +87,17 @@ public class AdProductController {
 
     // 상품 브랜드 추가
     @GetMapping("/brand/new")
+    public String productBrandCreate(@AuthenticationPrincipal Principal principal){
+        return "/admin/brand-create-form";
+    }
+    // 상품 브랜드 추가
+    @PostMapping("/brand/new/create")
     public String productBrandCreate(@AuthenticationPrincipal Principal principal,
                                      BrandCreateRequest brandCreateRequest,
                                      ModelMap mm){
         BrandDto brandDto = brandService.createBrand(brandCreateRequest);
         mm.addAttribute("brandDto", brandDto);
-        return "/admin/brand-create-form";
+        return "redirect:/admin/product/brand";
     }
 
     // 상품 카테고리
