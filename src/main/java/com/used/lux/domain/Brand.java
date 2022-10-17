@@ -18,7 +18,7 @@ public class Brand {
     @Column(name="brand_name", nullable = false, length = 100)
     private String brandName;
 
-    protected Brand() {}
+    public Brand() {}
 
     private Brand(Long id, String brandName) {
         this.id = id;

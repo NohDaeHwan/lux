@@ -9,8 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class MainController {
 
     @GetMapping("/")
-    public ResponseEntity<Integer> index() {
-        return ResponseEntity.status(HttpStatus.OK).body(1); // 루트 페이지를 보여줄 뷰 필요
+    public ResponseEntity<Integer> index() {return ResponseEntity.status(HttpStatus.OK).body(1); // 루트 페이지를 보여줄 뷰 필요
     }
 
     @GetMapping("/login")
