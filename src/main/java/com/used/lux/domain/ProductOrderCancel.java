@@ -17,6 +17,10 @@ public class ProductOrderCancel extends AuditingFields {
     private Long id;
 
     @Setter
+    @Column(name = "order_id")
+    private Long orderId;
+
+    @Setter
     @Column(length = 100)
     private String userName;
 
