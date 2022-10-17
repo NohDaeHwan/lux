@@ -85,11 +85,19 @@ public class AdProductController {
         return "/admin/brand";
     }
 
-    // 상품 브랜드 추가
+    // 상품 브랜드 추가 페이지
     @GetMapping("/brand/new")
+<<<<<<< Updated upstream
     public String productBrandCreate(@AuthenticationPrincipal Principal principal){
         return "/admin/brand-create-form";
     }
+=======
+    public String productBrandCreate(@AuthenticationPrincipal Principal principal)
+    {
+        return "/admin/brand-create-form";
+    }
+
+>>>>>>> Stashed changes
     // 상품 브랜드 추가
     @PostMapping("/brand/new/create")
     public String productBrandCreate(@AuthenticationPrincipal Principal principal,
