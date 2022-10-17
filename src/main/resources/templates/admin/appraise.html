@@ -21,11 +21,11 @@
                 <!-- Card with header and footer -->
                 <div class="card">
                     <div class="card-header">검수목록
-                        <button type="submit" class="btn btn-primary" style="float: right;">
+                        <!--<button type="submit" class="btn btn-primary" style="float: right;">
                             <a th:href="@{/admin/appraise/new}" stlye="color:#ffffff !important">
                                 새 검수등록
                             </a>
-                        </button>
+                        </button>-->
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">검색 조건</h5>
@@ -137,7 +137,7 @@
                             </thead>
                             <tbody>
                             <tr th:each="appraisalRes : ${appraisalResponse}">
-                                <th scope="row"><a href="#" th:text="${appraisalRes.appraisalName}">user1@mail.com</a></th>
+                                <th scope="row"><a th:href="@{/admin/appraise/{appraisalId}/new(appraisalId=${appraisalRes.id})}" th:text="${appraisalRes.appraisalName}">user1@mail.com</a></th>
                                 <td th:text="${appraisalRes.appraisalBrandName}">Brandon Jacob</td>
                                 <td th:text="${appraisalRes.appraisalGender}">dfd</td>
                                 <td th:text="${appraisalRes.appraisalSize}">Designer</td>
