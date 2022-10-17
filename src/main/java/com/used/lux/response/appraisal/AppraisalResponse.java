@@ -17,6 +17,7 @@ public record AppraisalResponse(
         String appraisalStateStep,
         String appraisalComment,
         int appraisalPrice,
+        Long userId,
         String userEmail,
         String userName,
         LocalDateTime createdAt,
@@ -28,11 +29,11 @@ public record AppraisalResponse(
     public static AppraisalResponse of(Long id, String appraisalName, String appraisalBrandName, String appraisalContent,
                              String appraisalGender, String appraisalColor, String appraisalSize,
                              String appraisalGrade, String appraisalStateName, String appraisalStateStep, String appraisalComment,
-                                       int appraisalPrice, String userEmail, String userName, LocalDateTime createdAt,
+                                       Long userId, int appraisalPrice, String userEmail, String userName, LocalDateTime createdAt,
                              String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
         return new AppraisalResponse(id, appraisalName, appraisalBrandName, appraisalContent, appraisalGender,
                 appraisalColor, appraisalSize, appraisalGrade, appraisalStateName, appraisalStateStep, appraisalComment, appraisalPrice,
-                userEmail, userName, createdAt, createdBy, modifiedAt, modifiedBy);
+                userId, userEmail, userName, createdAt, createdBy, modifiedAt, modifiedBy);
     }
 
     public static AppraisalResponse from(AppraisalDto dto) {
@@ -49,6 +50,7 @@ public record AppraisalResponse(
                 dto.appraisalState().getStateStep(),
                 dto.appraisalComment(),
                 dto.appraisalPrice(),
+                dto.userAccountDto().id(),
                 dto.userAccountDto().userEmail(),
                 dto.userAccountDto().userName(),
                 dto.createdAt(),
