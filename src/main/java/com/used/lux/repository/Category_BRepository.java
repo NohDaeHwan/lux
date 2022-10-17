@@ -3,5 +3,5 @@ package com.used.lux.repository;
 import com.used.lux.domain.CategoryB;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface Category_BDto extends JpaRepository<CategoryB,Long> {
+public interface Category_BRepository extends JpaRepository<CategoryB,Long> {
 }
