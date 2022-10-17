@@ -101,7 +101,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="user : ${userList}">
-                  <th scope="row"><a th:href="@{/admin/user/user-detail/{userId}(userId=${user.id})}" th:text="${user.userEmail}">user1@mail.com</a></th>
+                  <th scope="row"><a th:href="@{/admin/user/{userId}(userId=${user.id})}" th:text="${user.userEmail}">user1@mail.com</a></th>
                   <td th:text="${user.userName}">Brandon Jacob</td>
                   <td th:text="${user.age}">Designer</td>
                   <td th:text="${user.gender}">28</td>

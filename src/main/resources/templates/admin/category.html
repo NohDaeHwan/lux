@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/head :: .head"></head>
+<body>
+
+<header th:replace="layout/header :: .header">
+    header
+</header>
+
+<th:block th:replace="layout/aside :: .sidebar">
+    aside
+</th:block>
+
+
+<main id="main" class="main">
+
+    <!--    <section class="section">-->
+    <!--        <div class="row align-items-top">-->
+    <!--            <div class="col-lg-12">-->
+
+    <!--                &lt;!&ndash; Card with header and footer &ndash;&gt;-->
+    <!--                <div class="card">-->
+    <!--                    <div class="card-header">회원목록</div>-->
+    <!--                    <div class="card-body">-->
+    <!--                        <h5 class="card-title">검색 조건</h5>-->
+    <!--                        <form class="search-form" method="POST" action="#">-->
+    <!--                            <div class="row mb-3">-->
+    <!--                                <label class="col-sm-2 col-form-label">성별</label>-->
+    <!--                                <div class="col-sm-10">-->
+    <!--                                    <select class="form-select">-->
+    <!--                                        &lt;!&ndash; <option selected>Open this select menu</option> &ndash;&gt;-->
+    <!--                                        &lt;!&ndash;                      <option value="1">Male</option>&ndash;&gt;-->
+    <!--                                        &lt;!&ndash;                      <option value="2">Female</option>&ndash;&gt;-->
+    <!--                                        &lt;!&ndash; <option value="3">Three</option> &ndash;&gt;-->
+    <!--                                    </select>-->
+    <!--                                </div>-->
+    <!--                            </div>-->
+    <!--                            <div class="row mb-3">-->
+    <!--                                <label class="col-sm-2 col-form-label">나이</label>-->
+    <!--                                <div class="col-sm-10">-->
+
+    <!--                                    <select class="form-select">-->
+    <!--                                        &lt;!&ndash; <option selected>Open this select menu</option> &ndash;&gt;-->
+    <!--                                        &lt;!&ndash;                      <option value="2">Two</option>&ndash;&gt;-->
+    <!--                                        &lt;!&ndash;                      <option value="3">Three</option>&ndash;&gt;-->
+    <!--                                    </select>-->
+    <!--                                </div>-->
+    <!--                            </div>-->
+    <!--                            <div class="row mb-3">-->
+    <!--                                <label class="col-sm-2 col-form-label">등급</label>-->
+    <!--                                <div class="col-sm-10">-->
+    <!--                                    <select class="form-select" aria-label="Default select example">-->
+    <!--                                        &lt;!&ndash; <option selected>Open this select menu</option> &ndash;&gt;-->
+    <!--                                        &lt;!&ndash;                      <option value="1">bad</option>&ndash;&gt;-->
+    <!--                                        &lt;!&ndash;                      <option value="2">Two</option>&ndash;&gt;-->
+    <!--                                        &lt;!&ndash;                      <option value="3">Three</option>&ndash;&gt;-->
+    <!--                                    </select>-->
+    <!--                                </div>-->
+    <!--                            </div>-->
+    <!--                            <div class="row mb-3">-->
+    <!--                                <label for="inputDate" class="col-sm-2 col-form-label">가입일기준</label>-->
+    <!--                                <div class="col-sm-10">-->
+    <!--                                    <input type="date" class="form-control">-->
+    <!--                                </div>-->
+    <!--                            </div>-->
+    <!--                            <div class="search-bar mb-3">-->
+    <!--                                <input type="text" name="query" placeholder="이메일 혹은 고객명 입력" title="Enter search keyword">-->
+    <!--                                <button type="submit"><i class="bi bi-search"></i></button>-->
+    <!--                            </div>-->
+    <!--                    </div>-->
+    <!--                    </form>-->
+    <!--                </div>&lt;!&ndash; End Card with header and footer &ndash;&gt;-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </section>-->
+
+
+    <!--    <div class="pagetitle">-->
+    <!--        <nav style="&#45;&#45;bs-breadcrumb-divider: '|';">-->
+    <!--            <ol class="breadcrumb">-->
+    <!--                <li class="breadcrumb-item active">검색결과</li>-->
+    <!--                <li class="breadcrumb-item active" th:text="'('+${userGrade.totalElements}+') 건'">(3) 건</li>-->
+    <!--            </ol>-->
+    <!--        </nav>-->
+    <!--    </div>&lt;!&ndash; End Page Title &ndash;&gt;-->
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">등급 설정</h5>
+
+                        <!-- Table with hoverable rows -->
+                        <table class="table table-hover ">
+                            <thead>
+                            <tr>
+                                <th scope="col">등급명</th>
+                                <th scope="col">할인율(%)</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="usergd : ${userGrade}">
+                                <th scope="row"><a href="#" th:text="${usergd.gradeName}">user1@mail.com</a></th>
+                                <td th:text="${usergd.discount}">Brandon Jacob</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <!-- End Table with hoverable rows -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    </th:block>
+
+</main><!-- End #main -->
+<th:block th:replace="layout/footer :: #footer">
+
+</th:block>
+</body>
+
+</html>
