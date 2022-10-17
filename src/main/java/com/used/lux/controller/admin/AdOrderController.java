@@ -1,10 +1,9 @@
 package com.used.lux.controller.admin;
 
-import com.used.lux.dto.admin.AdAuctionDto;
+import com.used.lux.dto.admin.AdProductOrderDto;
 import com.used.lux.dto.security.Principal;
 import com.used.lux.response.ProductOrderResponse;
-import com.used.lux.response.auction.AuctionResponse;
-import com.used.lux.service.AdOrderService;
+import com.used.lux.service.admin.AdOrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,7 +24,7 @@ public class AdOrderController {
 
     // 주문 리스트
     @GetMapping
-    public String auctionList(@AuthenticationPrincipal Principal principal,
+    public String orderList(@AuthenticationPrincipal Principal principal,
                               @PageableDefault(size = 30) Pageable pageable,
                               ModelMap mm){
         /*if (principal == null) {
@@ -34,14 +33,14 @@ public class AdOrderController {
         if (principal.role().getName() != "ROLE_ADMIN") {
             return "redirect:/";
         }*/
-        /*Page<ProductOrderResponse> orderList = adOrderService.getOrderList(pageable).map(ProductOrderResponse::from);
-        mm.addAttribute("orderList", orderList);*/
-        return "/admin/auction";
+        Page<ProductOrderResponse> orderList = adOrderService.getOrderList(pageable).map(ProductOrderResponse::from);
+        mm.addAttribute("orderList", orderList);
+        return "/admin/order";
     }
 
     // 주문 상세정보
-    @GetMapping("/{auctionId}")
-    public String auctionDetail(@PathVariable Long auctionId,
+    @GetMapping("/{orderId}")
+    public String orderDetail(@PathVariable Long orderId,
                                 @AuthenticationPrincipal Principal principal,
                                 ModelMap mm){
         /*if (principal == null) {
@@ -50,9 +49,9 @@ public class AdOrderController {
         if (principal.role().getName() != "ROLE_ADMIN") {
             return "redirect:/";
         }*/
-        /*AdAuctionDto auctionDetail = adOrderService.getAuctionDetail(auctionId);
-        mm.addAttribute("auctionDetail", auctionDetail);*/
-        return "/admin/auction-detail";
+        AdProductOrderDto orderDetail = adOrderService.getOrderDetail(orderId);
+        mm.addAttribute("orderDetail", orderDetail);
+        return "/admin/order-detail";
     }
 
 }
