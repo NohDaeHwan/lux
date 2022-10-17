@@ -24,6 +24,11 @@ public class Auction extends AuditingFields {
 	private Product product;
 
 	@Setter
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "state_id")
+	private State state;
+
+	@Setter
 	@Column(name="start_price", nullable = false)
 	private int startPrice; // 시작가격
 
@@ -53,9 +58,10 @@ public class Auction extends AuditingFields {
 
 	protected Auction() {}
 
-	private Auction(Product product, int startPrice, int presentPrice, int closingPrice, LocalDateTime auctionStartDate,
+	private Auction(Product product, State state, int startPrice, int presentPrice, int closingPrice, LocalDateTime auctionStartDate,
 				   LocalDateTime auctionClosingDate, int biddingCount, String bidder) {
 		this.product = product;
+		this.state = state;
 		this.startPrice = startPrice;
 		this.presentPrice = presentPrice;
 		this.closingPrice = closingPrice;
@@ -65,9 +71,9 @@ public class Auction extends AuditingFields {
 		this.bidder = bidder;
 	}
 
-	public static Auction of(Product product, int startPrice, int presentPrice, int closingPrice, LocalDateTime auctionStartDate,
+	public static Auction of(Product product, State state, int startPrice, int presentPrice, int closingPrice, LocalDateTime auctionStartDate,
 							 LocalDateTime auctionClosingDate, int biddingCount, String bidder) {
-		return new Auction(product, startPrice, presentPrice, closingPrice, auctionStartDate, auctionClosingDate, biddingCount, bidder);
+		return new Auction(product, state, startPrice, presentPrice, closingPrice, auctionStartDate, auctionClosingDate, biddingCount, bidder);
 	}
 
 }
