@@ -4,7 +4,7 @@ import com.used.lux.dto.admin.AdCategoryDto;
 import com.used.lux.dto.admin.AdProductDto;
 import com.used.lux.dto.security.Principal;
 import com.used.lux.response.product.ProductResponse;
-import com.used.lux.service.AdProductService;
+import com.used.lux.service.admin.AdProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

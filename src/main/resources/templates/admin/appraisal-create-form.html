@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="layout/head :: .head"></head>
 <body>
 
@@ -31,8 +31,7 @@
                     <div class="card-body">
                         <h5 class="card-title">검수 기록 페이지</h5>
 
-
-                        <form th:action="@{|/admin/appraise/new/${appraisalResponse.id}|}" method="POST">
+                        <form th:action="@{|/admin/appraise/${appraisalResponse.id}/new|}" method="POST">
                             <div class="row mb-3">
                                 <label for="inputText" class="col-sm-2 col-form-label">검수상품명</label>
                                 <div class="col-sm-10">
@@ -59,7 +58,7 @@
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">고객명/이메일</label>
                                 <div class="col-sm-10" style="padding: 7px 12px;">
-                                    <div class="col-sm-10" style="font-weight: 300;">
+                                    <div class="col-sm-10" style="font-weight: 300;" th:text="${}">
                                         블라블라
                                     </div>
                                     <div class="col-sm-10">
@@ -102,6 +101,10 @@
 <th:block th:replace="layout/footer :: #footer">
 
 </th:block>
+
+<script>
+
+</script>
 </body>
 
 </html>

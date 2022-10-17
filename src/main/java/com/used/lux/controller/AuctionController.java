@@ -4,7 +4,7 @@ import com.used.lux.dto.security.Principal;
 import com.used.lux.request.AuctionBidRequest;
 import com.used.lux.response.auction.AuctionResponse;
 import com.used.lux.response.auction.AuctionsResponse;
-import com.used.lux.service.AuctionService;
+import com.used.lux.service.admin.AuctionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

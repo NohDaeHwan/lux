@@ -4,7 +4,7 @@ import com.used.lux.dto.security.Principal;
 import com.used.lux.request.AppraisalRequest;
 import com.used.lux.response.appraisal.AppraisalResponse;
 import com.used.lux.response.appraisal.AppraisalsResponse;
-import com.used.lux.service.AppraiseService;
+import com.used.lux.service.admin.AppraiseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
