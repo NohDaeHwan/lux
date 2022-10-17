@@ -93,10 +93,11 @@
                             <tr>
                                 <th scope="col">주문번호</th>
                                 <th scope="col">상품명</th>
+                                <th scope="col">판매그룹</th>
                                 <th scope="col">판매가격</th>
                                 <th scope="col">주문자명</th>
                                 <th scope="col">휴대폰번호</th>
-                                <th scope="col">주문상태?</th>
+                                <th scope="col">주문상태</th>
                                 <th scope="col">업데이트날짜</th>
                             </tr>
                             </thead>
@@ -104,10 +105,10 @@
                             <tr th:each="orderlist : ${orderList}">
                                 <th scope="row"><a th:href="@{|/admin/order/{orderList_id}/update|}" th:text="${orderlist.id}">user@mail.com</a></th>
                                 <td th:text="${orderlist.productName}">Brandon Jacob</td>
+                                <td th:text="${orderlist.productSellType}">28</td>
                                 <td th:text="${orderlist.productPrice}">dfd</td>
                                 <td th:text="${orderlist.orderName}">Designer</td>
                                 <td th:text="${orderlist.orderPhoneNumber}">28</td>
-                                <td th:text="${orderlist.productSellType}">28</td>
                                 <td th:text="${orderlist.stateStep}">28</td>
                                 <td th:text="${orderlist.modifiedAt()}">2022-01-01</td>
                             </tr>

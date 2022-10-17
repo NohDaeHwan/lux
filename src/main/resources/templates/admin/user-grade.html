@@ -105,12 +105,20 @@
                             <tr>
                                 <th scope="col">등급명</th>
                                 <th scope="col">할인율(%)</th>
+                                <th scope="col">삭제</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr th:each="usergd : ${userGrade}">
-                                <th scope="row"><a href="#" th:text="${usergd.gradeName}">user1@mail.com</a></th>
-                                <td th:text="${usergd.discount}">Brandon Jacob</td>
+                                <th scope="row" style="vertical-align: middle;"><a href="#" th:text="${usergd.gradeName}">user1@mail.com</a></th>
+                                <td th:text="${usergd.discount}" style="vertical-align: middle;">Brandon Jacob</td>
+                                <td>
+                                    <form action="#">
+                                        <button type="submit" class="btn btn-danger">
+                                            삭제
+                                        </button>
+                                    </form>
+                                </td>
                             </tr>
                             </tbody>
                         </table>

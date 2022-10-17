@@ -148,10 +148,10 @@
                         </thead>
                         <tbody>
                         <tr th:each="userapp : ${userDetail.appraisalDtos()}">
-                            <th scope="row"><a th:text="${userapp.appraisalName()}"></a></th>
+                            <th scope="row"><a th:href="@{|/admin/appraise/${userapp.id}/new|}" th:text="${userapp.appraisalName()}"></a></th>
                             <td th:text="${userapp.appraisalGrade()}"></td>
                             <td th:text="${userapp.appraisalPrice()}"></td>
-                            <td th:text="${userapp.appraisalState}"></td>
+                            <td th:text="${userapp.appraisalState().stateStep}"></td>
                             <td th:text="${userapp.createdAt()}"></td>
                         </tr>
                         </tbody>
