@@ -19,4 +19,8 @@ public class UserGradeService {
     public UserGradeDto createGrade(GradeCreateRequest gradeCreateRequest) {
         return UserGradeDto.from(userGradeRepository.save(UserGrade.of(gradeCreateRequest.id() , gradeCreateRequest.gradeName(), gradeCreateRequest.discount())));
     }
+
+    public void deleteGrade(Long gradeId) {
+        userGradeRepository.deleteById(gradeId);
+    }
 }

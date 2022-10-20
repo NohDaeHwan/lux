@@ -1,4 +1,4 @@
-package com.used.lux.controller;
+package com.used.lux.controller.user;
 
 import com.used.lux.response.product.ProductResponse;
 import com.used.lux.response.product.ProductsResponse;
