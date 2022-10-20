@@ -1,9 +1,12 @@
 package com.used.lux.controller.admin;
 
+import com.used.lux.dto.BrandDto;
+import com.used.lux.dto.ProductDto;
 import com.used.lux.dto.security.Principal;
 import com.used.lux.request.appraisal.AppraisalCommentRequest;
 import com.used.lux.response.appraisal.AppraisalResponse;
 import com.used.lux.service.admin.AdAppraiseService;
+import com.used.lux.service.admin.AdProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,12 +19,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RequestMapping("/admin/appraise")
 @Controller
 public class AdAppraiseController {
 
     private final AdAppraiseService adAppraiseService;
+
+    private  final AdProductService adProductService;
 
     // 검수기록
     @GetMapping
@@ -65,7 +72,9 @@ public class AdAppraiseController {
 //            return "redirect:/";
 //        }
         AppraisalResponse appraisalResponse = AppraisalResponse.from(adAppraiseService.appraiseCommentPage(appraisalId));
+        List<BrandDto> brandList = adProductService.getBrandList();
         mm.addAttribute("appraisalResponse", appraisalResponse);
+        mm.addAttribute("brandList",brandList);
         return "admin/appraisal-create-form";
     }
 
