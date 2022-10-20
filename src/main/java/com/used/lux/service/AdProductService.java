@@ -1,5 +1,9 @@
 package com.used.lux.service;
 
+import com.used.lux.domain.CategoryB;
+import com.used.lux.domain.CategoryM;
+import com.used.lux.domain.Product;
+import com.used.lux.domain.QCategoryM;
 import com.used.lux.dto.*;
 import com.used.lux.dto.admin.AdCategoryDto;
 import com.used.lux.dto.admin.AdProductDto;
@@ -8,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
+import com.used.lux.request.productUpdateRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,6 +50,7 @@ public class AdProductService {
         List<AuctionLogDto> auctionLogDtos = auctionLogRepository.findByProductId(productId)
                 .stream().map(AuctionLogDto::from).collect(Collectors.toCollection(ArrayList::new));
         return AdProductDto.of(productDto, productLogDtos, productOrderLogDtos, auctionLogDtos);
+
     }
 
     public AdCategoryDto getCategoryList() {
@@ -54,5 +59,17 @@ public class AdProductService {
         List<BrandDto> brandDtos = brandRepository.findAll()
                 .stream().map(BrandDto::from).collect(Collectors.toCollection(ArrayList::new));
         return AdCategoryDto.of(categoryBDtos, brandDtos);
+    }
+
+
+    public void  productUpdate(Long productId, productUpdateRequest productUpdateRequest){
+        CategoryB categoryB = categoryBRepository.findByCategoryBName(productUpdateRequest.categoryBName());
+        /*CategoryM categoryM = categoryBRepository.findByCategoryMName(productUpdateRequest.categoryMName());*/
+        Product product= productRepository.getReferenceById(productId);
+        product.setProductContent(productUpdateRequest.Content());
+        product.setProductSellType(productUpdateRequest.productSellType());
+        product.setCategoryB(categoryB);
+        /*product.setCategoryM(categoryM);*/
+        productRepository.save(product);
     }
 }

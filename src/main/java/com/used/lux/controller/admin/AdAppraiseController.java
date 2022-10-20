@@ -80,7 +80,7 @@ public class AdAppraiseController {
 //        if (principal.role().getName() != "ROLE_ADMIN") {
 //            return "redirect:/";
 //        }
-//        adAppraiseService.appraiseComment(appraisalId, appraisalCommentRequest);
+       adAppraiseService.appraiseComment(appraisalId, appraisalCommentRequest);
         System.out.println(appraisalCommentRequest);
         return "redirect:/admin/appraise";
     }

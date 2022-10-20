@@ -24,6 +24,8 @@ public class AdAppraiseService {
         return appraisalRepository.findAll(pageable).map(AppraisalDto::from);
     }
 
+
+    //업데이트
     public void appraiseComment(Long appraisalId, AppraisalCommentRequest appraisalCommentRequest) {
         Appraisal appraisal = appraisalRepository.getReferenceById(appraisalId);
         State state = stateRepository.findById(3L).get();
