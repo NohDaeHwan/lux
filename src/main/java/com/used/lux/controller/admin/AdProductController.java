@@ -1,24 +1,26 @@
 package com.used.lux.controller.admin;
 
 import com.used.lux.dto.BrandDto;
-import com.used.lux.dto.admin.AdCategoryDto;
+import com.used.lux.dto.CategoryBDto;
 import com.used.lux.dto.admin.AdProductDto;
 import com.used.lux.dto.security.Principal;
 import com.used.lux.request.BrandCreateRequest;
+import com.used.lux.request.CategoryCreateRequest;
+import com.used.lux.request.ProductUpdateRequest;
 import com.used.lux.response.product.ProductResponse;
 import com.used.lux.service.BrandService;
+import com.used.lux.service.CategoryBService;
 import com.used.lux.service.admin.AdProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,6 +32,8 @@ public class AdProductController {
     private final AdProductService adProductService;
 
     private final BrandService brandService;
+
+    private final CategoryBService categoryBService;
 
     // 상품 리스트
     @GetMapping
@@ -55,7 +59,7 @@ public class AdProductController {
     }
 
     // 상품 상세정보
-    @GetMapping("/{productId}")
+    @GetMapping("/product-detail/{productId}")
     public String productDetail(@PathVariable Long productId,
                              @AuthenticationPrincipal Principal principal,
                              ModelMap mm){
@@ -68,6 +72,22 @@ public class AdProductController {
         AdProductDto productDetail = adProductService.getProductDetail(productId);
         mm.addAttribute("productDetail", productDetail);
         return "/admin/product-detail";
+    }
+
+    // 상품 상세정보 업데이트
+    @PostMapping("/product_detail_update/{productId}/update")
+    public String productDetailUpdate(@PathVariable Long productId,
+                                      @AuthenticationPrincipal Principal principal,
+                                      ProductUpdateRequest productUpdateRequest){
+        /*if (principal == null) {
+            return "redirect:/login";
+        }
+        if (principal.role().getName() != "ROLE_ADMIN") {
+            return "redirect:/";
+        }*/
+        System.out.println(productUpdateRequest);
+        adProductService.productUpdate(productId,productUpdateRequest);
+        return "redirect:/admin/product-detail";
     }
 
     // 상품 브랜드
@@ -112,9 +132,18 @@ public class AdProductController {
         if (principal.role().getName() != "ROLE_ADMIN") {
             return "redirect:/";
         }*/
-        System.out.printf("test");
-        AdCategoryDto categoryList = adProductService.getCategoryList();
+        List<CategoryBDto> categoryList = adProductService.getCategoryList();
         mm.addAttribute("categoryList", categoryList);
         return "/admin/category";
     }
+
+    // 상품 카테고리 추가
+    @ResponseBody
+    @PostMapping("/category/new/create")
+    public ResponseEntity<CategoryBDto> productBrandCreate(@AuthenticationPrincipal Principal principal,
+                                             CategoryCreateRequest categoryCreateRequest){
+        CategoryBDto categoryBDto = categoryBService.createCategory(categoryCreateRequest);
+        return ResponseEntity.status(HttpStatus.OK).body(categoryBDto);
+    }
+
 }
