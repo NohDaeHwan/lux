@@ -2,6 +2,7 @@ package com.used.lux.controller.admin;
 
 import com.used.lux.dto.BrandDto;
 import com.used.lux.dto.CategoryBDto;
+import com.used.lux.dto.CategoryMDto;
 import com.used.lux.dto.admin.AdProductDto;
 import com.used.lux.dto.security.Principal;
 import com.used.lux.request.BrandCreateRequest;
@@ -11,6 +12,7 @@ import com.used.lux.request.ProductUpdateRequest;
 import com.used.lux.response.product.ProductResponse;
 import com.used.lux.service.BrandService;
 import com.used.lux.service.CategoryBService;
+import com.used.lux.service.CategoryMService;
 import com.used.lux.service.admin.AdProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -38,6 +40,8 @@ public class AdProductController {
     private final BrandService brandService;
 
     private final CategoryBService categoryBService;
+
+    private final CategoryMService categoryMService;
 
     // 상품 리스트
     @GetMapping
@@ -95,9 +99,15 @@ public class AdProductController {
         }*/
         System.out.println("called function");
         AdProductDto productDetail = adProductService.getProductDetail(productId);
-        mm.addAttribute("productDetail", productDetail);
+        List<BrandDto> brandDto = adProductService.getBrandList();
+        List<CategoryBDto> categoryBDtos = adProductService.getCategoryList();
+        List<CategoryMDto> categoryMDtos = categoryMService.getCategoryList();
 
-        return "/admin/product_detail_update";
+        mm.addAttribute("productDetail", productDetail);
+        mm.addAttribute("brandDto", brandDto);
+        mm.addAttribute("categoryBDtos", categoryBDtos);
+        mm.addAttribute("categoryMDtos", categoryMDtos);
+        return "/admin/product-detail-update";
     }
 
   
@@ -148,6 +158,14 @@ public class AdProductController {
                                      ModelMap mm){
         BrandDto brandDto = brandService.createBrand(brandCreateRequest);
         mm.addAttribute("brandDto", brandDto);
+        return "redirect:/admin/product/brand";
+    }
+
+    // 상품 브랜드 삭제
+    @GetMapping("/brand/{brandId}/delete")
+    public String productBrandCreate(@PathVariable Long brandId,
+                                     @AuthenticationPrincipal Principal principal){
+        brandService.deleteBrand(brandId);
         return "redirect:/admin/product/brand";
     }
 

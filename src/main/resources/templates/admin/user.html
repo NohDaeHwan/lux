@@ -118,13 +118,35 @@
       </div>
     </section>
 
-    <th:block th:replace="layout/pagination :: #pagination">
-
-    </th:block>
+    <!-- Pagination with icons -->
+    <nav id="pagination" aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page-item">
+          <a class="page-link" th:href="@{/admin/user(page=${userList.number - 1}, sort=(${param.sort} != null ? ${param.sort} : '') + (${userList.sort.getOrderFor('param.sort')} != null ? (${userList.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
+                      query=${param.query})}" aria-label="Previous" th:class="'page-link' + (${userList.number} <= 0 ? ' disabled' : '')">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li class="page-item" th:each="pageNumber : ${paginationBarNumbers}">
+          <a th:text="${pageNumber + 1}"
+             th:href="@{/admin/user(page=${pageNumber},
+                          sort=(${param.sort} != null ? ${param.sort} : '') + (${userList.sort.getOrderFor('param.sort')} != null ? (${userList.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
+                          query=${param.query}
+                      )}"
+             th:class="'page-link' + (${pageNumber} == ${userList.number} <= 0 ? ' disabled' : '')">
+          </a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" th:href="@{/admin/user(page=${userList.number + 1}, sort=(${param.sort} != null ? ${param.sort} : '') + (${userList.sort.getOrderFor('param.sort')} != null ? (${userList.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
+                      query=${param.query})}" aria-label="Next" th:class="'page-link' + (${userList.number} >= ${userList.totalPages - 1} ? ' disabled' : '')">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav><!-- End Pagination with icons -->
 
   </main><!-- End #main -->
   <th:block th:replace="layout/footer :: #footer">
-
   </th:block>
 <!-- 검색폼 스크립트 (user용) -->
   <script th:inline="javascript">

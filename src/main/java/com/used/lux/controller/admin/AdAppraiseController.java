@@ -1,7 +1,7 @@
 package com.used.lux.controller.admin;
 
 import com.used.lux.dto.security.Principal;
-import com.used.lux.request.AppraisalCommentRequest;
+import com.used.lux.request.appraisal.AppraisalCommentRequest;
 import com.used.lux.response.appraisal.AppraisalResponse;
 import com.used.lux.service.admin.AdAppraiseService;
 import lombok.RequiredArgsConstructor;
