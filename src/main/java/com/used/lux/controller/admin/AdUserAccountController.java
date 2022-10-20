@@ -1,13 +1,12 @@
 package com.used.lux.controller.admin;
 
-import com.used.lux.dto.BrandDto;
 import com.used.lux.dto.UserGradeDto;
 import com.used.lux.dto.UserWithdrawalDto;
 import com.used.lux.dto.admin.AdUserAccountDto;
 import com.used.lux.dto.security.Principal;
-import com.used.lux.request.BrandCreateRequest;
 import com.used.lux.request.GradeCreateRequest;
 import com.used.lux.response.UserAccountResponse;
+import com.used.lux.service.PaginationService;
 import com.used.lux.service.UserGradeService;
 import com.used.lux.service.admin.AdUserAccountService;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +31,8 @@ public class AdUserAccountController {
     private final AdUserAccountService adUserAccountService;
     private final UserGradeService userGradeService;
 
+    private final PaginationService paginationService;
+
     // 회원 리스트
     @GetMapping
     public String userList(@AuthenticationPrincipal Principal principal,
@@ -44,6 +45,9 @@ public class AdUserAccountController {
             return "redirect:/";
         }*/
         Page<UserAccountResponse> userList = adUserAccountService.getUserList(pageable).map(UserAccountResponse::from);
+        List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), userList.getTotalPages());
+        System.out.println(barNumbers);
+        mm.addAttribute("paginationBarNumbers", barNumbers);
         mm.addAttribute("userList", userList);
         return "/admin/user";
     }
@@ -79,17 +83,27 @@ public class AdUserAccountController {
         return "/admin/user-grade";
     }
 
+    // 회원 등급 종류 추가 페이지
     @GetMapping("/grade/new")
     public String userGradeCreate(@AuthenticationPrincipal Principal principal){
         return "/admin/grade-create-form";
     }
 
+    // 회원 등급 종류 추가
     @PostMapping("/grade/new/create")
     public String userGradeCreate(@AuthenticationPrincipal Principal principal,
                                   GradeCreateRequest gradeCreateRequest,
                                   ModelMap mm){
         UserGradeDto userGradeDto = userGradeService.createGrade(gradeCreateRequest);
         mm.addAttribute("userGradeDto", userGradeDto);
+        return "redirect:/admin/user/grade";
+    }
+
+    // 회원 등급 종류 삭제
+    @GetMapping("/grade/{gradeId}/delete")
+    public String userGradeCreate(@PathVariable Long gradeId,
+                                  @AuthenticationPrincipal Principal principal){
+        userGradeService.deleteGrade(gradeId);
         return "redirect:/admin/user/grade";
     }
 

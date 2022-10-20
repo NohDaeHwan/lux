@@ -1,4 +1,4 @@
-package com.used.lux.request;
+package com.used.lux.request.appraisal;
 
 public record AppraisalCommentRequest(
         String appraisalName,

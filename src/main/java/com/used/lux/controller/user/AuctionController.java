@@ -1,4 +1,4 @@
-package com.used.lux.controller;
+package com.used.lux.controller.user;
 
 import com.used.lux.dto.security.Principal;
 import com.used.lux.request.AuctionBidRequest;
