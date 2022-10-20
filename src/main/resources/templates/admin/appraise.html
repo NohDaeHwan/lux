@@ -136,7 +136,7 @@
                             </thead>
                             <tbody>
                             <tr th:each="appraisalRes : ${appraisalResponse}">
-                                <th scope="row"><a th:href="@{/admin/appraise/{appraisalId}/new(appraisalId=${appraisalRes.id})}" th:text="${appraisalRes.appraisalName}">user1@mail.com</a></th>
+                                <th scope="row"><a th:href="@{/admin/appraise/{appraisalId}/new(appraisalId=${appraisalRes.id()})}" th:text="${appraisalRes.appraisalName}">user1@mail.com</a></th>
                                 <td th:text="${appraisalRes.appraisalBrandName}">Brandon Jacob</td>
                                 <td th:text="${appraisalRes.appraisalGender}">dfd</td>
                                 <td th:text="${appraisalRes.appraisalSize}">Designer</td>

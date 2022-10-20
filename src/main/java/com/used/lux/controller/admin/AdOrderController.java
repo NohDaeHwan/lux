@@ -51,7 +51,7 @@ public class AdOrderController {
         }*/
         AdProductOrderDto orderDetail = adOrderService.getOrderDetail(orderId);
         mm.addAttribute("orderDetail", orderDetail);
-        return "/admin/order-detail";
+        return "/admin/order/order-detail";
     }
 
 }
