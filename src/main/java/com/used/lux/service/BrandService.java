@@ -1,10 +1,8 @@
 package com.used.lux.service;
 
 import com.used.lux.domain.Brand;
-import com.used.lux.dto.BrandDto;
 import com.used.lux.repository.BrandRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -16,7 +14,7 @@ public class BrandService {
 
     public void brandCreate(String st)
     {
-        Long id = null;
+
 
         Brand brand = new Brand();
         brand.setBrandName(st);
@@ -24,10 +22,13 @@ public class BrandService {
         brandRepository.save(brand);
     }
 
-    public void brandDelete(String a) {
-        Long brandId = null;
-        Brand brand = new Brand();
-        brand.setBrandName(a);
-        brandRepository.delete(brand);
+    public int brandDelete(String a) {
+        return brandRepository.deleteByBrandName(a);
     }
+
+    public boolean brandExist(String st)
+    {
+      return brandRepository.existsByBrandName(st);
+    }
+
 }
