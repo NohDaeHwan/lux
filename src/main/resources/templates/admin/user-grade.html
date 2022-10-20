@@ -110,14 +110,9 @@
                             </thead>
                             <tbody>
                             <tr th:each="usergd : ${userGrade}">
-                                <th scope="row" style="vertical-align: middle;"><a href="#" th:text="${usergd.gradeName}">user1@mail.com</a></th>
+                                <th scope="row" th:text="${usergd.gradeName}" style="vertical-align: middle;">user1@mail.com</th>
                                 <td th:text="${usergd.discount}" style="vertical-align: middle;">Brandon Jacob</td>
-                                <td>
-                                    <form action="#">
-                                        <button type="submit" class="btn btn-danger">
-                                            삭제
-                                        </button>
-                                    </form>
+                                <td><a class="btn btn-danger" th:href="@{/admin/user/grade/{gradeId}/delete(gradeId=${usergd.id()})}">삭제</a>
                                 </td>
                             </tr>
                             </tbody>

@@ -117,15 +117,9 @@
                             </thead>
                             <tbody>
                             <tr th:each="brandlist : ${brandList}">
-                                <th scope="row" style="vertical-align: middle;"><a href="#" th:text="${brandlist.id}">user1@mail.com</a></th>
+                                <th scope="row" style="vertical-align: middle;" th:text="${brandlistStat.count}">user1@mail.com</th>
                                 <td th:text="${brandlist.brandName}" style="vertical-align: middle;">Brandon Jacob</td>
-                                <td>
-                                    <form action="#">
-                                        <button type="submit" class="btn btn-danger">
-                                            삭제
-                                        </button>
-                                    </form>
-                                </td>
+                                <td><a class="btn btn-danger" th:href="@{/admin/product/brand/{brandId}/delete(brandId=${brandlist.id})}">삭제</a></td>
                             </tr>
                             </tbody>
                         </table>

@@ -18,4 +18,8 @@ public class BrandService {
     public BrandDto createBrand(BrandCreateRequest brandCreateRequest) {
         return BrandDto.from(brandRepository.save(Brand.of(brandCreateRequest.brandName())));
     }
+
+    public void deleteBrand(Long brandId) {
+        brandRepository.deleteById(brandId);
+    }
 }

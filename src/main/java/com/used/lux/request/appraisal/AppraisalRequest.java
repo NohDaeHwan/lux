@@ -1,4 +1,4 @@
-package com.used.lux.request;
+package com.used.lux.request.appraisal;
 
 import com.used.lux.domain.Brand;
 import com.used.lux.dto.AppraisalDto;
