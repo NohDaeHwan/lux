@@ -33,11 +33,9 @@
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">주문상태</label>
                                 <div class="col-sm-10">
-                                    <select class="form-select">
-                                        <!-- <option selected>Open this select menu</option> -->
-                                        <!--                      <option value="1">Male</option>-->
-                                        <!--                      <option value="2">Female</option>-->
-                                        <!-- <option value="3">Three</option> -->
+                                    <select th:field="*{stateList}"  class="form-select" aria-label="Default select example">
+                                        <option value="">==선택하세요==</option>
+                                        <option th:each="state:${stateList}" th:if="${state.stateName=='주문'}" th:value="${state.getStateStep()}" th:text="${state.getStateStep()}"></option>
                                     </select>
                                 </div>
                             </div>
@@ -45,10 +43,9 @@
                                 <label class="col-sm-2 col-form-label">판매그룹</label>
                                 <div class="col-sm-10">
                                     <select class="form-select">
-                                        <!-- <option selected>Open this select menu</option> -->
-                                        <!--                      <option value="1">Male</option>-->
-                                        <!--                      <option value="2">Female</option>-->
-                                        <!-- <option value="3">Three</option> -->
+                                        <option selected>==판매타입==</option>
+                                        <option value="경매">경매</option>
+                                        <option value="중고">중고</option>
                                     </select>
                                 </div>
                             </div>
