@@ -56,7 +56,7 @@
                             </li>
                         </ul>
                         <div class="tab-content pt-2">
-                            <form th:action="@{|/admin/product/product_detail_update/${productDetail.productDto.id}/update|}" method="post">
+                            <form th:action="@{|/admin/product/product-detail-update/${productDetail.productDto.id}/update|}" method="post">
                                 <!--  <div class="row mb-3">
                                    <label for=F"profileImage" class="col-md-4 col-lg-3 col-form-label">사진 추가</label>
                                    <div class="col-md-8 col-lg-9">
@@ -78,14 +78,14 @@
                                 <div class="row mb-3">
                                     <label for="about" class="col-md-4 col-lg-3 col-form-label">상품설명</label>
                                     <div class="col-md-8 col-lg-9">
-                                        <textarea name="Content" class="form-control" id="about" style="height: 100px" th:text="${productDetail.productDto().productContent()}"></textarea>
+                                        <textarea name="content" class="form-control" id="about" style="height: 100px" th:text="${productDetail.productDto().productContent()}"></textarea>
                                     </div>
                                 </div>
 
                                 <div class="row mb-3">
                                     <label for="company" class="col-md-4 col-lg-3 col-form-label">브랜드</label>
                                     <div class="col-md-8 col-lg-9">
-                                        <input name="BrandName" type="text" class="form-control" id="company" readonly="readonly" th:value="${productDetail.productDto().productBrandName()}" >
+                                        <input name="brandName" type="text" class="form-control" id="company" readonly="readonly" th:value="${productDetail.productDto().productBrandName()}" >
                                     </div>
                                 </div>
 
