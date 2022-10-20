@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/head :: .head"></head>
+<body>
+
+<header th:replace="layout/header :: .header">
+    header
+</header>
+
+<th:block th:replace="layout/aside :: .sidebar">
+    aside
+</th:block>
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Profile</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item">Users</li>
+                <li class="breadcrumb-item active">Profile</li>
+            </ol>s
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section profile">
+        <div class="row">
+            <div class="col-xl-4">
+
+                <div class="card">
+                    <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+
+                        <img src="/static/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+
+                        <div class="social-links mt-2">
+                            <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+                            <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+                            <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+                            <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-xl-8">
+
+                <div class="card">
+                    <div class="card-body pt-3">
+                        <!-- Bordered Tabs -->
+                        <ul class="nav nav-tabs nav-tabs-bordered">
+
+                            <li class="nav-item">
+                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="profile-overview">Overview</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content pt-2">
+                            <form th:action="@{|/admin/product/product_detail_update/${productDetail.productDto.id}/update|}" method="post">
+                                <!--  <div class="row mb-3">
+                                   <label for=F"profileImage" class="col-md-4 col-lg-3 col-form-label">사진 추가</label>
+                                   <div class="col-md-8 col-lg-9">
+                                     <div class="pt-2">
+                                       <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
+                                       <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
+                                     </div>
+                                   </div>
+                                 </div> -->
+
+
+                                <div class="row mb-3">
+                                    <label for="fullName" class="col-md-4 col-lg-3 col-form-label">상품명</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <input name="productName" type="text" class="form-control" id="fullName"  th:value="${productDetail.productDto.productName}">
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="about" class="col-md-4 col-lg-3 col-form-label">상품설명</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <textarea name="Content" class="form-control" id="about" style="height: 100px" th:text="${productDetail.productDto().productContent()}"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="company" class="col-md-4 col-lg-3 col-form-label">브랜드</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <input name="BrandName" type="text" class="form-control" id="company" readonly="readonly" th:value="${productDetail.productDto().productBrandName()}" >
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label class="col-md-4 col-lg-3 col-form-label">B카테고리</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <input name="categoryBName" type="text" class="form-control" readonly="readonly"  th:value="${productDetail.productDto().categoryBName()}">
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label class="col-md-4 col-lg-3 col-form-label">M카테고리</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <input name="categoryMName" type="text" class="form-control" readonly="readonly"  th:value="${productDetail.productDto().categoryMName()}">
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="Address" class="col-md-4 col-lg-3 col-form-label">그룹</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <input name="productSellType" type="text" class="form-control" id="Address" readonly="readonly" th:value="${productDetail.productDto().productSellType()}">
+                                    </div>
+                                </div>
+
+                                <div class="text-center mb-4">
+                                    <button type="submit" class="btn btn-primary">수정하기</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- End Bordered Tabs -->
+            <section class="section">
+                <div class="row">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">주문내역</h5>
+                            <!-- Table with hoverable rows -->
+                            <table class="table table-hover ">
+                                <thead>
+                                <tr>
+                                    <th scope="col">주문자명</th>
+                                    <th scope="col">상태</th>
+                                    <th scope="col">주문날짜</th>
+
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                            <!-- End Table with hoverable rows -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 수정내역-->
+            <section class="section">
+                <div class="row">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">수정내역</h5>
+                            <!-- Table with hoverable rows -->
+                            <table class="table table-hover ">
+                                <thead>
+                                <tr>
+                                    <th scope="col">상품명</th>
+                                    <th scope="col">B카테고리</th>
+                                    <th scope="col">M카테고리</th>
+                                    <th scope="col">그룹</th>
+                                    <th scope="col">수정날짜</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                </tr>
+                                </tbody>
+                            </table>
+                            <!-- End Table with hoverable rows -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="row">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">경매내역</h5>
+                            <!-- Table with hoverable rows -->
+                            <table class="table table-hover ">
+                                <thead>
+                                <tr>
+                                    <th scope="col">현재입찰자</th>
+                                    <th scope="col">입찰가격</th>
+                                    <th scope="col">입찰날짜</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                </tr>
+                                </tbody>
+                            </table>
+                            <!-- End Table with hoverable rows -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+        </div>
+
+        </div>
+        </div>
+    </section>
+
+</main><!-- End #main -->
+
+<th:block th:replace="layout/footer :: #footer">
+
+</th:block>
+
+</body>
+
+</html>
