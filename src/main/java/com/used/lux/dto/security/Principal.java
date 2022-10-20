@@ -3,7 +3,6 @@ package com.used.lux.dto.security;
 import com.used.lux.domain.UserGrade;
 import com.used.lux.domain.constant.RoleType;
 import com.used.lux.dto.UserAccountDto;
-import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -73,12 +72,12 @@ public record Principal(
 
     @Override
     public String getPassword() {
-        return userEmail;
+        return userPassword;
     }
 
     @Override
     public String getUsername() {
-        return userPassword;
+        return userEmail;
     }
 
     @Override

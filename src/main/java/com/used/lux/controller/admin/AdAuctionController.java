@@ -2,9 +2,8 @@ package com.used.lux.controller.admin;
 
 import com.used.lux.dto.admin.AdAuctionDto;
 import com.used.lux.dto.security.Principal;
-import com.used.lux.response.UserAccountResponse;
 import com.used.lux.response.auction.AuctionResponse;
-import com.used.lux.service.AdAuctionService;
+import com.used.lux.service.admin.AdAuctionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -40,8 +39,24 @@ public class AdAuctionController {
     }
 
     // 경매 상세정보
+//    @GetMapping("/{auctionId}")
+//    public String auctionDetail(@PathVariable Long auctionId,
+//                                @AuthenticationPrincipal Principal principal,
+//                                ModelMap mm){
+//        /*if (principal == null) {
+//            return "redirect:/login";
+//        }
+//        if (principal.role().getName() != "ROLE_ADMIN") {
+//            return "redirect:/";
+//        }*/
+//        AdAuctionDto auctionDetail = adAuctionService.getAuctionDetail(auctionId);
+//        mm.addAttribute("auctionDetail", auctionDetail);
+//        return "/admin/auction-detail";
+//    }
+
+    // 경매 수정
     @GetMapping("/{auctionId}")
-    public String auctionDetail(@PathVariable Long auctionId,
+    public String auctionUpdate(@PathVariable Long auctionId,
                                 @AuthenticationPrincipal Principal principal,
                                 ModelMap mm){
         /*if (principal == null) {
@@ -52,7 +67,7 @@ public class AdAuctionController {
         }*/
         AdAuctionDto auctionDetail = adAuctionService.getAuctionDetail(auctionId);
         mm.addAttribute("auctionDetail", auctionDetail);
-        return "/admin/auction-detail";
+        return "/admin/auction-create-form";
     }
 
 }

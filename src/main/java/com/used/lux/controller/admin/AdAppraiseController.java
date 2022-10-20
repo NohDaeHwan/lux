@@ -3,7 +3,7 @@ package com.used.lux.controller.admin;
 import com.used.lux.dto.security.Principal;
 import com.used.lux.request.AppraisalCommentRequest;
 import com.used.lux.response.appraisal.AppraisalResponse;
-import com.used.lux.service.AdAppraiseService;
+import com.used.lux.service.admin.AdAppraiseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -54,9 +54,9 @@ public class AdAppraiseController {
 //    }
 
     // 검수 결과 등록 페이지
-    @GetMapping("/new/{appraisalId}")
+    @GetMapping("/{appraisalId}/new")
     public String appraiseComment(@PathVariable Long appraisalId,
-            @AuthenticationPrincipal Principal principal,
+                                  @AuthenticationPrincipal Principal principal,
                                   ModelMap mm) {
 //        if (principal == null) {
 //            return "redirect:/login";
@@ -70,18 +70,19 @@ public class AdAppraiseController {
     }
 
     // 검수 결과 등록
-    @PostMapping("/new/{appraisalId}")
+    @PostMapping("/{appraisalId}/new/update")
     public String appraiseCommentAdd(@PathVariable Long appraisalId,
-                                  @AuthenticationPrincipal Principal principal,
-                                  AppraisalCommentRequest appraisalCommentRequest) {
+                                     @AuthenticationPrincipal Principal principal,
+                                     AppraisalCommentRequest appraisalCommentRequest) {
 //        if (principal == null) {
 //            return "redirect:/login";
 //        }
 //        if (principal.role().getName() != "ROLE_ADMIN") {
 //            return "redirect:/";
 //        }
-       adAppraiseService.appraiseComment(appraisalId, appraisalCommentRequest);
+
         System.out.println(appraisalCommentRequest);
+        adAppraiseService.appraiseComment(appraisalCommentRequest, appraisalId);
         return "redirect:/admin/appraise";
     }
 

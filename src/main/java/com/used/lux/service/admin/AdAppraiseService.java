@@ -1,4 +1,4 @@
-package com.used.lux.service;
+package com.used.lux.service.admin;
 
 import com.used.lux.domain.Appraisal;
 import com.used.lux.domain.State;
@@ -25,8 +25,10 @@ public class AdAppraiseService {
     }
 
 
+
     //업데이트
-    public void appraiseComment(Long appraisalId, AppraisalCommentRequest appraisalCommentRequest) {
+
+    public void appraiseComment(AppraisalCommentRequest appraisalCommentRequest, Long appraisalId) {
         Appraisal appraisal = appraisalRepository.getReferenceById(appraisalId);
         State state = stateRepository.findById(3L).get();
         appraisal.setAppraisalGrade(appraisalCommentRequest.appraisalGrade());

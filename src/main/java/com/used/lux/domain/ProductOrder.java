@@ -1,13 +1,6 @@
 package com.used.lux.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -44,6 +37,11 @@ public class ProductOrder extends AuditingFields {
 	private String requestedTerm; // 요청사항
 
 	@Setter
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "state_id")
+	private State state;
+
+	@Setter
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "product_id")
 	private Product product;
@@ -56,19 +54,20 @@ public class ProductOrder extends AuditingFields {
 	protected ProductOrder() {}
 
 	private ProductOrder(String name, String phoneNumber, String address, String email, String requestedTerm,
-						Product product, UserAccount userAccount) {
+						 State state, Product product, UserAccount userAccount) {
 		this.name = name;
 		this.phoneNumber = phoneNumber;
 		this.address = address;
 		this.email = email;
 		this.requestedTerm = requestedTerm;
+		this.state = state;
 		this.product = product;
 		this.userAccount = userAccount;
 	}
 
 	public static ProductOrder of(String name, String phoneNumber, String address, String email,
-								  String requestedTerm, Product product, UserAccount userAccount) {
-		return new ProductOrder(name, phoneNumber, address, email, requestedTerm, product, userAccount);
+								  String requestedTerm, State state, Product product, UserAccount userAccount) {
+		return new ProductOrder(name, phoneNumber, address, email, requestedTerm, state, product, userAccount);
 	}
 
 }
