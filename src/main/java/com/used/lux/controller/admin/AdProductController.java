@@ -74,8 +74,24 @@ public class AdProductController {
         return "/admin/product-detail";
     }
 
+    // 상품 상세정보
+    @GetMapping("/product-detail-update/{productId}")
+    public String productDetailForm(@PathVariable Long productId,
+                                @AuthenticationPrincipal Principal principal,
+                                ModelMap mm){
+        /*if (principal == null) {
+            return "redirect:/login";
+        }
+        if (principal.role().getName() != "ROLE_ADMIN") {
+            return "redirect:/";
+        }*/
+        AdProductDto productDetail = adProductService.getProductDetail(productId);
+        mm.addAttribute("productDetail", productDetail);
+        return "/admin/product-detail-update";
+    }
+
     // 상품 상세정보 업데이트
-    @PostMapping("/product_detail_update/{productId}/update")
+    @PostMapping("/product-detail-update/{productId}/update")
     public String productDetailUpdate(@PathVariable Long productId,
                                       @AuthenticationPrincipal Principal principal,
                                       ProductUpdateRequest productUpdateRequest){
@@ -87,7 +103,7 @@ public class AdProductController {
         }*/
         System.out.println(productUpdateRequest);
         adProductService.productUpdate(productId,productUpdateRequest);
-        return "redirect:/admin/product-detail";
+        return "redirect:/admin/product/product-detail/"+productId;
     }
 
     // 상품 브랜드
