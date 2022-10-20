@@ -4,7 +4,6 @@ package com.used.lux.service.admin;
 import com.used.lux.domain.CategoryB;
 import com.used.lux.domain.CategoryM;
 import com.used.lux.domain.Product;
-import com.used.lux.domain.QCategoryM;
 import com.used.lux.domain.*;
 import com.used.lux.dto.*;
 import com.used.lux.dto.admin.AdProductDto;
@@ -14,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import com.used.lux.request.productUpdateRequest;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
