@@ -1,8 +1,10 @@
 package com.used.lux.controller.admin;
 
+import com.used.lux.domain.State;
 import com.used.lux.dto.admin.AdProductOrderDto;
 import com.used.lux.dto.security.Principal;
 import com.used.lux.response.ProductOrderResponse;
+import com.used.lux.service.StateService;
 import com.used.lux.service.admin.AdOrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -15,12 +17,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RequestMapping("/admin/order")
 @Controller
 public class AdOrderController {
 
     private final AdOrderService adOrderService;
+
+    private final StateService stateService;
 
     // 주문 리스트
     @GetMapping
@@ -34,7 +40,9 @@ public class AdOrderController {
             return "redirect:/";
         }*/
         Page<ProductOrderResponse> orderList = adOrderService.getOrderList(pageable).map(ProductOrderResponse::from);
+        List<State> stateList = stateService.getStateList();
         mm.addAttribute("orderList", orderList);
+        mm.addAttribute("stateList",stateList);
         return "/admin/order";
     }
 
