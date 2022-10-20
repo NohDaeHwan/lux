@@ -1,7 +1,6 @@
 package com.used.lux.service.admin;
 
-import com.used.lux.domain.CategoryB;
-import com.used.lux.domain.Product;
+import com.used.lux.domain.*;
 import com.used.lux.dto.*;
 import com.used.lux.dto.admin.AdProductDto;
 import com.used.lux.repository.*;
@@ -27,7 +26,11 @@ public class AdProductService {
 
     private final AuctionLogRepository auctionLogRepository;
 
+    private final AppraisalRepository appraisalRepository;
+
     private final CategoryBRepository categoryBRepository;
+
+    private final CategoryMRepository categoryMRepository;
 
     private final BrandRepository brandRepository;
 
@@ -61,13 +64,22 @@ public class AdProductService {
     }
 
     public void  productUpdate(Long productId, ProductUpdateRequest productUpdateRequest){
+        // 업데이트에 필요한 entity 가져오기
         CategoryB categoryB = categoryBRepository.findByCategoryBName(productUpdateRequest.categoryBName());
-        /*CategoryM categoryM = categoryBRepository.findByCategoryMName(productUpdateRequest.categoryMName());*/
+        CategoryM categoryM = categoryMRepository.findByCategoryMName(productUpdateRequest.categoryMName());
+        Brand brand = brandRepository.findByBrandName(productUpdateRequest.brandName());
         Product product= productRepository.getReferenceById(productId);
+
+        // 내용 업데이트
+        product.getAppraisal().setAppraisalProductName(productUpdateRequest.productName());
         product.setProductContent(productUpdateRequest.content());
-        product.setProductSellType(productUpdateRequest.productSellType());
+        product.getAppraisal().setAppraisalBrand(brand);
         product.setCategoryB(categoryB);
-        /*product.setCategoryM(categoryM);*/
+        product.setCategoryM(categoryM);
+        product.setProductSellType(productUpdateRequest.productSellType());
+
+        // 레포지토리 저장
+        appraisalRepository.save(product.getAppraisal());
         productRepository.save(product);
     }
 
