@@ -100,7 +100,7 @@
                             </thead>
                             <tbody>
                             <tr th:each="orderlist : ${orderList}">
-                                <th scope="row"><a th:href="@{|/admin/order/{orderList_id}/update|}" th:text="${orderlist.id}">user@mail.com</a></th>
+                                <th scope="row"><a th:href="@{|/admin/order/${orderlist.id}|}" th:text="${orderlist.id}">user@mail.com</a></th>
                                 <td th:text="${orderlist.productName}">Brandon Jacob</td>
                                 <td th:text="${orderlist.productSellType}">28</td>
                                 <td th:text="${orderlist.productPrice}">dfd</td>
