@@ -170,9 +170,9 @@
                                 <label class="col-sm-2 col-form-label">총 결제금액</label>
                                 <div class="col-sm-10" style="padding: 7px 12px;">
                                     <div class="col-sm-10" style="font-weight: 300;"
-                                         th:text="${#numbers.formatInteger(orderDetail.productOrderDto.productDto.productPrice,3,'COMMA')} +
+                                         th:text="${#numbers.formatInteger(orderDetail.productOrderDto.productDto.productPrice,3,'COMMA') +'원'} +
                                           ' - ' +
-                                          (${orderDetail.productOrderDto.userAccountDto.userGrade.getDiscount}) +
+                                          (${#numbers.formatInteger((orderDetail.productOrderDto.userAccountDto.userGrade.getDiscount)*0.01,3,'COMMA')+'원'}) +
                                           ' = ' +
                                           ${#numbers.formatInteger((orderDetail.productOrderDto.productDto.productPrice)-((orderDetail.productOrderDto.userAccountDto.userGrade.getDiscount)*0.01),3,'COMMA')}
                                            + '원' ">

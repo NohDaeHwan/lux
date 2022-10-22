@@ -79,7 +79,7 @@
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">판매가격</label>
                 <div class="col-sm-10" style="padding: 7px 12px;">
-                  <div class="col-sm-10" style="font-weight: 300;" th:text="${#numbers.formatInteger(productDetail.productDto.productPrice,3,'COMMA')} + ''">
+                  <div class="col-sm-10" style="font-weight: 300;" th:text="${#numbers.formatInteger(productDetail.productDto.productPrice,3,'COMMA')} + '원'">
                     가굑
                   </div>
                 </div>

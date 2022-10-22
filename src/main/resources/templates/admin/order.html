@@ -103,7 +103,7 @@
                                 <th scope="row"><a th:href="@{|/admin/order/${orderlist.id}|}" th:text="${orderlist.id}">user@mail.com</a></th>
                                 <td th:text="${orderlist.productName}">Brandon Jacob</td>
                                 <td th:text="${orderlist.productSellType}">28</td>
-                                <td th:text="${orderlist.productPrice}">dfd</td>
+                                <td th:text="${#numbers.formatInteger(orderlist.productPrice,3,'COMMA')+'원'}">dfd</td>
                                 <td th:text="${orderlist.orderName}">Designer</td>
                                 <td th:text="${orderlist.orderPhoneNumber}">28</td>
                                 <td th:text="${orderlist.stateStep}">28</td>
