@@ -79,7 +79,7 @@
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">주문일자</label>
                                 <div class="col-sm-10" style="padding: 7px 12px;">
-                                    <div class="col-sm-10" style="font-weight: 300;" th:text="${orderDetail.productOrderDto.createdAt}" >
+                                    <div class="col-sm-10" style="font-weight: 300;" th:text="${#temporals.format(orderDetail.productOrderDto.createdAt,'yyyy-MM-dd HH:mm:ss')}" >
                                         2022-10-20 18:04:45
                                     </div>
                                 </div>
@@ -153,15 +153,15 @@
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">주문금액</label>
                                 <div class="col-sm-10" style="padding: 7px 12px;">
-                                    <div class="col-sm-10" style="font-weight: 300;" th:text="${#numbers.formatInteger(orderDetail.productOrderDto.productDto.productPrice,3)}+ ' 원'" >
+                                    <div class="col-sm-10" style="font-weight: 300;" th:text="${#numbers.formatInteger(orderDetail.productOrderDto.productDto.productPrice,3,'COMMA')}+ '원'" >
                                         200000
                                     </div>
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label">할인금액</label>
+                                <label class="col-sm-2 col-form-label">등급할인율</label>
                                 <div class="col-sm-10" style="padding: 7px 12px;">
-                                    <div class="col-sm-10" style="font-weight: 300;" th:text="${orderDetail.productOrderDto.userAccountDto.userGrade.getDiscount} + ' %'">
+                                    <div class="col-sm-10" style="font-weight: 300;" th:text="${orderDetail.productOrderDto.userAccountDto.userGrade.gradeName} + ' ' + ${orderDetail.productOrderDto.userAccountDto.userGrade.getDiscount} + ' %'">
                                         10000
                                     </div>
                                 </div>
@@ -170,12 +170,12 @@
                                 <label class="col-sm-2 col-form-label">총 결제금액</label>
                                 <div class="col-sm-10" style="padding: 7px 12px;">
                                     <div class="col-sm-10" style="font-weight: 300;"
-                                         th:text="${orderDetail.productOrderDto.productDto.productPrice} +
+                                         th:text="${#numbers.formatInteger(orderDetail.productOrderDto.productDto.productPrice,3,'COMMA')} +
                                           ' - ' +
                                           (${orderDetail.productOrderDto.userAccountDto.userGrade.getDiscount}) +
                                           ' = ' +
-                                          (${orderDetail.productOrderDto.productDto.productPrice}-(${#numbers.formatInteger(orderDetail.productOrderDto.userAccountDto.userGrade.getDiscount * 0.01,3)}))
-                                           + ' 원' ">
+                                          ${#numbers.formatInteger((orderDetail.productOrderDto.productDto.productPrice)-((orderDetail.productOrderDto.userAccountDto.userGrade.getDiscount)*0.01),3,'COMMA')}
+                                           + '원' ">
                                         190000
                                     </div>
                                 </div>
@@ -239,7 +239,7 @@
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">상품가격</label>
                                 <div class="col-sm-10" style="padding: 7px 12px;">
-                                    <div class="col-sm-10" style="font-weight: 300;" th:text="${orderDetail.productOrderDto.productDto.productPrice}" >
+                                    <div class="col-sm-10" style="font-weight: 300;" th:text="${#numbers.formatInteger(orderDetail.productOrderDto.productDto.productPrice,3,'COMMA')} + '원'" >
                                         12345677
                                     </div>
                                 </div>
@@ -257,7 +257,7 @@
                                 <div class="col-sm-10" style="padding: 7px 12px;">
                                     <div class="col-sm-10" style="font-weight: 300;" th:if="${orderDetail.productOrderDto.stateDto.stateStep} == '주문완료'" th:text="'-'">12345677</div>
                                     <div class="col-sm-10" style="font-weight: 300; padding: 2px 0;" th:if="${orderDetail.productOrderDto.stateDto.stateStep} == '취소요청'" th:text="'-'">취소요청</button>
-                                    <div class="col-sm-10" style="font-weight: 300; padding: 2px 0;" th:if="${orderDetail.productOrderDto.stateDto.stateStep} == '주문취소'" th:text="${orderDetail.productOrderCancelDto.modifiedAt}">12345677</div>
+                                    <div class="col-sm-10" style="font-weight: 300; padding: 2px 0;" th:if="${orderDetail.productOrderDto.stateDto.stateStep} == '주문취소'" th:text="${#temporals.format(orderDetail.productOrderCancelDto.modifiedAt,'yyyy-MM-dd HH:mm:ss')}">12345677</div>
                                 </div>
                             </div>
                             <!-- <div class="row mb-3">

@@ -107,7 +107,7 @@
                                 <td th:text="${orderlist.orderName}">Designer</td>
                                 <td th:text="${orderlist.orderPhoneNumber}">28</td>
                                 <td th:text="${orderlist.stateStep}">28</td>
-                                <td th:text="${orderlist.modifiedAt()}">2022-01-01</td>
+                                <td th:text="${#temporals.format(orderlist.modifiedAt,'yyyy-MM-dd')}">2022-01-01</td>
                             </tr>
                             </tbody>
                         </table>
