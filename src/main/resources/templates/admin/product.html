@@ -145,7 +145,7 @@
                                 <td th:text="${productResponse.productBrandName}">Brandon Jacob</td>
                                 <td th:text="${productResponse.productGender}">Designer</td>
                                 <td th:text="${productResponse.productSize}">Designer</td>
-                                <td th:text="${productResponse.productPrice}">28</td>
+                                <td th:text="${#numbers.formatInteger(productResponse.productPrice,3,'COMMA')}+ '원'">28</td>
                                 <td th:text="${productResponse.productGrade}">28</td>
                                 <td th:text="${productResponse.productState.stateStep}">2016-05-25</td>
                             </tr>
