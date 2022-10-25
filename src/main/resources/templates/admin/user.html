@@ -111,7 +111,7 @@
                   <td th:text="${user.age}">Designer</td>
                   <td th:text="${user.gender}">28</td>
                   <td th:text="${user.userGrade.gradeName}">28</td>
-                  <td th:text="${user.createdAt}">2016-05-25</td>
+                  <td th:text="${#temporals.format(user.createdAt,'yyyy-MM-dd')}">2016-05-25</td>
                 </tr>
                 </tbody>
               </table>

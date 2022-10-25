@@ -79,7 +79,7 @@
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">판매가격</label>
                 <div class="col-sm-10" style="padding: 7px 12px;">
-                  <div class="col-sm-10" style="font-weight: 300;" th:text="${productDetail.productDto.productPrice}">
+                  <div class="col-sm-10" style="font-weight: 300;" th:text="${#numbers.formatInteger(productDetail.productDto.productPrice,3,'COMMA')} + '원'">
                     가굑
                   </div>
                 </div>
@@ -164,19 +164,25 @@
                 <thead>
                 <tr>
                   <th scope="col">상품명</th>
+                  <th scope="col">판매가격</th>
+                  <th scope="col">판매타입</th>
+                  <th scope="col">브랜드</th>
                   <th scope="col">대분류</th>
                   <th scope="col">중분류</th>
-                  <th scope="col">판매타입</th>
+                  <th scope="col">상품상태</th>
                   <th scope="col">수정날짜</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="pdupdate: ${productDetail.productLogDtos}">
                   <td th:text="${pdupdate.productName}"></td>
+                  <td th:text="${#numbers.formatInteger(pdupdate.productPrice,3,'COMMA')}"></td>
+                  <td th:text="${pdupdate.productSellType}"></td>
+                  <td th:text="${productDetail.productDto.productBrandName}"></td> <!--브랜드-->
                   <td th:text="${pdupdate.categoryBName}"></td>
                   <td th:text="${pdupdate.categoryMName}"></td>
-                  <td th:text="${pdupdate.productSellType}"></td>
-                  <td th:text="${pdupdate.createdAt}"></td>
+                  <td th:text="${pdupdate.productState.stateStep}"></td>
+                  <td th:text="${#temporals.format(pdupdate.createdAt,'yyyy-MM-dd HH:mm:ss')}"></td>
                 </tr>
                 </tbody>
               </table>
@@ -195,17 +201,19 @@
               <table class="table table-hover ">
                 <thead>
                 <tr>
+                  <th scope="col">주문번호</th>
                   <th scope="col">주문자명</th>
-                  <th scope="col">상태</th>
+                  <th scope="col">주문상태</th>
                   <th scope="col">주문날짜</th>
 
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="productorder : ${productDetail.ProductOrderLogDtos()}">
-                  <td th:text="${productorder.productName.toString()}"></td>
-                  <td th:text="${productorder.productState().getStateName()}+${productorder.productState().getStateStep()}"></td>
-                  <td th:text="${productorder.createdAt}">28</td>
+                  <td th:text="${productorder.productName}"></td> <!-- 주문번호 a link -->
+                  <td th:text="${productorder.productName}"></td>
+                  <td th:text="${productorder.productName.stateStep}"></td>
+                  <td th:text="${#temporals.format(productorder.createdAt,'yyyy-MM-dd HH:mm:ss')}">28</td>
                 </tr>
                 </tbody>
               </table>
@@ -224,6 +232,7 @@
               <table class="table table-hover ">
                 <thead>
                 <tr>
+                  <th scope="col">경매번호</th>
                   <th scope="col">입찰자명</th>
                   <th scope="col">입찰가격</th>
                   <th scope="col">입찰날짜</th>
@@ -231,8 +240,10 @@
                 </thead>
                 <tbody>
                 <tr th:each="auction : ${productDetail.AuctionLogDtos()}">
-                  <td th:text="${auction.bidder()}"></td>
-                  <td th:text="${auction.presentPrice()}"></td>
+                  <td th:text="${auction.bidder}"></td> <!-- 경매번호 a link -->
+                  <td th:text="${auction.bidder}"></td>
+                  <td th:text="${#numbers.formatInteger(auction.presentPrice,3,'COMMA')}"></td>
+                  <td th:text="${#temporals.format(auction.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
                 </tr>
                 </tbody>
               </table>
