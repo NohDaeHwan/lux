@@ -34,7 +34,7 @@
                                 <label class="col-sm-2 col-form-label">경매상태</label>
                                 <div class="col-sm-10">
                                     <select class="form-select">
-                                        <!-- <option selected>Open this select menu</option> -->
+                                         <option selected th:each="list : ${auctionList}" th:text="${list.stateResponse.stateStep}">Open this select menu</option>
                                         <!--                      <option value="1">Male</option>-->
                                         <!--                      <option value="2">Female</option>-->
                                         <!-- <option value="3">Three</option> -->
@@ -114,41 +114,41 @@
     </th:block>
 
 </main><!-- End #main -->
-<script th:inline="javascript">
-    <!-- 검색폼 스크립트 (user용) -->
+<!--<script th:inline="javascript">-->
+<!--    &lt;!&ndash; 검색폼 스크립트 (user용) &ndash;&gt;-->
 
-    /*<![CDATA[*/
+<!--    /*<![CDATA[*/-->
 
-    function g_by(column) {
-        columnArr = ["presentPrice"];
-        let num;
-        let fine_index = columnArr.map((item,index)=>{
-            if (item === column) {
-                num = index;
-            }
-        })
-        console.log(num)
-        let auctionList = [[${auctionList.content}]]
-        console.log(auctionList)
-        let newArr = [];
-        let cls = document.querySelectorAll(".form-select")[num];
-        console.log("functioncall",cls);
-        auctionList.map((item,index)=>{
-            newArr.push(item[column]);
-        })
-        let groupby = newArr.filter((item,index)=> {
-            return newArr.indexOf(item) === index
-        });
-        let result = groupby.sort().map((item,index)=>{
-            cls.innerHTML += `<option value="${index}">${item}</option>`;
-            return cls.innerHTML;
-        })
-        return cls.innerHTML
-    }
-    g_by("presentPrice");
-    /*]]>*/
+<!--    function g_by(column) {-->
+<!--        columnArr = ["presentPrice"];-->
+<!--        let num;-->
+<!--        let fine_index = columnArr.map((item,index)=>{-->
+<!--            if (item === column) {-->
+<!--                num = index;-->
+<!--            }-->
+<!--        })-->
+<!--        console.log(num)-->
+<!--        let auctionList = [[${auctionList.content}]]-->
+<!--        console.log(auctionList)-->
+<!--        let newArr = [];-->
+<!--        let cls = document.querySelectorAll(".form-select")[num];-->
+<!--        console.log("functioncall",cls);-->
+<!--        auctionList.map((item,index)=>{-->
+<!--            newArr.push(item[column]);-->
+<!--        })-->
+<!--        let groupby = newArr.filter((item,index)=> {-->
+<!--            return newArr.indexOf(item) === index-->
+<!--        });-->
+<!--        let result = groupby.sort().map((item,index)=>{-->
+<!--            cls.innerHTML += `<option value="${index}">${item}</option>`;-->
+<!--            return cls.innerHTML;-->
+<!--        })-->
+<!--        return cls.innerHTML-->
+<!--    }-->
+<!--    g_by("presentPrice");-->
+<!--    /*]]>*/-->
 
-</script>
+<!--</script>-->
 <th:block th:replace="layout/footer :: #footer">
 
 </th:block>
