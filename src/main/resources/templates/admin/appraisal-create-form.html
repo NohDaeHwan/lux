@@ -29,47 +29,134 @@
 
                 <div class="card">
                     <div class="card-body">
+                        <h5 class="card-title">검수기록-고객</h5>
+
+                        <!-- General Form Elements -->
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">검수상품명</label>
+                            <div class="col-sm-10" style="padding: 7px 12px;">
+                                <div class="col-sm-10" style="font-weight: 300;" th:text="${appraisalResponse.appraisalName()}">
+                                    고객이 작성한 검수 상품명
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">브랜드</label>
+                            <div class="col-sm-10" style="padding: 7px 12px;">
+                                <div class="col-sm-10" style="font-weight: 300;" th:text="${appraisalResponse.appraisalBrandName()}">
+                                    고양드
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">성별</label>
+                            <div class="col-sm-10" style="padding: 7px 12px;">
+                                <div class="col-sm-10" style="font-weight: 300;" th:text="${appraisalResponse.appraisalGender()}">
+                                    여
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">색상</label>
+                            <div class="col-sm-10" style="padding: 7px 12px;">
+                                <div class="col-sm-10" style="font-weight: 300;" th:text="${appraisalResponse.appraisalColor()}">
+                                    카키브라운
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">사이즈</label>
+                            <div class="col-sm-10" style="padding: 7px 12px;">
+                                <div class="col-sm-10" style="font-weight: 300;" th:text="${appraisalResponse.appraisalSize()}">
+                                    105
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">고객/이메일</label>
+                            <div class="col-sm-10" style="padding: 7px 12px;">
+                                    <div class="col-sm-10" style="font-weight: 300" th:text="${appraisalResponse.userName}">
+                                </div>
+                                <div>
+                                    <a th:href="@{/admin/user/{userId}(userId=${appraisalResponse.userId()})}" th:text="${appraisalResponse.userEmail}">rnskqkd@naver.com</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="card">
+                    <div class="card-body">
                         <h5 class="card-title">검수 기록 페이지</h5>
 
-                        <form th:action="@{|/admin/appraise/${appraisalResponse.id}/new|}" method="POST">
+                        <form th:action="@{|/admin/appraise/${appraisalResponse.id}/new/update|}" method="POST">
                             <div class="row mb-3">
-                                <label for="inputText" class="col-sm-2 col-form-label">검수상품명</label>
+                                <label class="col-sm-2 col-form-label">검수상품명</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="appraisalGrade" class="form-control">
+                                    <input type="text" name="appraisalName" class="form-control" th:value="${appraisalResponse.appraisalName()}">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">매입가격(원)</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="appraisalPrice" th:value="${appraisalResponse.appraisalPrice()}">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">브랜드</label>
+                                <div class="col-sm-10">
+                                    <select th:field="*{brandList}"  class="form-select" aria-label="Default select example">
+                                        <option value="">==브랜드==</option>
+                                        <option th:each="brand:${brandList}" th:value="${brand.brandName()}" th:text="${brand.brandName()}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">성별</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="appraisalGender"  th:value="${appraisalResponse.appraisalGender()}">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">색상</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="appraisalColor"  th:value="${appraisalResponse.appraisalColor()}">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">사이즈</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="appraisalSize" th:value="${appraisalResponse.appraisalSize}">
                                 </div>
                             </div>
 
                             <div class="row mb-3">
-                                <label for="inputText" class="col-sm-2 col-form-label">매입가격(원)</label>
+                                <label class="col-sm-2 col-form-label">검수등급</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="appraisalPrice">
+                                    <input type="text" class="form-control" name="appraisalGrade" th:value="${appraisalResponse.appraisalGrade()}">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">검수 코멘트</label>
                                 <div class="col-sm-10">
                                     <div class="form-floating mb-3">
-                                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" name="appraisalComment" style="height: 100px;"></textarea>
-                                        <label for="floatingTextarea">손상상태/담당자 이름 등 검수 코멘트를 기록해주세요.</label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label">고객명/이메일</label>
-                                <div class="col-sm-10" style="padding: 7px 12px;">
-                                    <div class="col-sm-10" style="font-weight: 300;" th:text="${}">
-                                        블라블라
-                                    </div>
-                                    <div class="col-sm-10">
-                                        <a href="#">rnskqkd@naver.com</a>
+                                        <textarea class="form-control" th:text="${appraisalResponse.appraisalContent}" placeholder="손상상태/담당자 이름 등 검수 코멘트를 기록해주세요." id="floatingTextarea" name="appraisalComment" style="height: 100px;"></textarea>
+                                        <label for="floatingTextarea"></label>
                                     </div>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">검수코드</label>
                                 <div class="col-sm-10" style="padding: 7px 12px;">
-                                    <div class="col-sm-10" style="font-weight: 300;">
+                                    <div class="col-sm-10" style="font-weight: 300;" th:text="${appraisalResponse.id}">
                                         4
                                     </div>
                                 </div>
@@ -78,16 +165,14 @@
                                 <label class="col-sm-2 col-form-label"></label>
                                 <div class="col-sm-10">
                                     <button type="submit" class="btn btn-success" style="float: right;">
-                                        <a th:href="@{/admin/appraise}">
+                                        <a stlye="color:#ffffff !important" th:href="@{/admin/appraise}">
                                             뒤로가기
                                         </a>
                                     </button>
                                     <button type="submit" class="btn btn-primary" style="float: right; margin-right: 8px;">등록하기</button>
                                 </div>
                             </div>
-
-                        </form><!-- End General Form Elements -->
-
+                        </form><!— End General Form Elements —>
                     </div>
                 </div>
 
@@ -95,7 +180,7 @@
         </div>
     </section>
 
-</main><!-- End #main -->
+</main><!— End #main —>
 
 
 <th:block th:replace="layout/footer :: #footer">

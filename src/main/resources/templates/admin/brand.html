@@ -107,24 +107,22 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">브랜드 설정</h5>
-
-                        <!-- Table with hoverable rows -->
                         <table class="table table-hover ">
                             <thead>
                             <tr>
                                 <th scope="col">번호</th>
                                 <th scope="col">브랜드명</th>
+                                <th scope="col">삭제</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="brandList : ${BrandList.brandDtos}">
-                                <th scope="row"><a href="#" th:text="${brandList.id}">user1@mail.com</a></th>
-                                <td th:text="${brandList.brandName}">Brandon Jacob</td>
+                            <tr th:each="brandlist : ${brandList}">
+                                <th scope="row" style="vertical-align: middle;" th:text="${brandlistStat.count}">user1@mail.com</th>
+                                <td th:text="${brandlist.brandName}" style="vertical-align: middle;">Brandon Jacob</td>
+                                <td><a class="btn btn-danger" th:href="@{/admin/product/brand/{brandId}/delete(brandId=${brandlist.id})}">삭제</a></td>
                             </tr>
                             </tbody>
                         </table>
-                        <!-- End Table with hoverable rows -->
-
                     </div>
                 </div>
             </div>

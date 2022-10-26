@@ -3,171 +3,188 @@
 <head th:replace="layout/head :: .head"></head>
 <body>
 
-  <header th:replace="layout/header :: .header">
-     header
-  </header>
+<header th:replace="layout/header :: .header">
+    header
+</header>
 
-  <th:block th:replace="layout/aside :: .sidebar">
+<th:block th:replace="layout/aside :: .sidebar">
     aside
-  </th:block>
+</th:block>
 
 
-  <main id="main" class="main">
+<main id="main" class="main">
 
     <section class="section">
-      <div class="row align-items-top">
-        <div class="col-lg-12">
+        <div class="row align-items-top">
+            <div class="col-lg-12">
 
-          <!-- Card with header and footer -->
-          <div class="card">
-            <div class="card-header">회원목록</div>
-            <div class="card-body">
-              <h5 class="card-title">검색 조건</h5>
-              <form class="search-form" method="POST" action="#">
-                <div class="row mb-3">
-                  <label class="col-sm-2 col-form-label">성별</label>
-                  <div class="col-sm-10">
-                    <select class="form-select">
-                      <!-- <option selected>Open this select menu</option> -->
-<!--                      <option value="1">Male</option>-->
-<!--                      <option value="2">Female</option>-->
-                      <!-- <option value="3">Three</option> -->
-                    </select>
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <label class="col-sm-2 col-form-label">나이</label>
-                  <div class="col-sm-10">
-
-                    <select class="form-select">
-                      <!-- <option selected>Open this select menu</option> -->
-<!--                      <option value="2">Two</option>-->
-<!--                      <option value="3">Three</option>-->
-                    </select>
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <label class="col-sm-2 col-form-label">등급</label>
-                  <div class="col-sm-10">
-                    <select class="form-select" aria-label="Default select example">
-                      <!-- <option selected>Open this select menu</option> -->
-<!--                      <option value="1">bad</option>-->
-<!--                      <option value="2">Two</option>-->
-<!--                      <option value="3">Three</option>-->
-                    </select>
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <label for="inputDate" class="col-sm-2 col-form-label">가입일기준</label>
-                  <div class="col-sm-10">
-                    <input type="date" class="form-control">
-                  </div>
-                </div>
-                <div class="search-bar mb-3">
-                  <input type="text" name="query" placeholder="이메일 혹은 고객명 입력" title="Enter search keyword">
-                  <button type="submit"><i class="bi bi-search"></i></button>
-                </div>
+                <!-- Card with header and footer -->
+                <div class="card">
+                    <div class="card-header">회원목록</div>
+                    <div class="card-body">
+                        <h5 class="card-title">검색 조건</h5>
+                        <form class="search-form" method="GET" action="/admin/user">
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">성별</label>
+                                <div class="col-sm-10">
+                                    <select class="form-select" name="gender">
+                                        <option value="" selected>전체</option>
+                                        <option value="Male">Male</option>
+                                        <option value="FeMale">Female</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">나이</label>
+                                <div class="col-sm-10">
+                                    <select class="form-select" name="age">
+                                        <option value="" selected>전체</option>
+                                        <option th:each="num : ${#numbers.sequence(14,100)}" th:value="${num}" th:text="${num}">14</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">등급</label>
+                                <div class="col-sm-10">
+                                    <select class="form-select" name="grade">
+                                        <option value="" selected>전체</option>
+                                        <option th:each="list : ${userGradeList}" th:value="${list.gradeName()}" th:text="${list.gradeName()}">example</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">가입일기준</label>
+                                <div class="col-sm-10">
+                                    <input type="date" class="form-control" name="date">
+                                </div>
+                            </div>
+                            <div class="search-bar mb-3">
+                                <input type="text" name="query" placeholder="이메일 혹은 고객명 입력" title="Enter search keyword">
+                                <button type="submit"><i class="bi bi-search"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                </div><!-- End Card with header and footer -->
             </div>
-            </form>
-          </div><!-- End Card with header and footer -->
         </div>
-      </div>
     </section>
 
 
     <div class="pagetitle">
-      <nav style="--bs-breadcrumb-divider: '|';">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item active">검색결과</li>
-          <li class="breadcrumb-item active" th:text="'('+${userList.totalElements}+') 건'">(3) 건</li>
-        </ol>
-      </nav>
+        <nav style="--bs-breadcrumb-divider: '|';">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active">검색결과</li>
+                <li class="breadcrumb-item active" th:text="'('+${userList.totalElements}+') 건'">(3) 건</li>
+            </ol>
+        </nav>
     </div><!-- End Page Title -->
 
     <section class="section">
-      <div class="row">
-        <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-12">
 
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">로그 내역</h5>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">로그 내역</h5>
 
-              <!-- Table with hoverable rows -->
-              <table class="table table-hover ">
-                <thead>
-                <tr>
-                  <th scope="col">이메일</th>
-                  <th scope="col">고객명</th>
-                  <th scope="col">나이</th>
-                  <th scope="col">성별</th>
-                  <th scope="col">등급</th>
-                  <th scope="col">가입일</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="user : ${userList}">
-                  <th scope="row"><a th:href="@{/admin/user/{userId}(userId=${user.id})}" th:text="${user.userEmail}">user1@mail.com</a></th>
-                  <td th:text="${user.userName}">Brandon Jacob</td>
-                  <td th:text="${user.age}">Designer</td>
-                  <td th:text="${user.gender}">28</td>
-                  <td th:text="${user.userGrade.gradeName}">28</td>
-                  <td th:text="${user.createdAt}">2016-05-25</td>
-                </tr>
-                </tbody>
-              </table>
-              <!-- End Table with hoverable rows -->
+                        <!-- Table with hoverable rows -->
+                        <table class="table table-hover ">
+                            <thead>
+                            <tr>
+                                <th scope="col">이메일</th>
+                                <th scope="col">고객명</th>
+                                <th scope="col">나이</th>
+                                <th scope="col">성별</th>
+                                <th scope="col">등급</th>
+                                <th scope="col">가입일</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="user : ${userList}">
+                                <th scope="row"><a th:href="@{/admin/user/{userId}(userId=${user.id})}" th:text="${user.userEmail}">user1@mail.com</a></th>
+                                <td th:text="${user.userName}">Brandon Jacob</td>
+                                <td th:text="${user.age}">Designer</td>
+                                <td th:text="${user.gender}">28</td>
+                                <td th:text="${user.userGrade.gradeName}">28</td>
+                                <td th:text="${user.createdAt}">2016-05-25</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <!-- End Table with hoverable rows -->
 
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </section>
 
-    <th:block th:replace="layout/pagination :: #pagination">
+    <!-- Pagination with icons -->
+    <nav id="pagination" aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" th:href="@{/admin/user(page=${userList.number - 1}, sort=(${param.sort} != null ? ${param.sort} : '') + (${userList.sort.getOrderFor('param.sort')} != null ? (${userList.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
+                      query=${param.query})}" aria-label="Previous" th:class="'page-link' + (${userList.number} <= 0 ? ' disabled' : '')">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item" th:each="pageNumber : ${paginationBarNumbers}">
+                <a th:text="${pageNumber + 1}"
+                   th:href="@{/admin/user(page=${pageNumber},
+                          sort=(${param.sort} != null ? ${param.sort} : '') + (${userList.sort.getOrderFor('param.sort')} != null ? (${userList.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
+                          query=${param.query}
+                      )}"
+                   th:class="'page-link' + (${pageNumber} == ${userList.number} <= 0 ? ' disabled' : '')">
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" th:href="@{/admin/user(page=${userList.number + 1}, sort=(${param.sort} != null ? ${param.sort} : '') + (${userList.sort.getOrderFor('param.sort')} != null ? (${userList.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
+                      query=${param.query})}" aria-label="Next" th:class="'page-link' + (${userList.number} >= ${userList.totalPages - 1} ? ' disabled' : '')">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav><!-- End Pagination with icons -->
 
-    </th:block>
-
-  </main><!-- End #main -->
-  <th:block th:replace="layout/footer :: #footer">
-
-  </th:block>
+</main><!-- End #main -->
+<th:block th:replace="layout/footer :: #footer">
+</th:block>
 <!-- 검색폼 스크립트 (user용) -->
-  <script th:inline="javascript">
+<!--<script th:inline="javascript">
 
-    /*<![CDATA[*/
+  /*<![CDATA[*/
 
-    function g_by(column) {
-      columnArr = ["gender","age","gradeName"];
-      let num;
-      let fine_index = columnArr.map((item,index)=>{
-        if (item === column) {
-          num = index;
-        }
-      })
-      console.log(num)
-      let userList = [[${userList.content}]]
-      console.log(userList)
-      let newArr = [];
-      let cls = document.querySelectorAll(".form-select")[num];
-      console.log("functioncall",cls);
-      userList.map((item,index)=>{
-        newArr.push(item[column]);
-      })
-      let groupby = newArr.filter((item,index)=> {
-        return newArr.indexOf(item) === index
-      });
-      let result = groupby.sort().map((item,index)=>{
-        cls.innerHTML += `<option value="${index}">${item}</option>`;
-        return cls.innerHTML;
-      })
-      return cls.innerHTML
-    }
-    g_by("gender");
-    g_by("age");
-    g_by("userGrade");
-    /*]]>*/
+  function g_by(column) {
+    columnArr = ["gender","age","gradeName"];
+    let num;
+    let fine_index = columnArr.map((item,index)=>{
+      if (item === column) {
+        num = index;
+      }
+    })
+    console.log(num)
+    let userList = [[${userList.content}]]
+    console.log(userList)
+    let newArr = [];
+    let cls = document.querySelectorAll(".form-select")[num];
+    console.log("functioncall",cls);
+    userList.map((item,index)=>{
+      newArr.push(item[column]);
+    })
+    let groupby = newArr.filter((item,index)=> {
+      return newArr.indexOf(item) === index
+    });
+    let result = groupby.sort().map((item,index)=>{
+      cls.innerHTML += `<option value="${index}">${item}</option>`;
+      return cls.innerHTML;
+    })
+    return cls.innerHTML
+  }
+  g_by("gender");
+  g_by("age");
+  g_by("userGrade");
+  /*]]>*/
 
-  </script>
+</script>-->
 </body>
 
 </html>

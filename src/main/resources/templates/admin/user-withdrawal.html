@@ -109,7 +109,7 @@
                                 <td th:text="${userWithdrawal.userName}">Brandon Jacob</td>
                                 <td th:text="${userWithdrawal.phoneNumber}">28</td>
                                 <td th:text="${userWithdrawal.content}">28</td>
-                                <td th:text="${userWithdrawal.createdAt}">2016-05-25</td>
+                                <td th:text="${#temporals.format(userWithdrawal.createdAt,'yyyy-MM-dd')}">2016-05-25</td>
                             </tr>
                             </tbody>
                         </table>

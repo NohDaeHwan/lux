@@ -12,6 +12,8 @@ public record ProductOrderResponse(
         String orderAddress,
         String orderEmail,
         String requestedTerm,
+        String stateName,
+        String stateStep,
         String productName,
         State productState,
         int productPrice,
@@ -19,15 +21,19 @@ public record ProductOrderResponse(
         String userEmail,
         String userName,
         LocalDateTime createdAt,
-        String createdBy
+        String createdBy,
+        LocalDateTime modifiedAt,
+        String modifiedBy
 ) {
 
     public static ProductOrderResponse of(Long id, String orderName, String orderPhoneNumber, String orderAddress,
-                                String orderEmail, String requestedTerm, String productName, State productState,
+                                String orderEmail, String requestedTerm, String stateName, String stateStep,
+                                          String productName, State productState,
                                 int productPrice, String productSellType, String userEmail, String userName,
-                                LocalDateTime createdAt, String createdBy) {
+                                LocalDateTime createdAt, String createdBy,LocalDateTime modifiedAt, String modifiedBy) {
         return new ProductOrderResponse(id, orderName, orderPhoneNumber, orderAddress, orderEmail, requestedTerm,
-                productName, productState, productPrice, productSellType, userEmail, userName, createdAt, createdBy);
+                stateName, stateStep, productName, productState, productPrice, productSellType, userEmail,
+                userName, createdAt, createdBy, modifiedAt, modifiedBy);
     }
 
     public  static ProductOrderResponse from(ProductOrderDto dto){
@@ -38,6 +44,8 @@ public record ProductOrderResponse(
                 dto.address(),
                 dto.email(),
                 dto.requestedTerm(),
+                dto.stateDto().stateName(),
+                dto.stateDto().stateStep(),
                 dto.productDto().productName(),
                 dto.productDto().productState(),
                 dto.productDto().productPrice(),
@@ -45,7 +53,9 @@ public record ProductOrderResponse(
                 dto.userAccountDto().userEmail(),
                 dto.userAccountDto().userName(),
                 dto.createdAt(),
-                dto.createdBy()
+                dto.createdBy(),
+                dto.modifiedAt(),
+                dto.modifiedBy()
         );
     }
 

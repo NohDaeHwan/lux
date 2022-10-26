@@ -11,7 +11,6 @@
     aside
 </th:block>
 
-
 <main id="main" class="main">
 
     <section class="section">
@@ -91,7 +90,7 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="inputDate" class="col-sm-2 col-form-label">등록일기준</label>
+                                <label class="col-sm-2 col-form-label">등록일기준</label>
                                 <div class="col-sm-10">
                                     <input type="date" class="form-control">
                                 </div>
@@ -100,8 +99,8 @@
                                 <input type="text" name="query" placeholder="상품명 혹은 판매가격 입력" title="Enter search keyword">
                                 <button type="submit"><i class="bi bi-search"></i></button>
                             </div>
+                        </form>
                     </div>
-                    </form>
                 </div><!-- End Card with header and footer -->
             </div>
         </div>
@@ -140,11 +139,13 @@
                             </thead>
                             <tbody>
                             <tr th:each="productResponse : ${productResponses}">
-                                <th scope="row"><a href="#" th:text="${productResponse.productName}">user1@mail.com</a></th>
+                                <th scope="row">
+                                    <a th:href="@{/admin/product/product-detail/{productId}(productId=${productResponse.id})}" th:text="${productResponse.productName}">user1@mail.com</a>
+                                </th>
                                 <td th:text="${productResponse.productBrandName}">Brandon Jacob</td>
                                 <td th:text="${productResponse.productGender}">Designer</td>
                                 <td th:text="${productResponse.productSize}">Designer</td>
-                                <td th:text="${productResponse.productPrice}">28</td>
+                                <td th:text="${#numbers.formatInteger(productResponse.productPrice,3,'COMMA')}+ '원'">28</td>
                                 <td th:text="${productResponse.productGrade}">28</td>
                                 <td th:text="${productResponse.productState.stateStep}">2016-05-25</td>
                             </tr>

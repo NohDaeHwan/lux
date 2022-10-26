@@ -10,63 +10,30 @@
 <!--    <input type="text" name="appraisalPrice">-->
 <!--    <button type="submit">보내기</button>-->
 <!--</form>-->
-
-<form th:action="@{|/admin/appraise/new/${appraisalResponse.id}|}" method="POST">
+<form th:action="@{|/admin/user/grade/new/create|}" method="post">
     <div class="row mb-3">
-        <label for="inputText" class="col-sm-2 col-form-label">검수상품명</label>
+        <label class="col-sm-2 col-form-label">등급명</label>
         <div class="col-sm-10">
-            <input type="text" name="appraisalGrade" class="form-control">
+            <input type="text" class="form-control" name="gradeName">
         </div>
     </div>
-
     <div class="row mb-3">
-        <label for="inputText" class="col-sm-2 col-form-label">매입가격(원)</label>
+        <label class="col-sm-2 col-form-label">할인율(%)</label>
         <div class="col-sm-10">
-            <input type="text" class="form-control" name="appraisalPrice">
-        </div>
-    </div>
-    <div class="row mb-3">
-        <label class="col-sm-2 col-form-label">검수 코멘트</label>
-        <div class="col-sm-10">
-            <div class="form-floating mb-3">
-                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" name="appraisalComment" style="height: 100px;"></textarea>
-                <label for="floatingTextarea">손상상태/담당자 이름 등 검수 코멘트를 기록해주세요.</label>
-            </div>
-        </div>
-    </div>
-
-    <div class="row mb-3">
-        <label class="col-sm-2 col-form-label">고객명/이메일</label>
-        <div class="col-sm-10" style="padding: 7px 12px;">
-            <div class="col-sm-10" style="font-weight: 300;">
-                블라블라
-            </div>
-            <div class="col-sm-10">
-                <a href="#">rnskqkd@naver.com</a>
-            </div>
-        </div>
-    </div>
-    <div class="row mb-3">
-        <label class="col-sm-2 col-form-label">검수코드</label>
-        <div class="col-sm-10" style="padding: 7px 12px;">
-            <div class="col-sm-10" style="font-weight: 300;">
-                4
-            </div>
+            <input type="text" class="form-control" name="discount">
         </div>
     </div>
     <div class="row mb-3">
         <label class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
             <button type="submit" class="btn btn-success" style="float: right;">
-                <a th:href="@{/admin/appraise}">
+                <a th:href="@{/admin/user/grade}">
                     뒤로가기
                 </a>
             </button>
             <button type="submit" class="btn btn-primary" style="float: right; margin-right: 8px;">등록하기</button>
         </div>
     </div>
-
-</form><!-- End General Form Elements -->
-
+</form>
 </body>
 </html>

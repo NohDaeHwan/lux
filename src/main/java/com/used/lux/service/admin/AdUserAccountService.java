@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,8 +33,9 @@ public class AdUserAccountService {
 
     private final UserWithdrawalRepository userWithdrawalRepository;
 
-    public Page<UserAccountDto> getUserList(Pageable pageable) {
-        return userAccountRepository.findAll(pageable).map(UserAccountDto::from);
+    public Page<UserAccountDto> getUserList(Pageable pageable, String gender, String age, String grade,
+                                            String date, String query) {
+        return userAccountRepository.searchUser(gender, age, grade, date, query, pageable).map(UserAccountDto::from);
     }
 
     public AdUserAccountDto getUserDetail(Long userId) {

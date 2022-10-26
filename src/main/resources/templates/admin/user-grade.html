@@ -89,6 +89,13 @@
             <div class="col-lg-12">
 
                 <div class="card">
+                    <div class="card-header">등급 설정
+                                                <button type="submit" class="btn btn-primary" style="float: right;">
+                                                    <a th:href="@{|/admin/user/grade/new|}" stlye="color:#ffffff !important">
+                                                        새 등급 등록
+                                                    </a>
+                                                </button>
+                    </div>
                     <div class="card-body">
                         <h5 class="card-title">등급 설정</h5>
 
@@ -98,12 +105,15 @@
                             <tr>
                                 <th scope="col">등급명</th>
                                 <th scope="col">할인율(%)</th>
+                                <th scope="col">삭제</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr th:each="usergd : ${userGrade}">
-                                <th scope="row"><a href="#" th:text="${usergd.gradeName}">user1@mail.com</a></th>
-                                <td th:text="${usergd.discount}">Brandon Jacob</td>
+                                <th scope="row" th:text="${usergd.gradeName}" style="vertical-align: middle;">user1@mail.com</th>
+                                <td th:text="${usergd.discount}" style="vertical-align: middle;">Brandon Jacob</td>
+                                <td><a class="btn btn-danger" th:href="@{/admin/user/grade/{gradeId}/delete(gradeId=${usergd.id()})}">삭제</a>
+                                </td>
                             </tr>
                             </tbody>
                         </table>

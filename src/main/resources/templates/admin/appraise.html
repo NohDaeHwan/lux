@@ -95,8 +95,8 @@
                                 <input type="text" name="query" placeholder="검수상품명 혹은 매입가격 입력" title="Enter search keyword">
                                 <button type="submit"><i class="bi bi-search"></i></button>
                             </div>
-                    </div>
                     </form>
+                    </div>
                 </div><!-- End Card with header and footer -->
             </div>
         </div>
@@ -111,7 +111,6 @@
             </ol>
         </nav>
     </div><!-- End Page Title -->
-
     <section class="section">
         <div class="row">
             <div class="col-lg-12">
@@ -141,11 +140,11 @@
                                 <td th:text="${appraisalRes.appraisalBrandName}">Brandon Jacob</td>
                                 <td th:text="${appraisalRes.appraisalGender}">dfd</td>
                                 <td th:text="${appraisalRes.appraisalSize}">Designer</td>
-                                <td th:text="${appraisalRes.appraisalPrice}">28</td>
+                                <td th:text="${#numbers.formatInteger(appraisalRes.appraisalPrice,3,'COMMA')}+'원'">28</td>
                                 <td th:text="${appraisalRes.appraisalGrade}">28</td>
                                 <td th:text="${appraisalRes.appraisalStateStep}">2016-05-25</td>
                                 <td th:text="${appraisalRes.appraisalStateName}">2016-05-25</td>
-                                <td th:text="${appraisalRes.createdAt}">2016-05-25</td>
+                                <td th:text="${#temporals.format(appraisalRes.createdAt,'yyyy-MM-dd')}">2016-05-25</td>
                             </tr>
                             </tbody>
                         </table>

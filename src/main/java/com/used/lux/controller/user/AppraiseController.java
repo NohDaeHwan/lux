@@ -1,7 +1,7 @@
-package com.used.lux.controller;
+package com.used.lux.controller.user;
 
 import com.used.lux.dto.security.Principal;
-import com.used.lux.request.AppraisalRequest;
+import com.used.lux.request.appraisal.AppraisalRequest;
 import com.used.lux.response.appraisal.AppraisalResponse;
 import com.used.lux.response.appraisal.AppraisalsResponse;
 import com.used.lux.service.admin.AppraiseService;

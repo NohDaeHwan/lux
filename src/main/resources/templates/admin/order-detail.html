@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/head :: .head"></head>
+<body>
+
+<header th:replace="layout/header :: .header">
+    header
+</header>
+
+<th:block th:replace="layout/aside :: .sidebar">
+    aside
+</th:block>
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>주문 상세 페이지</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item">주문목록</li>
+                <li class="breadcrumb-item active">주문상세페이지</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section profile">
+        <div class="row">
+            <!-- <div class="col-xl-4">
+
+              <div class="card">
+                <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+
+                  <img src="/static/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+
+                  <div class="social-links mt-2">
+                    <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+                    <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+                    <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                  </div>
+                </div>
+              </div>
+
+            </div> -->
+
+            <div class="col-xl-12">
+
+                <div class="card">
+                    <div class="card-body pt-3">
+                        <!-- Bordered Tabs -->
+                        <ul class="nav nav-tabs nav-tabs-bordered">
+
+                            <li class="nav-item">
+                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="profile-overview">주문정보</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content pt-2">
+
+                            <!--  <div class="row mb-3">
+                               <label for=F"profileImage" class="col-md-4 col-lg-3 col-form-label">사진 추가</label>
+                               <div class="col-md-8 col-lg-9">
+                                 <div class="pt-2">
+                                   <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
+                                   <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
+                                 </div>
+                               </div>
+                             </div> -->
+
+
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">주문번호</label>
+                                <div class="col-sm-10" style="padding: 7px 12px;">
+                                    <div class="col-sm-10" style="font-weight: 300;" th:text="${orderDetail.productOrderDto.id}">
+                                        1234
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">주문일자</label>
+                                <div class="col-sm-10" style="padding: 7px 12px;">
+                                    <div class="col-sm-10" style="font-weight: 300;" th:text="${#temporals.format(orderDetail.productOrderDto.createdAt,'yyyy-MM-dd HH:mm:ss')}" >
+                                        2022-10-20 18:04:45
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">회원명</label>
+                                <div class="col-sm-10" style="padding: 7px 12px;">
+                                    <div class="col-sm-10" style="font-weight: 300;">
+                                        <a th:href="@{|/admin/user/${orderDetail.productOrderDto.userAccountDto.id}|}" th:text="${orderDetail.productOrderDto.userAccountDto.userName}">user@mail.com</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">주문자명</label>
+                                <div class="col-sm-10" style="padding: 7px 12px;">
+                                    <div class="col-sm-10" style="font-weight: 300;" th:text="${orderDetail.productOrderDto.name}">
+                                        구나방
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">휴대폰번호</label>
+                                <div class="col-sm-10" style="padding: 7px 12px;">
+                                    <div class="col-sm-10" style="font-weight: 300;"  th:text="${orderDetail.productOrderDto.phoneNumber}" >
+                                        010-1111-1111
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">주소</label>
+                                <div class="col-sm-10" style="padding: 7px 12px;">
+                                    <div class="col-sm-10" style="font-weight: 300;" th:text="${orderDetail.productOrderDto.address}" >
+                                        의정부시 서부로 545
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">요청사항</label>
+                                <div class="col-sm-10" style="padding: 7px 12px;">
+                                    <div class="col-sm-10" style="font-weight: 300;" th:text="${orderDetail.productOrderDto.requestedTerm}" >
+                                        배송 전 연락주세요.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">주문처리상태</label>
+                                <div class="col-sm-10" style="padding: 7px 12px;">
+                                    <div class="col-sm-10" style="font-weight: 300;" th:text="${orderDetail.productOrderDto.stateDto.stateStep}" >
+                                        주문완료
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- End Bordered Tabs -->
+            <div class="col-xl-12">
+
+                <div class="card">
+                    <div class="card-body pt-3">
+                        <!-- Bordered Tabs -->
+                        <ul class="nav nav-tabs nav-tabs-bordered">
+
+                            <li class="nav-item">
+                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="profile-overview">결제정보</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content pt-2">
+
+
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">주문금액</label>
+                                <div class="col-sm-10" style="padding: 7px 12px;">
+                                    <div class="col-sm-10" style="font-weight: 300;" th:text="${#numbers.formatInteger(orderDetail.productOrderDto.productDto.productPrice,3,'COMMA')}+ '원'" >
+                                        200000
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">등급할인율</label>
+                                <div class="col-sm-10" style="padding: 7px 12px;">
+                                    <div class="col-sm-10" style="font-weight: 300;" th:text="${orderDetail.productOrderDto.userAccountDto.userGrade.gradeName} + ' ' + ${orderDetail.productOrderDto.userAccountDto.userGrade.getDiscount} + ' %'">
+                                        10000
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">총 결제금액</label>
+                                <div class="col-sm-10" style="padding: 7px 12px;">
+                                    <div class="col-sm-10" style="font-weight: 300;"
+                                         th:text="${#numbers.formatInteger(orderDetail.productOrderDto.productDto.productPrice,3,'COMMA') +'원'} +
+                                          ' - ' +
+                                          (${#numbers.formatInteger((orderDetail.productOrderDto.userAccountDto.userGrade.getDiscount)*0.01,3,'COMMA')+'원'}) +
+                                          ' = ' +
+                                          ${#numbers.formatInteger((orderDetail.productOrderDto.productDto.productPrice)-((orderDetail.productOrderDto.userAccountDto.userGrade.getDiscount)*0.01),3,'COMMA')}
+                                           + '원' ">
+                                        190000
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="row mb-3">
+                              <label class="col-sm-2 col-form-label"></label>
+                              <div class="col-sm-10">
+                                <button type="submit" class="btn btn-success" style="float: right;">
+                                  <a stlye="color:#ffffff !important" th:href="@{/admin/product}">
+                                    뒤로가기
+                                  </a>
+                                </button>
+                                <button type="submit" class="btn btn-primary" style="float: right; margin-right: 8px;">
+                                  <a th:href="@{|/admin/product/product-detail-update/${productDetail.productDto.id}|}">수정하기</a>
+                                </button>
+                              </div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div><!-- End Bordered Tabs -->
+
+            <div class="col-xl-12">
+
+                <div class="card">
+                    <div class="card-body pt-3">
+                        <!-- Bordered Tabs -->
+                        <ul class="nav nav-tabs nav-tabs-bordered">
+
+                            <li class="nav-item">
+                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="profile-overview">주문상품정보</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content pt-2">
+
+
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">이미지</label>
+                                <div class="col-sm-10" style="padding: 7px 12px;">
+                                    <div class="col-sm-10" style="font-weight: 300;">
+                                        <img src="/static/assets/img/profile-img.jpg" alt="product-img" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">상품명</label>
+                                <div class="col-sm-10" style="padding: 7px 12px;">
+                                    <div class="col-sm-10" style="font-weight: 300;">
+                                        <a th:href="@{|/admin/product/product-detail/${orderDetail.productOrderDto.productDto.id}|}" th:text="${orderDetail.productOrderDto.productDto.productName}">user@mail.com</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">판매그룹</label>
+                                <div class="col-sm-10" style="padding: 7px 12px;">
+                                    <div class="col-sm-10" style="font-weight: 300;" th:text="${orderDetail.productOrderDto.productDto.productSellType}" >
+                                        중고
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">상품가격</label>
+                                <div class="col-sm-10" style="padding: 7px 12px;">
+                                    <div class="col-sm-10" style="font-weight: 300;" th:text="${#numbers.formatInteger(orderDetail.productOrderDto.productDto.productPrice,3,'COMMA')} + '원'" >
+                                        12345677
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">상품취소요청</label>
+                                <div class="col-sm-10">
+                                    <div class="col-sm-10" style="font-weight: 300; padding: 8px 0;"th:if="${orderDetail.productOrderDto.stateDto.stateStep} == '주문완료'" th:text="${orderDetail.productOrderDto.stateDto.stateStep}">12345677</div>
+                                    <button type="submit" class="btn btn-danger" th:if="${orderDetail.productOrderDto.stateDto.stateStep} == '취소요청'" th:text="${orderDetail.productOrderDto.stateDto.stateStep}">취소요청</button>
+                                    <div class="col-sm-10" style="font-weight: 300; padding: 8px 0;" th:if="${orderDetail.productOrderDto.stateDto.stateStep} == '주문취소'" th:text="${orderDetail.productOrderDto.stateDto.stateStep}">12345677</div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">취소처리일자</label>
+                                <div class="col-sm-10" style="padding: 7px 12px;">
+                                    <div class="col-sm-10" style="font-weight: 300;" th:if="${orderDetail.productOrderDto.stateDto.stateStep} == '주문완료'" th:text="'-'">12345677</div>
+                                    <div class="col-sm-10" style="font-weight: 300; padding: 2px 0;" th:if="${orderDetail.productOrderDto.stateDto.stateStep} == '취소요청'" th:text="'-'">취소요청</button>
+                                    <div class="col-sm-10" style="font-weight: 300; padding: 2px 0;" th:if="${orderDetail.productOrderDto.stateDto.stateStep} == '주문취소'" th:text="${#temporals.format(orderDetail.productOrderCancelDto.modifiedAt,'yyyy-MM-dd HH:mm:ss')}">12345677</div>
+                                </div>
+                            </div>
+                            <!-- <div class="row mb-3">
+                              <label class="col-sm-2 col-form-label"></label>
+                              <div class="col-sm-10">
+                                <button type="submit" class="btn btn-success" style="float: right;">
+                                  <a stlye="color:#ffffff !important" th:href="@{/admin/product}">
+                                    뒤로가기
+                                  </a>
+                                </button>
+                                <button type="submit" class="btn btn-primary" style="float: right; margin-right: 8px;">
+                                  <a th:href="@{|/admin/product/product-detail-update/${productDetail.productDto.id}|}">수정하기</a>
+                                </button>
+                              </div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div><!-- End Bordered Tabs -->
+
+            <!-- 수정내역-->
+            <!-- <section class="section">
+              <div class="row">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">해당 상품 변경로그</h5>
+                    <table class="table table-hover ">
+                      <thead>
+                      <tr>
+                        <th scope="col">상품명</th>
+                        <th scope="col">대분류</th>
+                        <th scope="col">중분류</th>
+                        <th scope="col">판매타입</th>
+                        <th scope="col">수정날짜</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr th:each="pdupdate: ${productDetail.productLogDtos}">
+                        <td th:text="${pdupdate.productName}"></td>
+                        <td th:text="${pdupdate.categoryBName}"></td>
+                        <td th:text="${pdupdate.categoryMName}"></td>
+                        <td th:text="${pdupdate.productSellType}"></td>
+                        <td th:text="${pdupdate.createdAt}"></td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="section">
+              <div class="row">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">해당 상품 주문로그</h5>
+                    <table class="table table-hover ">
+                      <thead>
+                      <tr>
+                        <th scope="col">주문자명</th>
+                        <th scope="col">상태</th>
+                        <th scope="col">주문날짜</th>
+
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr th:each="productorder : ${productDetail.ProductOrderLogDtos()}">
+                        <td th:text="${productorder.productName.toString()}"></td>
+                        <td th:text="${productorder.productState().getStateName()}+${productorder.productState().getStateStep()}"></td>
+                        <td th:text="${productorder.createdAt}">28</td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="section">
+              <div class="row">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">해당 상품 경매로그</h5>
+                    <table class="table table-hover ">
+                      <thead>
+                      <tr>
+                        <th scope="col">입찰자명</th>
+                        <th scope="col">입찰가격</th>
+                        <th scope="col">입찰날짜</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr th:each="auction : ${productDetail.AuctionLogDtos()}">
+                        <td th:text="${auction.bidder()}"></td>
+                        <td th:text="${auction.presentPrice()}"></td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </section> -->
+
+        </div>
+        </div>
+
+        </div>
+        </div>
+    </section>
+
+</main><!-- End #main -->
+
+<th:block th:replace="layout/footer :: #footer">
+
+</th:block>
+
+</body>
+
+</html>
