@@ -78,6 +78,18 @@ public class AdAppraiseController {
         return "admin/appraisal-create-form";
     }
 
+    //검수상세 수정 2022/10/26
+    @GetMapping("/{appraisalId}/detail/update")
+    public String appraiseDetail(@PathVariable Long appraisalId,
+                                 @AuthenticationPrincipal Principal principal,
+                                 ModelMap mm) {
+        AppraisalResponse appraisalResponse = AppraisalResponse.from(adAppraiseService.appraiseCommentPage(appraisalId));
+        List<BrandDto> brandList = adProductService.getBrandList();
+        mm.addAttribute("appraisalResponse", appraisalResponse);
+        mm.addAttribute("brandList",brandList);
+        return "/admin/appraisal-detail";
+    }
+
     // 검수 결과 등록
     @PostMapping("/{appraisalId}/new/update")
     public String appraiseCommentAdd(@PathVariable Long appraisalId,
@@ -93,5 +105,7 @@ public class AdAppraiseController {
         adAppraiseService.appraiseComment(appraisalCommentRequest, appraisalId);
         return "redirect:/admin/appraise";
     }
+
+
 
 }

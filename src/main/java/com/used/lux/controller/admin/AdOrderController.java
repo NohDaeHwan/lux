@@ -57,8 +57,14 @@ public class AdOrderController {
         if (principal.role().getName() != "ROLE_ADMIN") {
             return "redirect:/";
         }*/
+        System.out.println("function"+orderId);
+
         AdProductOrderDto orderDetail = adOrderService.getOrderDetail(orderId);
         mm.addAttribute("orderDetail", orderDetail);
+        System.out.println("function"+orderDetail);
+
+
+
         return "/admin/order-detail";
     }
 

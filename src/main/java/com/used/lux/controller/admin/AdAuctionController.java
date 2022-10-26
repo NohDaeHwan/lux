@@ -38,25 +38,9 @@ public class AdAuctionController {
         return "/admin/auction";
     }
 
-    // 경매 상세정보
-//    @GetMapping("/{auctionId}")
-//    public String auctionDetail(@PathVariable Long auctionId,
-//                                @AuthenticationPrincipal Principal principal,
-//                                ModelMap mm){
-//        /*if (principal == null) {
-//            return "redirect:/login";
-//        }
-//        if (principal.role().getName() != "ROLE_ADMIN") {
-//            return "redirect:/";
-//        }*/
-//        AdAuctionDto auctionDetail = adAuctionService.getAuctionDetail(auctionId);
-//        mm.addAttribute("auctionDetail", auctionDetail);
-//        return "/admin/auction-detail";
-//    }
-
-    // 경매 수정
+     //경매 상세정보
     @GetMapping("/{auctionId}")
-    public String auctionUpdate(@PathVariable Long auctionId,
+    public String auctionDetail(@PathVariable Long auctionId,
                                 @AuthenticationPrincipal Principal principal,
                                 ModelMap mm){
         /*if (principal == null) {
@@ -67,7 +51,27 @@ public class AdAuctionController {
         }*/
         AdAuctionDto auctionDetail = adAuctionService.getAuctionDetail(auctionId);
         mm.addAttribute("auctionDetail", auctionDetail);
-        return "/admin/auction-create-form";
+
+        if (auctionDetail.auctionDto().stateDto().stateStep().equals("경매전")){
+            return  "/admin/auction-create-form";
+        }
+        return "/admin/auction-detail";
     }
+
+//    // 경매 수정
+//    @GetMapping("/{auctionId}")
+//    public String auctionUpdate(@PathVariable Long auctionId,
+//                                @AuthenticationPrincipal Principal principal,
+//                                ModelMap mm){
+//        /*if (principal == null) {
+//            return "redirect:/login";
+//        }
+//        if (principal.role().getName() != "ROLE_ADMIN") {
+//            return "redirect:/";
+//        }*/
+//        AdAuctionDto auctionDetail = adAuctionService.getAuctionDetail(auctionId);
+//        mm.addAttribute("auctionDetail", auctionDetail);
+//        return "/admin/auction-create-form";
+//    }
 
 }

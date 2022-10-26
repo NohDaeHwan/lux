@@ -244,22 +244,22 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label">상품취소요청</label>
-                                <div class="col-sm-10">
-                                    <div class="col-sm-10" style="font-weight: 300; padding: 8px 0;"th:if="${orderDetail.productOrderDto.stateDto.stateStep} == '주문완료'" th:text="${orderDetail.productOrderDto.stateDto.stateStep}">12345677</div>
-                                    <button type="submit" class="btn btn-danger" th:if="${orderDetail.productOrderDto.stateDto.stateStep} == '취소요청'" th:text="${orderDetail.productOrderDto.stateDto.stateStep}">취소요청</button>
-                                    <div class="col-sm-10" style="font-weight: 300; padding: 8px 0;" th:if="${orderDetail.productOrderDto.stateDto.stateStep} == '주문취소'" th:text="${orderDetail.productOrderDto.stateDto.stateStep}">12345677</div>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label">취소처리일자</label>
-                                <div class="col-sm-10" style="padding: 7px 12px;">
-                                    <div class="col-sm-10" style="font-weight: 300;" th:if="${orderDetail.productOrderDto.stateDto.stateStep} == '주문완료'" th:text="'-'">12345677</div>
-                                    <div class="col-sm-10" style="font-weight: 300; padding: 2px 0;" th:if="${orderDetail.productOrderDto.stateDto.stateStep} == '취소요청'" th:text="'-'">취소요청</button>
-                                    <div class="col-sm-10" style="font-weight: 300; padding: 2px 0;" th:if="${orderDetail.productOrderDto.stateDto.stateStep} == '주문취소'" th:text="${#temporals.format(orderDetail.productOrderCancelDto.modifiedAt,'yyyy-MM-dd HH:mm:ss')}">12345677</div>
-                                </div>
-                            </div>
+<!--                            <div class="row mb-3">-->
+<!--                                <label class="col-sm-2 col-form-label">상품취소요청</label>-->
+<!--                                <div class="col-sm-10">-->
+<!--                                    <div class="col-sm-10" style="font-weight: 300; padding: 8px 0;"th:if="${orderDetail.productOrderDto.stateDto.stateStep} == '주문완료'" th:text="${orderDetail.productOrderDto.stateDto.stateStep}">12345677</div>-->
+<!--                                    <button type="submit" class="btn btn-danger" th:if="${orderDetail.productOrderDto.stateDto.stateStep} == '취소요청'" th:text="${orderDetail.productOrderDto.stateDto.stateStep}">취소요청</button>-->
+<!--                                    <div class="col-sm-10" style="font-weight: 300; padding: 8px 0;" th:if="${orderDetail.productOrderDto.stateDto.stateStep} == '주문취소'" th:text="${orderDetail.productOrderDto.stateDto.stateStep}">12345677</div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="row mb-3">-->
+<!--                                <label class="col-sm-2 col-form-label">취소처리일자</label>-->
+<!--                                <div class="col-sm-10" style="padding: 7px 12px;">-->
+<!--                                    <div class="col-sm-10" style="font-weight: 300;" th:if="${orderDetail.productOrderDto.stateDto.stateStep} == '주문완료'" th:text="'-'">12345677</div>-->
+<!--                                    <div class="col-sm-10" style="font-weight: 300; padding: 2px 0;" th:if="${orderDetail.productOrderDto.stateDto.stateStep} == '취소요청'" th:text="'-'">취소요청</button>-->
+<!--                                    <div class="col-sm-10" style="font-weight: 300; padding: 2px 0;" th:if="${orderDetail.productOrderDto.stateDto.stateStep} == '주문취소'" th:text="${#temporals.format(orderDetail.productOrderCancelDto.modifiedAt,'yyyy-MM-dd HH:mm:ss')}">12345677</div>-->
+<!--                                </div>-->
+<!--                            </div>-->
                             <!-- <div class="row mb-3">
                               <label class="col-sm-2 col-form-label"></label>
                               <div class="col-sm-10">
@@ -273,6 +273,7 @@
                                 </button>
                               </div>
                             </div> -->
+                            <div th:if="${#lists.isEmpty(orderDetail.productOrderCancelDto())}" th:text="널값입니다.">
                         </div>
                     </div>
                 </div>
