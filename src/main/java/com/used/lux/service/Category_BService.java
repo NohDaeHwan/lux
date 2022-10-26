@@ -15,7 +15,6 @@ public class Category_BService {
 
     public void bigCategoryCreate(String st)
     {
-
         CategoryB CB = new CategoryB();
         CB.setCategoryBName(st);
         category_BRepository.save(CB);
