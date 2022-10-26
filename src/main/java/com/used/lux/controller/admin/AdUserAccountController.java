@@ -16,10 +16,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -37,17 +34,24 @@ public class AdUserAccountController {
     @GetMapping
     public String userList(@AuthenticationPrincipal Principal principal,
                            @PageableDefault(size = 30) Pageable pageable,
-                           ModelMap mm){
+                           @RequestParam(defaultValue = "") String gender, @RequestParam(defaultValue = "") String age,
+                           @RequestParam(defaultValue = "") String grade, @RequestParam(defaultValue = "2000-01-01") String date,
+                           @RequestParam(defaultValue = "") String query,
+                           ModelMap mm) {
         /*if (principal == null) {
             return "redirect:/login";
         }
         if (principal.role().getName() != "ROLE_ADMIN") {
             return "redirect:/";
         }*/
-        Page<UserAccountResponse> userList = adUserAccountService.getUserList(pageable).map(UserAccountResponse::from);
+
+        System.out.println(gender + " " + age + " " + grade + " " + date + " " + query);
+        Page<UserAccountResponse> userList = adUserAccountService.getUserList(pageable, gender, age, grade, date, query).map(UserAccountResponse::from);
         List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), userList.getTotalPages());
+        List<UserGradeDto> userGradeList = userGradeService.getGradeList();
         System.out.println(barNumbers);
         mm.addAttribute("paginationBarNumbers", barNumbers);
+        mm.addAttribute("userGradeList", userGradeList);
         mm.addAttribute("userList", userList);
         return "/admin/user";
     }
