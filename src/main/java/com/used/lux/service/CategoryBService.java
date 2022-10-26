@@ -7,6 +7,8 @@ import com.used.lux.request.CategoryCreateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class CategoryBService {
@@ -15,5 +17,20 @@ public class CategoryBService {
 
     public CategoryBDto createCategory(CategoryCreateRequest categoryCreateRequest) {
         return CategoryBDto.from(categoryBRepository.save(CategoryB.of(categoryCreateRequest.categoryName())));
+    }
+
+    //B 카테고리 모두 출력하기
+    public List<CategoryB> getBigCategoryAll(){return categoryBRepository.findAll();}
+
+    public void bigCategoryCreate(String st)
+    {
+        CategoryB CB = CategoryB.of(null,st);
+        categoryBRepository.save(CB);
+    }
+    public void bigCategoryDelete( String st){
+        categoryBRepository.deleteByCategoryBName(st);
+    }
+    public void bigCategoryExist( String st){
+        categoryBRepository.existsByCategoryBName(st);
     }
 }

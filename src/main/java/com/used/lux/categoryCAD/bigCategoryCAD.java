@@ -1,22 +1,18 @@
 package com.used.lux.categoryCAD;
 
-import com.used.lux.domain.CategoryB;
-import com.used.lux.domain.CategoryM;
-import com.used.lux.service.Category_BService;
-
-import com.used.lux.service.Category_MService;
+import com.used.lux.service.CategoryBService;
+import com.used.lux.service.CategoryMService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @RequiredArgsConstructor
 @Service
 public class bigCategoryCAD {
-    private final Category_BService category_bService;
-    private final Category_MService category_mService;
+    private final CategoryBService category_bService;
+    private final CategoryMService category_mService;
     //bigcategory 생성 메소드
     public void bigCategoryCreate(String st)
     {

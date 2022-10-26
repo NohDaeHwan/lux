@@ -1,16 +1,36 @@
 package com.used.lux.dto;
 
-import java.util.Date;
+import com.used.lux.domain.UserWithdrawal;
 
-public record UserWithDrawalDto(
+import java.time.LocalDateTime;
+
+public record UserWithdrawalDto(
         Long id,
-        Date create_at,
-        String create_by,
-        Date modified_at,
-        String modified_by,
+        String userEmail,
+        String userName,
+        String phoneNumber,
         String content,
-        String phone_number,
-        String user_email,
-        String user_name
+        LocalDateTime createAt,
+        String createBy,
+        LocalDateTime modifiedAt,
+        String modifiedBy
 ) {
+    public static UserWithdrawalDto of(Long id, String userEmail, String userName, String phoneNumber, String content,
+                             LocalDateTime createAt, String createBy, LocalDateTime modifiedAt, String modifiedBy) {
+        return new UserWithdrawalDto(id, userEmail, userName, phoneNumber, content, createAt, createBy, modifiedAt, modifiedBy);
+    }
+
+    public static UserWithdrawalDto from(UserWithdrawal entity) {
+        return new UserWithdrawalDto(
+                entity.getId(),
+                entity.getUserEmail(),
+                entity.getUserName(),
+                entity.getPhoneNumber(),
+                entity.getContent(),
+                entity.getCreatedAt(),
+                entity.getCreatedBy(),
+                entity.getModifiedAt(),
+                entity.getModifiedBy()
+        );
+    }
 }

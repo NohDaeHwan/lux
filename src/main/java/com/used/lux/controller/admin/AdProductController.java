@@ -1,5 +1,6 @@
 package com.used.lux.controller.admin;
 
+import com.used.lux.domain.CategoryB;
 import com.used.lux.dto.BrandDto;
 import com.used.lux.dto.CategoryBDto;
 import com.used.lux.dto.CategoryMDto;
@@ -167,15 +168,22 @@ public class AdProductController {
         if (principal.role().getName() != "ROLE_ADMIN") {
             return "redirect:/";
         }*/
-        List<CategoryBDto> categoryList = adProductService.getCategoryList();
-        mm.addAttribute("categoryList", categoryList);
+        List<CategoryB> BCategoryList = categoryBService.getBigCategoryAll();
+        mm.addAttribute("categoryList", BCategoryList);
         return "/admin/category";
+    }
+
+    // 상품 카테고리 추가 페이지
+    @GetMapping("/category/new")
+    public String productCategoryCreate(@AuthenticationPrincipal Principal principal)
+    {
+        return "/admin/category-create-form";
     }
 
     // 상품 카테고리 추가
     @ResponseBody
     @PostMapping("/category/new/create")
-    public ResponseEntity<CategoryBDto> productBrandCreate(@AuthenticationPrincipal Principal principal,
+    public ResponseEntity<CategoryBDto> productCategoryCreate(@AuthenticationPrincipal Principal principal,
                                              CategoryCreateRequest categoryCreateRequest){
         CategoryBDto categoryBDto = categoryBService.createCategory(categoryCreateRequest);
         return ResponseEntity.status(HttpStatus.OK).body(categoryBDto);

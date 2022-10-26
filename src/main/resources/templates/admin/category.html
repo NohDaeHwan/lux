@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layout/head :: .head"></head>
+<head th:replace="layout/head :: .head">
+    <script th:inline="javascript">
+        var viewCategory = "big"
+        function categorySwitch(val)
+        {
+            viewCategory = val;
+        }
+
+    </script>
+</head>
 <body>
 
 <header th:replace="layout/header :: .header">
@@ -83,27 +92,56 @@
     <!--            </ol>-->
     <!--        </nav>-->
     <!--    </div>&lt;!&ndash; End Page Title &ndash;&gt;-->
-
     <section class="section">
+        <div class="row align-items-top">
+            <div class="col-lg-12">
+
+                <!-- Card with header and footer -->
+                <div class="card">
+                    <div class="card-header">
+                        <button  class="btn btn-primary" style="float: right;">
+                            <a th:onclick="categorySwitch('big')"  stlye="color:#ffffff !important">
+                                큰카테고리
+                            </a>
+                        </button>
+                        <button  class="btn btn-primary" style="float: right;">
+                            <a th:onclick="categorySwitch('middle')" stlye="color:#ffffff !important">
+                                작은 카테고리
+                            </a>
+                        </button>
+                        <button type="submit" class="btn btn-primary" style="float: right;">
+                            <a th:href="@{/admin/product/category/new}" stlye="color:#ffffff !important">
+                                새 카테고리등록
+                            </a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section" >
         <div class="row">
             <div class="col-lg-12">
 
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">등급 설정</h5>
+                        <h5 class="card-title">큰 카테고리</h5>
 
                         <!-- Table with hoverable rows -->
                         <table class="table table-hover ">
                             <thead>
                             <tr>
-                                <th scope="col">등급명</th>
-                                <th scope="col">할인율(%)</th>
+                                <th scope="col">번호</th>
+                                <th scope="col">카테고리 이름</th>
+                                <th scope="col">삭제</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="usergd : ${userGrade}">
-                                <th scope="row"><a href="#" th:text="${usergd.gradeName}">user1@mail.com</a></th>
-                                <td th:text="${usergd.discount}">Brandon Jacob</td>
+                            <tr th:each="BCategoryList : ${categoryList}">
+                                <th scope="row" style="vertical-align: middle;" th:text="${BCategoryListStat.count}">user1@mail.com</th>
+                                <td th:text="${BCategoryList.categoryBName}" style="vertical-align: middle;">Brandon Jacob</td>
+                                <td><a class="btn btn-danger" th:href="@{/admin/product/category/{categoryId}/delete(categoryId=${BCategoryList.id})}">삭제</a></td>
+                                <!-- @{/admin/product/category/{categoryId}/delete(categoryId=${BCategoryList.id})}-->
                             </tr>
                             </tbody>
                         </table>
@@ -114,6 +152,7 @@
             </div>
         </div>
     </section>
+
     </th:block>
 
 </main><!-- End #main -->
