@@ -18,8 +18,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -39,6 +37,8 @@ public class AdProductController {
     private final CategoryBService categoryBService;
 
     private final CategoryMService categoryMService;
+
+
 
     // 상품 리스트
     @GetMapping
@@ -177,16 +177,46 @@ public class AdProductController {
     @GetMapping("/category/new")
     public String productCategoryCreate(@AuthenticationPrincipal Principal principal)
     {
+
         return "/admin/category-create-form";
     }
 
     // 상품 카테고리 추가
-    @ResponseBody
     @PostMapping("/category/new/create")
-    public ResponseEntity<CategoryBDto> productCategoryCreate(@AuthenticationPrincipal Principal principal,
-                                             CategoryCreateRequest categoryCreateRequest){
-        CategoryBDto categoryBDto = categoryBService.createCategory(categoryCreateRequest);
-        return ResponseEntity.status(HttpStatus.OK).body(categoryBDto);
-    }
+    public String productCategoryCreate(@AuthenticationPrincipal Principal principal,
+                                             CategoryCreateRequest categoryCreateRequest,ModelMap mm){
 
+        if(!categoryBService.bigCategoryExist(categoryCreateRequest.categoryName()))
+        {
+            categoryBService.createCategory(categoryCreateRequest);
+        }else
+        {
+            //메세지박스 문자가 들어가야함 ::중복된 이름의 카테고리가 있습니다.
+        }
+
+        return "redirect:/admin/product/category";
+    }
+    //상품 카테고리 삭제
+    @GetMapping("/category/{categoryId}/delete")
+    public String productCategoryDelete(@PathVariable Long categoryId,
+                                     @AuthenticationPrincipal Principal principal){
+        //bigcategory 삭제 메소드 1차 ::하위카테고리 삭제여부
+        List<String> list = categoryMService.middlecategoryExsistByBCategory(categoryId);
+
+        /*
+            메세지 Dto를 만들어서 넣어야함 ::삭제하려는 카테고리와 관계된 카테고리가 있습니다.
+                                            해당 카테고리를 삭제하면 다른 카테고리들도 삭제가 됩니다.
+                                            그래도 삭제하시겠습니까?
+         */
+
+        //bigcategory 삭제 메소드 2차 :: 하위카테고리가 없거나 확인하고 이를 요청한 경우 실행한다
+        //B카테고리에 종속된 M카테고리 먼저 제거한다
+        categoryMService.middelCategoryDeleteByBCategoryId(categoryId);
+
+        //B카테고리 제거
+        categoryBService.bigCategoryDelete(categoryId);
+
+
+        return "redirect:/admin/product/category";
+    }
 }

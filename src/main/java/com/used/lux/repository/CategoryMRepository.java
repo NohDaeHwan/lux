@@ -12,10 +12,12 @@ public interface CategoryMRepository extends JpaRepository<CategoryM, Long> {
     boolean existsByCategoryMName(String st);
     void deleteByCategoryMName(String st);
 
-    void deleteAllByCategoryB(String st);
+    void deleteAllByCategoryB_Id(Long id);
 
-    List<String> findAllByCategoryMName(String st);
+
 
     //검색용
     List<CategoryM> findAllByCategoryMNameContaining(String st);
+
+    List<String> findAllById(Long categoryId);
 }

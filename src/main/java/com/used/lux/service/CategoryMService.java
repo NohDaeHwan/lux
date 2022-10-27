@@ -41,10 +41,10 @@ public class CategoryMService {
         categoryMRepository.deleteByCategoryMName(st);
 
     }
-    public void middelCategoryDeleteByBCategory(String st)
+    public void middelCategoryDeleteByBCategoryId(Long categoryId)
     {
         //B카테고리에 종속된 M카테고리 삭제
-        categoryMRepository.deleteAllByCategoryB(st);
+        categoryMRepository.deleteAllByCategoryB_Id(categoryId);
 
     }
 
@@ -53,10 +53,10 @@ public class CategoryMService {
         categoryMRepository.existsByCategoryMName(st);
     }
 
-    public List<String> middlecategoryExsistByBCategory(String st)
+    public List<String> middlecategoryExsistByBCategory(Long categoryId)
     {
         //B카테고리에 종속된 M카테고리 출력
-        List<String> list = categoryMRepository.findAllByCategoryMName(st);
+        List<String> list = categoryMRepository.findAllById(categoryId);
         return list;
     }
 }
