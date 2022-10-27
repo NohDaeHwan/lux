@@ -9,9 +9,8 @@ import com.used.lux.request.BrandCreateRequest;
 import com.used.lux.request.CategoryCreateRequest;
 import com.used.lux.request.ProductUpdateRequest;
 import com.used.lux.response.product.ProductResponse;
-import com.used.lux.service.BrandService;
-import com.used.lux.service.CategoryBService;
-import com.used.lux.service.CategoryMService;
+import com.used.lux.response.SearchResponse;
+import com.used.lux.service.*;
 import com.used.lux.service.admin.AdProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -39,27 +38,40 @@ public class AdProductController {
 
     private final CategoryMService categoryMService;
 
+    private final PaginationService paginationService;
+
+    private final SearchService searchService;
+
     // 상품 리스트
     @GetMapping
     public String productList(@AuthenticationPrincipal Principal principal,
-                           @PageableDefault(size = 30) Pageable pageable,
-                           ModelMap mm) {
+                              @PageableDefault(size = 30) Pageable pageable,
+                              @RequestParam(defaultValue = "") String productSellType,
+                              @RequestParam(defaultValue = "") String productBrand,
+                              @RequestParam(defaultValue = "") String productGender,
+                              @RequestParam(defaultValue = "") String productSize,
+                              @RequestParam(defaultValue = "") String productGrade,
+                              @RequestParam(defaultValue = "") String productState,
+                              @RequestParam(defaultValue = "2000-01-01") String productDate,
+                              @RequestParam(defaultValue = "") String query,
+                              ModelMap mm) {
 //        if (principal == null) {
 //            return "redirect:/login";
 //        }
 //        if (principal.role().getName() != "ROLE_ADMIN") {
 //            return "redirect:/";
 //        }
-        Page<ProductResponse> productResponses = adProductService.getProductList(pageable).map(ProductResponse::from);
-        mm.addAttribute("productResponses", productResponses);
-        return "/admin/product";
-    }
 
-    // 상품 등록하기(상품 상세정보 부재시)
-    @GetMapping("/new")
-    public String productCreate(ModelMap mm) {
-        mm.addAttribute("hello","대시보드");
-        return "/admin/product-create-form";
+        Page<ProductResponse> productResponses = adProductService.getProductList(productSellType,
+                productBrand, productGender, productSize, productGrade, productState,
+                productDate, query, pageable).map(ProductResponse::from);
+        List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), productResponses.getTotalPages());
+        SearchResponse searchResponse = searchService.getSearchList();
+
+        mm.addAttribute("paginationBarNumbers", barNumbers);
+        mm.addAttribute("productResponses", productResponses);
+        mm.addAttribute("productSearchResponse", searchResponse);
+        return "/admin/product";
     }
 
     // 상품 상세정보
@@ -75,7 +87,11 @@ public class AdProductController {
         }*/
         AdProductDto productDetail = adProductService.getProductDetail(productId);
         mm.addAttribute("productDetail", productDetail);
-        return "/admin/product-detail";
+        if (productDetail.productDto().productState().getStateStep().equals("신규")) {
+            return "/admin/product-create-form";
+        } else {
+            return "/admin/product-detail";
+        }
     }
 
     // 상품 상세정보
