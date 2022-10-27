@@ -36,9 +36,7 @@ public class CategoryBService {
     public List<CategoryB> getBigCategoryAll(){return categoryBRepository.findAll();}
 
 
-    public void bigCategoryDeleteByBName( String st){
-        categoryBRepository.deleteByCategoryBName(st);
-    }
+
 
     public boolean bigCategoryExist( String st){
         return categoryBRepository.existsByCategoryBName(st);

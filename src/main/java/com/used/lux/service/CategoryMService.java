@@ -56,7 +56,7 @@ public class CategoryMService {
     public List<String> middlecategoryExsistByBCategory(Long categoryId)
     {
         //B카테고리에 종속된 M카테고리 출력
-        List<String> list = categoryMRepository.findAllById(categoryId);
+        List<String> list = categoryMRepository.findAllByCategoryB_Id(categoryId);
         return list;
     }
 }

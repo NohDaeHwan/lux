@@ -19,5 +19,5 @@ public interface CategoryMRepository extends JpaRepository<CategoryM, Long> {
     //검색용
     List<CategoryM> findAllByCategoryMNameContaining(String st);
 
-    List<String> findAllById(Long categoryId);
+    List<String> findAllByCategoryB_Id(Long categoryId);
 }
