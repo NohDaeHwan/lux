@@ -5,7 +5,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 @Getter
 @ToString(callSuper = true)
@@ -18,8 +17,8 @@ public class ProductOrderCancel extends AuditingFields {
     private Long id;
 
     @Setter
-    @Column(name = "order_cancel_id",nullable = false)
-    private Long orderCancelId;
+    @Column(name = "order_id")
+    private Long orderId;
 
     @Setter
     @Column(length = 100)
