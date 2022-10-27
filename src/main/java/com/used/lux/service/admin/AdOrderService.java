@@ -25,9 +25,13 @@ public class AdOrderService {
         return productOrderRepository.findAll(pageable).map(ProductOrderDto::from);
     }
 
-    public AdProductOrderDto getOrderDetail(Long orderId) {
+    public ProductOrderDto getOrderDetail(Long orderId) {
         ProductOrderDto productOrderDto = ProductOrderDto.from(productOrderRepository.findById(orderId).get());
+        return productOrderDto;
+    }
+
+    public ProductOrderCancelDto getOrderCancel(Long orderId) {
         ProductOrderCancelDto productOrderCancelDto = ProductOrderCancelDto.from(productOrderCancelRepository.findByOrderId(orderId));
-        return AdProductOrderDto.of(productOrderDto, productOrderCancelDto);
+        return productOrderCancelDto;
     }
 }
