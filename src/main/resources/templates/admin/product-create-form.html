@@ -16,8 +16,8 @@
     <div class="pagetitle">
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item">상품목록</li>
+                <li class="breadcrumb-item"><a href="/admin">홈</a></li>
+                <li class="breadcrumb-item"><a href="/admin/product">상품목록</a></li>
                 <li class="breadcrumb-item active">새 상품 등록</li>
             </ol>
         </nav>
@@ -32,7 +32,7 @@
                         <h5 class="card-title">새 상품 등록</h5>
 
                         <!-- General Form Elements -->
-                        <form>
+                        <form action="/admin/product/product-detail/new" method="post" enctype="multipart/form-data">
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">검수상품명</label>
                                 <div class="col-sm-10" style="padding: 7px 12px;">
@@ -50,14 +50,15 @@
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">상품명</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control">
+                                    <input type="hidden" class="form-control" name="productId" th:value="${productDetail.productDto().id()}">
+                                    <input type="text" class="form-control" name="productName">
                                 </div>
                             </div>
 
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">판매가격(원)</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" name="productPrice">
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -65,15 +66,15 @@
                                 <div class="col-sm-10">
 
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" id="gridCheck1" checked>
-                                        <label class="form-check-label" for="gridCheck1">
+                                        <input class="form-check-input" type="radio" name="productSellType" value="중고" checked>
+                                        <label class="form-check-label">
                                             중고
                                         </label>
                                     </div>
 
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" >
-                                        <label class="form-check-label" for="gridCheck2">
+                                        <input class="form-check-input" type="radio" name="productSellType" value="경매">
+                                        <label class="form-check-label">
                                             경매
                                         </label>
                                     </div>
@@ -83,8 +84,8 @@
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">브랜드</label>
                                 <div class="col-sm-10">
-                                    <select class="form-select" aria-label="Default select example" name="brandName">
-                                        <option th:each="list : ${brandDto}" th:text="${list.brandName}">Open this select menu</option>
+                                    <select class="form-select" aria-label="Default select example" name="brandId">
+                                        <option th:each="list : ${brandDto}" th:value="${list.id}" th:text="${list.brandName}">Open this select menu</option>
                                     </select>
                                 </div>
                             </div>
@@ -92,50 +93,50 @@
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">카테고리(대,중)</label>
                                 <div class="col-sm-5 mb-3">
-                                    <select class="form-select" multiple aria-label="multiple select example" name="categoryBName">
-                                        <option checked th:each="list : ${categoryBDtos}" th:value="${list.categoryBName}" th:text="${list.categoryBName}">Open this select menu</option>
+                                    <select class="form-select" multiple aria-label="multiple select example" name="categoryBId">
+                                        <option th:each="list : ${categoryBDtos}" th:value="${list.id}" th:text="${list.categoryBName}">Open this select menu</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-5">
-                                    <select class="form-select" multiple aria-label="multiple select example" name="categoryMName" >
-                                        <option checked th:each="list : ${categoryMDtos}" th:value="${list.categoryMName}" th:text="${list.categoryMName}">Open this select menu</option>
+                                    <select class="form-select" multiple aria-label="multiple select example" name="categoryMId" >
+                                        <option th:each="list : ${categoryMDtos}" th:value="${list.id}" th:text="${list.categoryMName}">Open this select menu</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="inputNumber" class="col-sm-2 col-form-label">상품이미지1</label>
+                                <label for="formFile1" class="col-sm-2 col-form-label">상품이미지1</label>
                                 <div class="col-sm-10">
-                                    <input class="form-control" type="file" id="formFile1">
+                                    <input class="form-control" type="file" id="formFile1" name="images">
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="inputNumber" class="col-sm-2 col-form-label">상품이미지2</label>
+                                <label for="formFile2" class="col-sm-2 col-form-label">상품이미지2</label>
                                 <div class="col-sm-10">
-                                    <input class="form-control" type="file" id="formFile2">
+                                    <input class="form-control" type="file" id="formFile2" name="images">
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="inputNumber" class="col-sm-2 col-form-label">상품이미지3</label>
+                                <label for="formFile3" class="col-sm-2 col-form-label">상품이미지3</label>
                                 <div class="col-sm-10">
-                                    <input class="form-control" type="file" id="formFile3">
+                                    <input class="form-control" type="file" id="formFile3" name="images">
                                 </div>
                             </div>
-                            <div class="row mb-3">
+                            <!--<div class="row mb-3">
                                 <legend class="col-form-label col-sm-2 pt-0">상품상태</legend>
                                 <div class="col-sm-10">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck2" checked>
-                                        <label class="form-check-label" for="gridCheck2">
+                                        <input class="form-check-input" type="checkbox" id="gridCheck1" checked>
+                                        <label class="form-check-label" for="gridCheck1">
                                             상품노출중
                                         </label>
                                     </div>
 
                                 </div>
-                            </div>
+                            </div>-->
                             <div class="row mb-3">
-                                <label for="inputPassword" class="col-sm-2 col-form-label">상품코멘트</label>
+                                <label class="col-sm-2 col-form-label">상품코멘트</label>
                                 <div class="col-sm-10">
-                                    <textarea class="form-control" style="height: 100px" placeholder="상품에 대한 정보를 기입해주세요."></textarea>
+                                    <textarea class="form-control" style="height: 100px" name="productContent" placeholder="상품에 대한 정보를 기입해주세요."></textarea>
                                 </div>
                             </div>
                             <div class="row mb-3">
