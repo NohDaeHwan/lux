@@ -7,6 +7,7 @@ import com.used.lux.dto.admin.AdProductDto;
 import com.used.lux.dto.security.Principal;
 import com.used.lux.request.BrandCreateRequest;
 import com.used.lux.request.CategoryCreateRequest;
+import com.used.lux.request.ProductCreateRequest;
 import com.used.lux.request.ProductUpdateRequest;
 import com.used.lux.response.product.ProductResponse;
 import com.used.lux.response.SearchResponse;
@@ -55,12 +56,9 @@ public class AdProductController {
                               @RequestParam(defaultValue = "2000-01-01") String productDate,
                               @RequestParam(defaultValue = "") String query,
                               ModelMap mm) {
-//        if (principal == null) {
-//            return "redirect:/login";
-//        }
-//        if (principal.role().getName() != "ROLE_ADMIN") {
-//            return "redirect:/";
-//        }
+        if (principal.role().getName() != "ROLE_ADMIN") {
+            return "redirect:/";
+        }
 
         Page<ProductResponse> productResponses = adProductService.getProductList(productSellType,
                 productBrand, productGender, productSize, productGrade, productState,
@@ -79,15 +77,21 @@ public class AdProductController {
     public String productDetail(@PathVariable Long productId,
                              @AuthenticationPrincipal Principal principal,
                              ModelMap mm){
-        /*if (principal == null) {
-            return "redirect:/login";
-        }
         if (principal.role().getName() != "ROLE_ADMIN") {
             return "redirect:/";
-        }*/
+        }
+
         AdProductDto productDetail = adProductService.getProductDetail(productId);
         mm.addAttribute("productDetail", productDetail);
+
         if (productDetail.productDto().productState().getStateStep().equals("신규")) {
+            List<BrandDto> brandDto = adProductService.getBrandList();
+            List<CategoryBDto> categoryBDtos = adProductService.getCategoryList();
+            List<CategoryMDto> categoryMDtos = categoryMService.getCategoryList();
+
+            mm.addAttribute("brandDto", brandDto);
+            mm.addAttribute("categoryBDtos", categoryBDtos);
+            mm.addAttribute("categoryMDtos", categoryMDtos);
             return "/admin/product-create-form";
         } else {
             return "/admin/product-detail";
@@ -95,16 +99,28 @@ public class AdProductController {
     }
 
     // 상품 상세정보
+    @PostMapping("/product-detail/new")
+    public String productDetailNew(@AuthenticationPrincipal Principal principal,
+                                   ProductCreateRequest productCreateRequest,
+                                   ModelMap mm) throws Exception {
+        if (principal.role().getName() != "ROLE_ADMIN") {
+            return "redirect:/";
+        }
+
+        System.out.println(productCreateRequest);
+        adProductService.productCreate(productCreateRequest);
+        return "redirect:/admin/product/product-detail/"+productCreateRequest.productId();
+    }
+
+    // 상품 상세정보 수정 페이지
     @GetMapping("/product-detail-update/{productId}")
     public String productDetailForm(@PathVariable Long productId,
                                 @AuthenticationPrincipal Principal principal,
                                 ModelMap mm){
-        /*if (principal == null) {
-            return "redirect:/login";
-        }
         if (principal.role().getName() != "ROLE_ADMIN") {
             return "redirect:/";
-        }*/
+        }
+
         AdProductDto productDetail = adProductService.getProductDetail(productId);
         List<BrandDto> brandDto = adProductService.getBrandList();
         List<CategoryBDto> categoryBDtos = adProductService.getCategoryList();
@@ -122,12 +138,10 @@ public class AdProductController {
     public String productDetailUpdate(@PathVariable Long productId,
                                       @AuthenticationPrincipal Principal principal,
                                       ProductUpdateRequest productUpdateRequest){
-        /*if (principal == null) {
-            return "redirect:/login";
-        }
         if (principal.role().getName() != "ROLE_ADMIN") {
             return "redirect:/";
-        }*/
+        }
+
         System.out.println(productUpdateRequest);
         adProductService.productUpdate(productId,productUpdateRequest);
         return "redirect:/admin/product/product-detail/"+productId;
@@ -137,12 +151,10 @@ public class AdProductController {
     @GetMapping("/brand")
     public String productBrand(@AuthenticationPrincipal Principal principal,
                              ModelMap mm){
-        /*if (principal == null) {
-            return "redirect:/login";
-        }
         if (principal.role().getName() != "ROLE_ADMIN") {
             return "redirect:/";
-        }*/
+        }
+
         List<BrandDto> brandList = adProductService.getBrandList();
         mm.addAttribute("brandList", brandList);
         return "/admin/brand";
@@ -152,6 +164,10 @@ public class AdProductController {
     @GetMapping("/brand/new")
     public String productBrandCreate(@AuthenticationPrincipal Principal principal)
     {
+        if (principal.role().getName() != "ROLE_ADMIN") {
+            return "redirect:/";
+        }
+
         return "/admin/brand-create-form";
     }
 
@@ -160,6 +176,10 @@ public class AdProductController {
     public String productBrandCreate(@AuthenticationPrincipal Principal principal,
                                      BrandCreateRequest brandCreateRequest,
                                      ModelMap mm){
+        if (principal.role().getName() != "ROLE_ADMIN") {
+            return "redirect:/";
+        }
+
         BrandDto brandDto = brandService.createBrand(brandCreateRequest);
         mm.addAttribute("brandDto", brandDto);
         return "redirect:/admin/product/brand";
@@ -169,6 +189,10 @@ public class AdProductController {
     @GetMapping("/brand/{brandId}/delete")
     public String productBrandCreate(@PathVariable Long brandId,
                                      @AuthenticationPrincipal Principal principal){
+        if (principal.role().getName() != "ROLE_ADMIN") {
+            return "redirect:/";
+        }
+
         brandService.deleteBrand(brandId);
         return "redirect:/admin/product/brand";
     }
@@ -177,12 +201,10 @@ public class AdProductController {
     @GetMapping("/category")
     public String productCategory(@AuthenticationPrincipal Principal principal,
                                ModelMap mm){
-        /*if (principal == null) {
-            return "redirect:/login";
-        }
         if (principal.role().getName() != "ROLE_ADMIN") {
             return "redirect:/";
-        }*/
+        }
+
         List<CategoryBDto> categoryList = adProductService.getCategoryList();
         mm.addAttribute("categoryList", categoryList);
         return "/admin/category";

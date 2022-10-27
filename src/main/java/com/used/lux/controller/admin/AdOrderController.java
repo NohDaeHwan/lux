@@ -5,6 +5,7 @@ import com.used.lux.dto.ProductOrderDto;
 import com.used.lux.dto.StateDto;
 import com.used.lux.dto.security.Principal;
 import com.used.lux.response.ProductOrderResponse;
+import com.used.lux.service.PaginationService;
 import com.used.lux.service.StateService;
 import com.used.lux.service.admin.AdOrderService;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -29,19 +31,27 @@ public class AdOrderController {
 
     private final StateService stateService;
 
+    private final PaginationService paginationService;
+
     // 주문 리스트
     @GetMapping
     public String orderList(@AuthenticationPrincipal Principal principal,
-                              @PageableDefault(size = 30) Pageable pageable,
-                              ModelMap mm){
-        /*if (principal == null) {
-            return "redirect:/login";
-        }
+                            @PageableDefault(size = 30) Pageable pageable,
+                            @RequestParam(defaultValue = "") String orderState,
+                            @RequestParam(defaultValue = "") String orderSellType,
+                            @RequestParam(defaultValue = "2000-01-01") String orderDate,
+                            @RequestParam(defaultValue = "") String query,
+                            ModelMap mm){
         if (principal.role().getName() != "ROLE_ADMIN") {
             return "redirect:/";
-        }*/
-        Page<ProductOrderResponse> orderList = adOrderService.getOrderList(pageable).map(ProductOrderResponse::from);
+        }
+
+        Page<ProductOrderResponse> orderList = adOrderService.getOrderList(orderState, orderSellType,
+                orderDate, query, pageable).map(ProductOrderResponse::from);
+        List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), orderList.getTotalPages());
         List<StateDto> stateList = stateService.getStateList();
+
+        mm.addAttribute("paginationBarNumbers", barNumbers);
         mm.addAttribute("orderList", orderList);
         mm.addAttribute("stateList",stateList);
         return "/admin/order";
@@ -52,12 +62,10 @@ public class AdOrderController {
     public String orderDetail(@PathVariable Long orderId,
                                 @AuthenticationPrincipal Principal principal,
                                 ModelMap mm){
-        /*if (principal == null) {
-            return "redirect:/login";
-        }
         if (principal.role().getName() != "ROLE_ADMIN") {
             return "redirect:/";
-        }*/
+        }
+
         ProductOrderDto orderDetail = adOrderService.getOrderDetail(orderId);
 
         if (!orderDetail.stateDto().stateStep().equals("주문완료")) {

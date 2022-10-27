@@ -1,7 +1,6 @@
 package com.used.lux.service.admin;
 
 import com.used.lux.domain.Auction;
-import com.used.lux.domain.CategoryB;
 import com.used.lux.domain.State;
 import com.used.lux.dto.AuctionDto;
 import com.used.lux.dto.AuctionLogDto;
@@ -30,8 +29,8 @@ public class AdAuctionService {
     private final StateRepository stateRepository;
 
 
-    public Page<AuctionDto> getAuctionList(Pageable pageable) {
-        return auctionRepository.findAll(pageable).map(AuctionDto::from);
+    public Page<AuctionDto> getAuctionList(String auctionState, String auctionDate, String query, Pageable pageable) {
+        return auctionRepository.searchAuction(auctionState, auctionDate, query, pageable).map(AuctionDto::from);
     }
 
     public AdAuctionDto getAuctionDetail(Long auctionId) {
@@ -46,10 +45,8 @@ public class AdAuctionService {
     // 업데이트
     public void auctionUpdate(Long auctionId, AuctionUpdateRequest auctionUpdateRequest){
         //업데이트에 필요한 entity 가져오기
-        auctionRepository.findBystartPrice(auctionUpdateRequest.startPrice());
+        auctionRepository.findByStartPrice(auctionUpdateRequest.startPrice());
         State state=stateRepository.findByStateStep("경매중");
-
-
 
         //시작시간 포맷
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -74,7 +71,6 @@ public class AdAuctionService {
         
         //레포지토리 저장
         auctionRepository.save(auction);
-        
 
     }
 

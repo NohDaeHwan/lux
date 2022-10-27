@@ -1,7 +1,6 @@
 package com.used.lux.controller.admin;
 
 import com.used.lux.dto.BrandDto;
-import com.used.lux.dto.ProductDto;
 import com.used.lux.dto.security.Principal;
 import com.used.lux.request.appraisal.AppraisalCommentRequest;
 import com.used.lux.response.SearchResponse;
@@ -46,12 +45,10 @@ public class AdAppraiseController {
                            @RequestParam(defaultValue = "2000-01-01") String appraisalDate,
                            @RequestParam(defaultValue = "") String query,
                            ModelMap mm) {
-//        if (principal == null) {
-//            return "redirect:/login";
-//        }
-//        if (principal.role().getName() != "ROLE_ADMIN") {
-//            return "redirect:/";
-//        }
+        if (principal.role().getName() != "ROLE_ADMIN") {
+            return "redirect:/";
+        }
+
         Page<AppraisalResponse> appraisalResponse = adAppraiseService.getAppraiseList(appraisalState,
                 appraisalBrand, appraisalGender, appraisalSize, appraisalGrade, appraisalDate,
                 query, pageable).map(AppraisalResponse::from);
@@ -83,12 +80,10 @@ public class AdAppraiseController {
     public String appraiseComment(@PathVariable Long appraisalId,
                                   @AuthenticationPrincipal Principal principal,
                                   ModelMap mm) {
-//        if (principal == null) {
-//            return "redirect:/login";
-//        }
-//        if (principal.role().getName() != "ROLE_ADMIN") {
-//            return "redirect:/";
-//        }
+        if (principal.role().getName() != "ROLE_ADMIN") {
+            return "redirect:/";
+        }
+
         AppraisalResponse appraisalResponse = AppraisalResponse.from(adAppraiseService.appraiseCommentPage(appraisalId));
         List<BrandDto> brandList = adProductService.getBrandList();
         mm.addAttribute("appraisalResponse", appraisalResponse);
@@ -113,12 +108,11 @@ public class AdAppraiseController {
     public String appraiseCommentAdd(@PathVariable Long appraisalId,
                                      @AuthenticationPrincipal Principal principal,
                                      AppraisalCommentRequest appraisalCommentRequest) {
-//        if (principal == null) {
-//            return "redirect:/login";
-//        }
-//        if (principal.role().getName() != "ROLE_ADMIN") {
-//            return "redirect:/";
-//        }
+
+        if (principal.role().getName() != "ROLE_ADMIN") {
+            return "redirect:/";
+        }
+
         System.out.println(appraisalCommentRequest);
         adAppraiseService.appraiseComment(appraisalCommentRequest, appraisalId);
         return "redirect:/admin/appraise";
