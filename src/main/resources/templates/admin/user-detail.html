@@ -284,7 +284,7 @@
                         </thead>
                         <tbody>
                         <tr th:each="auction : ${userDetail.auctionLogDtos()}">
-                            <th scope="row"><a th:text="${auction.productName()}"></a></th>
+                            <th scope="row"><a th:href="@{|/admin/auction/${auction.id}/|}" th:text="${auction.productName()}"></a></th>
                             <td th:text="${#numbers.formatInteger(auction.presentPrice,3,'COMMA')} + '원'"></td>
                             <td th:text="${#temporals.format(auction.createdAt,'yyyy-MM-dd HH:mm:ss')}"></td>
                         </tr>

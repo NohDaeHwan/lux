@@ -244,6 +244,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">상품취소요청</label>
                                 <div class="col-sm-10">
@@ -273,6 +274,7 @@
                                 </button>
                               </div>
                             </div> -->
+                            <div th:if="${#lists.isEmpty(orderDetail.productOrderCancelDto())}" th:text="널값입니다.">
                         </div>
                     </div>
                 </div>

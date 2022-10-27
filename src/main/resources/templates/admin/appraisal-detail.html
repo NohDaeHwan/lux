@@ -102,45 +102,44 @@
                                 <label class="col-sm-2 col-form-label">검수상품명</label>
                                 <div class="col-sm-10">
                                         <input type="text" name="appraisalName" class="form-control"  th:if="${appraisalResponse.appraisalStateStep()=='검수전'}" value="">
-                                        <input type="text" name="appraisalName" class="form-control" th:unless="${appraisalResponse.appraisalStateStep()=='검수전'}" th:value="${appraisalResponse.appraisalName()}"  id="read" readonly="readonly">
+                                        <input type="text" name="appraisalName" class="form-control" th:unless="${appraisalResponse.appraisalStateStep()=='검수전'}" th:value="${appraisalResponse.appraisalName()}" >
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">매입가격(원)</label>
                                 <div class="col-sm-10">
                                     <input type="text" name="appraisalName" class="form-control"  th:if="${appraisalResponse.appraisalStateStep()=='검수전'}" value="">
-                                    <input type="text" class="form-control" name="appraisalPrice"  th:unless="${appraisalResponse.appraisalStateStep()=='검수전'}"  th:value="${appraisalResponse.appraisalPrice()}" readonly="readonly">
+                                    <input type="text" class="form-control" name="appraisalPrice"  th:unless="${appraisalResponse.appraisalStateStep()=='검수전'}"  th:value="${appraisalResponse.appraisalPrice()}">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">브랜드</label>
                                 <div class="col-sm-10">
-                                    <select th:if="${appraisalResponse.appraisalStateStep()=='검수전'}"  th:field="*{brandList}"  class="form-select" aria-label="Default select example">
+                                    <select  th:field="*{brandList}"  class="form-select" aria-label="Default select example">
                                         <option value="none"> 브랜드 선택</option>
                                         <option th:each="brand:${brandList}" th:value="${brand.brandName()}"  th:text="${brand.brandName()}"></option>
                                     </select>
-                                    <div  th:unless="${appraisalResponse.appraisalStateStep()=='검수전'}" th:text="${appraisalResponse.appraisalBrandName()}"></div>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">성별</label>
                                 <div class="col-sm-10">
                                     <input type="text" name="appraisalName" class="form-control"  th:if="${appraisalResponse.appraisalStateStep()=='검수전'}" value="">
-                                    <input type="text" class="form-control" name="appraisalGender" th:unless="${appraisalResponse.appraisalStateStep()=='검수전'}"  th:value="${appraisalResponse.appraisalGender()}" readonly="readonly">
+                                    <input type="text" class="form-control" name="appraisalGender" th:unless="${appraisalResponse.appraisalStateStep()=='검수전'}"  th:value="${appraisalResponse.appraisalGender()}" >
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">색상</label>
                                 <div class="col-sm-10">
                                     <input type="text" name="appraisalName" class="form-control"  th:if="${appraisalResponse.appraisalStateStep()=='검수전'}" value="">
-                                    <input type="text" class="form-control" name="appraisalColor"  th:unless="${appraisalResponse.appraisalStateStep()=='검수전'}"  th:value="${appraisalResponse.appraisalColor()}" readonly="readonly">
+                                    <input type="text" class="form-control" name="appraisalColor"  th:unless="${appraisalResponse.appraisalStateStep()=='검수전'}"  th:value="${appraisalResponse.appraisalColor()}" >
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">사이즈</label>
                                 <div class="col-sm-10">
                                     <input type="text" name="appraisalName" class="form-control"  th:if="${appraisalResponse.appraisalStateStep()=='검수전'}" value="">
-                                    <input type="text" class="form-control" name="appraisalSize" th:unless="${appraisalResponse.appraisalStateStep()=='검수전'}" th:value="${appraisalResponse.appraisalSize}" readonly="readonly">
+                                    <input type="text" class="form-control" name="appraisalSize" th:unless="${appraisalResponse.appraisalStateStep()=='검수전'}" th:value="${appraisalResponse.appraisalSize}" >
                                 </div>
                             </div>
 
@@ -148,7 +147,7 @@
                                 <label class="col-sm-2 col-form-label">검수등급</label>
                                 <div class="col-sm-10">
                                     <input type="text" name="appraisalName" class="form-control"  th:if="${appraisalResponse.appraisalStateStep()=='검수전'}" value="">
-                                    <input type="text" class="form-control" name="appraisalGrade"  th:unless="${appraisalResponse.appraisalStateStep()=='검수전'}" th:value="${appraisalResponse.appraisalGrade()}" readonly="readonly">
+                                    <input type="text" class="form-control" name="appraisalGrade"  th:unless="${appraisalResponse.appraisalStateStep()=='검수전'}" th:value="${appraisalResponse.appraisalGrade()}" >
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -156,7 +155,7 @@
                                 <div class="col-sm-10">
                                     <div class="form-floating mb-3">
                                         <textarea class="form-control"  th:if="${appraisalResponse.appraisalStateStep()=='검수전'}" value=""></textarea>
-                                        <textarea class="form-control" th:text="${appraisalResponse.appraisalContent}" th:unless="${appraisalResponse.appraisalStateStep()=='검수전'}" placeholder="손상상태/담당자 이름 등 검수 코멘트를 기록해주세요." id="floatingTextarea" name="appraisalComment" style="height: 100px;" readonly="readonly"></textarea>
+                                        <textarea class="form-control" th:text="${appraisalResponse.appraisalContent}" th:unless="${appraisalResponse.appraisalStateStep()=='검수전'}" placeholder="손상상태/담당자 이름 등 검수 코멘트를 기록해주세요." id="floatingTextarea" name="appraisalComment" style="height: 100px;" ></textarea>
                                         <label for="floatingTextarea"></label>
                                     </div>
                                 </div>
@@ -166,7 +165,7 @@
                                 <div class="col-sm-10" style="padding: 7px 12px;">
                                     <div class="col-sm-10" style="font-weight: 300;" th:if="${appraisalResponse.appraisalStateStep()=='검수전'}" text="">
                                     </div>
-                                    <div class="col-sm-10" style="font-weight: 300;" th:unless="${appraisalResponse.appraisalStateStep()=='검수전'}" th:text="${appraisalResponse.id}" readonly="readonly">
+                                    <div class="col-sm-10" style="font-weight: 300;" th:unless="${appraisalResponse.appraisalStateStep()=='검수전'}" th:text="${appraisalResponse.id}">
                                     </div>
                                 </div>
                             </div>
@@ -178,16 +177,17 @@
                                             뒤로가기
                                         </a>
                                     </button>
+                                    <button type="submit"  class="btn btn-primary" style="float: right; margin-right: 8px;" >등록하기</button>
                                 </div>
                             </div>
                         </form>
-                        <button th:onclick="|location.href='@{/admin/appraise/{appraisalId}/detail/update(appraisalId=${appraisalResponse.id})}'|" class="btn btn-primary" style="float: right; margin-right: 8px;" >수정하기</button>
 
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
 </main><!— End #main —>
 
 

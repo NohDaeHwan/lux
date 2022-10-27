@@ -91,7 +91,7 @@
                             </thead>
                             <tbody>
                             <tr th:each="auctionlist : ${auctionList}">
-                                <th scope="row"><a th:href="@{|/admin/auction/${auctionlist.id}|}" th:text="${auctionlist.id}">user1@mail.com</a></th>
+                                <th scope="row"><a th:href="@{|/admin/auction/${auctionlist.id}/|}" th:text="${auctionlist.id}">user1@mail.com</a></th>
                                 <td th:text="${auctionlist.productResponse.productName}">Brandon Jacob</td>
                                 <td th:text="${#numbers.formatInteger(auctionlist.presentPrice,3,'COMMA')}+'원'">dfd</td>
                                 <td th:text="${#numbers.formatInteger(auctionlist.startPrice,3,'COMMA')}+'원'">Designer</td>

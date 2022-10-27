@@ -1,7 +1,8 @@
 package com.used.lux.controller.admin;
 
-import com.used.lux.domain.State;
-import com.used.lux.dto.admin.AdProductOrderDto;
+import com.used.lux.dto.ProductOrderCancelDto;
+import com.used.lux.dto.ProductOrderDto;
+import com.used.lux.dto.StateDto;
 import com.used.lux.dto.security.Principal;
 import com.used.lux.response.ProductOrderResponse;
 import com.used.lux.service.StateService;
@@ -40,7 +41,7 @@ public class AdOrderController {
             return "redirect:/";
         }*/
         Page<ProductOrderResponse> orderList = adOrderService.getOrderList(pageable).map(ProductOrderResponse::from);
-        List<State> stateList = stateService.getStateList();
+        List<StateDto> stateList = stateService.getStateList();
         mm.addAttribute("orderList", orderList);
         mm.addAttribute("stateList",stateList);
         return "/admin/order";
@@ -57,7 +58,13 @@ public class AdOrderController {
         if (principal.role().getName() != "ROLE_ADMIN") {
             return "redirect:/";
         }*/
-        AdProductOrderDto orderDetail = adOrderService.getOrderDetail(orderId);
+        ProductOrderDto orderDetail = adOrderService.getOrderDetail(orderId);
+
+        if (!orderDetail.stateDto().stateStep().equals("주문완료")) {
+            ProductOrderCancelDto productOrderCancelDto = adOrderService.getOrderCancel(orderId);
+            mm.addAttribute("orderCancelDetail", productOrderCancelDto);
+        }
+
         mm.addAttribute("orderDetail", orderDetail);
         return "/admin/order-detail";
     }

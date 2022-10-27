@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface StateRepository extends JpaRepository<State, Long> {
 
+    State findByStateStep(String stateStep);
 }
