@@ -10,6 +10,10 @@ import com.used.lux.request.GradeCreateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RequiredArgsConstructor
 @Service
 public class UserGradeService {
@@ -22,5 +26,10 @@ public class UserGradeService {
 
     public void deleteGrade(Long gradeId) {
         userGradeRepository.deleteById(gradeId);
+    }
+
+    public List<UserGradeDto> getGradeList() {
+        return userGradeRepository.findAll().stream()
+                .map(UserGradeDto::from).collect(Collectors.toCollection(ArrayList::new));
     }
 }

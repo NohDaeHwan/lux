@@ -6,10 +6,13 @@ import com.used.lux.dto.AppraisalDto;
 import com.used.lux.repository.AppraisalRepository;
 import com.used.lux.repository.StateRepository;
 import com.used.lux.request.appraisal.AppraisalCommentRequest;
+import com.used.lux.response.appraisal.AppraisalResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.stream.DoubleStream;
 
 @RequiredArgsConstructor
 @Service
@@ -19,9 +22,13 @@ public class AdAppraiseService {
 
     private final StateRepository stateRepository;
 
-    public Page<AppraisalDto> getAppraiseList(Pageable pageable) {
-        return appraisalRepository.findAll(pageable).map(AppraisalDto::from);
+    public Page<AppraisalDto> getAppraiseList(String appraisalState, String appraisalBrand, String appraisalGender,
+                                        String appraisalSize, String appraisalGrade, String appraisalDate,
+                                        String query, Pageable pageable) {
+        return appraisalRepository.searchAppraise(appraisalState, appraisalBrand, appraisalGender,
+                appraisalSize, appraisalGrade, appraisalDate, query, pageable).map(AppraisalDto::from);
     }
+
 
     public void appraiseComment(AppraisalCommentRequest appraisalCommentRequest, Long appraisalId) {
         Appraisal appraisal = appraisalRepository.getReferenceById(appraisalId);
