@@ -5,6 +5,7 @@ import com.used.lux.dto.*;
 import com.used.lux.dto.admin.AdProductDto;
 import com.used.lux.repository.*;
 import com.used.lux.request.ProductUpdateRequest;
+import com.used.lux.response.SearchResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.DoubleStream;
 
 @RequiredArgsConstructor
 @Service
@@ -34,9 +36,13 @@ public class AdProductService {
 
     private final BrandRepository brandRepository;
 
-    public Page<ProductDto> getProductList(Pageable pageable) {
-        return productRepository.findAll(pageable).map(ProductDto::from);
+    public Page<ProductDto> getProductList(String productSellType, String productBrand, String productGender,
+                                       String productSize, String productGrade, String productState,
+                                       String productDate, String query, Pageable pageable) {
+        return productRepository.searchProduct(productSellType, productBrand, productGender, productSize,
+                productGrade, productState, productDate, query, pageable).map(ProductDto::from);
     }
+
 
     public AdProductDto getProductDetail(Long productId) {
         // 상품 상세

@@ -42,15 +42,15 @@ public class Product extends AuditingFields {
 	private State state;
 
 	@Setter
-	@Column(name = "product_price", nullable = false)
+	@Column(name = "product_price")
 	private int productPrice;
 
 	@Setter
-	@Column(name = "product_sell_type", nullable = false, length = 100)
+	@Column(name = "product_sell_type", length = 100)
 	private String productSellType; // 중고, 경매
 
 	@Setter
-	@Column(name = "product_content", nullable = false, length = 1000)
+	@Column(name = "product_content", length = 1000)
 	private String productContent;
 
 	@Setter
