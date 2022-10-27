@@ -1,6 +1,5 @@
 package com.used.lux.service.admin;
 
-import com.used.lux.domain.ProductOrderCancel;
 import com.used.lux.dto.ProductOrderCancelDto;
 import com.used.lux.dto.ProductOrderDto;
 import com.used.lux.repository.ProductOrderCancelRepository;
@@ -18,8 +17,9 @@ public class AdOrderService {
 
     private final ProductOrderCancelRepository productOrderCancelRepository;
 
-    public Page<ProductOrderDto> getOrderList(Pageable pageable) {
-        return productOrderRepository.findAll(pageable).map(ProductOrderDto::from);
+    public Page<ProductOrderDto> getOrderList(String orderState, String orderSellType, String orderDate, String query, Pageable pageable) {
+        return productOrderRepository.searchProductOrder(orderState, orderSellType, orderDate,
+                query, pageable).map(ProductOrderDto::from);
     }
 
     public ProductOrderDto getOrderDetail(Long orderId) {
@@ -31,4 +31,5 @@ public class AdOrderService {
         ProductOrderCancelDto productOrderCancelDto = ProductOrderCancelDto.from(productOrderCancelRepository.findByOrderId(orderId));
         return productOrderCancelDto;
     }
+
 }

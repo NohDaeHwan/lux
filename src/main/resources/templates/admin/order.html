@@ -29,30 +29,31 @@
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">검색 조건</h5>
-                        <form class="search-form" method="POST" action="#">
+                        <form class="search-form" action="/admin/order">
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">주문상태</label>
                                 <div class="col-sm-10">
-                                    <select th:field="*{stateList}"  class="form-select" aria-label="Default select example">
-                                        <option value="">==선택하세요==</option>
-                                        <option th:each="state:${stateList}" th:if="${state.stateName=='주문'}" th:value="${state.getStateStep()}" th:text="${state.getStateStep()}"></option>
+                                    <select class="form-select" name="orderState">
+                                        <option value="">전체</option>
+                                        <option th:each="state:${stateList}" th:if="${state.stateName=='주문'}"
+                                                th:value="${state.stateStep}" th:text="${state.stateStep()}"></option>
                                     </select>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">판매그룹</label>
                                 <div class="col-sm-10">
-                                    <select class="form-select">
-                                        <option selected>==판매타입==</option>
+                                    <select class="form-select" name="orderSellType">
+                                        <option value="" selected>전체</option>
                                         <option value="경매">경매</option>
                                         <option value="중고">중고</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="inputDate" class="col-sm-2 col-form-label">업데이트날짜</label>
+                                <label class="col-sm-2 col-form-label">업데이트날짜</label>
                                 <div class="col-sm-10">
-                                    <input type="date" class="form-control">
+                                    <input type="date" class="form-control" name="orderDate">
                                 </div>
                             </div>
                             <div class="search-bar mb-3">
@@ -119,13 +120,36 @@
         </div>
     </section>
 
-    <th:block th:replace="layout/pagination :: #pagination">
-
-    </th:block>
+    <!-- Pagination with icons -->
+    <nav id="pagination" aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" th:href="@{/admin/order(page=${orderList.number - 1}, sort=(${param.sort} != null ? ${param.sort} : '') + (${orderList.sort.getOrderFor('param.sort')} != null ? (${orderList.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
+                      query=${param.query})}" aria-label="Previous" th:class="'page-link' + (${orderList.number} <= 0 ? ' disabled' : '')">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item" th:each="pageNumber : ${paginationBarNumbers}">
+                <a th:text="${pageNumber + 1}"
+                   th:href="@{/admin/order(page=${pageNumber},
+                          sort=(${param.sort} != null ? ${param.sort} : '') + (${orderList.sort.getOrderFor('param.sort')} != null ? (${orderList.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
+                          query=${param.query}
+                      )}"
+                   th:class="'page-link' + (${pageNumber} == ${orderList.number} <= 0 ? ' disabled' : '')">
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" th:href="@{/admin/order(page=${orderList.number + 1}, sort=(${param.sort} != null ? ${param.sort} : '') + (${orderList.sort.getOrderFor('param.sort')} != null ? (${orderList.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
+                      query=${param.query})}" aria-label="Next" th:class="'page-link' + (${orderList.number} >= ${orderList.totalPages - 1} ? ' disabled' : '')">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav><!-- End Pagination with icons -->
 
 </main><!-- End #main -->
-<script th:inline="javascript">
-    <!-- 검색폼 스크립트 (user용) -->
+<!--<script th:inline="javascript">
+    &lt;!&ndash; 검색폼 스크립트 (user용) &ndash;&gt;
 
     /*<![CDATA[*/
 
@@ -159,7 +183,7 @@
     g_by("productSellType");
     /*]]>*/
 
-</script>
+</script>-->
 <th:block th:replace="layout/footer :: #footer">
 
 </th:block>
