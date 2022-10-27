@@ -20,6 +20,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
@@ -93,7 +94,7 @@ public class AdProductController {
         AdProductDto productDetail = adProductService.getProductDetail(productId);
         List<BrandDto> brandDto = adProductService.getBrandList();
         List<CategoryBDto> categoryBDtos = adProductService.getCategoryList();
-        List<CategoryMDto> categoryMDtos = categoryMService.getCategoryList();
+        List<CategoryMDto> categoryMDtos = categoryMService.getMiddleCategoryList();
 
         mm.addAttribute("productDetail", productDetail);
         mm.addAttribute("brandDto", brandDto);
@@ -219,4 +220,23 @@ public class AdProductController {
 
         return "redirect:/admin/product/category";
     }
+
+    //카테고리 전환
+    @ResponseBody
+    @GetMapping("/category/changer")
+    public List CategoryChanger(@RequestParam("categoryType")String type, ModelMap map)
+    {
+        List list = null;
+        if(type.equals("big"))
+        {
+            list = categoryBService.getBigCategoryAll();
+        }else if(type.equals("middle"))
+        {
+            list =categoryMService.getMiddleCategoryList();
+        }
+
+        return list;
+    }
+
+
 }
