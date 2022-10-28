@@ -1330,3 +1330,12 @@ legend {
   font-size: 13px;
   color: #012970;
 }
+
+.preview-link {
+  position: absolute;
+  right: 50px;
+  font-size: 24px;
+  top: calc(50% - 18px);
+  color: rgba(255, 255, 255, 0.7);
+  transition: ease-in-out 0.3s;
+}
