@@ -17,11 +17,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @RequiredArgsConstructor
-@RequestMapping("/used_luxury")
+@RequestMapping("/product")
 @Controller
-public class UsedluxController {
+public class ProductController {
 
-    private final UsedluxService usedluxService;
+    @GetMapping
+    public String productList() {
+        return "/front/product"; // 중고 명품 리스트 페이지
+    }
+
+    @GetMapping("/{productId}")
+    public String productDetail(@PathVariable Long productId) {
+        return "/front/product-detail"; // 중고 명품 리스트 페이지
+    }
+
+
+
+
+    /*private final UsedluxService usedluxService;
 
     @GetMapping
     public ResponseEntity<Page<ProductsResponse>> usedLuxury(@RequestParam(required = false, defaultValue = "") String brandName,
@@ -47,6 +60,6 @@ public class UsedluxController {
     public ResponseEntity<ProductResponse> usedLuxuryOrder(@PathVariable Long productId) {
         ProductResponse product = ProductResponse.from(usedluxService.productFind(productId));
         return ResponseEntity.status(HttpStatus.OK).body(product); // 중고 명품 구매 페이지
-    }
+    }*/
 
 }
