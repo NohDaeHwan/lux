@@ -1,5 +1,6 @@
 package com.used.lux.controller.admin;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.used.lux.domain.CategoryB;
 import com.used.lux.dto.BrandDto;
 import com.used.lux.dto.CategoryBDto;
@@ -169,7 +170,7 @@ public class AdProductController {
         if (principal.role().getName() != "ROLE_ADMIN") {
             return "redirect:/";
         }*/
-        List<CategoryB> BCategoryList = categoryBService.getBigCategoryAll();
+        List<CategoryBDto> BCategoryList = categoryBService.getBigCategoryAll();
         mm.addAttribute("categoryList", BCategoryList);
         return "/admin/category";
     }
@@ -223,16 +224,23 @@ public class AdProductController {
 
     //카테고리 전환
     @ResponseBody
-    @GetMapping("/category/changer")
-    public List CategoryChanger(@RequestParam("categoryType")String type, ModelMap map)
+    @PostMapping("/category/changer")
+    public List  CategoryChanger(@RequestBody String type, ModelMap map)
     {
+
+
         List list = null;
-        if(type.equals("big"))
+
+        if(type.equals("{\"check\":\"big\"}"))
         {
+            System.out.println("B진입");
             list = categoryBService.getBigCategoryAll();
-        }else if(type.equals("middle"))
+
+        }else if(type.equals("{\"check\":\"middle\"}"))
         {
-            list =categoryMService.getMiddleCategoryList();
+            System.out.println("M진입");
+            list = categoryMService.getMiddleCategoryList();
+
         }
 
         return list;

@@ -22,6 +22,7 @@ public class CategoryB {
     @Column(name="category_b_name", nullable = false, length = 100)
     private String categoryBName;
 
+
     @ToString.Exclude
     @OneToMany(mappedBy = "categoryB", cascade = CascadeType.ALL)
     private final Set<CategoryM> categoryMs = new LinkedHashSet<>();

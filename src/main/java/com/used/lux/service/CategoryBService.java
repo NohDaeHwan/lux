@@ -2,12 +2,15 @@ package com.used.lux.service;
 
 import com.used.lux.domain.CategoryB;
 import com.used.lux.dto.CategoryBDto;
+import com.used.lux.dto.CategoryMDto;
 import com.used.lux.repository.CategoryBRepository;
 import com.used.lux.request.CategoryCreateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -18,10 +21,6 @@ public class CategoryBService {
 
     //B카테고리 추가 BDto반환
     public CategoryBDto createCategory(CategoryCreateRequest categoryCreateRequest) {
-        //System.out.println(categoryCreateRequest.categoryName());
-        //System.out.println(CategoryB.of(categoryCreateRequest.categoryName()).getCategoryMs());
-        //System.out.println(CategoryB.of(categoryCreateRequest.categoryName()).getCategoryBName());
-
         return CategoryBDto.from(categoryBRepository.save(CategoryB.of(categoryCreateRequest.categoryName())));
     }
 
@@ -33,7 +32,8 @@ public class CategoryBService {
     }
 
     //B 카테고리 모두 출력하기
-    public List<CategoryB> getBigCategoryAll(){return categoryBRepository.findAll();}
+    public List<CategoryBDto> getBigCategoryAll(){return categoryBRepository.findAll()
+            .stream().map(CategoryBDto::from).collect(Collectors.toCollection(ArrayList::new));}
 
 
 
