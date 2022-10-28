@@ -16,4 +16,9 @@ public class MainController {
         return "/front/login"; // 로그인 페이지를 보여줄 뷰 필요
     }
 
+    @GetMapping("/register")
+    public String register() {
+        return "/front/register"; // 회원가입 페이지를 보여줄 뷰 필요
+    }
+
 }

@@ -11,12 +11,19 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequiredArgsConstructor
+@RequestMapping("/mypage")
 @Controller
 public class UserAccountController {
 
-    private final UserAccountService userAccountService;
+    @GetMapping
+    public String mypage(){
+        return "/front/mypage-order";
+    }
+
+    /*private final UserAccountService userAccountService;
 
     @GetMapping
     public String Mypage(ModelMap model, @AuthenticationPrincipal Principal principal, @PageableDefault(size = 2)Pageable pageable){
@@ -24,6 +31,6 @@ public class UserAccountController {
         Page<ProductOrderResponse> orders = userAccountService.orderlistPage(principal.toDto(), pageable).map(ProductOrderResponse::from);
         model.addAttribute("orders", orders);
         return "/mypage";
-    }
+    }*/
 
 }
