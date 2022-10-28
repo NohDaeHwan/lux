@@ -7,6 +7,5 @@ import java.util.List;
 
 public interface ProductOrderCancelRepository extends JpaRepository<ProductOrderCancel, Long> {
     List<ProductOrderCancel> findByUserName(String userEmail);
-
     ProductOrderCancel findByOrderId(Long orderId);
 }

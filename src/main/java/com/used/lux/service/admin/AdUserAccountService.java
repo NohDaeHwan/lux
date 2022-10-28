@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,10 +33,13 @@ public class AdUserAccountService {
 
     private final UserWithdrawalRepository userWithdrawalRepository;
 
-    public Page<UserAccountDto> getUserList(Pageable pageable) {
-        return userAccountRepository.findAll(pageable).map(UserAccountDto::from);
+    @Transactional(readOnly = true)
+    public Page<UserAccountDto> getUserList(Pageable pageable, String gender, String age, String grade,
+                                            String date, String query) {
+        return userAccountRepository.searchUser(gender, age, grade, date, query, pageable).map(UserAccountDto::from);
     }
 
+    @Transactional(readOnly = true)
     public AdUserAccountDto getUserDetail(Long userId) {
         // 회원 상세
         UserAccountDto userAccountDto = UserAccountDto.from(userAccountRepository.findById(userId).get());
@@ -59,11 +63,19 @@ public class AdUserAccountService {
                 appraisalDtos, auctionLogDtos, userAccountLogDtos);
     }
 
+    @Transactional(readOnly = true)
+    public UserAccountDto getAdminDetail(Long userId) {
+        // 회원 상세
+        return UserAccountDto.from(userAccountRepository.findById(userId).get());
+    }
+
+    @Transactional(readOnly = true)
     public List<UserGradeDto> getUserGrade() {
         return userGradeRepository.findAll()
                 .stream().map(UserGradeDto::from).collect(Collectors.toCollection(ArrayList::new));
     }
 
+    @Transactional(readOnly = true)
     public List<UserWithdrawalDto> getUserWithdrawal() {
         return userWithdrawalRepository.findAll()
                 .stream().map(UserWithdrawalDto::from).collect(Collectors.toCollection(ArrayList::new));

@@ -29,66 +29,61 @@
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">검색 조건</h5>
-                        <form class="search-form" method="POST" action="#">
+                        <form class="search-form" action="/admin/appraise">
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">검수상태</label>
                                 <div class="col-sm-10">
-                                    <select class="form-select">
-                                        <!-- <option selected>Open this select menu</option> -->
-                                        <!--                      <option value="1">Male</option>-->
-                                        <!--                      <option value="2">Female</option>-->
-                                        <!-- <option value="3">Three</option> -->
+                                    <select class="form-select" name="appraisalState">
+                                        <option value="" selected>전체</option>
+                                        <option th:each="state : ${appraisalSearchResponse.stateDtos()}" th:if="${state.stateName().contains('검수')}"
+                                                th:value="${state.stateStep()}" th:text="${state.stateStep}">example</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">브랜드</label>
                                 <div class="col-sm-10">
-
-                                    <select class="form-select">
-                                        <!-- <option selected>Open this select menu</option> -->
-                                        <!--                      <option value="2">Two</option>-->
-                                        <!--                      <option value="3">Three</option>-->
+                                    <select class="form-select" name="appraisalBrand">
+                                        <option value="" selected>전체</option>
+                                        <option th:each="brand : ${appraisalSearchResponse.brandDtos()}" th:value="${brand.brandName()}" th:text="${brand.brandName}">example</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">성별</label>
                                 <div class="col-sm-10">
-                                    <select class="form-select" aria-label="Default select example">
-                                        <!-- <option selected>Open this select menu</option> -->
-                                        <!--                      <option value="1">bad</option>-->
-                                        <!--                      <option value="2">Two</option>-->
-                                        <!--                      <option value="3">Three</option>-->
+                                    <select class="form-select" name="appraisalGender">
+                                        <option value="" selected>전체</option>
+                                        <option value="Male">남자</option>
+                                        <option value="Female">여자</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">사이즈</label>
                                 <div class="col-sm-10">
-                                    <select class="form-select" aria-label="Default select example">
-                                        <!-- <option selected>Open this select menu</option> -->
-                                        <!--                      <option value="1">bad</option>-->
-                                        <!--                      <option value="2">Two</option>-->
-                                        <!--                      <option value="3">Three</option>-->
+                                    <select class="form-select" name="appraisalSize">
+                                        <option value="" selected>전체</option>
+                                        <option th:each="num : ${#numbers.sequence(90,290, 5)}" th:value="${num}" th:text="${num}">14</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">상품등급</label>
                                 <div class="col-sm-10">
-                                    <select class="form-select" aria-label="Default select example">
-                                        <!-- <option selected>Open this select menu</option> -->
-                                        <!--                      <option value="1">bad</option>-->
-                                        <!--                      <option value="2">Two</option>-->
-                                        <!--                      <option value="3">Three</option>-->
+                                    <select class="form-select" name="appraisalGrade">
+                                        <option value="" selected>전체</option>
+                                        <option value="1">S</option>
+                                        <option value="2">A</option>
+                                        <option value="3">B</option>
+                                        <option value="3">C</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="inputDate" class="col-sm-2 col-form-label">등록일기준</label>
+                                <label class="col-sm-2 col-form-label">등록일기준</label>
                                 <div class="col-sm-10">
-                                    <input type="date" class="form-control">
+                                    <input type="date" class="form-control" name="appraisalDate">
                                 </div>
                             </div>
                             <div class="search-bar mb-3">
@@ -156,13 +151,36 @@
         </div>
     </section>
 
-    <th:block th:replace="layout/pagination :: #pagination">
-
-    </th:block>
+    <!-- Pagination with icons -->
+    <nav id="pagination" aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" th:href="@{/admin/appraise(page=${appraisalResponse.number - 1}, sort=(${param.sort} != null ? ${param.sort} : '') + (${appraisalResponse.sort.getOrderFor('param.sort')} != null ? (${appraisalResponse.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
+                      query=${param.query})}" aria-label="Previous" th:class="'page-link' + (${appraisalResponse.number} <= 0 ? ' disabled' : '')">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item" th:each="pageNumber : ${paginationBarNumbers}">
+                <a th:text="${pageNumber + 1}"
+                   th:href="@{/admin/appraise(page=${pageNumber},
+                          sort=(${param.sort} != null ? ${param.sort} : '') + (${appraisalResponse.sort.getOrderFor('param.sort')} != null ? (${appraisalResponse.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
+                          query=${param.query}
+                      )}"
+                   th:class="'page-link' + (${pageNumber} == ${appraisalResponse.number} <= 0 ? ' disabled' : '')">
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" th:href="@{/admin/appraise(page=${appraisalResponse.number + 1}, sort=(${param.sort} != null ? ${param.sort} : '') + (${appraisalResponse.sort.getOrderFor('param.sort')} != null ? (${appraisalResponse.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
+                      query=${param.query})}" aria-label="Next" th:class="'page-link' + (${appraisalResponse.number} >= ${appraisalResponse.totalPages - 1} ? ' disabled' : '')">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav><!-- End Pagination with icons -->
 
 </main><!-- End #main -->
-<script th:inline="javascript">
-    <!-- 검색폼 스크립트 (user용) -->
+<!--<script th:inline="javascript">
+    &lt;!&ndash; 검색폼 스크립트 (user용) &ndash;&gt;
 
     /*<![CDATA[*/
 
@@ -199,7 +217,7 @@
     g_by("appraisalGrade");
     /*]]>*/
 
-</script>
+</script>-->
 <th:block th:replace="layout/footer :: #footer">
 
 </th:block>
