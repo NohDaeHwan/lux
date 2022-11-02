@@ -91,7 +91,7 @@ public class AdProductController {
         if (productDetail.productDto().productState().getStateStep().equals("신규")) {
             List<BrandDto> brandDto = adProductService.getBrandList();
             List<CategoryBDto> categoryBDtos = adProductService.getCategoryList();
-            List<CategoryMDto> categoryMDtos = categoryMService.getCategoryList();
+            List<CategoryMDto> categoryMDtos = categoryMService.getMiddleCategoryList();
 
             mm.addAttribute("brandDto", brandDto);
             mm.addAttribute("categoryBDtos", categoryBDtos);
