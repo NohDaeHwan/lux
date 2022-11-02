@@ -1,137 +1,59 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-  <!-- Basic -->
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <!-- Mobile Metas -->
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <!-- Site Metas -->
-  <meta name="keywords" content="" />
-  <meta name="description" content="" />
-  <meta name="author" content="" />
-
-  <title>Watcher</title>
-
-  <!-- slider stylesheet -->
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.3/assets/owl.carousel.min.css" />
-
-  <!-- bootstrap core css -->
-  <link rel="stylesheet" type="text/css" href="/static/assets/watcher-html/css/bootstrap.css" />
-
-  <!-- fonts style -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap" rel="stylesheet">
-  
- <!-- Custom styles for this template -->
-  <link href="css/front-style.css" rel="stylesheet" />
-  <!-- responsive style -->
-  <link href="/static/assets/watcher-html/css/responsive.css" rel="stylesheet" />
-</head>
-
+<head th:replace="layout/front-head :: .head"></head>
 <body class="sub_page">
-  <div class="hero_area">
-    <!-- header section strats -->
-    <header class="header_section">
-      <div class="container-fluid">
-        <nav class="navbar navbar-expand-lg custom_nav-container pt-3">
-          <a class="navbar-brand" href="index.html">
-            <span>
-              Watcher
-            </span>
-          </a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <div class="d-flex ml-auto flex-column flex-lg-row align-items-center">
-              <ul class="navbar-nav  ">
-                <li class="nav-item active">
-                  <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/static/assets/watcher-html/about.html"> About </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/static/assets/watcher-html/watch.html"> Our Watches </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="contact.html">Contact us</a>
-                </li>
-              </ul>
-              <form class="form-inline my-2 my-lg-0 ml-0 ml-lg-4 mb-3 mb-lg-0">
-                <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit"></button>
-              </form>
-            </div>
-          </div>
-        </nav>
-      </div>
-    </header>
-    <!-- end header section -->
-
-  </div>
+<div th:replace="layout/front-header-profile :: #profile-header"></div>
 
 
-  <!-- contact section -->
-	<div class="layout_padding" style="padding: 150px 0;">
+<!-- contact section -->
+<div class="layout_padding" style="padding: 150px 0;">
     <h2 class="custom_heading text-center">
-      LUX
+        LUX
     </h2>
-		<div class="container" style="padding: 0 300px;">
-			<div class="container full-height justify-content-center">
-				<div class="col-12 text-center align-self-center py-5">
-				
-					<div class="section pb-5 pt-5 pt-sm-2 text-center">
-						<h6 class="mb-0 pb-3"><span>명품 중고/경매 거래 사이트, LUX </span></h6>
-			          	<!-- <input class="checkbox" type="checkbox" id="reg-log" name="reg-log"/> -->
-			          	<label for="reg-log"></label>
-			          	<!-- <a href="/"><img src="/static/assets/img/lux.png" alt=""></a> -->
-						<div class="card-3d-wrap mx-auto">
-							<div class="card-3d-wrapper">
-								<div class="card-front">
-									<div class="center-wrap">
-									 
-										<div class="section text-center">
-											<form action="/login_request" method="post"> 
-											<h4 class="mb-4 pb-3">닉네임 변경</h4>
-											<div class="form-group">
-												<input type="text" name="username" class="form-control" placeholder="현재 닉네임:" id="username" autocomplete="off">
-												<i class="input-icon uil uil-at"></i>
-											</div>	
+    <div class="container" style="padding: 0 300px;">
+        <div class="container full-height justify-content-center">
+            <div class="col-12 text-center align-self-center py-5">
+
+                <div class="section pb-5 pt-5 pt-sm-2 text-center">
+                    <h6 class="mb-0 pb-3"><span>명품 중고/경매 거래 사이트, LUX </span></h6>
+                    <!-- <input class="checkbox" type="checkbox" id="reg-log" name="reg-log"/> -->
+                    <label></label>
+                    <!-- <a href="/"><img src="/static/assets/img/lux.png" alt=""></a> -->
+                    <div class="card-3d-wrap mx-auto">
+                        <div class="card-3d-wrapper">
+                            <div class="card-front">
+                                <div class="center-wrap">
+
+                                    <div class="section text-center">
+                                        <form action="/login_request" method="post">
+                                            <h4 class="mb-4 pb-3">닉네임 변경</h4>
+                                            <div class="form-group">
+                                                <input type="text" name="username" class="form-control" placeholder="현재 닉네임:" th:placeholder="'현재 닉네임: '+${users.userName}" id="username" autocomplete="off">
+                                                <i class="input-icon uil uil-at"></i>
+                                            </div>
                                             <div class="form-group mt-2">
                                                 <button type="submit" class="w-100 btn btn-info mt-2" value="로그인">변경완료</button>
                                             </div>
-											</form>
-                                            <p class="mb-0 mt-4 text-center"><a href="#0" class="link">탈퇴하기</a></p>
-				      					</div>
-			      					</div>
-			      				</div>
-			      			</div>
-			      		</div>
-			      	</div>
-		      	</div>
-	      	</div>
-	    </div>
-	</div>
-  <!-- end contact section -->
+                                        </form>
+                                        <p class="mb-0 mt-4 text-center"><a href="/mypage/withdrawal" class="link">탈퇴하기</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end contact section -->
 
 
-  <!-- end info_section -->
+<!-- end info_section -->
 
-  <!-- footer section -->
-  <section class="container-fluid footer_section">
-    <p>
-      © 2020 All Rights Reserved By
-      <a href="https://html.design/">Free Html Templates</a>
-    </p>
-  </section>
-  <!-- footer section -->
-
-  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
-  <script type="text/javascript" src="js/bootstrap.js"></script>
+<!-- footer section -->
+<footer th:replace="layout/front-footer :: .footer"></footer>
 </body>
 
 </html>

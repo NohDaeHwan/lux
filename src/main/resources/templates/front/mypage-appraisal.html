@@ -1,168 +1,13 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-  <!-- Basic -->
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <!-- Mobile Metas -->
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <!-- Site Metas -->
-  <meta name="keywords" content="" />
-  <meta name="description" content="" />
-  <meta name="author" content="" />
-
-  <title>Watcher</title>
-
-  <!-- slider stylesheet -->
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.3/assets/owl.carousel.min.css" />
-
-  <!-- bootstrap core css -->
-  <link rel="stylesheet" type="text/css" href="/static/assets/watcher-html/css/bootstrap.css" />
-
-  <!-- fonts style -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap" rel="stylesheet">
-  <!-- <link href="https://fonts.googleapis.com/css?family=Dosis:400,500|Poppins:400,700&display=swap" rel="stylesheet"> -->
-  <!-- Custom styles for this template -->
-  <link href="css/front-style.css" rel="stylesheet" />
-  <!-- responsive style -->
-  <link href="/static/assets/watcher-html/css/responsive.css" rel="stylesheet" />
-</head>
+<head th:replace="layout/front-head :: .head"></head>
 
 <body class="sub_page">
 
+<header th:replace="layout/front-header :: .header"></header>
+<header th:replace="layout/front-header-mypage :: #mypage-header"></header>
 
-<!-- header section strats -->
-<header class="header_section header fixed-top d-flex align-items-center">
-    <div class="container-fluid">
-    <nav class="navbar navbar-expand-lg custom_nav-container pt-3">
-        <a class="navbar-brand" href="index.html">
-        <span>
-            LUX
-        </span>
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <form class="form-inline col-lg-5 my-2 my-lg-0 ml-0 ml-lg-4 mb-3 mb-lg-0" style="justify-content: center;">
-            <input type="text" class="form-control mr-2 col-lg-10 col-sm-10" placeholder="어떤 중고 상품을 둘러보고 싶으신가요? 검색">
-            <button class="btn my-2 my-sm-0 nav_search-btn" type="submit"></button>
-        </form>
-        <div class="d-flex ml-auto flex-column flex-lg-row align-items-center">
-            <ul class="navbar-nav ">
-            <li class="nav-item active">
-                <a class="nav-link" href="index.html">Home<span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/static/assets/watcher-html/about.html">중고 </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/static/assets/watcher-html/watch.html">경매</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="contact.html">검수</a>
-            </li>
-            </ul>
-        </div>
-        </div>
-    </nav>
-    </div>
-    
-</header>
-<!-- end header section -->
-
-<header class="align-items-center">
-    <div class="container-fluid">
-        <div class="navbar navbar-expand-lg pt-3" style="margin-top : 76px;">
-            <h2 style="color:white;" class="nav-link">
-                My Page
-            </h2>
-        </div>
-        <div class="navbar pt-3">
-            <div class="ml-5" style="width: 200px; height:200px;">
-                <div class="slider_img-box">
-                    <div>
-                        <img src="/static/assets/img/watch.png" alt="" class="" />
-                    </div>
-                </div>
-            </div>
-            <div style="flex-grow: 1;">
-                <div>
-                    <h1 style="color:white; font-size: 60px;">시팔학번</h1>
-                    <h6 ><a href="#" style="color:lightgray;">회원정보변경 ></a></h6>
-                </div>
-                <div>
-                    <h3 style="color:white;">LV.3 멤버</h3>
-                    <h6 style="color:lightgray;">가입일: 2019.03.09</h6>
-                </div>
-                <div>
-                    <h4 style="color:lightgray;">구*현님 다음 등급인 브론즈까지 82,768점 남았습니다.</h4>
-                    <h6><a href="#" style="color:lightgray;">등급혜택 ></a></h6>
-                </div>
-            </div>
-            <div class="ml-5" style="padding-right:150px;">
-                <a href="#">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-piggy-bank" viewBox="0 0 16 16" style="color:white;">
-                        <path d="M5 6.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0zm1.138-1.496A6.613 6.613 0 0 1 7.964 4.5c.666 0 1.303.097 1.893.273a.5.5 0 0 0 .286-.958A7.602 7.602 0 0 0 7.964 3.5c-.734 0-1.441.103-2.102.292a.5.5 0 1 0 .276.962z"/>
-                        <path fill-rule="evenodd" d="M7.964 1.527c-2.977 0-5.571 1.704-6.32 4.125h-.55A1 1 0 0 0 .11 6.824l.254 1.46a1.5 1.5 0 0 0 1.478 1.243h.263c.3.513.688.978 1.145 1.382l-.729 2.477a.5.5 0 0 0 .48.641h2a.5.5 0 0 0 .471-.332l.482-1.351c.635.173 1.31.267 2.011.267.707 0 1.388-.095 2.028-.272l.543 1.372a.5.5 0 0 0 .465.316h2a.5.5 0 0 0 .478-.645l-.761-2.506C13.81 9.895 14.5 8.559 14.5 7.069c0-.145-.007-.29-.02-.431.261-.11.508-.266.705-.444.315.306.815.306.815-.417 0 .223-.5.223-.461-.026a.95.95 0 0 0 .09-.255.7.7 0 0 0-.202-.645.58.58 0 0 0-.707-.098.735.735 0 0 0-.375.562c-.024.243.082.48.32.654a2.112 2.112 0 0 1-.259.153c-.534-2.664-3.284-4.595-6.442-4.595zM2.516 6.26c.455-2.066 2.667-3.733 5.448-3.733 3.146 0 5.536 2.114 5.536 4.542 0 1.254-.624 2.41-1.67 3.248a.5.5 0 0 0-.165.535l.66 2.175h-.985l-.59-1.487a.5.5 0 0 0-.629-.288c-.661.23-1.39.359-2.157.359a6.558 6.558 0 0 1-2.157-.359.5.5 0 0 0-.635.304l-.525 1.471h-.979l.633-2.15a.5.5 0 0 0-.17-.534 4.649 4.649 0 0 1-1.284-1.541.5.5 0 0 0-.446-.275h-.56a.5.5 0 0 1-.492-.414l-.254-1.46h.933a.5.5 0 0 0 .488-.393zm12.621-.857a.565.565 0 0 1-.098.21.704.704 0 0 1-.044-.025c-.146-.09-.157-.175-.152-.223a.236.236 0 0 1 .117-.173c.049-.027.08-.021.113.012a.202.202 0 0 1 .064.199z"/>
-                    </svg>
-                    <p style="color:white;">포인트 ></p>
-                    <h1 style="color:white;">3,300</h1>
-                </a>
-            </div>
-        </div>
-    </div>
-</header>
-
-<aside id="sidebar" class="mysidebar">
-
-    <ul class="sidebar-nav">
-    <li class="nav-heading">나의 쇼핑 활동</li>
-        <li class="nav-item">
-        <a class="nav-link collapsed" href="index.html">
-            <i class="bi bi-grid"></i>
-            <span>주문 내역 조회</span>
-        </a>
-        </li><!-- End Dashboard Nav -->
-        <li class="nav-item">
-        <a class="nav-link collapsed" href="index.html">
-            <i class="bi bi-grid"></i>
-            <span>경매 내역 조회</span>
-        </a>
-        </li><!-- End Dashboard Nav -->
-        <li class="nav-item">
-        <a class="nav-link collapsed" href="index.html">
-            <i class="bi bi-grid"></i>
-            <span>검수 요청 결과</span>
-        </a>
-        </li><!-- End Dashboard Nav -->
-        <li class="nav-item">
-        <a class="nav-link collapsed" href="index.html">
-            <i class="bi bi-grid"></i>
-            <span>최근 본 상품</span>
-        </a>
-        </li><!-- End Dashboard Nav -->
-        <li class="nav-item">
-        <a class="nav-link collapsed" href="index.html">
-            <i class="bi bi-grid"></i>
-            <span>포인트 내역/충전</span>
-        </a>
-        </li><!-- End Dashboard Nav -->
-        <li class="nav-item">
-        <a class="nav-link collapsed" href="index.html">
-            <i class="bi bi-grid"></i>
-            <span>회원 혜택</span>
-        </a>
-        </li><!-- End Dashboard Nav -->
-    </ul>
-
-</aside><!-- End Sidebar-->
-
-
+<aside th:replace="layout/front-aside-mypage :: .mysidebar"></aside>
     <!-- brand section -->
     <main id="main" class="main">
         <section class="layout_padding2">
@@ -418,24 +263,7 @@
 
     </main>
 
-    <footer id="footer" class="footer">
-            <!-- footer section -->
-            <section class="container-fluid footer_section">
-                <p>
-                    © 2022 All Rights Reserved By
-                    <a href="#">Lux ARP Project</a>
-                </p>
-                </section>
-                <!-- footer section -->
-    </footer>
-
-
-  <!-- end info_section -->
-
-
-
-  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
-  <script type="text/javascript" src="js/bootstrap.js"></script>
+<footer th:replace="layout/front-footer :: .footer"></footer>
 </body>
 
 </html>

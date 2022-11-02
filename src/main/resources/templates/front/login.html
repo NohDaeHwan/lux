@@ -1,25 +1,8 @@
 <!DOCTYPE html>
 <html>
-
 <head th:replace="layout/front-head :: .head"></head>
-
 <body class="sub_page">
-  <div class="hero_area">
-    <!-- header section strats -->
-    <header class="header_section">
-      <div class="container-fluid">
-        <nav class="navbar navbar-expand-lg custom_nav-container pt-3">
-          <a class="navbar-brand" href="/">
-            <span>
-              LUX
-            </span>
-          </a>
-        </nav>
-      </div>
-    </header>
-    <!-- end header section -->
-  </div>
-
+<div th:replace="layout/front-header-profile :: #profile-header"></div>
 
   <!-- contact section -->
 	<div class="layout_padding" style="padding: 150px 0;">
@@ -106,22 +89,7 @@
 	      	</div>
 	    </div>
 	</div>
-  <!-- end contact section -->
-
-
-  <!-- end info_section -->
-
-  <!-- footer section -->
-  <section class="container-fluid footer_section">
-    <p>
-      © 2020 All Rights Reserved By
-      <a href="https://html.design/">Free Html Templates</a>
-    </p>
-  </section>
-  <!-- footer section -->
-
-  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-  <script type="text/javascript" src="/static/assets/js/bootstrap.js"></script>
+<footer th:replace="layout/front-footer :: .footer"></footer>
 </body>
 
 </html>
