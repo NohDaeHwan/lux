@@ -32,4 +32,7 @@ public class UserAccountService {
         return  paging;
     }
 
+    public UserAccountDto getUser(Long id) {
+        return UserAccountDto.from(userAccountRepository.findById(id).get());
+    }
 }

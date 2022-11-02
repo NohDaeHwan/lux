@@ -50,6 +50,8 @@ public class AdUserAccountService {
         List<ProductOrderCancelDto> productOrderCancelDtos = productOrderCancelRepository.findByUserName(userAccountDto.userName())
                 .stream().map(ProductOrderCancelDto::from).collect(Collectors.toCollection(ArrayList::new));
         // 검수내역
+        // pageable일땐 stream이어도 map만해줘도된다. 상관없음.
+        // list, arraylist, collection 등 다른 리스트 형태들은 파이프(stream) 역할을 해줘야한다.
         List<AppraisalDto> appraisalDtos = appraisalRepository.findByUserAccountId(userAccountDto.id())
                 .stream().map(AppraisalDto::from).collect(Collectors.toCollection(ArrayList::new));
         // 경매 내역
