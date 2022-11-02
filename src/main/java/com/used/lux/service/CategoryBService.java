@@ -2,7 +2,6 @@ package com.used.lux.service;
 
 import com.used.lux.domain.CategoryB;
 import com.used.lux.dto.CategoryBDto;
-import com.used.lux.dto.CategoryMDto;
 import com.used.lux.repository.CategoryBRepository;
 import com.used.lux.request.CategoryCreateRequest;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -43,4 +43,9 @@ public class CategoryBService {
     }
 
     public void bigCategoryDelete(Long categoryId) {categoryBRepository.deleteById(categoryId);}
+
+    public CategoryB findById(Long id){
+        Optional<CategoryB> categoryB = categoryBRepository.findById(id);
+        return categoryB.orElse(null);
+    }
 }

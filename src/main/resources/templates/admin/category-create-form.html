@@ -34,9 +34,23 @@
             <!-- General Form Elements -->
             <form th:action="@{|/admin/product/category/new/create|}" method="post">
               <div class="row mb-3">
+                <label for="inputText" class="col-sm-2 col-form-label">카테고리 선택</label>
+                  <input type="radio"  class="form-control" name="categoryType" value="big" checked onclick="javacript:display(1)">큰 카테고리
+                  <input type="radio"  class="form-control" name="categoryType" value="middle" onclick="javacript:display(0)">작은 카테고리
+              </div>
+              <div class="row mb-3">
                 <label for="inputText" class="col-sm-2 col-form-label">카테고리명</label>
                 <div class="col-sm-10">
                   <input type="text" id="inputText" class="form-control" name="categoryName">
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="inputText" class="col-sm-2 col-form-label">종속될 카테고리</label>
+                <div class="col-sm-10 " id = "selectBox" name = "Bid">
+                  <select name="Bid" >
+                      <option value="">선택해주세요</option>
+                      <option th:each="list : ${listDtos}" th:value="${list.id()}" th:text="${list.categoryBName()}"></option>
+                  </select>
                 </div>
               </div>
               <div class="row mb-3">
@@ -63,6 +77,30 @@
 <th:block th:replace="layout/footer :: #footer">
 
 </th:block>
+<script>
+  function display(a)
+  {
+      let sel = document.getElementById("selectBox");
+      if(a == 1 && sel.style.display=="block")
+      {
+        sel.style.display = "none";
+        return;
+      }else if(a == 0) {
+        if (sel.style.display === "none") {
+          sel.style.display = "block";
+        } else if (sel.style.display === "block") {
+          sel.style.display = "none";
+        }
+      }
+
+  }
+
+  window.onload = () => {
+    document.getElementById("selectBox").style.display = "none";
+  }
+
+
+</script>
 </body>
 
 </html>

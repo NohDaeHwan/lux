@@ -15,20 +15,23 @@ import java.util.stream.Collectors;
 public class CategoryMService {
     //Category_M DB의 서비스 클래스입니다. 해당 DB에 연결하려면 repository와 service 영역에 추가적인 작성이 필요합니다.
     private final CategoryMRepository categoryMRepository;
-    private CategoryM categoryM =null;
+    private final CategoryBService categoryBService;
+
     public List<CategoryMDto> getMiddleCategoryList() {
         return categoryMRepository.findAll()
                 .stream().map(CategoryMDto::from).collect(Collectors.toCollection(ArrayList::new));
     }
 
-    public boolean middleCategoryCreate(String st)
+    public boolean middleCategoryCreate(String st,Long id)
     {
+        CategoryM categoryM = new CategoryM();
         boolean output = false;
         //같은 이름이 있는지 확인
         if(!categoryMRepository.existsByCategoryMName(st))
         {
             //없을시 추가
             categoryM.setCategoryMName(st);
+            categoryM.setCategoryB(categoryBService.findById(id));
             categoryMRepository.save(categoryM);
             output = true;
 
@@ -48,9 +51,10 @@ public class CategoryMService {
 
     }
 
-    public void middleCategoryExsist(String st){
+    public boolean middleCategoryExsist(String st){
         //해당 카테고리가 존재하는지 확인
-        categoryMRepository.existsByCategoryMName(st);
+        return categoryMRepository.existsByCategoryMName(st);
+
     }
 
     public List<String> middlecategoryExsistByBCategory(Long categoryId)

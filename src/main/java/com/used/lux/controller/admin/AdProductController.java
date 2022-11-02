@@ -177,9 +177,10 @@ public class AdProductController {
 
     // 상품 카테고리 추가 페이지
     @GetMapping("/category/new")
-    public String productCategoryCreate(@AuthenticationPrincipal Principal principal)
+    public String productCategoryCreate(@AuthenticationPrincipal Principal principal,ModelMap modelMap)
     {
-
+        List<CategoryBDto> categoryBDtos = categoryBService.getBigCategoryAll();
+        modelMap.addAttribute("listDtos",categoryBDtos);
         return "/admin/category-create-form";
     }
 
@@ -187,15 +188,25 @@ public class AdProductController {
     @PostMapping("/category/new/create")
     public String productCategoryCreate(@AuthenticationPrincipal Principal principal,
                                              CategoryCreateRequest categoryCreateRequest,ModelMap mm){
+        System.out.println(categoryCreateRequest.categoryType());
+        System.out.println(categoryCreateRequest.categoryName());
+        System.out.println(categoryCreateRequest.Bid());
+        if(categoryCreateRequest.categoryType().equals("big")) {
+            if (!categoryBService.bigCategoryExist(categoryCreateRequest.categoryName())) {
+                categoryBService.createCategory(categoryCreateRequest);
+            } else {
+                //메세지박스 문자가 들어가야함 ::중복된 이름의 카테고리가 있습니다.
+            }
+        }else if(categoryCreateRequest.categoryType().equals("middle"))
+        {
+            if(!categoryMService.middleCategoryExsist(categoryCreateRequest.categoryName()))
+            {
+                categoryMService.middleCategoryCreate(categoryCreateRequest.categoryName(),categoryCreateRequest.Bid());
+            }else
+            {
 
-        if(!categoryBService.bigCategoryExist(categoryCreateRequest.categoryName()))
-        {
-            categoryBService.createCategory(categoryCreateRequest);
-        }else
-        {
-            //메세지박스 문자가 들어가야함 ::중복된 이름의 카테고리가 있습니다.
+            }
         }
-
         return "redirect:/admin/product/category";
     }
     //상품 카테고리 삭제
