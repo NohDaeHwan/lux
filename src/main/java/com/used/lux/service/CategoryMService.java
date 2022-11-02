@@ -59,4 +59,8 @@ public class CategoryMService {
         List<String> list = categoryMRepository.findAllByCategoryB_Id(categoryId);
         return list;
     }
+
+    public void middleCategoryDeleteById(Long categoryId) {
+        categoryMRepository.deleteById(categoryId);
+    }
 }

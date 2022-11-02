@@ -199,8 +199,8 @@ public class AdProductController {
         return "redirect:/admin/product/category";
     }
     //상품 카테고리 삭제
-    @GetMapping("/category/{categoryId}/delete")
-    public String productCategoryDelete(@PathVariable Long categoryId,
+    @GetMapping("/category/{categoryId}/deleteB")
+    public String productCategoryDeleteB(@PathVariable Long categoryId,
                                      @AuthenticationPrincipal Principal principal){
         //bigcategory 삭제 메소드 1차 ::하위카테고리 삭제여부
         List<String> list = categoryMService.middlecategoryExsistByBCategory(categoryId);
@@ -221,7 +221,14 @@ public class AdProductController {
 
         return "redirect:/admin/product/category";
     }
+    //M카테고리 삭제
+    @GetMapping("/category/{categoryId}/deleteM")
+    public String productCategoryDeleteM(@PathVariable Long categoryId,
+                                        @AuthenticationPrincipal Principal principal){
 
+        categoryMService.middleCategoryDeleteById(categoryId);
+        return "redirect:/admin/product/category";
+    }
     //카테고리 전환
     @ResponseBody
     @PostMapping("/category/changer")
