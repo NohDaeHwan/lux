@@ -1,14 +1,12 @@
 package com.used.lux.service;
 
-import com.used.lux.domain.Brand;
 import com.used.lux.domain.UserGrade;
-import com.used.lux.dto.BrandDto;
 import com.used.lux.dto.UserGradeDto;
 import com.used.lux.repository.UserGradeRepository;
-import com.used.lux.request.BrandCreateRequest;
 import com.used.lux.request.GradeCreateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +19,9 @@ public class UserGradeService {
     private final UserGradeRepository userGradeRepository;
 
     public UserGradeDto createGrade(GradeCreateRequest gradeCreateRequest) {
-        return UserGradeDto.from(userGradeRepository.save(UserGrade.of(gradeCreateRequest.id() , gradeCreateRequest.gradeName(), gradeCreateRequest.discount())));
+        return UserGradeDto.from(userGradeRepository.save(UserGrade.of(gradeCreateRequest.id(),
+                gradeCreateRequest.gradeStep(), gradeCreateRequest.gradeName(),
+                gradeCreateRequest.discount(), gradeCreateRequest.rankUp())));
     }
 
     public void deleteGrade(Long gradeId) {
@@ -32,4 +32,10 @@ public class UserGradeService {
         return userGradeRepository.findAll().stream()
                 .map(UserGradeDto::from).collect(Collectors.toCollection(ArrayList::new));
     }
+
+    @Transactional
+    public UserGradeDto getNextGrade(int gradeStep) {
+        return UserGradeDto.from(userGradeRepository.findByGradeStep(gradeStep+1));
+    }
+
 }
