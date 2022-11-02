@@ -20,6 +20,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf().disable().authorizeHttpRequests(auth -> auth
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+                        .antMatchers(
+                                "/mypage/**", "/admin/**"
+                        ).authenticated()
                         .antMatchers("/admin/**").hasRole("ROLE_ADMIN")
                         .anyRequest().permitAll()
                 )

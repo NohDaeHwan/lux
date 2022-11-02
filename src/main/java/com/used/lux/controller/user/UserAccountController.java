@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class UserAccountController {
 
     private final UserAccountService userAccountService;
+
     private final ProductOrderService productOrderService;
 
     private final UserAccountLogService userAccountLogService;
@@ -64,6 +65,24 @@ public class UserAccountController {
     }
 
     /*private final UserAccountService userAccountService;
+
+    private final ProductOrderService productOrderService;
+
+    private final UserGradeService userGradeService;
+
+    @GetMapping
+    public String mypage(@AuthenticationPrincipal Principal principal, Pageable pageable, ModelMap mm){
+        UserAccountResponse userAccountResponse = UserAccountResponse.from(userAccountService.getUser(principal.id()));
+        Page<ProductOrderResponse> productOrderResponse = productOrderService.productListAll(principal.id(),pageable).map(ProductOrderResponse::from);
+        UserGradeDto nextGrade = userGradeService.getNextGrade(principal.userGrade().getGradeStep());
+
+        System.out.println(nextGrade);
+        mm.addAttribute("users",userAccountResponse);
+        mm.addAttribute("orders",productOrderResponse);
+        mm.addAttribute("nextGrade", nextGrade);
+        return "/front/mypage-order";
+    }
+
 
     @GetMapping
     public String Mypage(ModelMap model, @AuthenticationPrincipal Principal principal, @PageableDefault(size = 2)Pageable pageable){

@@ -23,16 +23,18 @@ public class UserAccountService {
     private final UserAccountRepository userAccountRepository;
 
     public Page<ProductOrder> orderlistAll(Long id, Pageable pageable){
-        Page<ProductOrder> orders = productOrderRepository.findByProductId(id,pageable);
+        Page<ProductOrder> orders = productOrderRepository.findByUserAccountId(id,pageable);
         return orders;
     }
 
     public  Page<ProductOrderDto> orderlistPage(UserAccountDto userAccountDto, Pageable pageable){
-        Page<ProductOrderDto> paging = productOrderRepository.findByProductId(userAccountDto.id(),pageable).map(ProductOrderDto::from);
+        Page<ProductOrderDto> paging = productOrderRepository.findByUserAccountId(userAccountDto.id(),pageable).map(ProductOrderDto::from);
         return  paging;
     }
 
+    @Transactional
     public UserAccountDto getUser(Long id) {
         return UserAccountDto.from(userAccountRepository.findById(id).get());
     }
+
 }
