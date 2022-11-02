@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="layout/front-head :: .head"></head>
+
+<body class="sub_page">
+
+
+<header th:replace="layout/front-header :: .header"></header>
+<header th:replace="layout/front-header-mypage :: #mypage-header"></header>
+
+<aside th:replace="layout/front-aside-mypage :: .mysidebar"></aside>
+<!-- brand section -->
+<main id="main" class="main">
+    <section class="layout_padding2">
+        <div class="container-fluid">
+            <div class="brand_heading">
+                <h3 class="custom_heading">
+                    회원 탈퇴
+                </h3>
+                <p>
+                    회원 탈퇴 페이지입니다.<br>
+                </p>
+            </div>
+        </div>
+        <div class="container-fluid brand_item-container">
+            <div class="mb-3">
+                <div>
+                    <ul class="p-3" style="font-size:10px; color: gray;">
+                        <li><h6>탈퇴 완료 후 30일 동안에도 재가입이 가능합니다.</h6></li>
+                        <!-- <li><h6>누적 충전 포인트는 실시간 누적 충전 포인트를 기준으로 집계됩니다.</h6></li> -->
+                        <li><h6>포인트 잔액이 남아있는 경우, 탈퇴를 진행 하시더라도 잔액은 반환이 되지 않습니다.</h6></li>
+                        <li><h6>탈퇴를 진행하시게 되면, 작성하셨던 모든 게시글도 같이 삭제됩니다.</h6></li>
+                    </ul>
+                </div>
+            </div>
+            <h4>탈퇴사유작성</h4>
+            <div class="container-fluid brand_item-container">
+
+                <form>
+                    <!-- <div class="row mb-3">
+                      <label for="inputText" class="col-sm-2 col-form-label">이메일</label>
+                      <div class="col-sm-9 p-2 ml-2">
+                        rnskqkd@naver.com
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="inputText" class="col-sm-2 col-form-label">핸드폰번호</label>
+                      <div class="col-sm-9 p-2 ml-2">
+                        010-9025-5155
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="inputText" class="col-sm-2 col-form-label">회원명</label>
+                      <div class="col-sm-9 p-2 ml-2">
+                        구나현
+                      </div>
+                    </div> -->
+                    <div class="row mb-3">
+                        <label for="inputText" class="col-sm-2 col-form-label">탈퇴사유 ㅠㅠ</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" placeholder="탈퇴하기 전 LUX를 위한 응원의 한마디 !^^!">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-10">
+                            <button type="submit" class="btn btn-info">탈퇴하기</button>
+                            <button type="button" class="btn btn-secondary"><a href="/" style="color:white">홈으로 이동</a></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- <div class="container-fluid brand_item-container">
+            <h4>나의 등급내역</h4>
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">등급명</th>
+                    <th scope="col">포인트</th>
+                    <th scope="col">변경일자</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr each="brandlist : ${brandList}">
+                    <td style="vertical-align: middle;"><h6>Lv.1 뉴비</h6></td>
+                    <td style="vertical-align: middle;"><h6>~100,000P</h6></td>
+                    <td style="vertical-align: middle;"><h6>2%</h6></td>
+                </tr>
+                </tbody>
+            </table>
+        </div> -->
+
+    </section>
+
+</main>
+<footer th:replace="layout/front-footer :: .footer"></footer>
+</body>
+
+</html>

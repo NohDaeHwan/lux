@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="layout/front-head :: .head"></head>
+
+<body class="sub_page">
+
+<header th:replace="layout/front-header :: .header"></header>
+<header th:replace="layout/front-header-mypage :: #mypage-header"></header>
+
+<aside th:replace="layout/front-aside-mypage :: .mysidebar"></aside>    <!-- brand section -->
+    <main id="main" class="main">
+        <section class="layout_padding2">
+            <div class="container-fluid">
+                <div class="brand_heading">
+                <h3 class="custom_heading">
+                    회원 혜택
+                </h3>
+                <p>
+                    명품 중고/경매 쇼핑몰, LUX스토어에서 회원님께 드리는 혜택입니다.<br>
+                    할인 혜택은 회원 등급에 따라 차등 적용됩니다. 많은 관심 부탁드립니다.
+                </p>
+                </div>
+            </div>
+            <div class="container-fluid brand_item-container">
+                <div class="mb-3">
+                    <div>
+                        <ul class="p-3" style="font-size:10px; color: gray;">
+                            <li><h6>회원 등급은 로그인, 마이페이지 접속시 갱신됩니다.</h6></li>
+                            <!-- <li><h6>누적 충전 포인트는 실시간 누적 충전 포인트를 기준으로 집계됩니다.</h6></li> -->
+                            <li><h6>누적 충전 포인트는 최근 5년 치가 반영됩니다.</h6></li>
+                        </ul>
+                    </div>
+                </div>
+                <h4>등급혜택</h4>
+                <table class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">등급명</th>
+                        <th scope="col">누적 충전 포인트</th>
+                        <th scope="col">할인율(%)</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr each="brandlist : ${brandList}">
+                        <td style="vertical-align: middle;"><h6>Lv.1 뉴비</h6></td>
+                        <td style="vertical-align: middle;"><h6>~100,000P</h6></td>
+                        <td style="vertical-align: middle;"><h6>2%</h6></td>
+                    </tr>                
+                    </tbody>
+                </table>
+            </div>
+            <!-- <div class="container-fluid brand_item-container">
+                <h4>나의 등급내역</h4>
+                <table class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">등급명</th>
+                        <th scope="col">포인트</th>
+                        <th scope="col">변경일자</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr each="brandlist : ${brandList}">
+                        <td style="vertical-align: middle;"><h6>Lv.1 뉴비</h6></td>
+                        <td style="vertical-align: middle;"><h6>~100,000P</h6></td>
+                        <td style="vertical-align: middle;"><h6>2%</h6></td>
+                    </tr>                
+                    </tbody>
+                </table>
+            </div> -->
+        
+        </section>
+
+    </main>
+<footer th:replace="layout/front-footer :: .footer"></footer>
+</body>
+
+</html>

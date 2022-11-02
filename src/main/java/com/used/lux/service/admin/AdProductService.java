@@ -1,14 +1,17 @@
 package com.used.lux.service.admin;
 
+import com.used.lux.component.FileHandler;
 import com.used.lux.domain.*;
 import com.used.lux.dto.*;
 import com.used.lux.dto.admin.AdProductDto;
 import com.used.lux.repository.*;
+import com.used.lux.request.ProductCreateRequest;
 import com.used.lux.request.ProductUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,10 +37,19 @@ public class AdProductService {
 
     private final BrandRepository brandRepository;
 
-    public Page<ProductDto> getProductList(Pageable pageable) {
-        return productRepository.findAll(pageable).map(ProductDto::from);
+    private final FileHandler fileHandler;
+
+    private final ImageRepository imageRepository;
+
+    @Transactional(readOnly = true)
+    public Page<ProductDto> getProductList(String productSellType, String productBrand, String productGender,
+                                       String productSize, String productGrade, String productState,
+                                       String productDate, String query, Pageable pageable) {
+        return productRepository.searchProduct(productSellType, productBrand, productGender, productSize,
+                productGrade, productState, productDate, query, pageable).map(ProductDto::from);
     }
 
+    @Transactional(readOnly = true)
     public AdProductDto getProductDetail(Long productId) {
         // 상품 상세
         ProductDto productDto = ProductDto.from(productRepository.findById(productId).get());
@@ -53,17 +65,48 @@ public class AdProductService {
         return AdProductDto.of(productDto, productLogDtos, productOrderLogDtos, auctionLogDtos);
     }
 
+    @Transactional(readOnly = true)
     public List<CategoryBDto> getCategoryList() {
         return categoryBRepository.findAll()
                 .stream().map(CategoryBDto::from).collect(Collectors.toCollection(ArrayList::new));
     }
 
+    @Transactional(readOnly = true)
     public List<BrandDto> getBrandList() {
         return brandRepository.findAll()
                 .stream().map(BrandDto::from).collect(Collectors.toCollection(ArrayList::new));
     }
 
-    public void  productUpdate(Long productId, ProductUpdateRequest productUpdateRequest){
+    @Transactional
+    public void productCreate(ProductCreateRequest request) throws Exception {
+        Product product = productRepository.findById(request.productId()).get();
+        Brand brand = brandRepository.findById(request.brandId()).get();
+        CategoryB categoryB = categoryBRepository.findById(request.categoryBId()).get();
+        CategoryM categoryM = categoryMRepository.findById(request.categoryMId()).get();
+
+        product.getAppraisal().setAppraisalProductName(request.productName());
+        product.setProductPrice(request.productPrice());
+        product.setProductSellType(request.productSellType());
+        product.getAppraisal().setAppraisalBrand(brand);
+        product.setCategoryB(categoryB);
+        product.setCategoryM(categoryM);
+        product.setProductContent(request.productContent());
+        Product productResult = productRepository.save(product);
+
+        List<Image> imageList = fileHandler.parseFileInfo(request, productResult); // 파일 처리
+        // 파일이 존재할 때에만 처리
+        if(!imageList.isEmpty()) {
+            for(Image image : imageList) {
+                // 파일을 DB에 저장
+                System.out.println(image);
+                imageRepository.save(image); // 이미지 이름 및 경로 DB에 저장
+            }
+        }
+        System.out.println("파일 저장 성공");
+    }
+
+    @Transactional
+    public void productUpdate(Long productId, ProductUpdateRequest productUpdateRequest){
         // 업데이트에 필요한 entity 가져오기
         CategoryB categoryB = categoryBRepository.findByCategoryBName(productUpdateRequest.categoryBName());
         CategoryM categoryM = categoryMRepository.findByCategoryMName(productUpdateRequest.categoryMName());

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="layout/front-head :: .head"></head>
+
+<body class="sub_page">
+
+<header th:replace="layout/front-header :: .header"></header>
+<header th:replace="layout/front-header-mypage :: #mypage-header"></header>
+
+<aside th:replace="layout/front-aside-mypage :: .mysidebar"></aside>
+
+
+   <!-- brand section -->
+    <main id="main" class="main">
+        <section class="layout_padding2">
+            <div class="container-fluid">
+                <div class="brand_heading">
+                <h3 class="custom_heading">
+                    주문 내역 조회
+                </h3>
+                <p>
+                    전체결과: n 건
+                </p>
+                </div>
+            </div>
+            <div class="container-fluid brand_item-container">
+                    <table class="table table-hover ">
+                    <thead>
+                    <tr>
+                        <th scope="col">상품정보</th>
+                        <th scope="col">주문일자</th>
+                        <th scope="col">주문번호</th>
+                        <th scope="col">주문금액(원)</th>
+                        <th scope="col">주문상태</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr each="brandlist : ${brandList}">
+                    <form action="#">
+                        <th scope="row">
+                                <div style="display:flex;">
+                                    <div>
+                                        <img src="/static/assets/img/watch.png" style="width: 100px; height:100px;" alt="" class="" />
+                                    </div>
+                                    <div style="display: flex; flex-direction: column">
+                                        <h6>브랜드</h6>
+                                        <h6>
+                                            <a href="#">
+                                                상품명
+                                            </a>
+                                        </h6>
+                                        <h6>판매그룹:중고</h6>
+                                    </div>
+                                </div>
+                        </th>
+                        <td style="vertical-align: middle;"><h6>2022.03.10</h6></td>
+                        <td style="vertical-align: middle;"><h6>12345678</h6></td>
+                        <td style="vertical-align: middle;"><h6>200,000원</h6></td>
+                        <td style="vertical-align: middle;">
+                            <div style="display:flex; flex-direction: column; align-items: flex-start;">
+                                <h6 style="margin-left: 13px;">주문확정</h6>
+                                <button type="submit" class="btn btn-danger" >취소요청</button>
+                            </div>
+                        </td>
+                    </form>
+                    </tr>
+                    <tr each="brandlist : ${brandList}">
+                        <form action="#">
+                            <th scope="row">
+                                    <div style="display:flex;">
+                                        <div>
+                                            <img src="/static/assets/img/watch.png" style="width: 100px; height:100px;" alt="" class="" />
+                                        </div>
+                                        <div style="display: flex; flex-direction: column">
+                                            <h6>브랜드</h6>
+                                            <h6>
+                                                <a href="#">
+                                                    상품명
+                                                </a>
+                                            </h6>
+                                            <h6>판매그룹:중고</h6>
+                                        </div>
+                                    </div>
+                            </th>
+                            <td style="vertical-align: middle;"><h6>2022.03.10</h6></td>
+                            <td style="vertical-align: middle;"><h6>12345678</h6></td>
+                            <td style="vertical-align: middle;"><h6>200,000원</h6></td>
+                            <td style="vertical-align: middle;">
+                                <div style="display:flex; flex-direction: column; align-items: flex-start;">
+                                    <h6 style="margin-left: 13px;">주문확정</h6>
+                                    <button type="submit" class="btn btn-danger" >취소요청</button>
+                                </div>
+                            </td>
+                        </form>
+                    </tr>
+                    <tr each="brandlist : ${brandList}">
+                        <form action="#">
+                            <th scope="row">
+                                    <div style="display:flex;">
+                                        <div>
+                                            <img src="/static/assets/img/watch.png" style="width: 100px; height:100px;" alt="" class="" />
+                                        </div>
+                                        <div style="display: flex; flex-direction: column">
+                                            <h6>브랜드</h6>
+                                            <h6>
+                                                <a href="#">
+                                                    상품명
+                                                </a>
+                                            </h6>
+                                            <h6>판매그룹:중고</h6>
+                                        </div>
+                                    </div>
+                            </th>
+                            <td style="vertical-align: middle;"><h6>2022.03.10</h6></td>
+                            <td style="vertical-align: middle;"><h6>12345678</h6></td>
+                            <td style="vertical-align: middle;"><h6>200,000원</h6></td>
+                            <td style="vertical-align: middle;">
+                                <div style="display:flex; flex-direction: column; align-items: flex-start;">
+                                    <h6 style="margin-left: 13px;">주문확정</h6>
+                                    <button type="submit" class="btn btn-danger" >취소요청</button>
+                                </div>
+                            </td>
+                        </form>
+                    </tr>                    
+                    </tbody>
+                </table>
+            </div>
+        
+        </section>
+
+    </main>
+<footer th:replace="layout/front-footer :: .footer"></footer>
+</body>
+
+</html>

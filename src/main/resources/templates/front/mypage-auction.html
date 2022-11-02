@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="layout/front-head :: .head"></head>
+
+<body class="sub_page">
+
+<header th:replace="layout/front-header :: .header"></header>
+<header th:replace="layout/front-header-mypage :: #mypage-header"></header>
+
+<aside th:replace="layout/front-aside-mypage :: .mysidebar"></aside>
+    <!-- brand section -->
+    <main id="main" class="main">
+        <section class="layout_padding2">
+            <div class="container-fluid">
+                <div class="brand_heading">
+                <h3 class="custom_heading">
+                    경매 내역 조회
+                </h3>
+                <p>
+                    전체결과: n 건
+                </p>
+                </div>
+            </div>
+            <div class="container-fluid brand_item-container">
+                    <table class="table table-hover ">
+                    <thead>
+                    <tr>
+                        <th scope="col">경매상품정보</th>
+                        <th scope="col">입찰일자</th>
+                        <th scope="col">경매번호</th>
+                        <th scope="col">입찰가격(원)</th>
+                        <th scope="col">입찰상태</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr each="brandlist : ${brandList}">
+                    <form action="#">
+                        <th scope="row">
+                                <div style="display:flex;">
+                                    <div>
+                                        <img src="/static/assets/img/watch.png" style="width: 100px; height:100px;" alt="" class="" />
+                                    </div>
+                                    <div style="display: flex; flex-direction: column">
+                                        <h6>브랜드</h6>
+                                        <h6>
+                                            <a href="#">
+                                                상품명
+                                            </a>
+                                        </h6>
+                                    </div>
+                                </div>
+                        </th>
+                        <td style="vertical-align: middle;"><h6>2022.03.10T18:05:34</h6></td>
+                        <td style="vertical-align: middle;"><h6>12345678</h6></td>
+                        <td style="vertical-align: middle;"><h6>200,000원</h6></td>
+                        <td style="vertical-align: middle;">
+                            <div style="display:flex; flex-direction: column; align-items: flex-start;">
+                                <h6 style="margin-left: 13px;">입찰확정</h6>
+                                <!-- <button type="submit" class="btn btn-danger" >취소요청</button> -->
+                            </div>
+                        </td>
+                    </form>
+                    </tr>
+                    <tr each="brandlist : ${brandList}">
+                        <form action="#">
+                            <th scope="row">
+                                    <div style="display:flex;">
+                                        <div>
+                                            <img src="/static/assets/img/watch.png" style="width: 100px; height:100px;" alt="" class="" />
+                                        </div>
+                                        <div style="display: flex; flex-direction: column">
+                                            <h6>브랜드</h6>
+                                            <h6>
+                                                <a href="#">
+                                                    상품명
+                                                </a>
+                                            </h6>
+                                        </div>
+                                    </div>
+                            </th>
+                            <td style="vertical-align: middle;"><h6>2022.03.10T18:05:34</h6></td>
+                            <td style="vertical-align: middle;"><h6>12345678</h6></td>
+                            <td style="vertical-align: middle;"><h6>200,000원</h6></td>
+                            <td style="vertical-align: middle;">
+                                <div style="display:flex; flex-direction: column; align-items: flex-start;">
+                                    <h6 style="margin-left: 13px;">입찰실패</h6>
+                                    <!-- <button type="submit" class="btn btn-danger" >취소요청</button> -->
+                                </div>
+                            </td>
+                        </form>
+                    </tr>
+                    <tr each="brandlist : ${brandList}">
+                        <form action="#">
+                            <th scope="row">
+                                    <div style="display:flex;">
+                                        <div>
+                                            <img src="/static/assets/img/watch.png" style="width: 100px; height:100px;" alt="" class="" />
+                                        </div>
+                                        <div style="display: flex; flex-direction: column">
+                                            <h6>브랜드</h6>
+                                            <h6>
+                                                <a href="#">
+                                                    상품명
+                                                </a>
+                                            </h6>
+                                        </div>
+                                    </div>
+                            </th>
+                            <td style="vertical-align: middle;"><h6>2022.03.10T18:05:34</h6></td>
+                            <td style="vertical-align: middle;"><h6>12345678</h6></td>
+                            <td style="vertical-align: middle;"><h6>200,000원</h6></td>
+                            <td style="vertical-align: middle;">
+                                <div style="display:flex; flex-direction: column; align-items: flex-start;">
+                                    <h6 style="margin-left: 13px;">입찰확정</h6>
+                                    <!-- <button type="submit" class="btn btn-danger" >취소요청</button> -->
+                                </div>
+                            </td>
+                        </form>
+                    </tr>                    
+                    </tbody>
+                </table>
+            </div>
+        
+        </section>
+    
+        <!-- <div class="bg">
+            <section class="brand_section layout_padding2">
+                <div class="container">
+                    <div class="brand_heading">
+                    <h3 class="custom_heading">
+                        Our watch brands
+                    </h3>
+                    <p class="font-weight-bold">
+                        It is a long established fact that a reader will be distracted by the readable content of a page
+                    </p>
+                    </div>
+                </div>
+                <div class="container-fluid brand_item-container">
+                    <div class="brand_item-box">
+                    <div class="brand_img-box  item-1">
+                        <a href="">
+                        View More
+                        </a>
+                    </div>
+                    <div class="brand_detail-box">
+                        <h5>
+                        $<span> 40 </span>
+                        </h5>
+                        <h6 class="">
+                        best watch
+                        </h6>
+                    </div>
+                    </div>
+                    <div class="brand_item-box">
+                    <div class="brand_img-box  item-2">
+                        <a href="">
+                        View More
+                        </a>
+                    </div>
+                    <div class="brand_detail-box">
+                        <h5>
+                        $<span> 50 </span>
+                        </h5>
+                        <h6 class="">
+                        best watch
+                        </h6>
+                    </div>
+                    </div>
+                    <div class="brand_item-box">
+                    <div class="brand_img-box  item-3">
+                        <a href="">
+                        View More
+                        </a>
+                    </div>
+                    <div class="brand_detail-box">
+                        <h5>
+                        $<span> 60 </span>
+                        </h5>
+                        <h6 class="">
+                        best watch
+                        </h6>
+                    </div>
+                    </div>
+                    <div class="brand_item-box">
+                    <div class="brand_img-box  item-4">
+                        <a href="">
+                        View More
+                        </a>
+                    </div>
+                    <div class="brand_detail-box">
+                        <h5>
+                        $<span> 70 </span>
+                        </h5>
+                        <h6 class="">
+                        best watch
+                        </h6>
+                    </div>
+                    </div>
+                    <div class="brand_item-box">
+                    <div class="brand_img-box  item-5">
+                        <a href="">
+                        View More
+                        </a>
+                    </div>
+                    <div class="brand_detail-box">
+                        <h5>
+                        $<span> 80 </span>
+                        </h5>
+                        <h6 class="">
+                        best watch
+                        </h6>
+                    </div>
+                    </div>
+                </div>
+            
+            </section>
+        </div>
+        
+        <section class="info_section layout_padding">
+            <div class="container">
+            <div class="info_items">
+                <a href="">
+                <div class="item ">
+                    <div class="img-box box-1">
+                    <img src="" alt="">
+                    </div>
+                    <div class="detail-box">
+                    <p>
+                        Lorem Ipsum is simply dummy text
+                    </p>
+                    </div>
+                </div>
+                </a>
+                <a href="">
+                <div class="item ">
+                    <div class="img-box box-2">
+                    <img src="" alt="">
+                    </div>
+                    <div class="detail-box">
+                    <p>
+                        +02 1234567890
+                    </p>
+                    </div>
+                </div>
+                </a>
+                <a href="">
+                <div class="item ">
+                    <div class="img-box box-3">
+                    <img src="" alt="">
+                    </div>
+                    <div class="detail-box">
+                    <p>
+                        demo@gmail.com
+                    </p>
+                    </div>
+                </div>
+                </a>
+            </div>
+            </div>
+        </section> -->
+
+    </main>
+<footer th:replace="layout/front-footer :: .footer"></footer>
+</body>
+
+</html>

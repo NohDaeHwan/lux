@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="ㅏㅐ" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="layout/head :: .head"></head>
 <body>
@@ -18,8 +18,8 @@
         <h1>회원 상세 페이지</h1>
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item">회원목록</li>
+                <li class="breadcrumb-item"><a href="/admin">홈</a></li>
+                <li class="breadcrumb-item"><a href="/admin/user">회원목록</a></li>
                 <li class="breadcrumb-item active">회원 상세 페이지</li>
             </ol>
         </nav>
@@ -284,7 +284,7 @@
                         </thead>
                         <tbody>
                         <tr th:each="auction : ${userDetail.auctionLogDtos()}">
-                            <th scope="row"><a th:text="${auction.productName()}"></a></th>
+                            <th scope="row"><a th:href="@{|/admin/auction/${auction.id}/|}" th:text="${auction.productName()}"></a></th>
                             <td th:text="${#numbers.formatInteger(auction.presentPrice,3,'COMMA')} + '원'"></td>
                             <td th:text="${#temporals.format(auction.createdAt,'yyyy-MM-dd HH:mm:ss')}"></td>
                         </tr>

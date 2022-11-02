@@ -1,16 +1,27 @@
 package com.used.lux.component;
 
+import com.used.lux.domain.Image;
+import com.used.lux.domain.Product;
+import com.used.lux.request.ProductCreateRequest;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.ObjectUtils;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class FileHandler {
 
-	/*public List<AppraisalImage> parseFileInfo(ForAppraisalDto dto, UserAccount userAccount, Appraisal appraisal) throws Exception {
-		// 반환할 파일 리스트
-		List<AppraisalImage> imageList =  new ArrayList<>();
+	public List<Image> parseFileInfo(ProductCreateRequest productCreateRequest, Product product) throws Exception {
+		List<Image> imageList =  new ArrayList<>();
 
 		// 전달되어 온 파일이 존재할 경우
-        if(!CollectionUtils.isEmpty(dto.images())) {
+        if(!CollectionUtils.isEmpty(productCreateRequest.images())) {
             // 파일명을 업로드 한 날짜로 변환하여 저장
             LocalDateTime now = LocalDateTime.now();
             DateTimeFormatter dateTimeFormatter =
@@ -20,12 +31,11 @@ public class FileHandler {
             // 프로젝트 디렉터리 내의 저장을 위한 절대 경로 설정
             // 경로 구분자 File.separator 사용
             String absolutePath = new File("").getAbsolutePath() + File.separator + File.separator;
-            System.out.println(absolutePath);
 
             // 파일을 저장할 세부 경로 지정
             String path = absolutePath + "src" + File.separator + "main" + File.separator + "resources" + File.separator +
             		"static" + File.separator + "assets" + File.separator + "img" + File.separator +
-            		"appraisal_img" + File.separator + current_date;
+            		"product_img" + File.separator + current_date;
             File file = new File(path);
             System.out.println(path);
             System.out.println(file.exists());
@@ -41,7 +51,7 @@ public class FileHandler {
             }
 
             // 다중 파일 처리
-            for(MultipartFile multipartFile : dto.images()) {
+            for(MultipartFile multipartFile : productCreateRequest.images()) {
 
                     // 파일의 확장자 추출
                     String originalFileExtension;
@@ -64,11 +74,10 @@ public class FileHandler {
                     String new_file_name = System.nanoTime() + originalFileExtension;
 
                     // AppraisalImage 엔티티 생성
-                    AppraisalImage image = AppraisalImage.of(
-                            appraisal,
-                            userAccount,
+                    Image image = Image.of(
+                            product,
                             multipartFile.getOriginalFilename(),
-                            "/static/assets/img/appraisal_img/" + current_date + "/" + new_file_name,
+                            "/static/assets/img/product_img/" + current_date + "/" + new_file_name,
                             multipartFile.getSize()
                     );
 
@@ -78,7 +87,7 @@ public class FileHandler {
                     // 업로드 한 파일 데이터를 지정한 파일에 저장
                     file = new File(absolutePath + "src" + File.separator + "main" + File.separator + "resources" + File.separator +
                     		"static" + File.separator + "assets" + File.separator + "img" + File.separator +
-                    		"appraisal_img" + File.separator + current_date + File.separator + new_file_name);
+                    		"product_img" + File.separator + current_date + File.separator + new_file_name);
                     multipartFile.transferTo(file);
 
                     // 파일 권한 설정(쓰기, 읽기)
@@ -88,5 +97,5 @@ public class FileHandler {
         }
         return imageList;
 	}
-*/
+
 }

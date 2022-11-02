@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head th:replace="layout/front-head :: .head"></head>
+<body class="sub_page">
+<div th:replace="layout/front-header-profile :: #profile-header"></div>
+
+
+<!-- contact section -->
+<div class="layout_padding" style="padding: 150px 0;">
+    <h2 class="custom_heading text-center">
+        LUX
+    </h2>
+    <div class="container" style="padding: 0 300px;">
+        <div class="container full-height justify-content-center">
+            <div class="col-12 text-center align-self-center py-5">
+
+                <div class="section pb-5 pt-5 pt-sm-2 text-center">
+                    <h6 class="mb-0 pb-3"><span>명품 중고/경매 거래 사이트, LUX </span></h6>
+                    <!-- <input class="checkbox" type="checkbox" id="reg-log" name="reg-log"/> -->
+                    <label></label>
+                    <!-- <a href="/"><img src="/static/assets/img/lux.png" alt=""></a> -->
+                    <div class="card-3d-wrap mx-auto">
+                        <div class="card-3d-wrapper">
+                            <div class="card-front">
+                                <div class="center-wrap">
+
+                                    <div class="section text-center">
+                                        <form action="/login_request" method="post">
+                                            <h4 class="mb-4 pb-3">닉네임 변경</h4>
+                                            <div class="form-group">
+                                                <input type="text" name="username" class="form-control" placeholder="현재 닉네임:" th:placeholder="'현재 닉네임: '+${users.userName}" id="username" autocomplete="off">
+                                                <i class="input-icon uil uil-at"></i>
+                                            </div>
+                                            <div class="form-group mt-2">
+                                                <button type="submit" class="w-100 btn btn-info mt-2" value="로그인">변경완료</button>
+                                            </div>
+                                        </form>
+                                        <p class="mb-0 mt-4 text-center"><a href="/mypage/withdrawal" class="link">탈퇴하기</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end contact section -->
+
+
+<!-- end info_section -->
+
+<!-- footer section -->
+<footer th:replace="layout/front-footer :: .footer"></footer>
+</body>
+
+</html>

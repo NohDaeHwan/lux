@@ -29,30 +29,29 @@
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">검색 조건</h5>
-                        <form class="search-form" method="POST" action="#">
+                        <form class="search-form" action="/admin/auction">
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">경매상태</label>
                                 <div class="col-sm-10">
-                                    <select class="form-select">
-                                        <!-- <option selected>Open this select menu</option> -->
-                                        <!--                      <option value="1">Male</option>-->
-                                        <!--                      <option value="2">Female</option>-->
-                                        <!-- <option value="3">Three</option> -->
+                                    <select class="form-select" name="auctionState">
+                                        <option value="" selected>전체</option>
+                                        <option th:each="state : ${stateList}" th:if="${state.stateName().contains('경매')}"
+                                                th:value="${state.stateStep()}" th:text="${state.stateStep}">example</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="inputDate" class="col-sm-2 col-form-label">기준날짜</label>
+                                <label class="col-sm-2 col-form-label">기준날짜</label>
                                 <div class="col-sm-10">
-                                    <input type="date" class="form-control">
+                                    <input type="date" class="form-control" name="auctionDate">
                                 </div>
                             </div>
                             <div class="search-bar mb-3">
                                 <input type="text" name="query" placeholder="경매상품명 혹은 가격 입력" title="Enter search keyword">
                                 <button type="submit"><i class="bi bi-search"></i></button>
                             </div>
+                        </form>
                     </div>
-                    </form>
                 </div><!-- End Card with header and footer -->
             </div>
         </div>
@@ -91,7 +90,7 @@
                             </thead>
                             <tbody>
                             <tr th:each="auctionlist : ${auctionList}">
-                                <th scope="row"><a th:href="@{|/admin/auction/${auctionlist.id}|}" th:text="${auctionlist.id}">user1@mail.com</a></th>
+                                <th scope="row"><a th:href="@{|/admin/auction/${auctionlist.id}/|}" th:text="${auctionlist.id}">user1@mail.com</a></th>
                                 <td th:text="${auctionlist.productResponse.productName}">Brandon Jacob</td>
                                 <td th:text="${#numbers.formatInteger(auctionlist.presentPrice,3,'COMMA')}+'원'">dfd</td>
                                 <td th:text="${#numbers.formatInteger(auctionlist.startPrice,3,'COMMA')}+'원'">Designer</td>
@@ -109,44 +108,34 @@
         </div>
     </section>
 
-    <th:block th:replace="layout/pagination :: #pagination">
-
-    </th:block>
+    <!-- Pagination with icons -->
+    <nav id="pagination" aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" th:href="@{/admin/auction(page=${auctionList.number - 1}, sort=(${param.sort} != null ? ${param.sort} : '') + (${auctionList.sort.getOrderFor('param.sort')} != null ? (${auctionList.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
+                      query=${param.query})}" aria-label="Previous" th:class="'page-link' + (${auctionList.number} <= 0 ? ' disabled' : '')">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item" th:each="pageNumber : ${paginationBarNumbers}">
+                <a th:text="${pageNumber + 1}"
+                   th:href="@{/admin/auction(page=${pageNumber},
+                          sort=(${param.sort} != null ? ${param.sort} : '') + (${auctionList.sort.getOrderFor('param.sort')} != null ? (${auctionList.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
+                          query=${param.query}
+                      )}"
+                   th:class="'page-link' + (${pageNumber} == ${auctionList.number} <= 0 ? ' disabled' : '')">
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" th:href="@{/admin/auction(page=${auctionList.number + 1}, sort=(${param.sort} != null ? ${param.sort} : '') + (${auctionList.sort.getOrderFor('param.sort')} != null ? (${auctionList.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
+                      query=${param.query})}" aria-label="Next" th:class="'page-link' + (${auctionList.number} >= ${auctionList.totalPages - 1} ? ' disabled' : '')">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav><!-- End Pagination with icons -->
 
 </main><!-- End #main -->
-<script th:inline="javascript">
-    <!-- 검색폼 스크립트 (user용) -->
-
-    /*<![CDATA[*/
-
-    function g_by(column) {
-        columnArr = ["presentPrice"];
-        let num;
-        let fine_index = columnArr.map((item,index)=>{
-            if (item === column) {
-                num = index;
-            }
-        })
-        console.log(num)
-        let auctionList = [[${auctionList.content}]]
-        console.log(auctionList)
-        let newArr = [];
-        let cls = document.querySelectorAll(".form-select")[num];
-        console.log("functioncall",cls);
-        auctionList.map((item,index)=>{
-            newArr.push(item[column]);
-        })
-        let groupby = newArr.filter((item,index)=> {
-            return newArr.indexOf(item) === index
-        });
-        let result = groupby.sort().map((item,index)=>{
-            cls.innerHTML += `<option value="${index}">${item}</option>`;
-            return cls.innerHTML;
-        })
-        return cls.innerHTML
-    }
-    g_by("presentPrice");
-    /*]]>*/
 
 </script>
 <th:block th:replace="layout/footer :: #footer">

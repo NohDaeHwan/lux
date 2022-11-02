@@ -8,12 +8,17 @@ public class MainController {
 
     @GetMapping("/")
     public String index() {
-        return "index"; // 루트 페이지를 보여줄 뷰 필요
+        return "/front/index"; // 루트 페이지를 보여줄 뷰 필요
     }
 
     @GetMapping("/login")
     public String login() {
-        return "/admin/login"; // 로그인 페이지를 보여줄 뷰 필요
+        return "/front/login"; // 로그인 페이지를 보여줄 뷰 필요
+    }
+
+    @GetMapping("/register")
+    public String register() {
+        return "/front/register"; // 회원가입 페이지를 보여줄 뷰 필요
     }
 
 }
