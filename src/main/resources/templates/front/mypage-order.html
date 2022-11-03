@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="layout/front-head :: .head"></head>
 
 <body class="sub_page">
@@ -36,7 +36,6 @@
                     </thead>
                     <tbody>
                     <tr each="brandlist : ${brandList}">
-                    <form action="#">
                         <th scope="row">
                                 <div style="display:flex;">
                                     <div>
@@ -62,10 +61,8 @@
                                 <button type="submit" class="btn btn-danger" >취소요청</button>
                             </div>
                         </td>
-                    </form>
                     </tr>
-                    <tr each="brandlist : ${brandList}">
-                        <form action="#">
+                    <tr each="orderPage : ${orders}">
                             <th scope="row">
                                     <div style="display:flex;">
                                         <div>
@@ -91,10 +88,8 @@
                                     <button type="submit" class="btn btn-danger" >취소요청</button>
                                 </div>
                             </td>
-                        </form>
                     </tr>
                     <tr each="brandlist : ${brandList}">
-                        <form action="#">
                             <th scope="row">
                                     <div style="display:flex;">
                                         <div>
@@ -120,7 +115,6 @@
                                     <button type="submit" class="btn btn-danger" >취소요청</button>
                                 </div>
                             </td>
-                        </form>
                     </tr>                    
                     </tbody>
                 </table>

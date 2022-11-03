@@ -42,19 +42,21 @@ public class ProductRepositoryCustomImpl extends QuerydslRepositorySupport imple
     }
 
     @Override
-    public Page<Product> findByQuery(String brandName, String categoryBName, String categoryMName, String gender,
-                                     String state, String size, String productName, Pageable pageable) {
+    public Page<Product> findByQuery(String productColor, String productBrand, String productGender, String productSize,
+                                     String productGrade, String productPrice, String productName, Pageable pageable) {
         QProduct product = QProduct.product;
 
         JPQLQuery<Product> query = from(product)
                 .select(product)
-                .where(product.appraisal.appraisalBrand.brandName.like("%"+brandName+"%"),
-                        product.categoryB.categoryBName.like("%"+categoryBName+"%"),
-                        product.categoryM.categoryMName.like("%"+categoryMName+"%"),
-                        product.appraisal.appraisalGender.like("%"+gender+"%"),
-                        product.appraisal.appraisalGrade.like("%"+state+"%"),
-                        product.appraisal.appraisalSize.like("%"+size+"%"),
-                        product.appraisal.appraisalProductName.like("%"+productName+"%"));
+                .where(product.appraisal.appraisalColor.like("%"+productColor+"%"),
+                        product.appraisal.appraisalBrand.brandName.like("%"+productBrand+"%"),
+                        product.appraisal.appraisalGender.like("%"+productGender+"%"),
+                        product.appraisal.appraisalSize.like("%"+productSize+"%"),
+                        product.appraisal.appraisalGrade.like("%"+productGrade+"%"),
+                        product.productPrice.like("%"+productPrice+"%"),
+                        product.productSellType.eq("중고"),
+                        product.appraisal.appraisalProductName.like("%"+productName+"%"))
+                .orderBy(product.createdAt.desc());
         long totalCount = query.fetchCount();
         List<Product> results = getQuerydsl().applyPagination(pageable, query).fetch();
         return new PageImpl<Product>(results, pageable, totalCount);

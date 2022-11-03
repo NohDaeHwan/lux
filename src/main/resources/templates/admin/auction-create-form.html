@@ -30,102 +30,97 @@
 
                 <form method="post" th:action="@{/admin/auction/{auctionId}/update(auctionId=${auctionDetail.auctionDto().id()})}" th:object="${auctionDetail.auctionDto()}">
 
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">새 경매상세</h5>
-                        <!-- General Form Elements -->
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label">경매상품명</label>
-                                <div class="col-sm-10" style="padding: 7px 12px;">
-                                    <div class="col-sm-10">
-                                        <a th:href="@{/admin/product/product-detail/{productId}(productId=${auctionDetail.auctionDto().productDto().id()})}" th:text="${auctionDetail.auctionDto().productDto().productName()}"></a>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">새 경매상세</h5>
+                            <!-- General Form Elements -->
+                                <div class="row mb-3">
+                                    <label class="col-sm-2 col-form-label">경매상품명</label>
+                                    <div class="col-sm-10" style="padding: 7px 12px;">
+                                        <div class="col-sm-10">
+                                            <a th:href="@{/admin/product/product-detail/{productId}(productId=${auctionDetail.auctionDto().productDto().id()})}" th:text="${auctionDetail.auctionDto().productDto().productName()}"></a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                             <div class="row mb-3" >
-                        <label class="col-sm-2 col-form-label">브랜드</label>
-                        <div class="col-sm-10" style="font-weight: 300; padding: 7px 12px;" th:text="${auctionDetail.auctionDto().productDto().productBrandName()}">
-                        </div>
-                    </div>
-                            <div class="row mb-3" >
-                            <label class="col-sm-2 col-form-label">대분류</label>
-                            <div class="col-sm-10" style="font-weight: 300; padding: 7px 12px;" th:text="${auctionDetail.auctionDto().productDto().categoryBName()}">
-                            </div>
-                        </div>
-                            <div class="row mb-3" >
-                                <label class="col-sm-2 col-form-label">중분류</label>
-                                <div class="col-sm-10" style="font-weight: 300; padding: 7px 12px;" th:text="${auctionDetail.auctionDto().productDto().categoryMName()}">
+                                <label class="col-sm-2 col-form-label">브랜드</label>
+                                <div class="col-sm-10" style="font-weight: 300; padding: 7px 12px;" th:text="${auctionDetail.auctionDto().productDto().productBrandName()}">
                                 </div>
                             </div>
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" >시작가격(원)</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="startPrice" name="startPrice" placeholder="가격을 입력하세요">
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" >현재가격(원)</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="row mb-3" >
-                                <label class="col-sm-2 col-form-label">현재입찰자</label>
-                                <div class="col-sm-10" style="font-weight: 300; padding: 7px 12px;">
-                                    <a th:href="@{/admin/user/{userId}(userId=${auctionDetail.auctionDto().id()})}"></a>
-                                </div>
-                            </div>
-                            <div class="row mb-3" >
-                                    <label class="col-sm-2 col-form-label">시작시간</label>
-                                    <div class="col-sm-5" style="display:flex; " >
-                                        <input type="datetime-local" class="form-control" style="margin-right: 8px;" th:value="${#temporals.format(auctionDetail.auctionDto().auctionStartDate(),'yyyy-MM-dd HH:mm')}" id="auctionStartDate" name="auctionStartDate">
-
+                            <div>
+                                <div class="row mb-3" >
+                                    <label class="col-sm-2 col-form-label">대분류</label>
+                                    <div class="col-sm-10" style="font-weight: 300; padding: 7px 12px;" th:text="${auctionDetail.auctionDto().productDto().categoryBName()}">
                                     </div>
                                 </div>
                                 <div class="row mb-3" >
-                                    <label class="col-sm-2 col-form-label">종료시간</label>
-                                    <div class="col-sm-5" style="display:flex;">
-                                        <input type="datetime-local" class="form-control" style="margin-right: 8px;" th:value="${#temporals.format(auctionDetail.auctionDto().auctionClosingDate(),'yyyy-MM-dd HH:mm')}" id="auctionClosingDate" name="auctionClosingDate">
+                                    <label class="col-sm-2 col-form-label">중분류</label>
+                                    <div class="col-sm-10" style="font-weight: 300; padding: 7px 12px;" th:text="${auctionDetail.auctionDto().productDto().categoryMName()}">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label class="col-sm-2 col-form-label" for="startPrice">시작가격(원)</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="startPrice" name="startPrice" placeholder="가격을 입력하세요">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label class="col-sm-2 col-form-label" for="presentPrice">현재가격(원)</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="presentPrice" name="presentPrice">
+                                    </div>
+                                </div>
+                                <div class="row mb-3" >
+                                    <label class="col-sm-2 col-form-label">현재입찰자</label>
+                                    <div class="col-sm-10" style="font-weight: 300; padding: 7px 12px;">
+                                        <a th:href="@{/admin/user/{userId}(userId=${auctionDetail.auctionDto().id()})}"></a>
+                                    </div>
+                                </div>
+                                <div class="row mb-3" >
+                                    <label class="col-sm-2 col-form-label" for="auctionStartDate">시작시간</label>
+                                    <div class="col-sm-5" style="display:flex; " >
+                                        <input type="datetime-local" class="form-control" style="margin-right: 8px;" th:value="${#temporals.format(auctionDetail.auctionDto().auctionStartDate(),'yyyy-MM-dd HH:mm')}" id="auctionStartDate" name="auctionStartDate">
+                                    </div>
+                                    <div class="row mb-3" >
+                                        <label class="col-sm-2 col-form-label" for="auctionClosingDate">종료시간</label>
+                                        <div class="col-sm-5" style="display:flex;">
+                                            <input type="datetime-local" class="form-control" style="margin-right: 8px;" th:value="${#temporals.format(auctionDetail.auctionDto().auctionClosingDate(),'yyyy-MM-dd HH:mm')}" id="auctionClosingDate" name="auctionClosingDate">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="row mb-3">
+                                    <legend class="col-form-label col-sm-2 pt-0">경매상태</legend>
+                                    <div class="col-sm-10">
+                                      <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="gridCheck2" checked>
+                                        <label class="form-check-label" for="gridCheck2">
+                                          경매노출중
+                                        </label>
+                                      </div>
+                                    </div>
+                                  </div> -->
+                                <div class="row mb-3">
+                                    <label class="col-sm-2 col-form-label"></label>
+                                    <div class="col-sm-10">
+                                        <button type="submit" class="btn btn-success" style="float: right;">
+                                            <a th:href="@{/admin/auction}">
+                                                뒤로가기
+                                            </a>
+                                        </button>
+                                        <button type="submit" class="btn btn-primary" style="float: right; margin-right: 8px;">등록하기</button>
                                     </div>
                                 </div>
                             </div>
-                            <!-- <div class="row mb-3">
-                                <legend class="col-form-label col-sm-2 pt-0">경매상태</legend>
-                                <div class="col-sm-10">
-                                  <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="gridCheck2" checked>
-                                    <label class="form-check-label" for="gridCheck2">
-                                      경매노출중
-                                    </label>
-                                  </div>
-                                </div>
-                              </div> -->
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label"></label>
-                                <div class="col-sm-10">
-                                    <button type="submit" class="btn btn-success" style="float: right;">
-                                        <a th:href="@{/admin/auction}">
-                                            뒤로가기
-                                        </a>
-                                    </button>
-                                    <button type="submit" class="btn btn-primary" style="float: right; margin-right: 8px;">등록하기</button>
-                                </div>
-                            </div>
+                        </div>
                     </div>
-                    </div>
-                </div>
                 </form>
-
-
             </div>
         </div>
     </section>
 
 </main><!-- End #main -->
 
-
 <th:block th:replace="layout/footer :: #footer">
-
 </th:block>
 </body>
 

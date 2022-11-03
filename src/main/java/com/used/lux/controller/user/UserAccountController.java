@@ -1,5 +1,6 @@
 package com.used.lux.controller.user;
 
+import com.used.lux.dto.UserGradeDto;
 import com.used.lux.dto.security.Principal;
 import com.used.lux.response.ProductOrderResponse;
 import com.used.lux.response.UserAccountLogResponse;
@@ -7,6 +8,7 @@ import com.used.lux.response.UserAccountResponse;
 import com.used.lux.service.ProductOrderService;
 import com.used.lux.service.UserAccountLogService;
 import com.used.lux.service.UserAccountService;
+import com.used.lux.service.UserGradeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,12 +30,19 @@ public class UserAccountController {
     private final ProductOrderService productOrderService;
 
     private final UserAccountLogService userAccountLogService;
+
+    private final UserGradeService userGradeService;
+
     @GetMapping
     public String mypage(@AuthenticationPrincipal Principal principal,Pageable pageable,ModelMap mm){
         UserAccountResponse userAccountResponse = UserAccountResponse.from(userAccountService.getUser(2L));
         Page<ProductOrderResponse> productOrderResponse = productOrderService.productListAll(2L,pageable).map(ProductOrderResponse::from);
+        UserGradeDto nextGrade = userGradeService.getNextGrade(principal.userGrade().getGradeStep());
+
+        System.out.println(nextGrade);
         mm.addAttribute("users",userAccountResponse);
         mm.addAttribute("orders",productOrderResponse);
+        mm.addAttribute("nextGrade", nextGrade);
         return "/front/mypage-order";
     }
 
@@ -64,27 +73,7 @@ public class UserAccountController {
         return "/front/mypage-point";
     }
 
-    /*private final UserAccountService userAccountService;
-
-    private final ProductOrderService productOrderService;
-
-    private final UserGradeService userGradeService;
-
-    @GetMapping
-    public String mypage(@AuthenticationPrincipal Principal principal, Pageable pageable, ModelMap mm){
-        UserAccountResponse userAccountResponse = UserAccountResponse.from(userAccountService.getUser(principal.id()));
-        Page<ProductOrderResponse> productOrderResponse = productOrderService.productListAll(principal.id(),pageable).map(ProductOrderResponse::from);
-        UserGradeDto nextGrade = userGradeService.getNextGrade(principal.userGrade().getGradeStep());
-
-        System.out.println(nextGrade);
-        mm.addAttribute("users",userAccountResponse);
-        mm.addAttribute("orders",productOrderResponse);
-        mm.addAttribute("nextGrade", nextGrade);
-        return "/front/mypage-order";
-    }
-
-
-    @GetMapping
+    /*@GetMapping
     public String Mypage(ModelMap model, @AuthenticationPrincipal Principal principal, @PageableDefault(size = 2)Pageable pageable){
         //아이디를 사용해 로그인된 이용자의 구매 목록 나열
         Page<ProductOrderResponse> orders = userAccountService.orderlistPage(principal.toDto(), pageable).map(ProductOrderResponse::from);
