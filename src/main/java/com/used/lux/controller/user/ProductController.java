@@ -57,9 +57,20 @@ public class ProductController {
         return "/front/product"; // 중고 명품 리스트 페이지
     }
 
-    @GetMapping("/{productId}")
-    public String productDetail(@PathVariable Long productId) {
+    @GetMapping("/detail/{productId}")
+    public String productDetail(@PathVariable Long productId,ModelMap mm) {
+
+        List<CategoryBDto> categoryList = categoryBService.categoryList();
+
+        mm.addAttribute("categoryList", categoryList);
+
+
         return "/front/product-detail"; // 중고 명품 리스트 페이지
+    }
+    @GetMapping("/detail/{productId}/order")
+    public  String productOrder(@PathVariable Long productId,ModelMap mm){
+
+        return "front/product-order";
     }
 
     /*
