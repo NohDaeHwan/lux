@@ -62,7 +62,7 @@ public class UserAccountController {
             @AuthenticationPrincipal Principal principal,
             OrderCancelRequest orderCancelRequest) {
         productOrderCancelService.orderCancel(principal, orderId, orderCancelRequest);
-        return "redirect:/front/mypage-order";
+        return "redirect:/mypage/";
     }
 
     // 회원정보변경

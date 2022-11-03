@@ -57,8 +57,12 @@
                         <td style="vertical-align: middle;"><h6 th:text="${#numbers.formatInteger(orderlist.productPrice,3,'COMMA')}+'원'">200,000원</h6></td>
                         <td style="vertical-align: middle;">
                             <div style="display:flex; flex-direction: column; align-items: flex-start;">
-                                <h6 style="margin-left: 13px;" th:text="${orderlist.stateStep}">주문확정</h6>
-                                <button type="submit" class="btn btn-danger" >취소요청</button>
+                                <h6 style="margin-left: 13px;" th:if="${orderlist.stateStep} == '주문완료'" th:text="${orderlist.stateStep}">주문확정</h6>
+                                <h6 th:if="${orderlist.stateStep} == '취소요청'">취소확인중</h6>
+                                <h6 th:if="${orderlist.stateStep} == '주문취소'">취소확정</h6>
+                                <form th:if="${orderlist.stateStep} == '주문완료'" th:action="@{|/mypage/${orderlist.id}/loading|}" method="post">
+                                    <button type="submit" class="btn btn-danger" >취소요청</button>
+                                </form>
                             </div>
                         </td>
                     </tr>

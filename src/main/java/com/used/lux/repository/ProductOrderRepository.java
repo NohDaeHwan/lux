@@ -19,8 +19,5 @@ public interface ProductOrderRepository extends JpaRepository<ProductOrder, Long
     // 4. 만약에 조회하는 컬럼이 외래키라면 findBy외래키컬럼명_조인되는테이블의(첫대문자_첫대문자)컬럼명() 으로 불러온다.
     // 5. row 한줄 데이터를 수정할때 getReferenceById():주소를 가져온다.
 
-    @Query(nativeQuery = true, value = "select * from product_order where user_account_id=:id order by id", countQuery = "select count(*) from product_order where user_account_id=:id")
-    Page<ProductOrder> findByUserAccountId(@Param("id") Long id, Pageable pageable);
-
     ProductOrder findByStateId(Long stateId);
 }
