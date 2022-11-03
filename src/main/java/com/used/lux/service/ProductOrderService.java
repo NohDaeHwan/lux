@@ -17,8 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ProductOrderService {
 
-
-
     private final ProductOrderRepository productOrderRepository;
 
     public Page<ProductOrderDto> productListAll(Long id, Pageable pageable){
@@ -26,7 +24,7 @@ public class ProductOrderService {
     }
 
     public Page<ProductOrder> orderlistPage(Long id,Pageable pageable){
-        Page<ProductOrder> paging =productOrderRepository.findByProductId(id, pageable);
+        Page<ProductOrder> paging = productOrderRepository.findByUserAccountId(id, pageable);
         return paging;
     }
 
