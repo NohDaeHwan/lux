@@ -91,22 +91,26 @@
 
                 <!-- Card with header and footer -->
                 <div class="card">
-                    <div class="card-header">
-                        <button  class="btn btn-primary" style="float: right;">
-                            <a th:onclick="changeCategory('big')"  stlye="color:#ffffff !important">
-                                큰카테고리
-                            </a>
-                        </button>
-                        <button  class="btn btn-primary" style="float: right;">
-                            <a  th:onclick="changeCategory('middle')" stlye="color:#ffffff !important">
-                                작은 카테고리
-                            </a>
-                        </button>
-                        <button type="submit" class="btn btn-primary" style="float: right;">
-                            <a th:href="@{/admin/product/category/new}" stlye="color:#ffffff !important">
-                                새 카테고리등록
-                            </a>
-                        </button>
+                    <div class="card-header" style="display: flex; justify-content: space-between;">
+                        <div>
+                            <button  class="btn btn-success">
+                                <a th:onclick="changeCategory('big')"  stlye="color:#ffffff !important">
+                                    대분류 보기
+                                </a>
+                            </button>
+                            <button  class="btn  btn-success">
+                                <a  th:onclick="changeCategory('middle')" stlye="color:#ffffff !important">
+                                    중분류 보기
+                                </a>
+                            </button>
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-primary" style="float: right;">
+                                <a th:href="@{/admin/product/category/new}" stlye="color:#ffffff !important">
+                                    새 분류 등록
+                                </a>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -118,15 +122,15 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title" id = "cardTitle">큰 카테고리</h5>
+                        <h5 class="card-title" id = "cardTitle">대분류 보기</h5>
 
                         <!-- Table with hoverable rows -->
                         <table class="table table-hover ">
                             <thead >
                             <tr>
                                 <th scope="col">번호</th>
-                                <th scope="col">카테고리 이름</th>
-                                <th scope="col" style="display: none" id ="usemcate">큰 카테고리 이름</th>
+                                <th scope="col">분류명</th>
+                                <th scope="col" style="display: none" id ="usemcate">대분류명</th>
                                 <th scope="col">삭제</th>
                             </tr>
                             </thead>
@@ -205,7 +209,7 @@
                 if(check === "big")
                 {
                     //카드 재작성
-                    document.getElementById("cardTitle").textContent = "큰 카테고리"
+                    document.getElementById("cardTitle").textContent = "대분류 보기"
                     document.getElementById("usemcate").style.display = 'none';
 
                     //html 작성
@@ -229,7 +233,7 @@
                     document.getElementById("list").innerHTML = textHTML;
                 }else if(check === "middle")
                 {
-                    document.getElementById("cardTitle").textContent = "작은 카테고리"
+                    document.getElementById("cardTitle").textContent = "중분류 보기"
                     document.getElementById("usemcate").style.display = 'block';
                     let Bid;
 
