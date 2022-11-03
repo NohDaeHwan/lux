@@ -1,8 +1,11 @@
 package com.used.lux.controller.user;
 
+import com.used.lux.dto.security.Principal;
+import com.used.lux.response.SearchResponse;
 import com.used.lux.response.product.ProductResponse;
 import com.used.lux.response.product.ProductsResponse;
-import com.used.lux.service.UsedluxService;
+import com.used.lux.service.*;
+import com.used.lux.service.admin.AdProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,19 +13,60 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RequestMapping("/product")
 @Controller
 public class ProductController {
 
+
+    private final AdProductService adProductService;
+
+    private final BrandService brandService;
+
+    private final CategoryBService categoryBService;
+
+    private final CategoryMService categoryMService;
+
+    private final PaginationService paginationService;
+
+    private final SearchService searchService;
+
     @GetMapping
-    public String productList() {
+    public String productList( @AuthenticationPrincipal Principal principal,
+                               @PageableDefault(size = 30) Pageable pageable,
+                               @RequestParam(defaultValue = "") String productSellType,
+                               @RequestParam(defaultValue = "") String productBrand,
+                               @RequestParam(defaultValue = "") String productGender,
+                               @RequestParam(defaultValue = "") String productSize,
+                               @RequestParam(defaultValue = "") String productGrade,
+                               @RequestParam(defaultValue = "") String productState,
+                               @RequestParam(defaultValue = "2000-01-01") String productDate,
+                               @RequestParam(defaultValue = "") String query,
+                               ModelMap mm) {
+
+        Page<ProductResponse> productResponses = adProductService.getProductList(productSellType,
+                productBrand, productGender, productSize, productGrade, productState,
+                productDate, query, pageable).map(ProductResponse::from);
+        List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), productResponses.getTotalPages());
+        SearchResponse searchResponse = searchService.getSearchList();
+
+
+        mm.addAttribute("paginationBarNumbers", barNumbers);
+        mm.addAttribute("productResponses", productResponses);
+        mm.addAttribute("productSearchResponse", searchResponse);
+
+
+
         return "/front/product"; // 중고 명품 리스트 페이지
     }
 
