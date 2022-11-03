@@ -54,6 +54,11 @@ public class UserAccountLog extends AuditingFields {
         return new UserAccountLog(id, userEmail, userGrade, point, usageDetail, saleNumber);
     }
 
+    public static UserAccountLog of(String userEmail, UserGrade userGrade, int point,
+                                    String usageDetail, String saleNumber) {
+        return new UserAccountLog(null, userEmail, userGrade, point, usageDetail, saleNumber);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

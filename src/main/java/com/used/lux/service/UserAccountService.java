@@ -1,10 +1,14 @@
 package com.used.lux.service;
 
-import com.used.lux.domain.ProductOrder;
+import com.used.lux.domain.*;
 import com.used.lux.dto.ProductOrderDto;
 import com.used.lux.dto.UserAccountDto;
+import com.used.lux.dto.security.Principal;
 import com.used.lux.repository.ProductOrderRepository;
+import com.used.lux.repository.UserAccountLogRepository;
 import com.used.lux.repository.UserAccountRepository;
+import com.used.lux.request.ProductUpdateRequest;
+import com.used.lux.request.UserUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -22,6 +26,8 @@ public class UserAccountService {
 
     private final UserAccountRepository userAccountRepository;
 
+    private final UserAccountLogRepository userAccountLogRepository;
+
     public Page<ProductOrder> orderlistAll(Long id, Pageable pageable){
         Page<ProductOrder> orders = productOrderRepository.findByUserAccountId(id,pageable);
         return orders;
@@ -37,4 +43,10 @@ public class UserAccountService {
         return UserAccountDto.from(userAccountRepository.findById(id).get());
     }
 
+    @Transactional
+    public void userPointUpdate(Principal principal, UserUpdateRequest userUpdateRequest){
+        UserAccount userAccount = userAccountRepository.getReferenceById(principal.id());
+        userAccount.setPoint(userUpdateRequest.userPoint()+ userAccount.getPoint());
+        userAccountLogRepository.save(UserAccountLog.of(principal.userEmail(), principal.userGrade(),userUpdateRequest.userPoint(),"충전","-"));
+    }
 }

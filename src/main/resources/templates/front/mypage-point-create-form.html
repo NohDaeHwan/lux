@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="layout/front-head :: .head"></head>
 
 <body class="sub_page">
@@ -26,24 +26,25 @@
             </div>
             <div class="container-fluid brand_item-container">
 
-              <form>
+              <form action="/mypage/point/new/loading" method="post">
                 <div class="row mb-3">
                   <label for="inputText" class="col-sm-2 col-form-label">잔여포인트</label>
-                  <div class="col-sm-9 p-2 ml-2">
+                    <div class="col-sm-9 p-2 ml-2" th:if="${users.userPoint}<1000" th:text="${users.userPoint}+'P'">0</div>
+                  <div class="col-sm-9 p-2 ml-2" th:if="${users.userPoint}>=1000" th:text="${#numbers.formatInteger(users.userPoint,3,'COMMA')}+'P'">
                     3,300P
                   </div>
                 </div>
                 <div class="row mb-3">
                   <label for="inputText" class="col-sm-2 col-form-label">충전포인트</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" name="userPoint">
                   </div>
                 </div>
               <div class="row mb-3">
                   <label class="col-sm-2 col-form-label"></label>
                   <div class="col-sm-10">
                     <button type="submit" class="btn btn-info">충전하기</button>
-                    <button type="button" class="btn btn-secondary"><a href="#" style="color:white">뒤로가기</a></button>
+                    <button type="button" class="btn btn-secondary"><a href="/mypage/point" style="color:white">뒤로가기</a></button>
                   </div>
                 </div>
             </form>

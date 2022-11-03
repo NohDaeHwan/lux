@@ -32,4 +32,9 @@ public class AdOrderService {
         return productOrderCancelDto;
     }
 
+    public ProductOrderCancelDto getOrderCancel(Long orderId) {
+        ProductOrderCancelDto productOrderCancelDto = ProductOrderCancelDto.from(productOrderCancelRepository.findByOrderId(orderId));
+        return productOrderCancelDto;
+    }
+
 }

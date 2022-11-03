@@ -41,4 +41,24 @@ public class ProductOrderLog extends AuditingFields {
     @Column(name = "product_sell_type", nullable = false, length = 100)
     private String productSellType;
 
+    protected ProductOrderLog() {}
+    private ProductOrderLog(Long id, String userEmail, Long productId, String productName, State productState, int productPrice, String productSellType) {
+        this.id = id;
+        this.userEmail = userEmail;
+        this.productId = productId;
+        this.productName = productName;
+        this.productState = productState;
+        this.productPrice = productPrice;
+        this.productSellType = productSellType;
+    }
+
+    public static ProductOrderLog of(Long id, String userEmail, Long productId, String productName, State productState, int productPrice, String productSellType) {
+        return new ProductOrderLog(id, userEmail, productId, productName,productState,productPrice, productSellType);
+    }
+
+    public static ProductOrderLog of( String userEmail, Long productId, String productName, State productState, int productPrice, String productSellType) {
+        return new ProductOrderLog(null, userEmail, productId, productName,productState,productPrice, productSellType);
+    }
+
+
 }

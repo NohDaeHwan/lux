@@ -15,6 +15,7 @@ public record ProductOrderResponse(
         String stateName,
         String stateStep,
         String productName,
+        String productBrandName,
         State productState,
         int productPrice,
         String productSellType,
@@ -28,11 +29,11 @@ public record ProductOrderResponse(
 
     public static ProductOrderResponse of(Long id, String orderName, String orderPhoneNumber, String orderAddress,
                                 String orderEmail, String requestedTerm, String stateName, String stateStep,
-                                          String productName, State productState,
+                                          String productName,String productBrandName, State productState,
                                 int productPrice, String productSellType, String userEmail, String userName,
                                 LocalDateTime createdAt, String createdBy,LocalDateTime modifiedAt, String modifiedBy) {
         return new ProductOrderResponse(id, orderName, orderPhoneNumber, orderAddress, orderEmail, requestedTerm,
-                stateName, stateStep, productName, productState, productPrice, productSellType, userEmail,
+                stateName, stateStep, productName,productBrandName, productState, productPrice, productSellType, userEmail,
                 userName, createdAt, createdBy, modifiedAt, modifiedBy);
     }
 
@@ -47,6 +48,7 @@ public record ProductOrderResponse(
                 dto.stateDto().stateName(),
                 dto.stateDto().stateStep(),
                 dto.productDto().productName(),
+                dto.productDto().productBrandName(),
                 dto.productDto().productState(),
                 dto.productDto().productPrice(),
                 dto.productDto().productSellType(),

@@ -9,4 +9,6 @@ public interface ProductOrderLogRepository extends JpaRepository<ProductOrderLog
     List<ProductOrderLog> findByUserEmail(String userEmail);
 
     List<ProductOrderLog> findByProductId(Long productId);
+
+    ProductOrderLog findByProductIdAndUserEmail(Long id, String userEmail);
 }

@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Getter
 @ToString(callSuper = true)
@@ -36,4 +37,37 @@ public class ProductOrderCancel extends AuditingFields {
     @Column(name="cancel_term", length = 500)
     private String cancelTerm; // 취소사유
 
+    protected  ProductOrderCancel() {}
+
+    private ProductOrderCancel(Long id, Long orderId, String userName, String productName, int productPrice, String cancelTerm) {
+        this.id = id;
+        this.orderId = orderId;
+        this.userName = userName;
+        this.productName = productName;
+        this.productPrice = productPrice;
+        this.cancelTerm = cancelTerm;
+    }
+
+    public static ProductOrderCancel of(Long id, Long orderId, String userName, String productName,
+                                        int productPrice, String cancelTerm) {
+        return new ProductOrderCancel(id, orderId, userName, productName, productPrice, cancelTerm);
+    }
+
+    public static ProductOrderCancel of(Long orderId, String userName, String productName,
+                                        int productPrice, String cancelTerm) {
+        return new ProductOrderCancel(null, orderId, userName, productName, productPrice, cancelTerm);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProductOrderCancel that = (ProductOrderCancel) o;
+        return id != null && id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

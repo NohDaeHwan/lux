@@ -1,5 +1,6 @@
 package com.used.lux.service;
 
+import com.used.lux.dto.TotalPointDto;
 import com.used.lux.dto.UserAccountLogDto;
 import com.used.lux.repository.UserAccountLogRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,4 +17,8 @@ public class UserAccountLogService {
         return userAccountLogRepository.findByUserEmailFront(userEmail,pageable).map(UserAccountLogDto::from);
     }
 
+    public Long getTotalPoint(String userEmail) {
+        TotalPointDto totalPointDto = userAccountLogRepository.getTotalPoint(userEmail);
+        return totalPointDto.point();
+    }
 }

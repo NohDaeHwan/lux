@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="layout/front-head :: .head"></head>
 
 <body class="sub_page">
@@ -41,10 +41,11 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr each="brandlist : ${brandList}">
-                        <td style="vertical-align: middle;"><h6>Lv.1 뉴비</h6></td>
-                        <td style="vertical-align: middle;"><h6>~100,000P</h6></td>
-                        <td style="vertical-align: middle;"><h6>2%</h6></td>
+                    <tr th:each="grade : ${grades}">
+                        <td style="vertical-align: middle;" th:text="${grade.gradeName}"><h6>Lv.1 뉴비</h6></td>
+                        <td style="vertical-align: middle;" th:if="${grade.rankUp} < 1000" th:text="'~'+${grade.rankUp}+'P'"><h6>~0P</h6></td>
+                        <td style="vertical-align: middle;" th:if="${grade.rankUp} >= 1000" th:text="'~'+${#numbers.formatInteger(grade.rankUp,3,'COMMA')}+'P'"><h6>~100,000P</h6></td>
+                        <td style="vertical-align: middle;" th:text="${grade.discount}+'%'"><h6>2%</h6></td>
                     </tr>                
                     </tbody>
                 </table>
