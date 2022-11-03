@@ -40,133 +40,131 @@ public class UserAccountController {
 
     private final UserGradeService userGradeService;
 
-
-    //주문내역조회
+    // 주문내역조회
     @GetMapping
-    public String mypage(@AuthenticationPrincipal Principal principal, Pageable pageable, ModelMap mm){
+    public String mypage(@AuthenticationPrincipal Principal principal, Pageable pageable, ModelMap mm) {
         UserAccountResponse userAccountResponse = UserAccountResponse.from(userAccountService.getUser(principal.id()));
-        Page<ProductOrderResponse> productOrderResponse = productOrderService.productListAll(principal.id(),pageable).map(ProductOrderResponse::from);
+        Page<ProductOrderResponse> productOrderResponse = productOrderService.productListAll(principal.id(), pageable)
+                .map(ProductOrderResponse::from);
         UserGradeDto nextGrade = userGradeService.getNextGrade(principal.userGrade().getGradeStep());
         System.out.println(nextGrade);
-        mm.addAttribute("users",userAccountResponse);
-        mm.addAttribute("orders",productOrderResponse);
+        mm.addAttribute("users", userAccountResponse);
+        mm.addAttribute("orders", productOrderResponse);
         mm.addAttribute("nextGrade", nextGrade);
         Long totalPoint = userAccountLogService.getTotalPoint(principal.userEmail());
-        mm.addAttribute("total",totalPoint);
+        mm.addAttribute("total", totalPoint);
         return "/front/mypage-order";
     }
 
-    //주문취소요청
+    // 주문취소요청
     @PostMapping("/{orderId}/loading")
     public String mypageOrderDelete(@PathVariable Long orderId,
-                                    @AuthenticationPrincipal Principal principal,
-                                    OrderCancelRequest orderCancelRequest){
-        productOrderCancelService.orderCancel(principal,orderId,orderCancelRequest);
+            @AuthenticationPrincipal Principal principal,
+            OrderCancelRequest orderCancelRequest) {
+        productOrderCancelService.orderCancel(principal, orderId, orderCancelRequest);
         return "redirect:/front/mypage-order";
     }
 
     // 회원정보변경
     @GetMapping("/profile-update")
-    public String mypageProfileUpdate(@AuthenticationPrincipal Principal principal, ModelMap mm){
+    public String mypageProfileUpdate(@AuthenticationPrincipal Principal principal, ModelMap mm) {
         UserAccountResponse userAccountResponse = UserAccountResponse.from(userAccountService.getUser(principal.id()));
-        mm.addAttribute("users",userAccountResponse);
+        mm.addAttribute("users", userAccountResponse);
         return "/front/profile-update";
     }
 
     // 회원탈퇴
     @GetMapping("/withdrawal")
-    public String mypageWithdrawal(@AuthenticationPrincipal Principal principal, ModelMap mm){
+    public String mypageWithdrawal(@AuthenticationPrincipal Principal principal, ModelMap mm) {
         UserAccountResponse userAccountResponse = UserAccountResponse.from(userAccountService.getUser(principal.id()));
         UserGradeDto nextGrade = userGradeService.getNextGrade(principal.userGrade().getGradeStep());
-        mm.addAttribute("users",userAccountResponse);
+        mm.addAttribute("users", userAccountResponse);
         mm.addAttribute("nextGrade", nextGrade);
         Long totalPoint = userAccountLogService.getTotalPoint(principal.userEmail());
-        mm.addAttribute("total",totalPoint);
+        mm.addAttribute("total", totalPoint);
         return "/front/mypage-withdrawal";
     }
+
     // 회원경매
     @GetMapping("/auction")
     public String mypageAuction(@AuthenticationPrincipal Principal principal,
-                              ModelMap mm,
-                              @PageableDefault(size = 30,sort = "created_at", direction = Sort.Direction.DESC)
-                              Pageable pageable
-    ){
+            ModelMap mm,
+            @PageableDefault(size = 30, sort = "created_at", direction = Sort.Direction.DESC) Pageable pageable) {
         UserAccountResponse userAccountResponse = UserAccountResponse.from(userAccountService.getUser(principal.id()));
         UserGradeDto nextGrade = userGradeService.getNextGrade(principal.userGrade().getGradeStep());
         List<UserGradeDto> gradelist = userGradeService.getGradeList();
-        mm.addAttribute("users",userAccountResponse);
+        mm.addAttribute("users", userAccountResponse);
         mm.addAttribute("nextGrade", nextGrade);
-        mm.addAttribute("grades",gradelist);
+        mm.addAttribute("grades", gradelist);
         Long totalPoint = userAccountLogService.getTotalPoint(principal.userEmail());
-        mm.addAttribute("total",totalPoint);
+        mm.addAttribute("total", totalPoint);
         return "/front/mypage-auction";
     }
+
     // 회원포인트
     @GetMapping("/point")
     public String mypagePoint(@AuthenticationPrincipal Principal principal,
-                              ModelMap mm,
-                              @PageableDefault(size = 30,sort = "created_at", direction = Sort.Direction.DESC)
-                                  Pageable pageable
-                              ){
+            ModelMap mm,
+            @PageableDefault(size = 30, sort = "created_at", direction = Sort.Direction.DESC) Pageable pageable) {
         UserAccountResponse userAccountResponse = UserAccountResponse.from(userAccountService.getUser(principal.id()));
         UserGradeDto nextGrade = userGradeService.getNextGrade(principal.userGrade().getGradeStep());
-        Page<UserAccountLogResponse> pointlist = userAccountLogService.getPointList("Barn@gmail.com",pageable).map(UserAccountLogResponse::from);
-        mm.addAttribute("users",userAccountResponse);
+        Page<UserAccountLogResponse> pointlist = userAccountLogService.getPointList("Barn@gmail.com", pageable)
+                .map(UserAccountLogResponse::from);
+        mm.addAttribute("users", userAccountResponse);
         mm.addAttribute("nextGrade", nextGrade);
-        mm.addAttribute("points",pointlist);
+        mm.addAttribute("points", pointlist);
         Long totalPoint = userAccountLogService.getTotalPoint(principal.userEmail());
-        mm.addAttribute("total",totalPoint);
+        mm.addAttribute("total", totalPoint);
         return "/front/mypage-point";
     }
+
     // 회원포인트 충전
     @GetMapping("/point/new")
-    public String mypagePointCreate(@AuthenticationPrincipal Principal principal,ModelMap mm){
+    public String mypagePointCreate(@AuthenticationPrincipal Principal principal, ModelMap mm) {
         UserAccountResponse userAccountResponse = UserAccountResponse.from(userAccountService.getUser(principal.id()));
         UserGradeDto nextGrade = userGradeService.getNextGrade(principal.userGrade().getGradeStep());
-        mm.addAttribute("users",userAccountResponse);
+        mm.addAttribute("users", userAccountResponse);
         mm.addAttribute("nextGrade", nextGrade);
         Long totalPoint = userAccountLogService.getTotalPoint(principal.userEmail());
-        mm.addAttribute("total",totalPoint);
+        mm.addAttribute("total", totalPoint);
         return "/front/mypage-point-create-form";
     }
+
     @PostMapping("/point/new/loading")
     public String mypagePointCreate(@AuthenticationPrincipal Principal principal,
-                                    ModelMap mm,
-                                    UserUpdateRequest userUpdateRequest
-    ){
+            ModelMap mm,
+            UserUpdateRequest userUpdateRequest) {
         System.out.println(userUpdateRequest);
-        userAccountService.userPointUpdate(principal,userUpdateRequest);
+        userAccountService.userPointUpdate(principal, userUpdateRequest);
         return "redirect:/mypage/point";
     }
+
     // 회원혜택(등급내역)
     @GetMapping("/mygrade")
     public String mypageGrade(@AuthenticationPrincipal Principal principal,
-                              ModelMap mm,
-                              @PageableDefault(size = 30,sort = "created_at", direction = Sort.Direction.DESC)
-                              Pageable pageable
-    ){
+            ModelMap mm,
+            @PageableDefault(size = 30, sort = "created_at", direction = Sort.Direction.DESC) Pageable pageable) {
         UserAccountResponse userAccountResponse = UserAccountResponse.from(userAccountService.getUser(principal.id()));
         UserGradeDto nextGrade = userGradeService.getNextGrade(principal.userGrade().getGradeStep());
         List<UserGradeDto> gradelist = userGradeService.getGradeList();
-        mm.addAttribute("users",userAccountResponse);
+        mm.addAttribute("users", userAccountResponse);
         mm.addAttribute("nextGrade", nextGrade);
-        mm.addAttribute("grades",gradelist);
+        mm.addAttribute("grades", gradelist);
         Long totalPoint = userAccountLogService.getTotalPoint(principal.userEmail());
-        mm.addAttribute("total",totalPoint);
+        mm.addAttribute("total", totalPoint);
         return "/front/mypage-grade";
     }
 
-
-
-
-
-//
-//    @GetMapping
-//    public String Mypage(ModelMap model, @AuthenticationPrincipal Principal principal, @PageableDefault(size = 2)Pageable pageable){
-//        //아이디를 사용해 로그인된 이용자의 구매 목록 나열
-//        Page<ProductOrderResponse> orders = userAccountService.orderlistPage(principal.toDto(), pageable).map(ProductOrderResponse::from);
-//        model.addAttribute("orders", orders);
-//        return "/mypage";
-//    }
+    //
+    // @GetMapping
+    // public String Mypage(ModelMap model, @AuthenticationPrincipal Principal
+    // principal, @PageableDefault(size = 2)Pageable pageable){
+    // //아이디를 사용해 로그인된 이용자의 구매 목록 나열
+    // Page<ProductOrderResponse> orders =
+    // userAccountService.orderlistPage(principal.toDto(),
+    // pageable).map(ProductOrderResponse::from);
+    // model.addAttribute("orders", orders);
+    // return "/mypage";
+    // }
 
 }

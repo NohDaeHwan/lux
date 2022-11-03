@@ -82,24 +82,18 @@ public class AdAuctionController {
     @PostMapping("/{auctionId}/update")
     public String auctionUpdate(@PathVariable Long auctionId,
                                 @AuthenticationPrincipal Principal principal,
-                                ModelMap mm ,AuctionUpdateRequest auctionUpdateRequest){
-        /*if (principal == null) {
-            return "redirect:/login";
-        }
+                                ModelMap mm , AuctionUpdateRequest auctionUpdateRequest){
         if (principal.role().getName() != "ROLE_ADMIN") {
             return "redirect:/";
-        }*/
+        }
+        System.out.println(auctionUpdateRequest);
 
-        adAuctionService .auctionUpdate(auctionId,auctionUpdateRequest);
-        System.out.println("페이지 갔다옴");
+        /*adAuctionService .auctionUpdate(auctionId,auctionUpdateRequest);*/
 
         String str = auctionUpdateRequest.auctionClosingDate();
         str = str.replaceAll("T", " ");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
-
-
-        System.out.println(auctionUpdateRequest);
 
         return "redirect:/admin/auction/{auctionId}";
     }

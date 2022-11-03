@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html>
+
+<head th:replace="layout/front-head :: .head"></head>
+
+<header th:replace="layout/front-header :: .header"></header>
+
+<body class="sub_page">
+
+
+<!-- <aside id="sidebar" class="mysidebar">
+
+    <ul class="sidebar-nav">
+    <li class="nav-heading">카테고리</li>
+        <li class="nav-item">
+        <a class="nav-link collapsed" href="index.html">
+            <i class="bi bi-grid"></i>
+            <span>주문 내역 조회</span>
+        </a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link collapsed" href="index.html">
+            <i class="bi bi-grid"></i>
+            <span>경매 내역 조회</span>
+        </a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link collapsed" href="index.html">
+            <i class="bi bi-grid"></i>
+            <span>검수 요청 결과</span>
+        </a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link collapsed" href="index.html">
+            <i class="bi bi-grid"></i>
+            <span>최근 본 상품</span>
+        </a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link collapsed" href="index.html">
+            <i class="bi bi-grid"></i>
+            <span>포인트 내역/충전</span>
+        </a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link collapsed" href="index.html">
+            <i class="bi bi-grid"></i>
+            <span>회원 혜택</span>
+        </a>
+        </li>
+    </ul>
+
+</aside> -->
+<aside id="sidebar" class="mysidebar">
+    <div id="accordion" class="sidebar-nav">
+        <div class="nav-item">
+            <div class="nav-link collapsed flex" style="justify-content: space-between;" id="headingOne"  data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                <h6 class="mb-0 font-weight-bold">
+                    상의
+                </h6>
+                <h6 class="mb-0 font-weight-bold">+</h6>
+            </div>
+
+            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="nav-link collapsed">
+                    <h6 class="mb-0" style="font-size:15px;">
+                        <a href="#" class="text-black-50">짧은 상의</a>
+                    </h6>
+                </div>
+                <div class="nav-link collapsed">
+                    <h6 class="mb-0" style="font-size:15px;">
+                        <a href="#" class="text-black-50">긴 상의</a>
+                    </h6>
+                </div>
+            </div>
+        </div>
+        <div class="nav-item">
+            <div class="nav-link collapsed flex" style="justify-content: space-between;" id="headingTwo"  data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                <h6 class="mb-0 font-weight-bold">
+                    하의
+                </h6>
+                <h6 class="mb-0 font-weight-bold">+</h6>
+            </div>
+
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                <div class="nav-link collapsed">
+                    <h6 class="mb-0" style="font-size:15px;">
+                        <a href="#" class="text-black-50">짧은 상의</a>
+                    </h6>
+                </div>
+                <div class="nav-link collapsed">
+                    <h6 class="mb-0" style="font-size:15px;">
+                        <a href="#" class="text-black-50">긴 상의</a>
+                    </h6>
+                </div>
+            </div>
+        </div>
+        <div class="nav-item">
+            <div class="nav-link collapsed flex" style="justify-content: space-between;" id="headingThree"  data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                <h6 class="mb-0 font-weight-bold">
+                    ACC
+                </h6>
+                <h6 class="mb-0 font-weight-bold">+</h6>
+            </div>
+
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                <div class="nav-link collapsed">
+                    <h6 class="mb-0" style="font-size:15px;">
+                        <a href="#" class="text-black-50">짧은 상의</a>
+                    </h6>
+                </div>
+                <div class="nav-link collapsed">
+                    <h6 class="mb-0" style="font-size:15px;">
+                        <a href="#" class="text-black-50">긴 상의</a>
+                    </h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</aside>
+<!-- brand section -->
+<main id="main" class="main">
+
+    <section class="section">
+        <div class="row align-items-top">
+            <div class="col-lg-12">
+
+                <!-- Card with header and footer -->
+                <div class="card">
+                    <div class="card-header">옵션 검색
+                        <!--<button type="submit" class="btn btn-primary" style="float: right;">
+                            <a th:href="@{/admin/appraise/new}" stlye="color:#ffffff !important">
+                                새 검수등록
+                            </a>
+                        </button>-->
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">상세 조건</h5>
+                        <form class="search-form" method="POST" action="#">
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">색상</label>
+                                <div class="col-sm-10">
+                                    <select class="form-select form-control" name="productColor">
+                                        <option value="" selected>전체</option>
+                                        <option th:each="auctionresponse :${auctionResponse}" th:value="${auctionresponse.productResponse().productColor()}" th:text="${auctionresponse.productResponse().productColor()}">example</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">브랜드</label>
+                                <div class="col-sm-10">
+
+                                    <select class="form-select form-control" name="productColor">
+                                        <option value="" selected>전체</option>
+                                        <option th:each="auctionresponse :${auctionResponse}" th:value="${auctionresponse.productResponse().productBrandName()}" th:text="${auctionresponse.productResponse().productBrandName()}">example</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">성별</label>
+                                <div class="col-sm-10">
+                                    <select class="form-select form-control" name="productColor">
+                                        <option value="" selected>전체</option>
+                                        <option value="Male">남자</option>
+                                        <option value="Female">여자</option>
+                                    </select>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">사이즈</label>
+                                <div class="col-sm-10">
+                                    <select class="form-select form-control" name="productColor">
+                                        <option value="" selected>전체</option>
+                                        <option th:each="auctionresponse :${auctionResponse}" th:value="${auctionresponse.productResponse().productSize()}" th:text="${auctionresponse.productResponse().productSize()}">example</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">상품등급</label>
+                                <div class="col-sm-10">
+                                    <select class="form-select form-control" name="productGrade">
+                                        <option value="" selected>전체</option>
+                                        <option value="1">S</option>
+                                        <option value="2">A</option>
+                                        <option value="3">B</option>
+                                        <option value="3">C</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <!--d아-->
+                                <label class="col-sm-2 col-form-label">상품가격</label>
+                                <label class="col-sm-1 col-form-label" id="value1" >100000</label>
+                                <div class="col-sm-8">
+                                    <div class="slider">
+                                        <input type="range" class="a"  id="input-left" min="1" max="100" value="1"  step="1" />
+                                        <input type="range" class="a" id="input-right" min="1" max="100"  value="100"  step="1"/>
+                                        <div class="track"  style="">
+                                            <div class="range" ></div>
+                                            <div class="thumb left"></div>
+                                            <div class="thumb right"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <label class="col-sm-1 col-form-label" id="value2">10000000</label>
+                            </div>
+                            <div class="search-bar mb-3 row pl-2">
+                                <input type="text" class="form-control mr-1" style="width: 95%;" name="query" placeholder="검색" title="Enter search keyword">
+                                <button type="submit" class="btn btn-info"><i class="bi bi-search">검색</i></button>
+                            </div>
+                        </form>
+                    </div>
+                </div><!-- End Card with header and footer -->
+            </div>
+        </div>
+    </section>
+
+    <section class="layout_padding2">
+        <div class="container-fluid">
+            <div class="brand_heading">
+                <h3 class="custom_heading font-weight-light">
+                    경매 탭 검색결과 >
+                </h3>
+                <p>
+                    전체결과: n 건
+                </p>
+            </div>
+        </div>
+        <div class="album py-3 bg-light">
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="card mb-4 box-shadow">
+                            <a href="#">
+                                <img class="card-img-top p-1" src="/static/assets/img/watch.png" style="width: 150px;height: 150px;" alt="Card image cap">
+                                <div class="p-2">
+                                    <p class="card-text font-weight-lighter mb-1 text-black-50">브랜드</p>
+                                    <p class="card-text font-weight-light mb-1"><a href="#">상품명</a></p>
+                                    <p class="card-text font-weight-light">40.000P</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <!-- <div class="btn-group">
+                                          <button type="button" class="btn btn-sm btn-outline-secondary">상세보기</button>
+                                        </div>
+                                        <small class="text-muted">9 mins</small> -->
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        </div>
+    </section>
+    <script src="/static/assets/js/frontmain.js">
+    </script>
+</main>
+
+<footer id="footer" class="footer">
+    <!-- footer section -->
+    <section class="container-fluid footer_section">
+        <p>
+            © 2022 All Rights Reserved By
+            <a href="#">Lux ARP Project</a>
+        </p>
+    </section>
+    <!-- footer section -->
+</footer>
+
+
+<!-- end info_section -->
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/bootstrap.js"></script>
+</body>
+
+</html>
