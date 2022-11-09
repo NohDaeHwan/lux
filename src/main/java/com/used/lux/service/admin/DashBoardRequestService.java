@@ -1,23 +1,20 @@
-package com.used.lux.component;
+package com.used.lux.service.admin;
 
 
 import com.used.lux.domain.Auction;
 import com.used.lux.domain.Product;
 import com.used.lux.service.*;
 
-import com.used.lux.service.admin.AppraiseService;
-import com.used.lux.service.admin.AuctionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 
-import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-public class DashBoardRequest {
+public class DashBoardRequestService {
     private final ProductOrderService productOrderService;
     private final ProductOrderLogService productOrderLogService;
 
@@ -53,7 +50,7 @@ public class DashBoardRequest {
         //주문내역
         Long countOrderNotTreat = productOrderLogService.countorderByState();
         //주문최소요청
-        Long CountRequestOrderCancle = productOrderCancleService.count();
+        Long countRequestOrderCancle = productOrderCancleService.count();
 
         //주목할만한 경매 상품
         List<Auction> auctions = new ArrayList<Auction>();
@@ -71,6 +68,16 @@ public class DashBoardRequest {
 
         //예산보고
 
+
+        mm.addAttribute("countOrder", countOrder);
+        mm.addAttribute("sumPrice",sumPrice);
+        mm.addAttribute("countCustomer",countCustomer);
+        mm.addAttribute("countWithdrawal",countRequestWithdrawalCostomer);
+        mm.addAttribute("countGrade",countUserGradeRequest);
+        mm.addAttribute("countAppraise",countRequestAppraise);
+        mm.addAttribute("countOrderNotTreat",countOrderNotTreat);
+        mm.addAttribute("countCancle",countRequestOrderCancle);
+        mm.addAttribute("auctionBanner",auctions);
         return mm;
     }
 
