@@ -31,6 +31,12 @@ public class AppraiseService {
         Appraisal appraisal = appraisalRepository.save(dto.toEntity(userAccount)); // 감정신청서 DB에 저장
     }
 
+
+    //처리되지 않은 요청을 세는 메서드
+    public Long countRequest() {
+        return appraisalRepository.countByState1();
+    }
+
     /*
     List<AppraisalImage> imgeList = fileHandler.parseFileInfo(dto, userAccount, appraisal); // 이미지 처리
 
