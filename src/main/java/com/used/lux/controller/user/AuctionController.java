@@ -1,20 +1,16 @@
 package com.used.lux.controller.user;
 
-import com.used.lux.dto.security.Principal;
-import com.used.lux.request.AuctionBidRequest;
-import com.used.lux.response.SearchResponse;
+import com.used.lux.dto.BrandDto;
+import com.used.lux.dto.CategoryBDto;
 import com.used.lux.response.auction.AuctionResponse;
-import com.used.lux.response.auction.AuctionsResponse;
-import com.used.lux.response.product.ProductResponse;
+import com.used.lux.service.BrandService;
+import com.used.lux.service.CategoryBService;
+import com.used.lux.service.PaginationService;
 import com.used.lux.service.admin.AuctionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -28,13 +24,36 @@ public class AuctionController {
 
     private final AuctionService auctionService;
 
-//    @GetMapping
-//    public ResponseEntity<Page<AuctionsResponse>> auctionList(
-//            @PageableDefault(size = 30, sort = "created_at", direction = Sort.Direction.DESC) Pageable pageable
-//    ) {
-//        Page<AuctionsResponse> auctions = auctionService.auctionListFind(pageable).map(AuctionsResponse::from);
-//        return ResponseEntity.status(HttpStatus.OK).body(auctions); // 경매 리스트 페이지
-//    }
+    private final BrandService brandService;
+
+    private final CategoryBService categoryBService;
+
+    private final PaginationService paginationService;
+
+    @GetMapping
+    public  String auctionList(@RequestParam(defaultValue = "") String auctionColor,
+                               @RequestParam(defaultValue = "") String auctionBrand,
+                               @RequestParam(defaultValue = "") String auctionGender,
+                               @RequestParam(defaultValue = "") String auctionSize,
+                               @RequestParam(defaultValue = "") String auctionGrade,
+                               @RequestParam(defaultValue = "10000000") String maxPrice,
+                               @RequestParam(defaultValue = "100000") String minPrice,
+                               @RequestParam(defaultValue = "") String query,
+                               @PageableDefault(size = 30) Pageable pageable,
+                               ModelMap mm)
+    {
+        Page<AuctionResponse> auctions = auctionService.auctionListFind(auctionColor, auctionBrand, auctionGender,
+                auctionSize, auctionGrade, maxPrice, minPrice, query, pageable).map(AuctionResponse::from);
+        List<CategoryBDto> categoryList = categoryBService.categoryList();
+        List<BrandDto> brandList = brandService.brandList();
+        List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), auctions.getTotalPages());
+
+        mm.addAttribute("paginationBarNumbers", barNumbers);
+        mm.addAttribute("auctions", auctions);
+        mm.addAttribute("categoryList", categoryList);
+        mm.addAttribute("brandList", brandList);
+        return "/front/auction";
+    }
 
 //    @GetMapping("/detail/{id}")
 //    public ResponseEntity<AuctionResponse> auctionDetail(@PathVariable Long id) {
@@ -73,17 +92,5 @@ public class AuctionController {
 //        Integer result = auctionService.auctionUpdate(auctionId, auctionBidRequest.toDto(), principal.getUsername());
 //        return ResponseEntity.status(HttpStatus.OK).body(result);
 //    }
-
-    @GetMapping
-    public  String auctionList(@PageableDefault(size = 30, sort = "created_at", direction = Sort.Direction.DESC) Pageable pageable, ModelMap mm)
-    {
-
-        Page<AuctionResponse> auctionResponse = auctionService.auctionListFind(pageable).map(AuctionResponse::from);
-
-        mm.addAttribute("auctionResponse",auctionResponse);
-
-        return "/front/auction";
-    }
-
 
 }

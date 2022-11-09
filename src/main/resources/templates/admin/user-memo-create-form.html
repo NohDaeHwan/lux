@@ -17,8 +17,8 @@
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/admin">홈</a></li>
-                <li class="breadcrumb-item"><a href="/admin/user/grade">등급설정</a></li>
-                <li class="breadcrumb-item active">새 회원등급 등록</li>
+                <li class="breadcrumb-item"><a th:href="@{|/admin/user/${userDetail.id()}|}">유저상세</a></li>
+                <li class="breadcrumb-item active">유저 메모 등록</li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
@@ -29,39 +29,21 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">새 회원등급 등록</h5>
+                        <h5 class="card-title">유저 메모 등록</h5>
 
                         <!-- General Form Elements -->
-                        <form th:action="@{|/admin/user/grade/new/create|}" method="post">
+                        <form th:action="@{|/admin/user/${userDetail.id()}/memo/update|}" method="post">
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label">등급단계</label>
+                                <label for="inputText" class="col-sm-2 col-form-label">메모사항</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="gradeStep">
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label">등급명</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="gradeName">
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label">등급업포인트</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="rankUp">
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label">할인율(%)</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="discount">
+                                    <textarea id="inputText" class="form-control" name="memo" rows="15" th:text="${userDetail.memo}"></textarea>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label"></label>
                                 <div class="col-sm-10">
                                     <button type="submit" class="btn btn-success" style="float: right;">
-                                        <a th:href="@{/admin/user/grade}">
+                                        <a th:href="@{|/admin/user/${userDetail.id()}|}">
                                             뒤로가기
                                         </a>
                                     </button>

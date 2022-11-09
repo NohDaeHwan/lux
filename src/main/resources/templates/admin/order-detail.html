@@ -26,24 +26,6 @@
 
     <section class="section profile">
         <div class="row">
-            <!-- <div class="col-xl-4">
-
-              <div class="card">
-                <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-
-                  <img src="/static/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-
-                  <div class="social-links mt-2">
-                    <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-                    <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-                    <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-                    <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
-                  </div>
-                </div>
-              </div>
-
-            </div> -->
-
             <div class="col-xl-12">
 
                 <div class="card">
@@ -56,17 +38,6 @@
                             </li>
                         </ul>
                         <div class="tab-content pt-2">
-
-                            <!--  <div class="row mb-3">
-                               <label for=F"profileImage" class="col-md-4 col-lg-3 col-form-label">사진 추가</label>
-                               <div class="col-md-8 col-lg-9">
-                                 <div class="pt-2">
-                                   <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
-                                   <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
-                                 </div>
-                               </div>
-                             </div> -->
-
 
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">주문번호</label>
@@ -180,19 +151,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- <div class="row mb-3">
-                              <label class="col-sm-2 col-form-label"></label>
-                              <div class="col-sm-10">
-                                <button type="submit" class="btn btn-success" style="float: right;">
-                                  <a stlye="color:#ffffff !important" th:href="@{/admin/product}">
-                                    뒤로가기
-                                  </a>
-                                </button>
-                                <button type="submit" class="btn btn-primary" style="float: right; margin-right: 8px;">
-                                  <a th:href="@{|/admin/product/product-detail-update/${productDetail.productDto.id}|}">수정하기</a>
-                                </button>
-                              </div>
-                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -216,7 +174,7 @@
                                 <label class="col-sm-2 col-form-label">이미지</label>
                                 <div class="col-sm-10" style="padding: 7px 12px;">
                                     <div class="col-sm-10" style="font-weight: 300;">
-                                        <img src="/static/assets/img/profile-img.jpg" alt="product-img" >
+                                        <img style="width:100px;height:100px;" th:src="${orderDetail.productDto.imageDtos[0].filePath}" alt="product-img" />
                                     </div>
                                 </div>
                             </div>
@@ -261,108 +219,10 @@
                                     <div class="col-sm-10" style="font-weight: 300; padding: 2px 0;" th:if="${orderDetail.stateDto.stateStep} == '주문취소'" th:text="${#temporals.format(orderCancelDetail.modifiedAt,'yyyy-MM-dd HH:mm:ss')}">12345677</div>
                                 </div>
                             </div>
-                            <!-- <div class="row mb-3">
-                              <label class="col-sm-2 col-form-label"></label>
-                              <div class="col-sm-10">
-                                <button type="submit" class="btn btn-success" style="float: right;">
-                                  <a stlye="color:#ffffff !important" th:href="@{/admin/product}">
-                                    뒤로가기
-                                  </a>
-                                </button>
-                                <button type="submit" class="btn btn-primary" style="float: right; margin-right: 8px;">
-                                  <a th:href="@{|/admin/product/product-detail-update/${productDetail.productDto.id}|}">수정하기</a>
-                                </button>
-                              </div>
-                            </div> -->
-                            <div th:if="${#lists.isEmpty(orderDetail.productOrderCancelDto())}" th:text="널값입니다.">
                         </div>
                     </div>
                 </div>
             </div><!-- End Bordered Tabs -->
-
-            <!-- 수정내역-->
-            <!-- <section class="section">
-              <div class="row">
-                <div class="card">
-                  <div class="card-body">
-                    <h5 class="card-title">해당 상품 변경로그</h5>
-                    <table class="table table-hover ">
-                      <thead>
-                      <tr>
-                        <th scope="col">상품명</th>
-                        <th scope="col">대분류</th>
-                        <th scope="col">중분류</th>
-                        <th scope="col">판매타입</th>
-                        <th scope="col">수정날짜</th>
-                      </tr>
-                      </thead>
-                      <tbody>
-                      <tr th:each="pdupdate: ${productDetail.productLogDtos}">
-                        <td th:text="${pdupdate.productName}"></td>
-                        <td th:text="${pdupdate.categoryBName}"></td>
-                        <td th:text="${pdupdate.categoryMName}"></td>
-                        <td th:text="${pdupdate.productSellType}"></td>
-                        <td th:text="${pdupdate.createdAt}"></td>
-                      </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            <section class="section">
-              <div class="row">
-                <div class="card">
-                  <div class="card-body">
-                    <h5 class="card-title">해당 상품 주문로그</h5>
-                    <table class="table table-hover ">
-                      <thead>
-                      <tr>
-                        <th scope="col">주문자명</th>
-                        <th scope="col">상태</th>
-                        <th scope="col">주문날짜</th>
-
-                      </tr>
-                      </thead>
-                      <tbody>
-                      <tr th:each="productorder : ${productDetail.ProductOrderLogDtos()}">
-                        <td th:text="${productorder.productName.toString()}"></td>
-                        <td th:text="${productorder.productState().getStateName()}+${productorder.productState().getStateStep()}"></td>
-                        <td th:text="${productorder.createdAt}">28</td>
-                      </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            <section class="section">
-              <div class="row">
-                <div class="card">
-                  <div class="card-body">
-                    <h5 class="card-title">해당 상품 경매로그</h5>
-                    <table class="table table-hover ">
-                      <thead>
-                      <tr>
-                        <th scope="col">입찰자명</th>
-                        <th scope="col">입찰가격</th>
-                        <th scope="col">입찰날짜</th>
-                      </tr>
-                      </thead>
-                      <tbody>
-                      <tr th:each="auction : ${productDetail.AuctionLogDtos()}">
-                        <td th:text="${auction.bidder()}"></td>
-                        <td th:text="${auction.presentPrice()}"></td>
-                      </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </section> -->
-
         </div>
         </div>
 
