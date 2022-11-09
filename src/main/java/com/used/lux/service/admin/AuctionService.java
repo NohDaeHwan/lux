@@ -12,6 +12,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -59,4 +63,43 @@ public class AuctionService {
         return -1; // 경매 입찰 실패
     }
 
+    //관리자 대쉬보드에 쓰이는 5가지 메서드
+    //1.종료임박
+    public Auction auctionFindByCloseNearDate() {
+       return auctionRepository.findByClosingNearDate();
+    }
+
+    //2.기간내에 종료된 경매중 가장 높은 가격
+    public Auction findByPrice(String bannerDateType) {
+        LocalDate nowDate = LocalDate.now();
+        LocalDate sectionStartDate  = LocalDate.now();
+
+        if(bannerDateType.equals("month"))
+        {
+            sectionStartDate =  sectionStartDate.minusDays(31);
+
+        }else if(bannerDateType.equals("year"))
+        {
+            sectionStartDate =  sectionStartDate.minusYears(1);
+
+        }
+
+        return auctionRepository.findByhighPriceWithState10(sectionStartDate.toString(),nowDate.toString());
+    }
+
+    //3.가장 최근에 유찰된 것
+    public Auction findByNearDateFailBid() {
+        return auctionRepository.findByDateWithFailBid();
+    }
+    //4.현재 진행되는 경매중 가장 높은 가격
+    public Auction findByPriceWithState9() {
+        return auctionRepository.findByHighPriceWithState9();
+    }
+
+
+    public Auction findByMostBiddingWithState9() {
+        return auctionRepository.findByMostBiddingWithState9();
+    }
+
+    //5.현재 진행되는 경매중 가장 많은 조회 수
 }
