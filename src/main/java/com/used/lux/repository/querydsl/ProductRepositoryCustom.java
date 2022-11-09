@@ -11,5 +11,5 @@ public interface ProductRepositoryCustom {
                                 String productDate, String query, Pageable pageable);
 
     Page<Product> findByQuery(String productColor, String productBrand, String productGender, String productSize,
-                              String productGrade, String productPrice, String productName, Pageable pageable);
+                              String productGrade, String maxPrice, String minPrice, String query, Pageable pageable);
 }

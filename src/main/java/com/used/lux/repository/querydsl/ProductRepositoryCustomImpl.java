@@ -43,22 +43,23 @@ public class ProductRepositoryCustomImpl extends QuerydslRepositorySupport imple
 
     @Override
     public Page<Product> findByQuery(String productColor, String productBrand, String productGender, String productSize,
-                                     String productGrade, String productPrice, String productName, Pageable pageable) {
+                                     String productGrade, String maxPrice, String minPrice, String query, Pageable pageable) {
         QProduct product = QProduct.product;
 
-        JPQLQuery<Product> query = from(product)
+        JPQLQuery<Product> queryResult = from(product)
                 .select(product)
                 .where(product.appraisal.appraisalColor.like("%"+productColor+"%"),
                         product.appraisal.appraisalBrand.brandName.like("%"+productBrand+"%"),
                         product.appraisal.appraisalGender.like("%"+productGender+"%"),
                         product.appraisal.appraisalSize.like("%"+productSize+"%"),
                         product.appraisal.appraisalGrade.like("%"+productGrade+"%"),
-                        product.productPrice.like("%"+productPrice+"%"),
-                        product.productSellType.eq("중고"),
-                        product.appraisal.appraisalProductName.like("%"+productName+"%"))
+                        product.appraisal.appraisalProductName.like("%"+query+"%"),
+                        product.productPrice.gt(Integer.parseInt(minPrice)),
+                        product.productPrice.lt(Integer.parseInt(maxPrice)),
+                        product.productSellType.eq("중고"))
                 .orderBy(product.createdAt.desc());
-        long totalCount = query.fetchCount();
-        List<Product> results = getQuerydsl().applyPagination(pageable, query).fetch();
+        long totalCount = queryResult.fetchCount();
+        List<Product> results = getQuerydsl().applyPagination(pageable, queryResult).fetch();
         return new PageImpl<Product>(results, pageable, totalCount);
     }
 
