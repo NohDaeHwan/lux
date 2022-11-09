@@ -3,7 +3,6 @@ package com.used.lux.repository;
 import com.querydsl.core.types.dsl.DateTimeExpression;
 import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.core.types.dsl.StringExpression;
-import com.used.lux.domain.QProduct;
 import com.used.lux.domain.QUserAccount;
 import com.used.lux.domain.UserAccount;
 import com.used.lux.repository.querydsl.UserAccountRepositoryCustom;

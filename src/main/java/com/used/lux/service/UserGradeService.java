@@ -19,8 +19,7 @@ public class UserGradeService {
     private final UserGradeRepository userGradeRepository;
 
     public UserGradeDto createGrade(GradeCreateRequest gradeCreateRequest) {
-        return UserGradeDto.from(userGradeRepository.save(UserGrade.of(gradeCreateRequest.id(),
-                gradeCreateRequest.gradeStep(), gradeCreateRequest.gradeName(),
+        return UserGradeDto.from(userGradeRepository.save(UserGrade.of(gradeCreateRequest.gradeStep(), gradeCreateRequest.gradeName(),
                 gradeCreateRequest.discount(), gradeCreateRequest.rankUp())));
     }
 

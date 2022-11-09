@@ -44,5 +44,8 @@ public class UserGrade {
         return new UserGrade(id, gradeStep, gradeName, discount, rankUp);
     }
 
+    public static UserGrade of(int gradeStep, String gradeName, int discount, int rankUp) {
+        return new UserGrade(null, gradeStep, gradeName, discount, rankUp);
+    }
 
 }
