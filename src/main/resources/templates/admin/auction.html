@@ -95,7 +95,7 @@
                                 <td th:text="${#numbers.formatInteger(auctionlist.presentPrice,3,'COMMA')}+'원'">dfd</td>
                                 <td th:text="${#numbers.formatInteger(auctionlist.startPrice,3,'COMMA')}+'원'">Designer</td>
                                 <td th:text="${#numbers.formatInteger(auctionlist.closingPrice,3,'COMMA')}+'원'">28</td>
-                                <td th:text="${auctionlist.stateResponse.stateStep}">28</td>
+                                <td th:text="${auctionlist.stateStep}">28</td>
                                 <td th:text="${#temporals.format(auctionlist.auctionStartDate,'yyyy-MM-dd HH:mm')}">28</td>
                             </tr>
                             </tbody>

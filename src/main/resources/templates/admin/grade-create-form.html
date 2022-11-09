@@ -34,9 +34,21 @@
                         <!-- General Form Elements -->
                         <form th:action="@{|/admin/user/grade/new/create|}" method="post">
                             <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">등급단계</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="gradeStep">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">등급명</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" name="gradeName">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">등급업포인트</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="rankUp">
                                 </div>
                             </div>
                             <div class="row mb-3">
