@@ -21,4 +21,8 @@ public class ProductService {
                 productGender, productSize, productGrade, productPrice, productName, pageable).map(ProductDto::from);
     }
 
+
+    public ProductDto productDetail(Long productId) {
+        return ProductDto.from(productRepository.findById(productId).get());
+    }
 }

@@ -32,7 +32,7 @@
       </div>
 </aside>
     <!-- brand section -->
-    <main id="main" class="main">
+    <main id="main" class="main p-1">
         <script src="main.js"></script>
         <section class="section">
             <div class="row align-items-top">
@@ -144,11 +144,11 @@
 
                     <div class="col-md-2" th:each="product: ${products}">
                       <div class="card mb-4 box-shadow">
-                        <a th:href="@{|/product/detail/${product.id}|}">
+                        <a th:href="@{|/product/${product.id}|}">
                         <img class="card-img-top p-1" th:src="${product.imagePath()}" style="width: 150px;height: 150px;" alt="Card image cap">
                         <div class="p-2">
                           <p class="card-text font-weight-lighter mb-1 text-black-50" th:text="${product.productBrand}">브랜드</p>
-                          <p class="card-text font-weight-light mb-1"><a th:href="@{|/product/detail/${product.id}|}" th:text="${product.productName}">상품명</a></p>
+                          <p class="card-text font-weight-light mb-1"><a th:href="@{|/product/${product.id}|}" th:text="${product.productName}">상품명</a></p>
                           <p class="card-text font-weight-light" th:text="${product.productPrice}">40.000P</p>
                           <div class="d-flex justify-content-between align-items-center">
                             <!-- <div class="btn-group">

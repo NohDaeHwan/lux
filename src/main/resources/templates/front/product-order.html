@@ -1,10 +1,204 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+
+<head th:replace="layout/front-head :: .head"></head>
+<header th:replace="layout/front-header :: .header"></header>
+<body class="sub_page">
+
+<aside id="sidebar" class="mysidebar">
+    <div id="accordion" class="sidebar-nav">
+        <div class="nav-item" th:each="bcategory : ${categoryList}">
+            <div class="nav-link collapsed flex" style="justify-content: space-between;" th:id="'heading'+${bcategoryStat.count}" data-toggle="collapse"
+                 th:data-target="'#collapse'+${bcategoryStat.count}" aria-expanded="true" th:aria-controls="'collapse'+${bcategoryStat.count}">
+                <h6 class="mb-0 font-weight-bold" th:text="${bcategory.categoryBName}">
+                    상의
+                </h6>
+                <h6 class="mb-0 font-weight-bold">+</h6>
+            </div>
+            <div th:id="'collapse'+${bcategoryStat.count}" class="collapse"
+                 th:aria-labelledby="'heading'+${bcategoryStat.count}" data-parent="#accordion">
+                <div class="nav-link collapsed" th:each="mcategory : ${bcategory.categoryMDtos()}">
+                    <h6 class="mb-0" style="font-size:15px;">
+                        <a href="#" class="text-black-50" th:text="${mcategory.categoryMName()}">짧은 상의</a>
+                    </h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</aside>
+<!-- brand section -->
+<main id="main" class="main p-5">
+    <section class="section mb-5">
+        <div class="row align-items-top">
+            <div class="col-lg-12">
+
+                <!-- Card with header and footer -->
+                <div class="card">
+                    <div class="card-header">01. 주문정보입력
+                        <!--<button type="submit" class="btn btn-primary" style="float: right;">
+                            <a th:href="@{/admin/appraise/new}" stlye="color:#ffffff !important">
+                                새 검수등록
+                            </a>
+                        </button>-->
+                    </div>
+                    <div class="card-body">
+                        <div class="row gy-4" style="font-weight: 300;">
+                            <div class="col-lg-12">
+                                <form th:action="@{|/product/${productDto.id}/order/loading|}" method="post" >
+                                    <table class="table table-bordered">
+                                        <tbody>
+                                        <tr>
+                                            <td>받으시는 분*</td>
+                                            <td colspan="3">
+                                                <input class="form-control input-sm" id="name" name="name" type="text" required/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>휴대폰번호*</td>
+                                            <td colspan="3">
+                                                <input class="form-control input-sm" id="phoneNumber" name="phoneNumber" type="tel" required/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>배송지 주소*</label></td>
+                                            <td colspan="3">
+                                                <div class="mb-2 d-flex align-items-center">
+                                                    <input style="width: 100px;" name="name" type="text" disabled required/>
+                                                    <span>-</span>
+                                                    <input class="mr-1" style="width: 100px;" name="name" type="text" disabled required/>
+                                                    <button type="button" class="btn btn-sm btn-info" onclick="goPopup();">우편번호 찾기</button>
+                                                </div>
+                                                <input class="form-control" id="address" type="text" name="address" required/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>배송시 요청사항</td>
+                                            <td colspan="3">
+                                                <input class="form-control" id="requestedTerm" name="requestTerm" type="text"/>
+                                            </td>
+                                        </tr>
+                                            <input class="form-control" name="price" type="hidden" th:value="${#numbers.formatInteger((productDto.productPrice)-(principal.userGrade.getDiscount)*0.01*(productDto.productPrice),3)}"/>
+                                        <tr>
+                                            <td>당일배송 안내</td>
+                                            <td colspan="3">
+                                                <ul>
+                                                    <li>
+                                                        본사, 압구정, 반포신세계, 서초강남역, 명동, 일산, 영등포신세계, 선릉점 상품을 주문하신 경우
+                                                        서울 및 경기일부지역에 한해 "당일배송" 서비스를 실시하고 있습니다.
+                                                    </li>
+                                                    <li>단, 당일배송은 "밤 늦게 배송"되는 관계로 익일배송을 원하시는 분께서는 익일배송을 클릭하세요.</li>
+                                                    <li>수령지가 회사 또는 복합상가일 경우 당일배송을 요청하셔도 익일배송이 될 수 있습니다.</li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>배송마감 안내</td>
+                                            <td colspan="3">
+                                                <ul>
+                                                    <li>권역매장별 마감 안내</li>
+                                                    <li>수도권/충청권 : 월~금 오전 10시30분(일산, 송도점 토요일 발송)</li>
+                                                    <li>영남권 : 월~토 오전 10시30분</li>
+                                                    <li>온라인 판매점 :월~금(배송마감시간 상품별 고지)</li>
+                                                    <li style="color: red;">운송업체의 사정 또는 기상악화 시 익일 발송될 수 있습니다.</li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- End Card with header and footer -->
+            </div>
+        </div>
+    </section>
+    <section class="section mb-5">
+        <div class="row align-items-top">
+            <div class="col-lg-12">
+
+                <!-- Card with header and footer -->
+                <div class="card">
+                    <div class="card-header">02. 상품정보확인
+                        <!--<button type="submit" class="btn btn-primary" style="float: right;">
+                            <a th:href="@{/admin/appraise/new}" stlye="color:#ffffff !important">
+                                새 검수등록
+                            </a>
+                        </button>-->
+                    </div>
+                    <div class="card-body">
+                        <div class="row gy-4" style="font-weight: 300;">
+                            <div class="col-lg-12">
+                                <table class="table table-bordered">
+                                    <tbody>
+                                    <tr>
+                                        <td>상품정보</td>
+                                        <td>상품가격</td>
+                                        <td>상품할인</td>
+                                        <td>상품그룹</td>
+                                        <td>주문금액</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">
+                                            <div style="display:flex;" >
+                                                <div class="mr-1">
+                                                    <img th:src="${productDto.imageDtos[0].filePath}" style="width: 100px; height:100px;" alt="" class="" />
+                                                </div>
+                                                <div style="display: flex; flex-direction: column">
+                                                    <h6 th:text="${productDto.productBrandName}">브랜드</h6>
+                                                    <h6>
+                                                        <a href="#" th:text="${productDto.productName}">
+                                                            상품명
+                                                        </a>
+                                                    </h6>
+                                                    <h6 th:text="'옵션:'+${productDto.productSize} + ', ' + ${productDto.productColor}">옵션:사이즈,색상</h6>
+                                                    <h6 th:text="'성별:' + ${productDto.productGender}">성별:여자</h6>
+                                                    <h6 th:text="'상품등급:'+${productDto.productGrade}">상품등급:A</h6>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <td style="vertical-align: middle;" th:text="${#numbers.formatInteger(productDto.productPrice,3,'COMMA')}+'원'"><h6>- 36,000원</h6></td>
+                                        <td style="vertical-align: middle;" th:text="'- '+ ${#numbers.formatInteger((principal.userGrade.discount)*0.01*(productDto.productPrice),3,'COMMA')}+'원'"><h6>- 36,000원</h6></td>
+                                        <td style="vertical-align: middle;" th:text="${productDto.productSellType}"><h6>중고</h6></td>
+                                        <td style="vertical-align: middle;" th:text="${#numbers.formatInteger((productDto.productPrice)-(principal.userGrade.getDiscount)*0.01*(productDto.productPrice),3,'COMMA')}+'원'"><h6>123,456,789원</h6></td>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- End Card with header and footer -->
+            </div>
+        </div>
+    </section>
+
+    <div class="section" style="font-weight: 300;">
+        <button class="btn btn-info w-100" type="submit" th:text="${#numbers.formatInteger((productDto.productPrice)-(principal.userGrade.getDiscount)*0.01*(productDto.productPrice),3,'COMMA')}+'원 결제하기'">123,456,789원 결제하기</button>
+    </div>
+    </form>
+
+
+</main>
+
+<footer id="footer" class="footer">
+    <!-- footer section -->
+    <section class="container-fluid footer_section">
+        <p>
+            © 2022 All Rights Reserved By
+            <a href="#">Lux ARP Project</a>
+        </p>
+    </section>
+    <!-- footer section -->
+</footer>
+
+
+<!-- end info_section -->
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/bootstrap.js"></script>
+<script src="/static/assets/js/frontmain.js"></script>
 
 </body>
+
 </html>

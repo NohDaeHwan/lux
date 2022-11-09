@@ -132,7 +132,6 @@ public class UserAccountController {
 
     @PostMapping("/point/new/loading")
     public String mypagePointCreate(@AuthenticationPrincipal Principal principal,
-            ModelMap mm,
             UserUpdateRequest userUpdateRequest) {
         System.out.println(userUpdateRequest);
         userAccountService.userPointUpdate(principal, userUpdateRequest);
