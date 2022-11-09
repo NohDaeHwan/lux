@@ -6,14 +6,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 public interface AuctionRepository extends JpaRepository<Auction, Long>, AuctionRepositoryCustom {
-
-    @Query(nativeQuery = true, value ="SELECT * FROM auction WHERE closing_price = 0 ORDER BY created_at",
-            countQuery="SELECT count(*) FROM auction WHERE closing_price = 0")
-    Page<Auction> findList(Pageable pageable);
 
     @Query(nativeQuery = true, value ="SELECT * FROM auction WHERE closing_price != 0 ORDER BY created_at",
             countQuery="SELECT count(*) FROM auction WHERE closing_price != 0")
@@ -21,7 +18,7 @@ public interface AuctionRepository extends JpaRepository<Auction, Long>, Auction
 
     Auction findByStartPrice(int startPrice);
 
-    Auction findByauctionStartDate(LocalDateTime auctionStartDate);
+    @Query(value ="SELECT a FROM Auction a WHERE a.product.appraisal.appraisalProductName LIKE %:query%")
+    List<Auction> findByQuery(@Param("query") String query, Pageable pageable);
 
-    Auction findByauctionClosingDate(LocalDateTime auctionClosingDate);
 }

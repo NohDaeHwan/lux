@@ -44,12 +44,13 @@ public class ProductController {
                               @RequestParam(defaultValue = "") String productGender,
                               @RequestParam(defaultValue = "") String productSize,
                               @RequestParam(defaultValue = "") String productGrade,
-                              @RequestParam(defaultValue = "") String productPrice,
-                              @RequestParam(defaultValue = "") String productName,
+                              @RequestParam(defaultValue = "10000000") String maxPrice,
+                              @RequestParam(defaultValue = "100000") String minPrice,
+                              @RequestParam(defaultValue = "") String query,
                               @PageableDefault(size = 30) Pageable pageable,
                               ModelMap mm) {
         Page<ProductsResponse> products = productService.productFind(productColor, productBrand, productGender,
-                productSize, productGrade, productPrice, productName, pageable).map(ProductsResponse::from);
+                productSize, productGrade, maxPrice, minPrice, query, pageable).map(ProductsResponse::from);
         List<CategoryBDto> categoryList = categoryBService.categoryList();
         List<BrandDto> brandList = brandService.brandList();
         List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), products.getTotalPages());

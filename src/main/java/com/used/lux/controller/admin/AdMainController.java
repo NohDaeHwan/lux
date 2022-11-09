@@ -37,7 +37,7 @@ public class AdMainController {
             return "redirect:/";
         }
 
-        UserAccountResponse adminDetail = UserAccountResponse.from(adUserAccountService.getAdminDetail(principal.id()));
+        UserAccountResponse adminDetail = UserAccountResponse.from(adUserAccountService.getUserMemo(principal.id()));
         mm.addAttribute("adminDetail", adminDetail);
         return "/admin/admin-detail";
     }

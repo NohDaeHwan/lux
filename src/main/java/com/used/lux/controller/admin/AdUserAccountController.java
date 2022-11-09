@@ -1,10 +1,12 @@
 package com.used.lux.controller.admin;
 
+import com.used.lux.dto.UserAccountDto;
 import com.used.lux.dto.UserGradeDto;
 import com.used.lux.dto.UserWithdrawalDto;
 import com.used.lux.dto.admin.AdUserAccountDto;
 import com.used.lux.dto.security.Principal;
 import com.used.lux.request.GradeCreateRequest;
+import com.used.lux.request.UserMemoUpdateRequest;
 import com.used.lux.response.UserAccountResponse;
 import com.used.lux.service.PaginationService;
 import com.used.lux.service.UserGradeService;
@@ -67,6 +69,34 @@ public class AdUserAccountController {
         return "/admin/user-detail";
     }
 
+    // 회원 메모 추가 페이지
+    @GetMapping("/{userId}/memo")
+    public String userMemo(@PathVariable Long userId,
+                           @AuthenticationPrincipal Principal principal,
+                           ModelMap mm){
+        if (principal.role().getName() != "ROLE_ADMIN") {
+            return "redirect:/";
+        }
+
+        UserAccountDto userDetail = adUserAccountService.getUserMemo(userId);
+        mm.addAttribute("userDetail", userDetail);
+        return "/admin/user-memo-create-form";
+    }
+
+    // 회원 메모 추가
+    @PostMapping("/{userId}/memo/update")
+    public String userMemoCreate(@PathVariable Long userId,
+                                 @AuthenticationPrincipal Principal principal,
+                                 UserMemoUpdateRequest request,
+                                 ModelMap mm){
+        if (principal.role().getName() != "ROLE_ADMIN") {
+            return "redirect:/";
+        }
+
+        adUserAccountService.updateMemo(userId, request);
+        return "redirect:/admin/user/"+userId;
+    }
+
     // 회원 등급 종류 설정 페이지
     @GetMapping("/grade")
     public String userGrade(@AuthenticationPrincipal Principal principal,
@@ -83,6 +113,10 @@ public class AdUserAccountController {
     // 회원 등급 종류 추가 페이지
     @GetMapping("/grade/new")
     public String userGradeCreate(@AuthenticationPrincipal Principal principal){
+        if (principal.role().getName() != "ROLE_ADMIN") {
+            return "redirect:/";
+        }
+
         return "/admin/grade-create-form";
     }
 

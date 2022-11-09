@@ -43,7 +43,7 @@
 
                             <div class="tab-pane fade show active profile-overview" id="profile-overview">
                                 <h5 class="card-title">특이사항</h5>
-                                <p class="small fst-italic">밥 잘먹음.</p>
+                                <p class="small fst-italic" th:text="${userDetail.userAccountDto.memo}">밥 잘먹음.</p>
 
                                 <h5 class="card-title">회원상세정보</h5>
 
@@ -83,6 +83,11 @@
                                     <div class="col-lg-3 col-md-4 label">총주문액</div>
                                     <div class="col-lg-9 col-md-8" th:text="${userDetail.totalPoint()} + ' p'"></div>
                                 </div>
+                                <button type="submit" class="btn btn-primary" style="float: right;">
+                                    <a th:href="@{|/admin/user/${userDetail.userAccountDto.id}/memo|}" stlye="color:#ffffff !important">
+                                        특이사항 등록
+                                    </a>
+                                </button>
                             </div>
                         </div><!-- End Bordered Tabs -->
                     </div>

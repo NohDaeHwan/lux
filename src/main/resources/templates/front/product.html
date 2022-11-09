@@ -49,12 +49,12 @@
                         </div>
                         <div class="card-body">
                             <h5 class="card-title">상세 조건</h5>
-                            <form class="search-form" method="POST" action="#">
+                            <form class="search-form" action="/product">
                                 <div class="row mb-3">
                                     <label class="col-sm-2 col-form-label">색상</label>
                                     <div class="col-sm-10">
                                         <select class="form-select form-control" name="productColor">
-                                             <option selected>전체</option>
+                                             <option value="" selected>전체</option>
                                             <option th:each="product : ${products}" th:value="${product.productColor}" th:text="${product.productColor}">example</option>
                                         </select>
                                     </div>
@@ -102,10 +102,11 @@
                                 <div class="row mb-3">
                                     <!--d아-->
                                     <label class="col-sm-2 col-form-label">상품가격</label>
-                                    <label class="col-sm-1 col-form-label" id="value1" >100000</label>
+                                    <label class="col-sm-1 col-form-label" id="value1">100000</label>
+                                    <input type="hidden" name="minPrice" id="minPrice" value="100000">
                                     <div class="col-sm-8">
                                         <div class="slider">
-                                                <input type="range" class="a"  id="input-left" min="1" max="100" value="1"  step="1" />
+                                            <input type="range" class="a"  id="input-left" min="1" max="100" value="1"  step="1" />
                                             <input type="range" class="a" id="input-right" min="1" max="100"  value="100"  step="1"/>
                                             <div class="track"  style="">
                                                 <div class="range" ></div>
@@ -114,7 +115,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <label class="col-sm-1 col-form-label" id="value2">10000000</label>
+                                    <label class="col-sm-1 col-form-label" id="value2" name="maxPrice">10000000</label>
+                                    <input type="hidden" name="maxPrice" id="maxPrice" value="10000000">
                                 </div>
                                 <div class="search-bar mb-3 row pl-2">
                                     <input type="text" class="form-control mr-1" style="width: 95%;" name="query" placeholder="검색" title="Enter search keyword">

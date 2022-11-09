@@ -1,8 +1,10 @@
 package com.used.lux.service.admin;
 
+import com.used.lux.domain.UserAccount;
 import com.used.lux.dto.*;
 import com.used.lux.dto.admin.AdUserAccountDto;
 import com.used.lux.repository.*;
+import com.used.lux.request.UserMemoUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -66,8 +68,7 @@ public class AdUserAccountService {
     }
 
     @Transactional(readOnly = true)
-    public UserAccountDto getAdminDetail(Long userId) {
-        // 회원 상세
+    public UserAccountDto getUserMemo(Long userId) {
         return UserAccountDto.from(userAccountRepository.findById(userId).get());
     }
 
@@ -81,5 +82,11 @@ public class AdUserAccountService {
     public List<UserWithdrawalDto> getUserWithdrawal() {
         return userWithdrawalRepository.findAll()
                 .stream().map(UserWithdrawalDto::from).collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    @Transactional
+    public void updateMemo(Long userId, UserMemoUpdateRequest request) {
+        UserAccount userAccount = userAccountRepository.getReferenceById(userId);
+        userAccount.setMemo(request.memo());
     }
 }

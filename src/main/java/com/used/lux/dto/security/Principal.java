@@ -21,12 +21,13 @@ public record Principal(
         String gender,
         int point,
         UserGrade userGrade,
-        RoleType role
+        RoleType role,
+        String memo
 ) implements UserDetails {
 
     public static Principal of(Long id, String userEmail, String userPassword, String userName, String phoneNumber,
-                     int age, String gender, int point, UserGrade userGrade, RoleType role) {
-        return new Principal(id, userEmail, userPassword, userName, phoneNumber, age, gender, point, userGrade, role);
+                     int age, String gender, int point, UserGrade userGrade, RoleType role, String memo) {
+        return new Principal(id, userEmail, userPassword, userName, phoneNumber, age, gender, point, userGrade, role, memo);
     }
 
     //dto -> principal
@@ -41,7 +42,8 @@ public record Principal(
                 dto.gender(),
                 dto.userPoint(),
                 dto.userGrade(),
-                dto.role()
+                dto.role(),
+                dto.memo()
         );
     }
     //dto를 만들어주는거
@@ -56,7 +58,8 @@ public record Principal(
                 gender,
                 point,
                 userGrade,
-                role
+                role,
+                memo
         );
     }
 

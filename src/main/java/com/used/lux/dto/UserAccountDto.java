@@ -17,6 +17,7 @@ public record UserAccountDto(
         int userPoint,
         UserGrade userGrade,
         RoleType role,
+        String memo,
         LocalDateTime createdAt,
         String createdBy,
         LocalDateTime modifiedAt,
@@ -24,19 +25,19 @@ public record UserAccountDto(
 ) {
 
     public static UserAccountDto of(Long id, String userEmail, String userPassword, String userName, String phoneNumber,
-                                    int age, String gender, int userPoint, UserGrade userGrade, RoleType role)
+                                    int age, String gender, int userPoint, UserGrade userGrade, RoleType role, String memo)
     {
         return new UserAccountDto(id, userEmail, userPassword, userName, phoneNumber, age, gender,
-                userPoint, userGrade, role, null, null, null, null);
+                userPoint, userGrade, role, memo, null, null, null, null);
     }
 
     public static UserAccountDto of(
             Long id, String userEmail, String userPassword, String userName, String phoneNumber,
-            int age, String gender, int userPoint, UserGrade userGrade, RoleType role,
+            int age, String gender, int userPoint, UserGrade userGrade, RoleType role, String memo,
             LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy
     ) {
         return new UserAccountDto(id, userEmail, userPassword, userName, phoneNumber, age, gender, userPoint,
-                userGrade, role, createdAt, createdBy, modifiedAt, modifiedBy);
+                userGrade, role, memo, createdAt, createdBy, modifiedAt, modifiedBy);
     }
 
     public static UserAccountDto from(UserAccount entity) {
@@ -51,6 +52,7 @@ public record UserAccountDto(
                 entity.getPoint(),
                 entity.getUserGrade(),
                 entity.getRole(),
+                entity.getMemo(),
                 entity.getCreatedAt(),
                 entity.getCreatedBy(),
                 entity.getModifiedAt(),
@@ -59,7 +61,7 @@ public record UserAccountDto(
     }
 
     public UserAccount toEntity() {
-        return UserAccount.of(userEmail, userPassword, userName, phoneNumber, age, gender, userPoint, userGrade, role);
+        return UserAccount.of(userEmail, userPassword, userName, phoneNumber, age, gender, userPoint, userGrade, role, memo);
     }
 
 }

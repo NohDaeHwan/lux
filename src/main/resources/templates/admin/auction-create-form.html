@@ -81,24 +81,13 @@
                                     <div class="col-sm-5" style="display:flex; " >
                                         <input type="datetime-local" class="form-control" style="margin-right: 8px;" th:value="${#temporals.format(auctionDetail.auctionDto().auctionStartDate(),'yyyy-MM-dd HH:mm')}" id="auctionStartDate" name="auctionStartDate">
                                     </div>
-                                    <div class="row mb-3" >
-                                        <label class="col-sm-2 col-form-label" for="auctionClosingDate">종료시간</label>
-                                        <div class="col-sm-5" style="display:flex;">
-                                            <input type="datetime-local" class="form-control" style="margin-right: 8px;" th:value="${#temporals.format(auctionDetail.auctionDto().auctionClosingDate(),'yyyy-MM-dd HH:mm')}" id="auctionClosingDate" name="auctionClosingDate">
-                                        </div>
+                                </div>
+                                <div class="row mb-3" >
+                                    <label class="col-sm-2 col-form-label" for="auctionClosingDate">종료시간</label>
+                                    <div class="col-sm-5" style="display:flex;">
+                                        <input type="datetime-local" class="form-control" style="margin-right: 8px;" th:value="${#temporals.format(auctionDetail.auctionDto().auctionClosingDate(),'yyyy-MM-dd HH:mm')}" id="auctionClosingDate" name="auctionClosingDate">
                                     </div>
                                 </div>
-                                <!-- <div class="row mb-3">
-                                    <legend class="col-form-label col-sm-2 pt-0">경매상태</legend>
-                                    <div class="col-sm-10">
-                                      <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck2" checked>
-                                        <label class="form-check-label" for="gridCheck2">
-                                          경매노출중
-                                        </label>
-                                      </div>
-                                    </div>
-                                  </div> -->
                                 <div class="row mb-3">
                                     <label class="col-sm-2 col-form-label"></label>
                                     <div class="col-sm-10">

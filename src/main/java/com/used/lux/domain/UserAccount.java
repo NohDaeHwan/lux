@@ -52,10 +52,14 @@ public class UserAccount extends AuditingFields {
 	@Enumerated(EnumType.STRING)
 	private RoleType role;
 
+	@Setter
+	@Column(length = 500)
+	private String memo;
+
 	protected UserAccount() {}
 
 	private UserAccount(String userEmail, String userPassword, String userName, String phoneNumber, int age,
-						String gender, int point, UserGrade userGrade, RoleType role) {
+						String gender, int point, UserGrade userGrade, RoleType role, String memo) {
 		this.userEmail = userEmail;
 		this.userPassword = userPassword;
 		this.userName = userName;
@@ -65,11 +69,12 @@ public class UserAccount extends AuditingFields {
 		this.point = point;
 		this.userGrade = userGrade;
 		this.role = role;
+		this.memo = memo;
 	}
 
 	public static UserAccount of(String userEmail, String userPassword, String userName, String phoneNumber, int age,
-						String gender, int point, UserGrade userGrade, RoleType role) {
-		return new UserAccount(userEmail, userPassword, userName, phoneNumber, age, gender, point, userGrade, role);
+						String gender, int point, UserGrade userGrade, RoleType role, String memo) {
+		return new UserAccount(userEmail, userPassword, userName, phoneNumber, age, gender, point, userGrade, role, memo);
 	}
 
 	@Override

@@ -16,7 +16,6 @@ public interface UserAccountLogRepository extends JpaRepository<UserAccountLog, 
 
     List<UserAccountLog> findByUserEmail(String userEmail);
 
-
     @Query(value = "select new com.used.lux.dto.TotalPointDto(SUM(ur.point)) from UserAccountLog ur where ur.userEmail=:userEmail AND ur.usageDetail='충전'")
     TotalPointDto getTotalPoint(String userEmail);
 
