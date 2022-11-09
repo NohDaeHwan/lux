@@ -34,4 +34,26 @@ public class AuctionRepositoryCustomImpl extends QuerydslRepositorySupport imple
         return new PageImpl<Auction>(results, pageable, totalCount);
     }
 
+    @Override
+    public Page<Auction> findByQuery(String auctionColor, String auctionBrand, String auctionGender, String auctionSize,
+                                     String auctionGrade, String maxPrice, String minPrice, String query, Pageable pageable) {
+        QAuction auction = QAuction.auction;
+
+        JPQLQuery<Auction> queryResult = from(auction)
+                .select(auction)
+                .where(auction.product.appraisal.appraisalColor.like("%"+auctionColor+"%"),
+                        auction.product.appraisal.appraisalBrand.brandName.like("%"+auctionBrand+"%"),
+                        auction.product.appraisal.appraisalGender.like("%"+auctionGender+"%"),
+                        auction.product.appraisal.appraisalSize.like("%"+auctionSize+"%"),
+                        auction.product.appraisal.appraisalGrade.like("%"+auctionGrade+"%"),
+                        auction.product.appraisal.appraisalProductName.like("%"+query+"%"),
+                        auction.product.productPrice.gt(Integer.parseInt(minPrice)),
+                        auction.product.productPrice.lt(Integer.parseInt(maxPrice)),
+                        auction.product.productSellType.eq("경매"))
+                .orderBy(auction.createdAt.desc());
+        long totalCount = queryResult.fetchCount();
+        List<Auction> results = getQuerydsl().applyPagination(pageable, queryResult).fetch();
+        return new PageImpl<Auction>(results, pageable, totalCount);
+    }
+
 }

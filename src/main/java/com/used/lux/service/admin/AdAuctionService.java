@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -28,11 +29,14 @@ public class AdAuctionService {
 
     private final StateRepository stateRepository;
 
-
+    // Admin 경매 리스트 조회(+검색)
+    @Transactional(readOnly = true)
     public Page<AuctionDto> getAuctionList(String auctionState, String auctionDate, String query, Pageable pageable) {
         return auctionRepository.searchAuction(auctionState, auctionDate, query, pageable).map(AuctionDto::from);
     }
 
+    // Admin 경매 상세 조회(+경매로그)
+    @Transactional(readOnly = true)
     public AdAuctionDto getAuctionDetail(Long auctionId) {
         // 경매 상세
         AuctionDto auctionDto = AuctionDto.from(auctionRepository.findById(auctionId).get());

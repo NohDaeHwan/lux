@@ -8,115 +8,30 @@
 
 <body class="sub_page">
 
-
-<!-- <aside id="sidebar" class="mysidebar">
-
-    <ul class="sidebar-nav">
-    <li class="nav-heading">카테고리</li>
-        <li class="nav-item">
-        <a class="nav-link collapsed" href="index.html">
-            <i class="bi bi-grid"></i>
-            <span>주문 내역 조회</span>
-        </a>
-        </li>
-        <li class="nav-item">
-        <a class="nav-link collapsed" href="index.html">
-            <i class="bi bi-grid"></i>
-            <span>경매 내역 조회</span>
-        </a>
-        </li>
-        <li class="nav-item">
-        <a class="nav-link collapsed" href="index.html">
-            <i class="bi bi-grid"></i>
-            <span>검수 요청 결과</span>
-        </a>
-        </li>
-        <li class="nav-item">
-        <a class="nav-link collapsed" href="index.html">
-            <i class="bi bi-grid"></i>
-            <span>최근 본 상품</span>
-        </a>
-        </li>
-        <li class="nav-item">
-        <a class="nav-link collapsed" href="index.html">
-            <i class="bi bi-grid"></i>
-            <span>포인트 내역/충전</span>
-        </a>
-        </li>
-        <li class="nav-item">
-        <a class="nav-link collapsed" href="index.html">
-            <i class="bi bi-grid"></i>
-            <span>회원 혜택</span>
-        </a>
-        </li>
-    </ul>
-
-</aside> -->
 <aside id="sidebar" class="mysidebar">
     <div id="accordion" class="sidebar-nav">
-        <div class="nav-item">
-            <div class="nav-link collapsed flex" style="justify-content: space-between;" id="headingOne"  data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                <h6 class="mb-0 font-weight-bold">
+
+        <div class="nav-item" th:each="bcategory : ${categoryList}">
+
+            <div class="nav-link collapsed flex" style="justify-content: space-between;" th:id="'heading'+${bcategoryStat.count}" data-toggle="collapse"
+                 th:data-target="'#collapse'+${bcategoryStat.count}" aria-expanded="true" th:aria-controls="'collapse'+${bcategoryStat.count}">
+                <h6 class="mb-0 font-weight-bold" th:text="${bcategory.categoryBName}">
                     상의
                 </h6>
                 <h6 class="mb-0 font-weight-bold">+</h6>
             </div>
 
-            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-                <div class="nav-link collapsed">
+            <div th:id="'collapse'+${bcategoryStat.count}" class="collapse"
+                 th:aria-labelledby="'heading'+${bcategoryStat.count}" data-parent="#accordion">
+                <div class="nav-link collapsed" th:each="mcategory : ${bcategory.categoryMDtos()}">
                     <h6 class="mb-0" style="font-size:15px;">
-                        <a href="#" class="text-black-50">짧은 상의</a>
+                        <a href="#" class="text-black-50" th:text="${mcategory.categoryMName()}">짧은 상의</a>
                     </h6>
                 </div>
-                <div class="nav-link collapsed">
-                    <h6 class="mb-0" style="font-size:15px;">
-                        <a href="#" class="text-black-50">긴 상의</a>
-                    </h6>
-                </div>
-            </div>
-        </div>
-        <div class="nav-item">
-            <div class="nav-link collapsed flex" style="justify-content: space-between;" id="headingTwo"  data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                <h6 class="mb-0 font-weight-bold">
-                    하의
-                </h6>
-                <h6 class="mb-0 font-weight-bold">+</h6>
             </div>
 
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                <div class="nav-link collapsed">
-                    <h6 class="mb-0" style="font-size:15px;">
-                        <a href="#" class="text-black-50">짧은 상의</a>
-                    </h6>
-                </div>
-                <div class="nav-link collapsed">
-                    <h6 class="mb-0" style="font-size:15px;">
-                        <a href="#" class="text-black-50">긴 상의</a>
-                    </h6>
-                </div>
-            </div>
         </div>
-        <div class="nav-item">
-            <div class="nav-link collapsed flex" style="justify-content: space-between;" id="headingThree"  data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
-                <h6 class="mb-0 font-weight-bold">
-                    ACC
-                </h6>
-                <h6 class="mb-0 font-weight-bold">+</h6>
-            </div>
 
-            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-                <div class="nav-link collapsed">
-                    <h6 class="mb-0" style="font-size:15px;">
-                        <a href="#" class="text-black-50">짧은 상의</a>
-                    </h6>
-                </div>
-                <div class="nav-link collapsed">
-                    <h6 class="mb-0" style="font-size:15px;">
-                        <a href="#" class="text-black-50">긴 상의</a>
-                    </h6>
-                </div>
-            </div>
-        </div>
     </div>
 </aside>
 <!-- brand section -->
@@ -128,59 +43,51 @@
 
                 <!-- Card with header and footer -->
                 <div class="card">
-                    <div class="card-header">옵션 검색
-                        <!--<button type="submit" class="btn btn-primary" style="float: right;">
-                            <a th:href="@{/admin/appraise/new}" stlye="color:#ffffff !important">
-                                새 검수등록
-                            </a>
-                        </button>-->
-                    </div>
+                    <div class="card-header">옵션 검색</div>
                     <div class="card-body">
                         <h5 class="card-title">상세 조건</h5>
-                        <form class="search-form" method="POST" action="#">
+                        <form class="search-form" action="/product">
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">색상</label>
                                 <div class="col-sm-10">
-                                    <select class="form-select form-control" name="productColor">
+                                    <select class="form-select form-control" name="auctionColor">
                                         <option value="" selected>전체</option>
-                                        <option th:each="auctionresponse :${auctionResponse}" th:value="${auctionresponse.productResponse().productColor()}" th:text="${auctionresponse.productResponse().productColor()}">example</option>
+                                        <option th:each="auction : ${auctions}" th:value="${auction.productResponse.productColor}" th:text="${auction.productResponse.productColor}">example</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">브랜드</label>
                                 <div class="col-sm-10">
-
-                                    <select class="form-select form-control" name="productColor">
+                                    <select class="form-select form-control" name="auctionBrand">
                                         <option value="" selected>전체</option>
-                                        <option th:each="auctionresponse :${auctionResponse}" th:value="${auctionresponse.productResponse().productBrandName()}" th:text="${auctionresponse.productResponse().productBrandName()}">example</option>
+                                        <option th:each="brand : ${brandList}" th:value="${brand.brandName()}" th:text="${brand.brandName}">example</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">성별</label>
                                 <div class="col-sm-10">
-                                    <select class="form-select form-control" name="productColor">
+                                    <select class="form-select form-control" name="auctionGender">
                                         <option value="" selected>전체</option>
                                         <option value="Male">남자</option>
                                         <option value="Female">여자</option>
-                                    </select>
                                     </select>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">사이즈</label>
                                 <div class="col-sm-10">
-                                    <select class="form-select form-control" name="productColor">
+                                    <select class="form-select form-control" name="auctionSize">
                                         <option value="" selected>전체</option>
-                                        <option th:each="auctionresponse :${auctionResponse}" th:value="${auctionresponse.productResponse().productSize()}" th:text="${auctionresponse.productResponse().productSize()}">example</option>
+                                        <option th:each="num : ${#numbers.sequence(90,290, 5)}" th:value="${num}" th:text="${num}">14</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">상품등급</label>
                                 <div class="col-sm-10">
-                                    <select class="form-select form-control" name="productGrade">
+                                    <select class="form-select form-control" name="auctionGrade">
                                         <option value="" selected>전체</option>
                                         <option value="1">S</option>
                                         <option value="2">A</option>
@@ -192,7 +99,8 @@
                             <div class="row mb-3">
                                 <!--d아-->
                                 <label class="col-sm-2 col-form-label">상품가격</label>
-                                <label class="col-sm-1 col-form-label" id="value1" >100000</label>
+                                <label class="col-sm-1 col-form-label" id="value1">100000</label>
+                                <input type="hidden" name="minPrice" id="minPrice" value="100000">
                                 <div class="col-sm-8">
                                     <div class="slider">
                                         <input type="range" class="a"  id="input-left" min="1" max="100" value="1"  step="1" />
@@ -204,7 +112,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <label class="col-sm-1 col-form-label" id="value2">10000000</label>
+                                <label class="col-sm-1 col-form-label" id="value2" name="maxPrice">10000000</label>
+                                <input type="hidden" name="maxPrice" id="maxPrice" value="10000000">
                             </div>
                             <div class="search-bar mb-3 row pl-2">
                                 <input type="text" class="form-control mr-1" style="width: 95%;" name="query" placeholder="검색" title="Enter search keyword">
@@ -253,11 +162,35 @@
                 </div>
             </div>
         </div>
-
-        </div>
     </section>
-    <script src="/static/assets/js/frontmain.js">
-    </script>
+
+    <!-- Pagination with icons -->
+    <nav id="pagination" aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" th:href="@{/auction(page=${auctions.number - 1}, sort=(${param.sort} != null ? ${param.sort} : '') + (${auctions.sort.getOrderFor('param.sort')} != null ? (${auctions.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
+                      query=${param.query})}" aria-label="Previous" th:class="'page-link' + (${auctions.number} <= 0 ? ' disabled' : '')">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item" th:each="pageNumber : ${paginationBarNumbers}">
+                <a th:text="${pageNumber + 1}"
+                   th:href="@{/auction(page=${pageNumber},
+                          sort=(${param.sort} != null ? ${param.sort} : '') + (${auctions.sort.getOrderFor('param.sort')} != null ? (${auctions.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
+                          query=${param.query}
+                      )}"
+                   th:class="'page-link' + (${pageNumber} == ${products.number} <= 0 ? ' disabled' : '')">
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" th:href="@{/auction(page=${auctions.number + 1}, sort=(${param.sort} != null ? ${param.sort} : '') + (${auctions.sort.getOrderFor('param.sort')} != null ? (${auctions.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
+                      query=${param.query})}" aria-label="Next" th:class="'page-link' + (${auctions.number} >= ${auctions.totalPages - 1} ? ' disabled' : '')">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav><!-- End Pagination with icons -->
+
 </main>
 
 <footer id="footer" class="footer">
@@ -276,6 +209,7 @@
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="/static/assets/js/bootstrap.js"></script>
+<script src="/static/assets/js/frontmain.js"></script>
 </body>
 
 </html>
