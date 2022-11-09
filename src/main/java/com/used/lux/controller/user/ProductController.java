@@ -99,7 +99,13 @@ public class ProductController {
                                OrderCreateRequest orderCreateRequest){
         productOrderService.createOrder(principal,productId,orderCreateRequest);
 
-        return "redirect:/product";
+        return "redirect:/product/success";
+    }
+    @GetMapping("/success")
+    public String success(ModelMap mm) {
+        List<CategoryBDto> categoryList = categoryBService.categoryList();
+        mm.addAttribute("categoryList", categoryList);
+        return "front/success";
     }
 
     /*

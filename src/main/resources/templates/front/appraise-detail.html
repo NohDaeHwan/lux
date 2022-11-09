@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout/front-head :: .head"></head>
+<header th:replace="layout/front-header :: .header"></header>
+<body class="sub_page">
+
+<aside id="sidebar" class="mysidebar">
+    <div id="accordion" class="sidebar-nav">
+
+        <div class="nav-item" th:each="bcategory : ${categoryList}">
+
+            <div class="nav-link collapsed flex" style="justify-content: space-between;" th:id="'heading'+${bcategoryStat.count}" data-toggle="collapse"
+                 th:data-target="'#collapse'+${bcategoryStat.count}" aria-expanded="true" th:aria-controls="'collapse'+${bcategoryStat.count}">
+                <h6 class="mb-0 font-weight-bold" th:text="${bcategory.categoryBName}">
+                    상의
+                </h6>
+                <h6 class="mb-0 font-weight-bold">+</h6>
+            </div>
+
+            <div th:id="'collapse'+${bcategoryStat.count}" class="collapse"
+                 th:aria-labelledby="'heading'+${bcategoryStat.count}" data-parent="#accordion">
+                <div class="nav-link collapsed" th:each="mcategory : ${bcategory.categoryMDtos()}">
+                    <h6 class="mb-0" style="font-size:15px;">
+                        <a href="#" class="text-black-50" th:text="${mcategory.categoryMName()}">짧은 상의</a>
+                    </h6>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</aside>
+<main id="main" class="main">
+    <section class="layout_padding2">
+        <div class="container-fluid">
+            <div class="brand_heading">
+                <h3 class="custom_heading">
+                    검수 상세페이지
+                </h3>
+            </div>
+        </div>
+        <div class="container-fluid brand_item-container">
+            <table class="table table-bordered">
+                <tbody>
+                <tr>
+                    <td class="bg-light">상품명</td>
+                    <td colspan="5">
+                        <div class="col-sm-10">
+                            샤넬 명품백
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td  class="bg-light">브랜드</td>
+                    <td colspan="3">
+                        <div class="col-sm-10">
+                            가니
+                        </div>
+                    </td>
+                    <td class="bg-light">사이즈</td>
+                    <td colspan="3">
+                        <div class="col-sm-10">
+                            s
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg-light"><label>성별</label></td>
+                    <td colspan="3">
+                        <div class="col-sm-10">
+                            Female
+                        </div>
+                    </td>
+                    <td class="bg-light">색상</td>
+                    <td colspan="">
+                        <div class="col-sm-10">
+                            Orange
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg-light">
+                        <div>
+                            등록날짜
+                        </div>
+                    </td>
+                    <td colspan="5">
+                        <div class="col-sm-10">
+                            2022-11-01 17:09:44
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg-light">이미지</td>
+                    <td colspan="5">
+                        <div class="col-sm-10 center flex-column align-items-center" style="display: flex; border: 0;">
+                            <img class="mb-2" src="#">
+                            <img class="mb-2" src="#">
+                            <img class="mb-2" src="#">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg-light">
+                        <div>
+                            매입가격(원)
+                        </div>
+                    </td>
+                    <td colspan="5">
+                        <div class="col-sm-10">
+                            게시자만 볼 수 있게 처리
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg-light">
+                        <div>
+                            검수등급
+                        </div>
+                    </td>
+                    <td colspan="5">
+                        <div class="col-sm-10">
+                            게시자만 볼 수 있게 처리
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg-light">
+                        <div>
+                            검수코멘트
+                        </div>
+                    </td>
+                    <td colspan="5">
+                        <div class="col-sm-10">
+                            게시자만 볼 수 있게 처리
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg-light">
+                        <div>
+                            검수처리날짜
+                        </div>
+                    </td>
+                    <td colspan="5">
+                        <div class="col-sm-10">
+                            게시자만 볼 수 있게 처리
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </section>
+
+</main>
+<footer id="footer" class="footer">
+    <!-- footer section -->
+    <section class="container-fluid footer_section">
+        <p>
+            © 2022 All Rights Reserved By
+            <a href="#">Lux ARP Project</a>
+        </p>
+    </section>
+    <!-- footer section -->
+</footer>
+
+
+<!-- end info_section -->
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/bootstrap.js"></script>
+<script src="/static/assets/js/frontmain.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout/front-head :: .head"></head>
+<header th:replace="layout/front-header :: .header"></header>
+<body class="sub_page">
+
+<aside id="sidebar" class="mysidebar">
+    <div id="accordion" class="sidebar-nav">
+
+        <div class="nav-item" th:each="bcategory : ${categoryList}">
+
+            <div class="nav-link collapsed flex" style="justify-content: space-between;" th:id="'heading'+${bcategoryStat.count}" data-toggle="collapse"
+                 th:data-target="'#collapse'+${bcategoryStat.count}" aria-expanded="true" th:aria-controls="'collapse'+${bcategoryStat.count}">
+                <h6 class="mb-0 font-weight-bold" th:text="${bcategory.categoryBName}">
+                    상의
+                </h6>
+                <h6 class="mb-0 font-weight-bold">+</h6>
+            </div>
+
+            <div th:id="'collapse'+${bcategoryStat.count}" class="collapse"
+                 th:aria-labelledby="'heading'+${bcategoryStat.count}" data-parent="#accordion">
+                <div class="nav-link collapsed" th:each="mcategory : ${bcategory.categoryMDtos()}">
+                    <h6 class="mb-0" style="font-size:15px;">
+                        <a href="#" class="text-black-50" th:text="${mcategory.categoryMName()}">짧은 상의</a>
+                    </h6>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</aside>
+<main id="main" class="main p-5">
+    <section class="section mb-5">
+        <div class="row align-items-top">
+            <div class="col-lg-12">
+
+                <!-- Card with header and footer -->
+                <div class="card">
+                    <div class="card-header">01. 검수정보입력
+                        <!--<button type="submit" class="btn btn-primary" style="float: right;">
+                            <a th:href="@{/admin/appraise/new}" stlye="color:#ffffff !important">
+                                새 검수등록
+                            </a>
+                        </button>-->
+                    </div>
+                    <div class="card-body">
+                        <div class="row gy-4" style="font-weight: 300;">
+                            <div class="col-lg-12">
+                                <form action="#" >
+                                    <table class="table table-bordered">
+                                        <tbody>
+                                        <tr>
+                                            <td>상품명</td>
+                                            <td colspan="3">
+                                                <input class="form-control input-sm" id="name" type="text" required/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>브랜드</td>
+                                            <td colspan="3">
+                                                <div>
+                                                    <select class="form-select form-control">
+                                                        <option selected>Open this select menu</option>
+                                                        <option value="1">Male</option>
+                                                        <option value="2">Female</option>
+                                                        <option value="3">Three</option>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>성별</label></td>
+                                            <td colspan="3">
+                                                <input class="form-control" id="address" type="text" required/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>색상</td>
+                                            <td colspan="3">
+                                                <input class="form-control" type="text"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>사이즈</td>
+                                            <td colspan="3">
+                                                <input class="form-control" type="text"/>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- End Card with header and footer -->
+            </div>
+        </div>
+    </section>
+    <section class="section mb-5">
+        <div class="row align-items-top">
+            <div class="col-lg-12">
+
+                <!-- Card with header and footer -->
+                <div class="card">
+                    <div class="card-header">02. 검수이미지등록
+                        <!--<button type="submit" class="btn btn-primary" style="float: right;">
+                            <a th:href="@{/admin/appraise/new}" stlye="color:#ffffff !important">
+                                새 검수등록
+                            </a>
+                        </button>-->
+                    </div>
+                    <div class="card-body">
+                        <div class="gy-4" style="font-weight: 300;">
+                            <div class="col-lg-12 flex-column" style="display: flex;">
+                                <!-- <table class="table table-bordered">
+                                    <tbody>
+                                    <tr>
+                                        <td>상품정보</td>
+                                        <td>상품할인</td>
+                                        <td>상품그룹</td>
+                                        <td>주문금액</td>
+                                    </tr>
+                                    <tr each="brandlist : ${brandList}">
+                                        <th scope="row">
+                                                <div style="display:flex;">
+                                                    <div>
+                                                        <img src="images/watch.png" style="width: 100px; height:100px;" alt="" class="" />
+                                                    </div>
+                                                    <div style="display: flex; flex-direction: column">
+                                                        <h6>브랜드</h6>
+                                                        <h6>
+                                                            <a href="#">
+                                                                상품명
+                                                            </a>
+                                                        </h6>
+                                                        <h6>옵션:사이즈,색상</h6>
+                                                        <h6>성별:여자</h6>
+                                                        <h6>상품등급:A</h6>
+                                                    </div>
+                                                </div>
+                                        </th>
+                                        <td style="vertical-align: middle;"><h6>- 36,000원</h6></td>
+                                        <td style="vertical-align: middle;"><h6>중고</h6></td>
+                                        <td style="vertical-align: middle;"><h6>123,456,789원</h6></td>
+                                    </tbody>
+                                </table> -->
+                                <input type="file" class="mb-2">
+                                <input type="file" class="mb-2">
+                                <input type="file">
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- End Card with header and footer -->
+            </div>
+        </div>
+    </section>
+
+    <div class="section" style="font-weight: 300;">
+        <button type="submit" class="btn btn-info w-100">검수 등록하기</button>
+    </div>
+    </form>
+
+
+</main>
+<footer id="footer" class="footer">
+    <!-- footer section -->
+    <section class="container-fluid footer_section">
+        <p>
+            © 2022 All Rights Reserved By
+            <a href="#">Lux ARP Project</a>
+        </p>
+    </section>
+    <!-- footer section -->
+</footer>
+
+
+<!-- end info_section -->
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/bootstrap.js"></script>
+<script src="/static/assets/js/frontmain.js"></script>
+</body>
+
+</html>

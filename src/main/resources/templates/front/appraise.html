@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout/front-head :: .head"></head>
+<header th:replace="layout/front-header :: .header"></header>
+<body class="sub_page">
+
+<aside id="sidebar" class="mysidebar">
+    <div id="accordion" class="sidebar-nav">
+
+        <div class="nav-item" th:each="bcategory : ${categoryList}">
+
+            <div class="nav-link collapsed flex" style="justify-content: space-between;" th:id="'heading'+${bcategoryStat.count}" data-toggle="collapse"
+                 th:data-target="'#collapse'+${bcategoryStat.count}" aria-expanded="true" th:aria-controls="'collapse'+${bcategoryStat.count}">
+                <h6 class="mb-0 font-weight-bold" th:text="${bcategory.categoryBName}">
+                    상의
+                </h6>
+                <h6 class="mb-0 font-weight-bold">+</h6>
+            </div>
+
+            <div th:id="'collapse'+${bcategoryStat.count}" class="collapse"
+                 th:aria-labelledby="'heading'+${bcategoryStat.count}" data-parent="#accordion">
+                <div class="nav-link collapsed" th:each="mcategory : ${bcategory.categoryMDtos()}">
+                    <h6 class="mb-0" style="font-size:15px;">
+                        <a href="#" class="text-black-50" th:text="${mcategory.categoryMName()}">짧은 상의</a>
+                    </h6>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</aside>
+<main id="main" class="main">
+    <section class="layout_padding2">
+        <div class="container-fluid">
+            <div class="brand_heading">
+                <h3 class="custom_heading">
+                    명품감정 리스트
+                </h3>
+                <div style="display: flex; justify-content: space-between;">
+                    <p th:text="'전체결과: ' + 0 + ' 건'">
+                        전체결과: n 건
+                    </p>
+                    <div>
+                        <a href="/appraisal/new" class="btn btn-info mb-2" style="color:white">검수글 등록 ></a>
+                        <a href="/mypage/appraise" class="btn btn-info mb-2" style="color:white">나의 검수 ></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid brand_item-container">
+            <table class="table table-hover ">
+                <thead>
+                <tr>
+                    <th scope="col">상품</th>
+                    <th scope="col">내용</th>
+                    <th scope="col">적용일자</th>
+                    <th scope="col">검수상태</th>
+                </tr>
+
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row" style="width: 120px;">
+                        <a href="#"><img src="#" style="width: 100px; height:100px;"></a>
+                    </th>
+                    <td style="vertical-align: middle; font-weight: 300;"><h6>브랜드-카테고리중<br>브랜드 상품명<br>유저명</h6></td>
+                    <td style="vertical-align: middle; font-weight: 300; width: 150px;"><h6>2022-11-02 18:04:05</h6></td>
+                    <td style="vertical-align: middle; font-weight: 300;">검수완료</td>
+                </tr>
+                <tr>
+                    <th scope="row" style="width: 120px;">
+                        <a href="#"><img src="#" style="width: 100px; height:100px;"></a>
+                    </th>
+                    <td style="vertical-align: middle; font-weight: 300;"><h6>브랜드-카테고리중<br>브랜드 상품명<br>유저명</h6></td>
+                    <td style="vertical-align: middle; font-weight: 300; width: 150px;"><h6>2022-11-02 18:04:05</h6></td>
+                    <td style="vertical-align: middle; font-weight: 300;">검수완료</td>
+                </tr>
+                <tr>
+                    <th scope="row" style="width: 120px;">
+                        <a href="#"><img src="#" style="width: 100px; height:100px;"></a>
+                    </th>
+                    <td style="vertical-align: middle; font-weight: 300;"><h6>브랜드-카테고리중<br>브랜드 상품명<br>유저명</h6></td>
+                    <td style="vertical-align: middle; font-weight: 300; width: 150px;"><h6>2022-11-02 18:04:05</h6></td>
+                    <td style="vertical-align: middle; font-weight: 300;" >검수완료</td>
+                </tr>
+                <tr>
+                    <th scope="row" style="width: 120px;">
+                        <a href="#"><img src="#" style="width: 100px; height:100px;"></a>
+                    </th>
+                    <td style="vertical-align: middle; font-weight: 300;"><h6>브랜드-카테고리중<br>브랜드 상품명<br>유저명</h6></td>
+                    <td style="vertical-align: middle; font-weight: 300; width: 150px;"><h6>2022-11-02 18:04:05</h6></td>
+                    <td style="vertical-align: middle; font-weight: 300;">검수완료</td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+    </section>
+
+</main>
+<footer id="footer" class="footer">
+    <!-- footer section -->
+    <section class="container-fluid footer_section">
+        <p>
+            © 2022 All Rights Reserved By
+            <a href="#">Lux ARP Project</a>
+        </p>
+    </section>
+    <!-- footer section -->
+</footer>
+
+
+<!-- end info_section -->
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/bootstrap.js"></script>
+<script src="/static/assets/js/frontmain.js"></script>
+</body>
+
+</html>
