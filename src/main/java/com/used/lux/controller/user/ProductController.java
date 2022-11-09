@@ -1,22 +1,22 @@
 package com.used.lux.controller.user;
 
+import com.used.lux.dto.ProductDto;
+import com.used.lux.dto.UserGradeDto;
+import com.used.lux.dto.security.Principal;
+import com.used.lux.request.OrderCreateRequest;
+import com.used.lux.request.UserUpdateRequest;
 import com.used.lux.response.product.ProductsResponse;
 import com.used.lux.dto.BrandDto;
 import com.used.lux.dto.CategoryBDto;
-import com.used.lux.service.BrandService;
-import com.used.lux.service.CategoryBService;
-import com.used.lux.service.PaginationService;
-import com.used.lux.service.ProductService;
+import com.used.lux.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,6 +32,10 @@ public class ProductController {
     private final PaginationService paginationService;
 
     private final ProductService productService;
+    private final ProductOrderService productOrderService;
+    private final ProductOrderLogService productOrderLogService;
+
+    private final UserGradeService userGradeService;
 
 
     @GetMapping
@@ -58,20 +62,44 @@ public class ProductController {
         return "/front/product"; // 중고 명품 리스트 페이지
     }
 
-    @GetMapping("/detail/{productId}")
-    public String productDetail(@PathVariable Long productId,ModelMap mm) {
-
+    @GetMapping("/{productId}")
+    public String productDetail(@PathVariable Long productId, ModelMap mm, @AuthenticationPrincipal  Principal principal) {
+        if (principal != null) {
+            mm.addAttribute("principal",principal);
+        }
         List<CategoryBDto> categoryList = categoryBService.categoryList();
+        List<UserGradeDto> gradeList = userGradeService.getGradeList();
+        ProductDto productDto = productService.productDetail(productId);
 
         mm.addAttribute("categoryList", categoryList);
-
+        mm.addAttribute("gradeList", gradeList);
+        mm.addAttribute("productDto", productDto);
 
         return "/front/product-detail"; // 중고 명품 리스트 페이지
     }
-    @GetMapping("/detail/{productId}/order")
-    public  String productOrder(@PathVariable Long productId,ModelMap mm){
+    @GetMapping("/{productId}/order")
+    public  String productOrder(@PathVariable Long productId, ModelMap mm, @AuthenticationPrincipal  Principal principal){
+        if (principal != null) {
+            mm.addAttribute("principal",principal);
+        }
+        List<CategoryBDto> categoryList = categoryBService.categoryList();
+        List<UserGradeDto> gradeList = userGradeService.getGradeList();
+        ProductDto productDto = productService.productDetail(productId);
+
+        mm.addAttribute("categoryList", categoryList);
+        mm.addAttribute("gradeList", gradeList);
+        mm.addAttribute("productDto", productDto);
 
         return "front/product-order";
+    }
+
+    @PostMapping("/{productId}/order/loading")
+    public String productOrder(@AuthenticationPrincipal Principal principal,
+                               @PathVariable Long productId,
+                               OrderCreateRequest orderCreateRequest){
+        productOrderService.createOrder(principal,productId,orderCreateRequest);
+
+        return "redirect:/product";
     }
 
     /*

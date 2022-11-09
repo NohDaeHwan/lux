@@ -31,4 +31,8 @@ public class ProductService {
                 .map(ProductDto::from).collect(Collectors.toUnmodifiableList());
     }
 
+
+    public ProductDto productDetail(Long productId) {
+        return ProductDto.from(productRepository.findById(productId).get());
+    }
 }

@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+
 <head th:replace="layout/front-head :: .head"></head>
 <header th:replace="layout/front-header :: .header"></header>
 <body class="sub_page">
@@ -26,8 +30,8 @@
       </div>
 </aside>
     <!-- brand section -->
-    <main id="main" class="main">
-        <section class="session">
+    <main id="main" class="main p-5">
+        <section class="session mb-5">
             <div class="row align-items-top">
                 <div class="col-lg-5">
                     <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
@@ -37,25 +41,9 @@
                             <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
                         </div>
                         <div class="carousel-inner">
-                            <div class="carousel-item active" data-bs-interval="10000">
-                                <img src="/static/assets/img/item-1.jpg " class="d-block w-100" alt="...">
+                            <div class="carousel-item active" data-bs-interval="10000" th:each="img : ${productDto.imageDtos}" >
+                                <img src="/static/assets/img/item-1.jpg "  th:src="${img.filePath}" class="d-block w-100" alt="...">
                                 <div class="carousel-caption d-none d-md-block">
-                                    <h5>First slide label</h5>
-                                    <p>Some representative placeholder content for the first slide.</p>
-                                </div>
-                            </div>
-                            <div class="carousel-item" data-bs-interval="2000">
-                                <img src="/static/assets/img/item-2.jpg " class="d-block w-100" alt="...">
-                                <div class="carousel-caption d-none d-md-block">
-                                    <h5>Second slide label</h5>
-                                    <p>Some representative placeholder content for the second slide.</p>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <img src="/static/assets/img/item-3.jpg " class="d-block w-100" alt="...">
-                                <div class="carousel-caption d-none d-md-block">
-                                    <h5>Third slide label</h5>
-                                    <p>Some representative placeholder content for the third slide.</p>
                                 </div>
                             </div>
                         </div>
@@ -72,64 +60,50 @@
                 </div><!-- col-lg-5 종료-->
                 <div class="col-lg-7">
                     <div class="card-body pt-3">
-                        <!-- Bordered Tabs -->
-                        <ul class="nav nav-tabs nav-tabs-bordered">
-
-                            <li class="nav-item">
-                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="profile-overview">상품상세</button>
-                            </li>
-                        </ul>
                         <div class="tab-content pt-2">
 
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">상품명</label>
                                 <div class="col-sm-10" style="padding: 7px 12px;">
-                                    <div class="col-sm-10" style="font-weight: 300;">Fresh Blueberry Antibacterial Foaming Hand Wash</div>
+                                    <div class="col-sm-10" style="font-weight: 300;" th:text="${productDto.productName}">Fresh Blueberry Antibacterial Foaming Hand Wash</div>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">판매가격</label>
                                 <div class="col-sm-10" style="padding: 7px 12px;">
-                                    <div class="col-sm-10" style="font-weight: 300;">1,996,460원</div>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label">판매그룹</label>
-                                <div class="col-sm-10" style="padding: 7px 12px;">
-                                    <div class="col-sm-10" style="font-weight: 300;">중고</div>
+                                    <div class="col-sm-10" style="font-weight: 300;" th:text="${#numbers.formatInteger(productDto.productPrice,3,'COMMA')} +'원'">1,996,460원</div>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">브랜드</label>
                                 <div class="col-sm-10" style="padding: 7px 12px;">
-                                    <div class="col-sm-10" style="font-weight: 300;">끌로엦</div>
+                                    <div class="col-sm-10" style="font-weight: 300;" th:text="${productDto.productBrandName}">끌로엦</div>
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label">대분류</label>
+                                <label class="col-sm-2 col-form-label">카테고리</label>
                                 <div class="col-sm-10" style="padding: 7px 12px;">
-                                    <div class="col-sm-10" style="font-weight: 300;">악세서리</div>
+                                    <div class="col-sm-10" style="font-weight: 300;" th:text="${productDto.categoryBName} + ' > ' + ${productDto.categoryMName}">악세서리 > 넥타이</div>
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label">중분류</label>
-                                <div class="col-sm-10" style="padding: 7px 12px;">
-                                    <div class="col-sm-10" style="font-weight: 300;">넥타이</div>
+                                <label class="col-sm-2 col-form-label">등급별<br>혜택</label>
+                                <div class="col-sm-10" >
+                                    <div class="w-100 bg-light p-1 m-2" style="font-weight: 300;" th:each="list : ${gradeList}" th:text="${list.gradeName} + '👑 : ' +${list.discount} + '% 할인'">
+                                        어떻게 저렇게 해서 얼마얼마</div>
                                 </div>
                             </div>
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label">상품설명</label>
-                                <div class="col-sm-10" style="padding: 7px 12px;">
-                                    <div style="font-weight: 300;">
-                                        <textarea name="about" class="form-control" id="about" style="height: 100px" readonly="readonly">테스트23232323</textarea>
-                                    </div>
+                            <div class="row mb-3" sec:authorize="isAuthenticated">
+                                <label class="col-sm-2 col-form-label">현등급<br>혜택</label>
+                                <div class="col-sm-10" >
+                                    <div class="w-100 bg-light p-1 m-2" th:text="${principal.userGrade.gradeName} + '👑('+ ${principal.userGrade.discount} + '%할인): ' +${#numbers.formatInteger((productDto.productPrice)-(principal.userGrade.getDiscount)*0.01*(productDto.productPrice),3,'COMMA')}+'원'">
+                                        어떻게 저렇게 해서 얼마얼마</div>
                                 </div>
                             </div>
-
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label"></label>
                                 <div class="col-sm-10">
-                                    <button class="btn btn-primary"  style="float: right" th:onclick="|location.href='@{|/product/detail/${productId}/order|}'|">
+                                    <button class="btn btn-info w-100" th:onclick="|location.href='@{|/product/${productId}/order|}'|">
                                         구매하기
                                     </button>
                                 </div>
@@ -140,21 +114,29 @@
             </div>
         </section>
 
-        <div class="container">
+        <div class="container" style="font-weight: 300;">
+
+            <div class="gy-4 mb-5 bg-light" style="display:flex;justify-content: center">
+                <div>
+                    <div class="mb-3 text-center"><strong>상품설명💁🏻‍️</strong></div>
+                    <div class="mb-3 text-center" th:text="${productDto.productContent}">상품설명입니다~~</div>
+                    <div class="mb-3" th:each="img:${productDto.imageDtos}"><img src="#" th:src="${img.filePath}"></div>
+                </div>
+            </div>
             <!--문의사항 -->
-            <div class="row gy-4 mb-5" id="ordAndPur">
+            <div class="row gy-4 mb-5 bg-light" id="ordAndPur">
                 <ul class="nav nav-tabs nav-justified">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#ordAndPur">주문취소 및 구매제한 제도</a>
+                        <a class="nav-link active" stlye="color:#000000;" href="#ordAndPur">주문취소 및 구매제한 제도</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#delivery">배송안내</a>
+                        <a class="nav-link" stlye="color:#000000;" href="#delivery">배송안내</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#productInfo">상품 정보 제공 및 거래 조건</a>
+                        <a class="nav-link" stlye="color:#000000;" href="#productInfo">상품 정보 제공 및 거래 조건</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#refund">반품 및 환불제도</a>
+                        <a class="nav-link" stlye="color:#000000;" href="#refund">반품 및 환불제도</a>
                     </li>
                 </ul>
                 <div>
@@ -177,19 +159,19 @@
                     </ul>
                 </div>
             </div>
-            <div class="row gy-4 mb-5" id="delivery">
+            <div class="row gy-4 mb-5 bg-light" id="delivery">
                 <ul class="nav nav-tabs nav-justified">
                     <li class="nav-item">
-                        <a class="nav-link" href="#ordAndPur">주문취소 및 구매제한 제도</a>
+                        <a class="nav-link" stlye="color:#000000;" href="#ordAndPur">주문취소 및 구매제한 제도</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="#delivery">배송안내</a>
+                        <a class="nav-link active" stlye="color:#000000;" href="#delivery">배송안내</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#productInfo">상품 정보 제공 및 거래 조건</a>
+                        <a class="nav-link" stlye="color:#000000;" href="#productInfo">상품 정보 제공 및 거래 조건</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#refund">반품 및 환불제도</a>
+                        <a class="nav-link" stlye="color:#000000;" href="#refund">반품 및 환불제도</a>
                     </li>
                 </ul>
                 <div>
@@ -269,19 +251,19 @@
                     </ul>
                 </div>
             </div>
-            <div class="row gy-4 mb-5" id="productInfo">
+            <div class="row gy-4 mb-5 bg-light" id="productInfo">
                 <ul class="nav nav-tabs nav-justified">
                     <li class="nav-item">
-                        <a class="nav-link" href="#ordAndPur">주문취소 및 구매제한 제도</a>
+                        <a class="nav-link" stlye="color:#000000;" href="#ordAndPur">주문취소 및 구매제한 제도</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#delivery">배송안내</a>
+                        <a class="nav-link" stlye="color:#000000;" href="#delivery">배송안내</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="#productInfo">상품 정보 제공 및 거래 조건</a>
+                        <a class="nav-link active" stlye="color:#000000;" href="#productInfo">상품 정보 제공 및 거래 조건</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#refund">반품 및 환불제도</a>
+                        <a class="nav-link" stlye="color:#000000;" href="#refund">반품 및 환불제도</a>
                     </li>
                 </ul>
                 <div>
@@ -389,19 +371,19 @@
                     </table>
                 </div>
             </div>
-            <div class="row gy-4 mb-5" id="refund">
+            <div class="row gy-4 mb-5 bg-light" id="refund">
                 <ul class="nav nav-tabs nav-justified">
                     <li class="nav-item">
-                        <a class="nav-link" href="#ordAndPur">주문취소 및 구매제한 제도</a>
+                        <a class="nav-link" stlye="color:#000000;" href="#ordAndPur">주문취소 및 구매제한 제도</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#delivery">배송안내</a>
+                        <a class="nav-link" stlye="color:#000000;" href="#delivery">배송안내</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#productInfo">상품 정보 제공 및 거래 조건</a>
+                        <a class="nav-link" stlye="color:#000000;" href="#productInfo">상품 정보 제공 및 거래 조건</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="#refund">반품 및 환불제도</a>
+                        <a class="nav-link active" stlye="color:#000000;" href="#refund">반품 및 환불제도</a>
                     </li>
                 </ul>
                 <div>

@@ -265,7 +265,7 @@ sidebar
   align-items: center;
   font-size: 15px;
   font-weight: 300;
-  color: #4154f1;
+  color: #000000;
   transition: 0.3;
   background: #f6f9ff;
   padding: 10px 15px;
@@ -275,11 +275,11 @@ sidebar
 .sidebar-nav .nav-link i {
   font-size: 16px;
   margin-right: 10px;
-  color: #4154f1;
+  color: #000000;
 }
 
 .sidebar-nav .nav-link.collapsed {
-  color: #012970;
+  color: #000000;
   background: #fff;
 }
 
@@ -288,12 +288,12 @@ sidebar
 }
 
 .sidebar-nav .nav-link:hover {
-  color: #4154f1;
+  color: #000000;
   background: #f6f9ff;
 }
 
 .sidebar-nav .nav-link:hover i {
-  color: #4154f1;
+  color: #000000;
 }
 
 .sidebar-nav .nav-link .bi-chevron-down {
