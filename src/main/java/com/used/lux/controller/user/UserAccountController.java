@@ -126,7 +126,7 @@ public class UserAccountController {
         mm.addAttribute("users", userAccountResponse);
         mm.addAttribute("nextGrade", nextGrade);
         Long totalPoint = userAccountLogService.getTotalPoint(principal.userEmail());
-        mm.addAttribute("total", totalPoint);
+        mm.addAttribute("total",totalPoint);
         return "/front/mypage-point-create-form";
     }
 
