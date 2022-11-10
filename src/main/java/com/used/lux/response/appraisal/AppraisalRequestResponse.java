@@ -4,6 +4,8 @@ import com.used.lux.dto.*;
 import com.used.lux.response.UserAccountResponse;
 
 import java.time.LocalDateTime;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public record AppraisalRequestResponse(
         Long id,
@@ -16,6 +18,7 @@ public record AppraisalRequestResponse(
         String appraisalStateStep,
         UserAccountResponse userAccount,
         Long appraisalId,
+        Set<AppraisalImageResponse> imageList,
         LocalDateTime createdAt,
         String createdBy,
         LocalDateTime modifiedAt,
@@ -24,9 +27,9 @@ public record AppraisalRequestResponse(
 
     public static AppraisalRequestResponse of(Long id, String appraisalProductName, String appraisalBrandName, String appraisalGender, String appraisalColor,
                                     String appraisalSize, String appraisalStateName, String appraisalStateStep, UserAccountResponse userAccount,
-                                    Long appraisalId, LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
+                                    Long appraisalId, Set<AppraisalImageResponse> imageList, LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
         return new AppraisalRequestResponse(id, appraisalProductName, appraisalBrandName, appraisalGender, appraisalColor, appraisalSize,
-                appraisalStateName, appraisalStateStep, userAccount, appraisalId, createdAt, createdBy, modifiedAt, modifiedBy);
+                appraisalStateName, appraisalStateStep, userAccount, appraisalId, imageList, createdAt, createdBy, modifiedAt, modifiedBy);
     }
 
     public static AppraisalRequestResponse from(AppraisalRequestDto dto) {
@@ -41,6 +44,9 @@ public record AppraisalRequestResponse(
                 dto.appraisalState().stateStep(),
                 UserAccountResponse.from(dto.userAccount()),
                 dto.appraisalId(),
+                dto.imageList().stream()
+                        .map(AppraisalImageResponse::from)
+                        .collect(Collectors.toUnmodifiableSet()),
                 dto.createdAt(),
                 dto.createdBy(),
                 dto.modifiedAt(),
