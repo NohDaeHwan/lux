@@ -82,6 +82,8 @@ public class Appraisal extends AuditingFields {
 		this.userAccount = userAccount;
 	}
 
+
+
 	public static Appraisal of(String appraisalProductName, Brand appraisalBrandName, String appraisalContent,
 							   String appraisalGender, String appraisalColor, String appraisalSize, String appraisalGrade,
 							   State appraisalState, String appraisalComment, int appraisalPrice,

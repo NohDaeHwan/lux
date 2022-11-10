@@ -3,6 +3,7 @@ package com.used.lux.service.admin;
 import com.used.lux.domain.Appraisal;
 import com.used.lux.domain.UserAccount;
 import com.used.lux.dto.AppraisalDto;
+import com.used.lux.dto.ProductDto;
 import com.used.lux.repository.AppraisalRepository;
 import com.used.lux.repository.UserAccountRepository;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,10 @@ public class AppraiseService {
     public void create(AppraisalDto dto) throws Exception {
         UserAccount userAccount = userAccountRepository.getReferenceById(dto.userAccountDto().id());
         Appraisal appraisal = appraisalRepository.save(dto.toEntity(userAccount)); // 감정신청서 DB에 저장
+    }
+
+    public AppraisalDto appraisalDetail(Long productId) {
+        return AppraisalDto.from(appraisalRepository.findById(productId).get());
     }
 
     /*

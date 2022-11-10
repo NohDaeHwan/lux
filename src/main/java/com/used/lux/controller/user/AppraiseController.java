@@ -1,16 +1,20 @@
 package com.used.lux.controller.user;
 
+import com.used.lux.dto.AppraisalDto;
 import com.used.lux.dto.CategoryBDto;
 import com.used.lux.dto.security.Principal;
 import com.used.lux.request.appraisal.AppraisalRequest;
+import com.used.lux.response.UserAccountResponse;
 import com.used.lux.response.appraisal.AppraisalResponse;
 import com.used.lux.response.appraisal.AppraisalsResponse;
 import com.used.lux.service.CategoryBService;
+import com.used.lux.service.UserAccountService;
 import com.used.lux.service.admin.AppraiseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +33,8 @@ public class AppraiseController {
     private final AppraiseService appraiseService;
     private final CategoryBService categoryBService;
 
+    private final UserAccountService userAccountService;
+
     // 감정 신청 리스트
     @GetMapping
     public String appraisalList(
@@ -37,10 +43,13 @@ public class AppraiseController {
     ) {
 //        Page<AppraisalsResponse> appraisalList = appraiseService.findAllList(pageable).map(AppraisalsResponse::from);
 //        return ResponseEntity.status(HttpStatus.OK).body(appraisalList);
+        Page<AppraisalsResponse> appraisalList = appraiseService.findAllList(pageable).map(AppraisalsResponse::from);
         List<CategoryBDto> categoryList = categoryBService.categoryList();
         mm.addAttribute("categoryList", categoryList);
+        mm.addAttribute("appraisalList",appraisalList);
         return "front/appraise";
     }
+
 
     // 감정 신청 리스트
     @GetMapping("/new")
@@ -56,9 +65,11 @@ public class AppraiseController {
     }
 
     @GetMapping("/{appraiseId}")
-    public String appraiseDetail(ModelMap mm) {
+    public String appraiseDetail(@PathVariable Long appraiseId,ModelMap mm) {
+        AppraisalDto appraisalDto = appraiseService.appraisalDetail(appraiseId);
         List<CategoryBDto> categoryList = categoryBService.categoryList();
         mm.addAttribute("categoryList", categoryList);
+        mm.addAttribute("appraisalDto",appraisalDto);
         return "front/appraise-detail";
     }
 
