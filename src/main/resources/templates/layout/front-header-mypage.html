@@ -31,8 +31,9 @@
                     <h6 style="color:lightgray;" th:text="'가입일: ' + ${#temporals.format(users.createdAt,'yyyy.MM.dd')}">가입일: 2019.03.09</h6>
                 </div>
                 <div>
-                    <h4 style="color:lightgray;" th:if="${total}>${nextGrade.rankUp}" th:text="${users.userName}+'님 다음 등급인 ' + ${nextGrade.gradeName} + '까지 0P 남았습니다.'" >구*현님 다음 등급인 브론즈까지 82,768점 남았습니다.</h4>
-                    <h4 style="color:lightgray;" th:if="${total}<${nextGrade.rankUp}" th:text="${users.userName}+'님 다음 등급인 ' + ${nextGrade.gradeName} + '까지 ' + ${#numbers.formatInteger((nextGrade.rankUp)-(users.userPoint),3,'COMMA')} + 'P 남았습니다.'" >구*현님 다음 등급인 브론즈까지 82,768점 남았습니다.</h4>
+                    <h4 style="color:lightgray;" th:if="${nextGrade} == null" th:text="${users.userName}+'님 항상 감사합니다.'" >구*현님 다음 등급인 브론즈까지 82,768점 남았습니다.</h4>
+                    <h4 style="color:lightgray;" th:if="(${nextGrade} != null)and(${total}>${nextGrade.rankUp})" th:text="${users.userName}+'님 다음 등급인 ' + ${nextGrade.gradeName} + '까지 0P 남았습니다.'" >구*현님 다음 등급인 브론즈까지 82,768점 남았습니다.</h4>
+                    <h4 style="color:lightgray;" th:if="(${nextGrade} != null)and(${total}<${nextGrade.rankUp})" th:text="${users.userName}+'님 다음 등급인 ' + ${nextGrade.gradeName} + '까지 ' + ${#numbers.formatInteger((nextGrade.rankUp)-(users.userPoint),3,'COMMA')} + 'P 남았습니다.'" >구*현님 다음 등급인 브론즈까지 82,768점 남았습니다.</h4>
                     <h4 style="color:lightgray;" th:if="${total}<1000" th:text="'현재 누적 포인트: '+ ${#numbers.formatInteger(total,0)+'P'}">구*현님 다음 등급인 브론즈까지 82,768점 남았습니다.</h4>
                     <h4 style="color:lightgray;" th:if="${total}>=1000" th:text="'현재 누적 포인트: '+ ${#numbers.formatInteger(total,3,'COMMA')+'P'}">구*현님 다음 등급인 브론즈까지 82,768점 남았습니다.</h4>
                     <h6><a th:href="@{/mypage/mygrade}" style="color:lightgray;">등급혜택 ></a></h6>
