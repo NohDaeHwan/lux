@@ -19,4 +19,8 @@ public record StateDto(
         );
     }
 
+    public State toDto() {
+        return State.of(id, stateName, stateStep);
+    }
+
 }

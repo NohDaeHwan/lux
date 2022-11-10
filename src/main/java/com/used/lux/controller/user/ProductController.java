@@ -38,7 +38,7 @@ public class ProductController {
     private final UserGradeService userGradeService;
 
 
-    @GetMapping
+    /*@GetMapping
     public String productList(@RequestParam(defaultValue = "") String productColor,
                               @RequestParam(defaultValue = "") String productBrand,
                               @RequestParam(defaultValue = "") String productGender,
@@ -106,19 +106,6 @@ public class ProductController {
         List<CategoryBDto> categoryList = categoryBService.categoryList();
         mm.addAttribute("categoryList", categoryList);
         return "front/success";
-    }
-
-    /*
-    @GetMapping("/detail/{productId}")
-    public ResponseEntity<ProductResponse> usedLuxury(@PathVariable Long productId) {
-        ProductResponse product = ProductResponse.from(usedluxService.productFind(productId));
-        return ResponseEntity.status(HttpStatus.OK).body(product); // 중고 명품 상세 페이지
-    }
-
-    @GetMapping("/order/{productId}")
-    public ResponseEntity<ProductResponse> usedLuxuryOrder(@PathVariable Long productId) {
-        ProductResponse product = ProductResponse.from(usedluxService.productFind(productId));
-        return ResponseEntity.status(HttpStatus.OK).body(product); // 중고 명품 구매 페이지
     }*/
 
 }

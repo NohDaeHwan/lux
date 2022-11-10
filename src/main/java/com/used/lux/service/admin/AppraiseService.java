@@ -1,9 +1,9 @@
 package com.used.lux.service.admin;
 
-import com.used.lux.domain.Appraisal;
+import com.used.lux.domain.AppraisalRequest;
 import com.used.lux.domain.UserAccount;
-import com.used.lux.dto.AppraisalDto;
-import com.used.lux.repository.AppraisalRepository;
+import com.used.lux.dto.AppraisalRequestDto;
+import com.used.lux.repository.AppraisalRequestRepository;
 import com.used.lux.repository.UserAccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,19 +16,19 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class AppraiseService {
 
-    private final AppraisalRepository appraisalRepository;
+    private final AppraisalRequestRepository appraisalRequestRepository;
 
     private final UserAccountRepository userAccountRepository;
 
     @Transactional(readOnly = true)
-    public Page<AppraisalDto> findAllList(Pageable pageable) {
-        return appraisalRepository.findAll(pageable).map(AppraisalDto::from);
+    public Page<AppraisalRequestDto> findAllList(Pageable pageable) {
+        return appraisalRequestRepository.findAll(pageable).map(AppraisalRequestDto::from);
     }
 
     @Transactional
-    public void create(AppraisalDto dto) throws Exception {
-        UserAccount userAccount = userAccountRepository.getReferenceById(dto.userAccountDto().id());
-        Appraisal appraisal = appraisalRepository.save(dto.toEntity(userAccount)); // 감정신청서 DB에 저장
+    public void create(AppraisalRequestDto dto) throws Exception {
+        UserAccount userAccount = userAccountRepository.getReferenceById(dto.userAccount().id());
+        AppraisalRequest appraisalRequest = appraisalRequestRepository.save(dto.toEntity(userAccount)); // 감정신청서 DB에 저장
     }
 
     /*

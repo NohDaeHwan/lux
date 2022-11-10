@@ -39,7 +39,7 @@ public class ProductOrderService {
     }
 
     @Transactional
-    public void createOrder(Principal principal, Long productId, OrderCreateRequest orderCreateRequest) {
+    public void createOrder(Principal principal, Long productId, OrderCreateRequest request) {
         Product product = productRepository.findById(productId).get();
         UserAccount userAccount = userAccountRepository.findById(principal.id()).get();
         State stateOrder = stateRepository.findByStateStep("주문완료");
@@ -47,14 +47,14 @@ public class ProductOrderService {
         product.setState(stateProduct);
         productRepository.save(product);
         productOrderRepository.save(ProductOrder.of(
-                orderCreateRequest.name(), orderCreateRequest.phoneNumber(), orderCreateRequest.address(), orderCreateRequest.email(),
-                orderCreateRequest.requestTerm(), stateOrder, product,userAccount
+                request.name(), request.phoneNumber(), request.address(), request.email(),
+                request.payment(), request.requestTerm(), stateOrder, product,userAccount
         ));
         productOrderLogRepository.save(ProductOrderLog.of(
                 null,
                 principal.userEmail(),
                 productId,
-                product.getAppraisal().getAppraisalProductName(),
+                product.getAppraisalRequest().getAppraisalProductName(),
                 stateOrder,
                 product.getProductPrice(),
                 product.getProductSellType()

@@ -41,12 +41,12 @@ public record ProductDto(
     public static ProductDto from(Product entity) {
         return new ProductDto(
                 entity.getId(),
-                entity.getAppraisal().getAppraisalProductName(),
-                entity.getAppraisal().getAppraisalBrand().getBrandName(),
-                entity.getAppraisal().getAppraisalGender(),
-                entity.getAppraisal().getAppraisalColor(),
-                entity.getAppraisal().getAppraisalSize(),
-                entity.getAppraisal().getAppraisalGrade(),
+                entity.getAppraisalRequest().getAppraisalProductName(),
+                entity.getAppraisalRequest().getAppraisalBrand().getBrandName(),
+                entity.getAppraisalRequest().getAppraisalGender(),
+                entity.getAppraisalRequest().getAppraisalColor(),
+                entity.getAppraisalRequest().getAppraisalSize(),
+                "S", // 수정필요
                 entity.getCategoryB().getCategoryBName(),
                 entity.getCategoryM().getCategoryMName(),
                 entity.getState(),
@@ -64,8 +64,8 @@ public record ProductDto(
         );
     }
 
-    public Product toEntity(Appraisal appraisal, CategoryB categoryB, CategoryM categoryM) {
-        return Product.of(appraisal, categoryB, categoryM, productState, productPrice, productSellType, productContent,
+    public Product toEntity(AppraisalRequest appraisalRequest, CategoryB categoryB, CategoryM categoryM) {
+        return Product.of(appraisalRequest, categoryB, categoryM, productState, productPrice, productSellType, productContent,
                 productViewCount);
     }
 

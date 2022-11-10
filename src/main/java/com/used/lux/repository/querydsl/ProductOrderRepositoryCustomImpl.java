@@ -29,7 +29,7 @@ public class ProductOrderRepositoryCustomImpl extends QuerydslRepositorySupport 
                 .select(productOrder)
                 .where(productOrder.state.stateStep.like("%"+orderState+"%"),
                         productOrder.product.productSellType.like("%"+orderSellType+"%"),
-                        productOrder.product.appraisal.appraisalProductName.like("%"+query+"%"),
+                        productOrder.product.appraisalRequest.appraisalProductName.like("%"+query+"%"),
                         productOrder.modifiedAt.after(LocalDateTime.of(Integer.parseInt(dateResult[0]),
                                 Integer.parseInt(dateResult[1]), Integer.parseInt(dateResult[2]), 00, 00)));
         long totalCount = queryResult.fetchCount();

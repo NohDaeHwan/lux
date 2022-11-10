@@ -18,7 +18,7 @@ public class ProductService {
     //Product DB의 서비스 클래스입니다. 해당 DB에 연결하려면 repository와 service 영역에 추가적인 작성이 필요합니다.
     private final ProductRepository productRepository;
 
-    @Transactional(readOnly = true)
+    /*@Transactional(readOnly = true)
     public Page<ProductDto> productFind(String productColor, String productBrand, String productGender, String productSize,
                                         String productGrade, String maxPrice, String minPrice, String query, Pageable pageable) {
         return productRepository.findByQuery(productColor, productBrand,
@@ -34,5 +34,5 @@ public class ProductService {
 
     public ProductDto productDetail(Long productId) {
         return ProductDto.from(productRepository.findById(productId).get());
-    }
+    }*/
 }

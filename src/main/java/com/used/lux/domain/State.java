@@ -22,4 +22,16 @@ public class State {
     @Column(name="state_step", nullable = false, length = 100)
     private String stateStep; // 검수전, 검수중, 검수완료, 판매중, 판매완료, 판매취소, 경매중, 경매완료, 렌트대기, 렌트중, 상품회수중, 예약중, 상품회수완료
 
+    protected State() {}
+
+    private State(Long id, String stateName, String stateStep) {
+        this.id = id;
+        this.stateName = stateName;
+        this.stateStep = stateStep;
+    }
+
+    public static State of(Long id, String stateName, String stateStep) {
+        return new State(id, stateName, stateStep);
+    }
+
 }

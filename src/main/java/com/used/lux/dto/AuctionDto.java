@@ -30,13 +30,6 @@ public record AuctionDto(
         return new AuctionDto(id, productDto, stateDto, startPrice, presentPrice, closingPrice, auctionStartDate,
                 auctionClosingDate, biddingCount, bidder, createdAt, createdBy, modifiedAt, modifiedBy);
     }
-
-    public static AuctionDto of(int price) {
-        return new AuctionDto(null, null, null, 0, price, 0,
-                null, null, 0, null, null,
-                null, null, null);
-    }
-
     public static AuctionDto from(Auction entity) {
         return new AuctionDto(
                 entity.getId(),

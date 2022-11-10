@@ -13,8 +13,8 @@ public record ProductOrderDto(
         String phoneNumber, // 주문자 핸드폰번호
         String address, // 주문자 주소
         String email, // 주문자 이메일
+        int payment, // 결제가격
         String requestedTerm, // 주문자 요청사항
-
         StateDto stateDto,
         ProductDto productDto, // 주문한 상품 정보
         UserAccountDto userAccountDto, // 주문한 유저 정보
@@ -24,10 +24,10 @@ public record ProductOrderDto(
         String modifiedBy
 ) {
 
-    public static ProductOrderDto of(Long id, String name, String phoneNumber, String address, String email,
+    public static ProductOrderDto of(Long id, String name, String phoneNumber, String address, String email, int payment,
                            String requestedTerm, StateDto stateDto, ProductDto productDto, UserAccountDto userAccountDto,
                            LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
-        return new ProductOrderDto(id, name, phoneNumber, address, email, requestedTerm, stateDto,
+        return new ProductOrderDto(id, name, phoneNumber, address, email, payment, requestedTerm, stateDto,
                 productDto, userAccountDto, createdAt, createdBy, modifiedAt, modifiedBy);
     }
 
@@ -38,6 +38,7 @@ public record ProductOrderDto(
                 entity.getPhoneNumber(),
                 entity.getAddress(),
                 entity.getEmail(),
+                entity.getPayment(),
                 entity.getRequestedTerm(),
                 StateDto.from(entity.getState()),
                 ProductDto.from(entity.getProduct()),
@@ -50,7 +51,7 @@ public record ProductOrderDto(
     }
 
     public ProductOrder toEntity(State state, Product product, UserAccount userAccount) {
-        return ProductOrder.of(name, phoneNumber, address, email, requestedTerm, state, product, userAccount);
+        return ProductOrder.of(name, phoneNumber, address, email, payment, requestedTerm, state, product, userAccount);
     }
 
 }

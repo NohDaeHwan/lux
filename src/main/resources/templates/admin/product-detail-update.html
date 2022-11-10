@@ -129,8 +129,9 @@
                                     <legend class="col-form-label col-sm-2 pt-0">상품상태</legend>
                                     <div class="col-sm-10">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="gridCheck2" checked name="">
-                                            <label class="form-check-label" for="gridCheck2">
+                                            <input th:if="${productDetail.productDto.productState.stateStep == '판매중'}" class="form-check-input" name="stateStep" value="판매대기" type="checkbox" checked>
+                                            <input th:unless="${productDetail.productDto.productState.stateStep == '판매중'}" class="form-check-input" name="stateStep" value="판매중" type="checkbox">
+                                            <label class="form-check-label">
                                                 상품노출중
                                             </label>
                                         </div>

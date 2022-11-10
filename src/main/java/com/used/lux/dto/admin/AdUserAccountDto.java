@@ -8,20 +8,20 @@ public record AdUserAccountDto(
         UserAccountDto userAccountDto,
         List<ProductOrderLogDto> productOrderLogDtos,
         List<ProductOrderCancelDto> productOrderCancelDtos,
-        List<AppraisalDto> appraisalDtos,
+        List<AppraisalRequestDto> appraisalRequestDtos,
         List<AuctionLogDto> auctionLogDtos,
         List<UserAccountLogDto> userAccountLogDtos,
         Long totalPoint
 ) {
     public static AdUserAccountDto of(UserAccountDto userAccountDto, List<ProductOrderLogDto> productOrderLogDtos,
-                            List<ProductOrderCancelDto> productOrderCancelDtos, List<AppraisalDto> appraisalDtos,
+                            List<ProductOrderCancelDto> productOrderCancelDtos, List<AppraisalRequestDto> appraisalRequestDtos,
                             List<AuctionLogDto> auctionLogDtos, List<UserAccountLogDto> userAccountLogDtos) {
         Long totalPoint = 0L;
         for (int i = 0; i < userAccountLogDtos.size(); i++) {
             totalPoint += userAccountLogDtos.get(i).point();
         }
         return new AdUserAccountDto(userAccountDto, productOrderLogDtos, productOrderCancelDtos,
-                appraisalDtos, auctionLogDtos, userAccountLogDtos, totalPoint);
+                appraisalRequestDtos, auctionLogDtos, userAccountLogDtos, totalPoint);
     }
 
 }

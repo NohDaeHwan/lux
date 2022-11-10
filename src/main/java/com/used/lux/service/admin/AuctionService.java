@@ -27,10 +27,8 @@ public class AuctionService {
     private final ProductRepository productRepository;
 
     @Transactional(readOnly = true)
-    public Page<AuctionDto> auctionListFind(String auctionColor, String auctionBrand, String auctionGender, String auctionSize,
-                                            String auctionGrade, String maxPrice, String minPrice, String query, Pageable pageable) {
-        return auctionRepository.findByQuery(auctionColor, auctionBrand, auctionGender,
-                auctionSize, auctionGrade, maxPrice, minPrice, query, pageable).map(AuctionDto::from);
+    public Page<AuctionDto> auctionListFind(Pageable pageable) {
+        return auctionRepository.findAll(pageable).map(AuctionDto::from);
     }
 
     @Transactional(readOnly = true)

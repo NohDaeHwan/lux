@@ -5,7 +5,6 @@ import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.ColumnDefault;
 
 import java.util.LinkedHashSet;
 import java.util.Objects;
@@ -23,8 +22,8 @@ public class Product extends AuditingFields {
 
 	@Setter
 	@OneToOne(optional = false)
-	@JoinColumn(name = "appraisal_id")
-	private Appraisal appraisal;
+	@JoinColumn(name = "appraisal_request_id")
+	private AppraisalRequest appraisalRequest;
 
 	@Setter
 	@OneToOne(fetch = FetchType.EAGER)
@@ -63,9 +62,9 @@ public class Product extends AuditingFields {
 
 	protected Product() {}
 
-	private Product(Appraisal appraisal, CategoryB categoryB, CategoryM categoryM, State state, int productPrice, String productSellType,
+	private Product(AppraisalRequest appraisalRequest, CategoryB categoryB, CategoryM categoryM, State state, int productPrice, String productSellType,
 					String productContent, int productViewCount) {
-		this.appraisal = appraisal;
+		this.appraisalRequest = appraisalRequest;
 		this.categoryB = categoryB;
 		this.categoryM = categoryM;
 		this.state = state;
@@ -76,9 +75,9 @@ public class Product extends AuditingFields {
 	}
 
 	//생성자
-	public static Product of(Appraisal appraisal, CategoryB categoryB, CategoryM categoryM, State state, int productPrice, String productSellType,
+	public static Product of(AppraisalRequest appraisalRequest, CategoryB categoryB, CategoryM categoryM, State state, int productPrice, String productSellType,
 							 String productContent, int productViewCount) {
-		return new Product(appraisal, categoryB, categoryM, state, productPrice, productSellType, productContent, productViewCount);
+		return new Product(appraisalRequest, categoryB, categoryM, state, productPrice, productSellType, productContent, productViewCount);
 	}
 
 	//영속성

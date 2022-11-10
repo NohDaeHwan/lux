@@ -8,7 +8,6 @@ import com.used.lux.repository.ProductOrderRepository;
 import com.used.lux.repository.StateRepository;
 import com.used.lux.request.OrderCancelRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -28,7 +27,7 @@ public class ProductOrderCancelService {
         productOrderLogRepository.save(ProductOrderLog.of(
                 principal.userEmail(),
                 order.getProduct().getId(),
-                order.getProduct().getAppraisal().getAppraisalProductName(),
+                order.getProduct().getAppraisalRequest().getAppraisalProductName(),
                 state,
                 order.getProduct().getProductPrice(),
                 order.getProduct().getProductSellType()
@@ -37,7 +36,7 @@ public class ProductOrderCancelService {
         productOrderCancelRepository.save(ProductOrderCancel.of(
                 orderId,
                 principal.userName(),
-                order.getProduct().getAppraisal().getAppraisalProductName(),
+                order.getProduct().getAppraisalRequest().getAppraisalProductName(),
                 order.getProduct().getProductPrice(),
                 "주문취소할래용!")
         );
