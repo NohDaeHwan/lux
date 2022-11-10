@@ -61,7 +61,7 @@ public record UserAccountDto(
     }
 
     public UserAccount toEntity() {
-        return UserAccount.of(userEmail, userPassword, userName, phoneNumber, age, gender, userPoint, userGrade, role, memo);
+        return UserAccount.of(id, userEmail, userPassword, userName, phoneNumber, age, gender, userPoint, userGrade, role, memo);
     }
 
 }
