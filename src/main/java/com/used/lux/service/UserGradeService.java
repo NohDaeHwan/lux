@@ -34,6 +34,10 @@ public class UserGradeService {
 
     @Transactional
     public UserGradeDto getNextGrade(int gradeStep) {
+        int lastGrade = userGradeRepository.findByLastStep().getGradeStep();
+        if (lastGrade == gradeStep) {
+            return null;
+        }
         return UserGradeDto.from(userGradeRepository.findByGradeStep(gradeStep+1));
     }
 

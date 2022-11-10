@@ -49,6 +49,7 @@ public class UserAccountController {
         mm.addAttribute("users", userAccountResponse);
         mm.addAttribute("orders", productOrderResponse);
         mm.addAttribute("nextGrade", nextGrade);
+        System.out.println(nextGrade+"functioncall!!!!!!!!");
         Long totalPoint = userAccountLogService.getTotalPoint(principal.userEmail());
         mm.addAttribute("total", totalPoint);
         return "/front/mypage-order";

@@ -38,7 +38,7 @@ public class ProductController {
     private final UserGradeService userGradeService;
 
 
-    /*@GetMapping
+    @GetMapping
     public String productList(@RequestParam(defaultValue = "") String productColor,
                               @RequestParam(defaultValue = "") String productBrand,
                               @RequestParam(defaultValue = "") String productGender,
@@ -106,6 +106,6 @@ public class ProductController {
         List<CategoryBDto> categoryList = categoryBService.categoryList();
         mm.addAttribute("categoryList", categoryList);
         return "front/success";
-    }*/
+    }
 
 }
