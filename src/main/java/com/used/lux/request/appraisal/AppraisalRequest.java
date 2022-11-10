@@ -1,32 +1,35 @@
 package com.used.lux.request.appraisal;
 
-import com.used.lux.domain.Brand;
-import com.used.lux.dto.AppraisalDto;
+import com.used.lux.dto.AppraisalRequestDto;
+import com.used.lux.dto.BrandDto;
+import com.used.lux.dto.StateDto;
 import com.used.lux.dto.UserAccountDto;
 
 public record AppraisalRequest(
         String productName,
         Long brnadId,
         String brandName,
-        String content,
         String gender,
         String color,
-        String size
+        String size,
+        Long stateId,
+        String stateName,
+        String stateStep
 )  {
 
-    public static AppraisalRequest of(String productName, Long brnadId, String brandName, String content, String gender,
-                                      String color, String size) {
-        return new AppraisalRequest(productName, brnadId, brandName, content, gender, color, size);
+    public static AppraisalRequest of(String productName, Long brnadId, String brandName, String gender,
+                                      String color, String size, Long stateId, String stateName, String stateStep) {
+        return new AppraisalRequest(productName, brnadId, brandName, gender, color, size, stateId, stateName, stateStep);
     }
 
-    public AppraisalDto toDto(UserAccountDto userAccountDto) {
-        return AppraisalDto.of(
+    public AppraisalRequestDto toDto(UserAccountDto userAccountDto) {
+        return AppraisalRequestDto.of(
                 productName,
-                Brand.of(brnadId, brandName),
-                content,
+                BrandDto.of(brnadId, brandName),
                 gender,
                 color,
                 size,
+                StateDto.of(stateId, stateName, stateStep),
                 userAccountDto
         );
     }

@@ -26,7 +26,7 @@ public class AuctionRepositoryCustomImpl extends QuerydslRepositorySupport imple
         JPQLQuery<Auction> queryResult = from(auction)
                 .select(auction)
                 .where(auction.state.stateStep.like("%"+auctionState+"%"),
-                        auction.product.appraisal.appraisalProductName.like("%"+query+"%"),
+                        auction.product.appraisalRequest.appraisalProductName.like("%"+query+"%"),
                         auction.auctionStartDate.after(LocalDateTime.of(Integer.parseInt(dateResult[0]),
                                 Integer.parseInt(dateResult[1]), Integer.parseInt(dateResult[2]), 00, 00)));
         long totalCount = queryResult.fetchCount();
@@ -41,15 +41,13 @@ public class AuctionRepositoryCustomImpl extends QuerydslRepositorySupport imple
 
         JPQLQuery<Auction> queryResult = from(auction)
                 .select(auction)
-                .where(auction.product.appraisal.appraisalColor.like("%"+auctionColor+"%"),
-                        auction.product.appraisal.appraisalBrand.brandName.like("%"+auctionBrand+"%"),
-                        auction.product.appraisal.appraisalGender.like("%"+auctionGender+"%"),
-                        auction.product.appraisal.appraisalSize.like("%"+auctionSize+"%"),
-                        auction.product.appraisal.appraisalGrade.like("%"+auctionGrade+"%"),
-                        auction.product.appraisal.appraisalProductName.like("%"+query+"%"),
+                .where(auction.product.appraisalRequest.appraisalColor.like("%"+auctionColor+"%"),
+                        auction.product.appraisalRequest.appraisalBrand.brandName.eq("%"+auctionBrand+"%"),
+                        auction.product.appraisalRequest.appraisalGender.like("%"+auctionGender+"%"),
+                        auction.product.appraisalRequest.appraisalSize.like("%"+auctionSize+"%"),
+                        auction.product.appraisalRequest.appraisalProductName.like("%"+query+"%"),
                         auction.product.productPrice.gt(Integer.parseInt(minPrice)),
-                        auction.product.productPrice.lt(Integer.parseInt(maxPrice)),
-                        auction.product.productSellType.eq("경매"))
+                        auction.product.productPrice.lt(Integer.parseInt(maxPrice)))
                 .orderBy(auction.createdAt.desc());
         long totalCount = queryResult.fetchCount();
         List<Auction> results = getQuerydsl().applyPagination(pageable, queryResult).fetch();

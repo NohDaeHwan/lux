@@ -13,11 +13,15 @@ public record BrandDto(
         String brandName
 ) {
 
-        public static BrandDto of(Long id, String brandName) {
+    public static BrandDto of(Long id, String brandName) {
         return new BrandDto(id, brandName);
     }
     public static BrandDto from(Brand entity) {
         return new BrandDto(entity.getId(), entity.getBrandName());
+    }
+
+    public Brand toDto() {
+        return Brand.of(id, brandName);
     }
 
 }

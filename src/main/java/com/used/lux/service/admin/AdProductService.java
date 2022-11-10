@@ -29,7 +29,7 @@ public class AdProductService {
 
     private final AuctionLogRepository auctionLogRepository;
 
-    private final AppraisalRepository appraisalRepository;
+    private final AppraisalRequestRepository appraisalRepository;
 
     private final CategoryBRepository categoryBRepository;
 
@@ -40,6 +40,8 @@ public class AdProductService {
     private final FileHandler fileHandler;
 
     private final ImageRepository imageRepository;
+
+    private final StateRepository stateRepository;
 
     @Transactional(readOnly = true)
     public Page<ProductDto> getProductList(String productSellType, String productBrand, String productGender,
@@ -84,10 +86,10 @@ public class AdProductService {
         CategoryB categoryB = categoryBRepository.findById(request.categoryBId()).get();
         CategoryM categoryM = categoryMRepository.findById(request.categoryMId()).get();
 
-        product.getAppraisal().setAppraisalProductName(request.productName());
+        product.getAppraisalRequest().setAppraisalProductName(request.productName());
         product.setProductPrice(request.productPrice());
         product.setProductSellType(request.productSellType());
-        product.getAppraisal().setAppraisalBrand(brand);
+        product.getAppraisalRequest().setAppraisalBrand(brand);
         product.setCategoryB(categoryB);
         product.setCategoryM(categoryM);
         product.setProductContent(request.productContent());
@@ -112,17 +114,19 @@ public class AdProductService {
         CategoryM categoryM = categoryMRepository.findByCategoryMName(productUpdateRequest.categoryMName());
         Brand brand = brandRepository.findByBrandName(productUpdateRequest.brandName());
         Product product= productRepository.getReferenceById(productId);
+        State state = stateRepository.findByStateStep(productUpdateRequest.stateStep());
 
         // 내용 업데이트
-        product.getAppraisal().setAppraisalProductName(productUpdateRequest.productName());
+        product.getAppraisalRequest().setAppraisalProductName(productUpdateRequest.productName());
         product.setProductContent(productUpdateRequest.content());
-        product.getAppraisal().setAppraisalBrand(brand);
+        product.getAppraisalRequest().setAppraisalBrand(brand);
         product.setCategoryB(categoryB);
         product.setCategoryM(categoryM);
+        product.setState(state);
         product.setProductSellType(productUpdateRequest.productSellType());
 
         // 레포지토리 저장
-        appraisalRepository.save(product.getAppraisal());
+        appraisalRepository.save(product.getAppraisalRequest());
         productRepository.save(product);
     }
 

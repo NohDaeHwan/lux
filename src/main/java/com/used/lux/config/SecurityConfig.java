@@ -21,7 +21,7 @@ public class SecurityConfig {
         return http.csrf().disable().authorizeHttpRequests(auth -> auth
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         .antMatchers(
-                                "/mypage/**", "/admin/**"
+                                "/mypage/**", "/admin/**", "/product/**/order"
                         ).authenticated()
                         .antMatchers("/admin/**").hasRole("ROLE_ADMIN")
                         .anyRequest().permitAll()

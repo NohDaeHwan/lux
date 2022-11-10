@@ -3,6 +3,7 @@ package com.used.lux.controller.user;
 import com.used.lux.dto.BrandDto;
 import com.used.lux.dto.CategoryBDto;
 import com.used.lux.response.auction.AuctionResponse;
+import com.used.lux.response.auction.AuctionsResponse;
 import com.used.lux.service.BrandService;
 import com.used.lux.service.CategoryBService;
 import com.used.lux.service.PaginationService;
@@ -31,19 +32,9 @@ public class AuctionController {
     private final PaginationService paginationService;
 
     @GetMapping
-    public  String auctionList(@RequestParam(defaultValue = "") String auctionColor,
-                               @RequestParam(defaultValue = "") String auctionBrand,
-                               @RequestParam(defaultValue = "") String auctionGender,
-                               @RequestParam(defaultValue = "") String auctionSize,
-                               @RequestParam(defaultValue = "") String auctionGrade,
-                               @RequestParam(defaultValue = "10000000") String maxPrice,
-                               @RequestParam(defaultValue = "100000") String minPrice,
-                               @RequestParam(defaultValue = "") String query,
-                               @PageableDefault(size = 30) Pageable pageable,
-                               ModelMap mm)
+    public  String auctionList(@PageableDefault(size = 30) Pageable pageable, ModelMap mm)
     {
-        Page<AuctionResponse> auctions = auctionService.auctionListFind(auctionColor, auctionBrand, auctionGender,
-                auctionSize, auctionGrade, maxPrice, minPrice, query, pageable).map(AuctionResponse::from);
+        Page<AuctionsResponse> auctions = auctionService.auctionListFind(pageable).map(AuctionsResponse::from);
         List<CategoryBDto> categoryList = categoryBService.categoryList();
         List<BrandDto> brandList = brandService.brandList();
         List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), auctions.getTotalPages());

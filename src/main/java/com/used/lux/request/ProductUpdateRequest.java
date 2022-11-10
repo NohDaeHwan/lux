@@ -7,12 +7,12 @@ public record ProductUpdateRequest(
         String categoryBName,
         String categoryMName,
         String productSellType,
-        String stateName,
-        int price
+        String stateStep,
+        int productPrice
 ) {
     public static ProductUpdateRequest of(String productName, String content, String brandName, String categoryBName,
-                                          String categoryMName, String productSellType, String stateName, int price) {
+                                          String categoryMName, String productSellType, String stateStep, int productPrice) {
         return new ProductUpdateRequest(productName, content, brandName, categoryBName, categoryMName,
-                productSellType, stateName, price);
+                productSellType, stateStep, productPrice);
     }
 }

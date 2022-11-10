@@ -25,7 +25,7 @@ public class AdUserAccountService {
 
     private final ProductOrderCancelRepository productOrderCancelRepository;
 
-    private final AppraisalRepository appraisalRepository;
+    private final AppraisalRequestRepository appraisalRequestRepository;
 
     private final AuctionLogRepository auctionLogRepository;
 
@@ -54,8 +54,8 @@ public class AdUserAccountService {
         // 검수내역
         // pageable일땐 stream이어도 map만해줘도된다. 상관없음.
         // list, arraylist, collection 등 다른 리스트 형태들은 파이프(stream) 역할을 해줘야한다.
-        List<AppraisalDto> appraisalDtos = appraisalRepository.findByUserAccountId(userAccountDto.id())
-                .stream().map(AppraisalDto::from).collect(Collectors.toCollection(ArrayList::new));
+        List<AppraisalRequestDto> appraisalDtos = appraisalRequestRepository.findByUserAccountId(userAccountDto.id())
+                .stream().map(AppraisalRequestDto::from).collect(Collectors.toCollection(ArrayList::new));
         // 경매 내역
         List<AuctionLogDto> auctionLogDtos = auctionLogRepository.findByBidder(userAccountDto.userName())
                 .stream().map(AuctionLogDto::from).collect(Collectors.toCollection(ArrayList::new));

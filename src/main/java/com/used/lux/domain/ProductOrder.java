@@ -33,6 +33,9 @@ public class ProductOrder extends AuditingFields {
 	private String email;
 
 	@Setter
+	private int payment;
+
+	@Setter
 	@Column(name="requested_term", length = 100)
 	private String requestedTerm; // 요청사항
 
@@ -53,21 +56,22 @@ public class ProductOrder extends AuditingFields {
 
 	protected ProductOrder() {}
 
-	private ProductOrder(String name, String phoneNumber, String address, String email, String requestedTerm,
+	private ProductOrder(String name, String phoneNumber, String address, String email, int payment, String requestedTerm,
 						 State state, Product product, UserAccount userAccount) {
 		this.name = name;
 		this.phoneNumber = phoneNumber;
 		this.address = address;
 		this.email = email;
 		this.requestedTerm = requestedTerm;
+		this.payment = payment;
 		this.state = state;
 		this.product = product;
 		this.userAccount = userAccount;
 	}
 
-	public static ProductOrder of(String name, String phoneNumber, String address, String email,
+	public static ProductOrder of(String name, String phoneNumber, String address, String email, int payment,
 								  String requestedTerm, State state, Product product, UserAccount userAccount) {
-		return new ProductOrder(name, phoneNumber, address, email, requestedTerm, state, product, userAccount);
+		return new ProductOrder(name, phoneNumber, address, email, payment, requestedTerm, state, product, userAccount);
 	}
 
 }

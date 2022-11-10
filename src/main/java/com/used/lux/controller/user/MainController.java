@@ -47,7 +47,7 @@ public class MainController {
         return "/front/register"; // 회원가입 페이지를 보여줄 뷰 필요
     }
 
-    @GetMapping("/search")
+    /*@GetMapping("/search")
     public String register(@RequestParam(defaultValue = "") String query,
                            ModelMap mm) {
         List<ProductsResponse> productList = productService.productFind(query).stream()
@@ -62,6 +62,6 @@ public class MainController {
         mm.addAttribute("categoryList", categoryList);
         mm.addAttribute("brandList", brandList);
         return "/front/register"; // 회원가입 페이지를 보여줄 뷰 필요
-    }
+    }*/
 
 }

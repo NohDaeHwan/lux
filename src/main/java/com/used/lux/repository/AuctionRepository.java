@@ -18,7 +18,7 @@ public interface AuctionRepository extends JpaRepository<Auction, Long>, Auction
 
     Auction findByStartPrice(int startPrice);
 
-    @Query(value ="SELECT a FROM Auction a WHERE a.product.appraisal.appraisalProductName LIKE %:query%")
+    @Query(value ="SELECT a FROM Auction a WHERE a.product.appraisalRequest.appraisalProductName LIKE %:query%")
     List<Auction> findByQuery(@Param("query") String query, Pageable pageable);
 
 }

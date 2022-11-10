@@ -46,13 +46,13 @@
                     <div class="card-header">옵션 검색</div>
                     <div class="card-body">
                         <h5 class="card-title">상세 조건</h5>
-                        <form class="search-form" action="/product">
+                        <form class="search-form" action="/auction">
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">색상</label>
                                 <div class="col-sm-10">
                                     <select class="form-select form-control" name="auctionColor">
                                         <option value="" selected>전체</option>
-                                        <option th:each="auction : ${auctions}" th:value="${auction.productResponse.productColor}" th:text="${auction.productResponse.productColor}">example</option>
+                                        <option th:each="auction : ${auctions}" th:value="${auction.productColor}" th:text="${auction.productColor}">example</option>
                                     </select>
                                 </div>
                             </div>
@@ -61,7 +61,7 @@
                                 <div class="col-sm-10">
                                     <select class="form-select form-control" name="auctionBrand">
                                         <option value="" selected>전체</option>
-<!--                                        <option th:each="brand : ${brandList}" th:value="${brand.brandName()}" th:text="${brand.brandName}">example</option>-->
+                                        <option th:each="brand : ${brandList}" th:value="${brand.brandName}" th:text="${brand.brandName}">example</option>
                                     </select>
                                 </div>
                             </div>
@@ -132,35 +132,34 @@
                 <h3 class="custom_heading font-weight-light">
                     경매 탭 검색결과 >
                 </h3>
-                <p>
+                <p th:text="'전체결과: ' +${auctions.totalElements}+' 건'">
                     전체결과: n 건
                 </p>
             </div>
         </div>
         <div class="album py-3 bg-light">
             <div class="container-fluid">
-
                 <div class="row">
-                    <div class="col-md-2">
+
+                    <div class="col-md-2" th:each="auction: ${auctions}">
                         <div class="card mb-4 box-shadow">
-                            <a href="#">
-                                <img class="card-img-top p-1" src="/static/assets/img/watch.png" style="width: 150px;height: 150px;" alt="Card image cap">
+                            <a th:href="@{|/auction/${auction.id}|}">
+                                <img class="card-img-top p-1" th:src="${auction.imageDtos[0]}" style="width: 150px;height: 150px;" alt="Card image cap">
                                 <div class="p-2">
-                                    <p class="card-text font-weight-lighter mb-1 text-black-50">브랜드</p>
-                                    <p class="card-text font-weight-light mb-1"><a href="#">상품명</a></p>
-                                    <p class="card-text font-weight-light">40.000P</p>
+                                    <p class="card-text font-weight-lighter mb-1 text-black-50" th:text="${auction.brandName}">브랜드</p>
+                                    <p class="card-text font-weight-light mb-1"><a th:href="@{|/product/${auction.id}|}" th:text="${auction.productName}">상품명</a></p>
+                                    <p class="card-text font-weight-light" th:text="${auction.presentPrice}">40.000P</p>
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <!-- <div class="btn-group">
-                                          <button type="button" class="btn btn-sm btn-outline-secondary">상세보기</button>
-                                        </div>
-                                        <small class="text-muted">9 mins</small> -->
                                     </div>
                                 </div>
                             </a>
                         </div>
                     </div>
+
                 </div>
             </div>
+        </div>
+
         </div>
     </section>
 
@@ -179,7 +178,7 @@
                           sort=(${param.sort} != null ? ${param.sort} : '') + (${auctions.sort.getOrderFor('param.sort')} != null ? (${auctions.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
                           query=${param.query}
                       )}"
-                   th:class="'page-link' + (${pageNumber} == ${products.number} <= 0 ? ' disabled' : '')">
+                   th:class="'page-link' + (${pageNumber} == ${auctions.number} <= 0 ? ' disabled' : '')">
                 </a>
             </li>
             <li class="page-item">
