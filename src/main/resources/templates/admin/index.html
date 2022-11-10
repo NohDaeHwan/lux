@@ -77,7 +77,7 @@
                                         <i class="bi bi-currency-dollar"></i>
                                     </div>
                                     <div class="ps-3">
-                                        <h6>3,264</h6>
+                                        <h6><a th:text="${sumPrice}"></a>\</h6>
 
 
                                     </div>
@@ -102,14 +102,14 @@
                             </div>
 
                             <div class="card-body">
-                                <h5 class="card-title">고객 <span>| 오늘</span></h5>
+                                <h5 class="card-title">방문 고객 <span>| 오늘</span></h5>
 
                                 <div class="d-flex align-items-center">
                                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                         <i class="bi bi-people"></i>
                                     </div>
                                     <div class="ps-3">
-                                        <h6>1244</h6>
+                                        <h6><a th:text="${countCustomer}"></a>명</h6>
 
                                     </div>
                                 </div>
@@ -133,13 +133,12 @@
                             <div class="card-body">
                                 <h5 class="card-title">보고</h5>
 
-
                                 <div id="reportsChart">
-                                    <h5 class="card-title">회원탈퇴를 요청하는 고객이 00명 있습니다.</h5>
-                                    <h5 class="card-title">승급을 대기하는 고객이 00명 있습니다.</h5>
-                                    <h5 class="card-title">검수를 요청하는 고객이 00명 있습니다.</h5>
-                                    <h5 class="card-title">주문 00개가 대기하고 있습니다.</h5>
-                                    <h5 class="card-title">주문을 취소하는 요청 00개가 있습니다.</h5>
+                                    <h5 class="card-title">회원탈퇴를 요청하는 고객이 <a th:text="${countWithdrawal}"></a>명 있습니다.</h5>
+                                    <h5 class="card-title">승급을 대기하는 고객이 <a th:text="${countGrade}"></a>명 있습니다.</h5>
+                                    <h5 class="card-title">검수를 요청하는 고객이 <a th:text="${countAppraise}"></a>명 있습니다.</h5>
+                                    <h5 class="card-title">주문 <a th:text="${countOrderNotTreat}"></a>개가 대기하고 있습니다.</h5>
+                                    <h5 class="card-title">주문을 취소하는 요청 <a th:text="${countCancle}"></a>개가 있습니다.</h5>
                                 </div>
 
                                 <script>
@@ -229,7 +228,7 @@
                                     </thead>
                                     <tbody>
                                     <tr>
-                                        <th scope="row"><a href="#">#2457</a></th>
+                                        <th scope="row"><a href="#" >#2457</a></th>
                                         <td>Brandon Jacob</td>
                                         <td><a href="#" class="text-primary">상품</a></td>
                                         <td>$64</td>
@@ -433,8 +432,8 @@
                             <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                 <li><a class="dropdown-item" href="#">오늘</a></li>
+                                <li><a class="dropdown-item" href="#">이번 주</a></li>
                                 <li><a class="dropdown-item" href="#">이번 달</a></li>
-                                <li><a class="dropdown-item" href="#">이번 년도</a></li>
                             </ul>
                         </div>
 

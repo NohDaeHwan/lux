@@ -133,4 +133,30 @@ public class ProductOrderLogService {
 
         return productOrderLogRepository.findByMostViewCount(sectionStartDate.toString());
     }
+
+    public Long sumProfitByDate(String bannerDateType) {
+        LocalDate sectionStartDate  = LocalDate.now();
+
+        if(bannerDateType.equals("month")) {sectionStartDate =  sectionStartDate.minusDays(31);}
+        else if(bannerDateType.equals("week")) {sectionStartDate =  sectionStartDate.minusDays(7);}
+
+        return productOrderLogRepository.sumProfitByDate(sectionStartDate.toString());
+    }
+
+    public List<Long> profitIdByDate(String bannerDateType) {
+        LocalDate sectionStartDate  = LocalDate.now();
+
+        if(bannerDateType.equals("month")) {sectionStartDate =  sectionStartDate.minusDays(31);}
+        else if(bannerDateType.equals("week")) {sectionStartDate =  sectionStartDate.minusDays(7);}
+
+        return productOrderLogRepository.profitIdByDate(sectionStartDate.toString());
+    }
+
+    public Long countSellingProduct() {
+        return productOrderLogRepository.countSellingProduct();
+    }
+
+    public Long countProgressAuction() {
+        return productOrderLogRepository.countProgressAuction();
+    }
 }

@@ -44,6 +44,10 @@ public class AppraiseService {
         return appraisal.orElse(null);
     }
 
+    public Long findAppraisePriceByProductId(Long aLong) {
+        return appraisalRepository.findAppraisePriceByProductId(aLong);
+    }
+
     /*
     List<AppraisalImage> imgeList = fileHandler.parseFileInfo(dto, userAccount, appraisal); // 이미지 처리
 

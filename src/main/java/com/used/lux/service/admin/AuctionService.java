@@ -96,10 +96,21 @@ public class AuctionService {
         return auctionRepository.findByHighPriceWithState9();
     }
 
-
+    //5.현재 진행되는 경매중 가장 많은 조회 수
     public Auction findByMostBiddingWithState9() {
         return auctionRepository.findByMostBiddingWithState9();
     }
 
-    //5.현재 진행되는 경매중 가장 많은 조회 수
+
+    public Long sumProfitByDate(String bannerDateType) {
+
+        LocalDate sectionStartDate  = LocalDate.now();
+
+        if(bannerDateType.equals("month")) {sectionStartDate =  sectionStartDate.minusDays(31);}
+        else if(bannerDateType.equals("week")) {sectionStartDate =  sectionStartDate.minusDays(7);}
+
+        return auctionRepository.sumProfitByDate(sectionStartDate.toString());
+    }
+
+
 }
