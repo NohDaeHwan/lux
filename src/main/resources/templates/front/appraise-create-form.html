@@ -32,64 +32,62 @@
     </div>
 </aside>
 <main id="main" class="main p-5">
+    <form action="/appraisal/new/loading" method="post" enctype="multipart/form-data">
     <section class="section mb-5">
         <div class="row align-items-top">
             <div class="col-lg-12">
 
                 <!-- Card with header and footer -->
                 <div class="card">
-                    <div class="card-header">01. 검수정보입력
-                        <!--<button type="submit" class="btn btn-primary" style="float: right;">
-                            <a th:href="@{/admin/appraise/new}" stlye="color:#ffffff !important">
-                                새 검수등록
-                            </a>
-                        </button>-->
-                    </div>
+                    <div class="card-header">01. 검수정보입력</div>
                     <div class="card-body">
                         <div class="row gy-4" style="font-weight: 300;">
                             <div class="col-lg-12">
-                                <form action="#" >
-                                    <table class="table table-bordered">
-                                        <tbody>
-                                        <tr>
-                                            <td>상품명</td>
-                                            <td colspan="3">
-                                                <input class="form-control input-sm" id="name" type="text" required/>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>브랜드</td>
-                                            <td colspan="3">
-                                                <div>
-                                                    <select class="form-select form-control">
-                                                        <option selected>Open this select menu</option>
-                                                        <option value="1">Male</option>
-                                                        <option value="2">Female</option>
-                                                        <option value="3">Three</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><label>성별</label></td>
-                                            <td colspan="3">
-                                                <input class="form-control" id="address" type="text" required/>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>색상</td>
-                                            <td colspan="3">
-                                                <input class="form-control" type="text"/>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>사이즈</td>
-                                            <td colspan="3">
-                                                <input class="form-control" type="text"/>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                                <table class="table table-bordered">
+                                    <tbody>
+                                    <tr>
+                                        <td><label for="productName">상품명</label></td>
+                                        <td colspan="3">
+                                            <input class="form-control input-sm" id="productName" name="productName" type="text" required/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label for="brand">브랜드</label></td>
+                                        <td colspan="3">
+                                            <div>
+                                                <select class="form-select form-control" id="brand" name="brandId">
+                                                    <option th:each="brand : ${brandList}" th:value="${brand.id}" th:text="${brand.brandName}">example</option>
+                                                </select>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label for="gender">성별</label></td>
+                                        <td colspan="3">
+                                            <div>
+                                                <select class="form-select form-control" id="gender" name="gender">
+                                                    <option value="공용">공용</option>
+                                                    <option value="남자">남자</option>
+                                                    <option value="여자">여자</option>
+                                                </select>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label for="color">색상</label></td>
+                                        <td colspan="3">
+                                            <input class="form-control" type="text" id="color" name="color"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label for="size">사이즈</label></td>
+                                        <td colspan="3">
+                                            <input class="form-control" type="text" id="size" name="size"/>
+                                        </td>
+                                    </tr>
+                                    <input class="form-control" type="hidden" name="stateId" value="1"/>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -103,51 +101,13 @@
 
                 <!-- Card with header and footer -->
                 <div class="card">
-                    <div class="card-header">02. 검수이미지등록
-                        <!--<button type="submit" class="btn btn-primary" style="float: right;">
-                            <a th:href="@{/admin/appraise/new}" stlye="color:#ffffff !important">
-                                새 검수등록
-                            </a>
-                        </button>-->
-                    </div>
+                    <div class="card-header">02. 검수이미지등록</div>
                     <div class="card-body">
                         <div class="gy-4" style="font-weight: 300;">
                             <div class="col-lg-12 flex-column" style="display: flex;">
-                                <!-- <table class="table table-bordered">
-                                    <tbody>
-                                    <tr>
-                                        <td>상품정보</td>
-                                        <td>상품할인</td>
-                                        <td>상품그룹</td>
-                                        <td>주문금액</td>
-                                    </tr>
-                                    <tr each="brandlist : ${brandList}">
-                                        <th scope="row">
-                                                <div style="display:flex;">
-                                                    <div>
-                                                        <img src="images/watch.png" style="width: 100px; height:100px;" alt="" class="" />
-                                                    </div>
-                                                    <div style="display: flex; flex-direction: column">
-                                                        <h6>브랜드</h6>
-                                                        <h6>
-                                                            <a href="#">
-                                                                상품명
-                                                            </a>
-                                                        </h6>
-                                                        <h6>옵션:사이즈,색상</h6>
-                                                        <h6>성별:여자</h6>
-                                                        <h6>상품등급:A</h6>
-                                                    </div>
-                                                </div>
-                                        </th>
-                                        <td style="vertical-align: middle;"><h6>- 36,000원</h6></td>
-                                        <td style="vertical-align: middle;"><h6>중고</h6></td>
-                                        <td style="vertical-align: middle;"><h6>123,456,789원</h6></td>
-                                    </tbody>
-                                </table> -->
-                                <input type="file" class="mb-2">
-                                <input type="file" class="mb-2">
-                                <input type="file">
+                                <input type="file" class="mb-2" name="images">
+                                <input type="file" class="mb-2" name="images">
+                                <input type="file" name="images">
                             </div>
                         </div>
                     </div>

@@ -62,19 +62,17 @@ public class AdAppraiseController {
         return "/admin/appraise";
     }
 
-//    // 검수 결과 등록 페이지
-//    @GetMapping("/new/{appraisalId}")
-//    public String appraiseComment(@PathVariable Long appraisalId,
-//                                  @AuthenticationPrincipal Principal principal) {
-////        if (principal == null) {
-////            return "redirect:/login";
-////        }
-////        if (principal.role().getName() != "ROLE_ADMIN") {
-////            return "redirect:/";
-////        }
-//        AppraisalResponse appraisalResponse = AppraisalResponse.from(adAppraiseService.appraiseCommentPage(appraisalId));
-//        return "/admin/appraisal-create-form";
-//    }
+    // 검수 결과 등록 페이지
+    @GetMapping("/new/{appraisalId}")
+    public String appraiseComment(@PathVariable Long appraisalId,
+                                  @AuthenticationPrincipal Principal principal) {
+        if (principal.role().getName() != "ROLE_ADMIN") {
+            return "redirect:/";
+        }
+
+        AppraisalRequestResponse appraisalResponse = AppraisalRequestResponse.from(adAppraiseService.appraiseCommentPage(appraisalId));
+        return "/admin/appraisal-create-form";
+    }
 
     // 검수 결과 등록 페이지
     @GetMapping("/{appraisalId}/new")

@@ -58,8 +58,9 @@ public class UserAccount extends AuditingFields {
 
 	protected UserAccount() {}
 
-	private UserAccount(String userEmail, String userPassword, String userName, String phoneNumber, int age,
+	private UserAccount(Long id, String userEmail, String userPassword, String userName, String phoneNumber, int age,
 						String gender, int point, UserGrade userGrade, RoleType role, String memo) {
+		this.id = id;
 		this.userEmail = userEmail;
 		this.userPassword = userPassword;
 		this.userName = userName;
@@ -72,9 +73,9 @@ public class UserAccount extends AuditingFields {
 		this.memo = memo;
 	}
 
-	public static UserAccount of(String userEmail, String userPassword, String userName, String phoneNumber, int age,
+	public static UserAccount of(Long id, String userEmail, String userPassword, String userName, String phoneNumber, int age,
 						String gender, int point, UserGrade userGrade, RoleType role, String memo) {
-		return new UserAccount(userEmail, userPassword, userName, phoneNumber, age, gender, point, userGrade, role, memo);
+		return new UserAccount(id, userEmail, userPassword, userName, phoneNumber, age, gender, point, userGrade, role, memo);
 	}
 
 	@Override
