@@ -111,6 +111,7 @@ public class DashBoardRequestService {
         costReport.add(String.valueOf(selling_product)); // 5 : 팔고있는 상품 개수
         costReport.add(String.valueOf(progress_auction)); // 6 : 경매중인 상품 개수
 
+        System.out.println(auctions);
 
 
 
