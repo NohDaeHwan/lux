@@ -42,6 +42,7 @@ public class AppraiseController {
     ) {
         Page<AppraisalRequestResponse> appraisalList = appraiseService.findAllList(pageable).map(AppraisalRequestResponse::from);
         List<CategoryBDto> categoryList = categoryBService.categoryList();
+
         mm.addAttribute("categoryList", categoryList);
         mm.addAttribute("appraisalList",appraisalList);
         return "front/appraise";
@@ -69,9 +70,10 @@ public class AppraiseController {
     }
 
     @GetMapping("/{appraiseId}")
-    public String appraiseDetail(@PathVariable Long appraiseId,ModelMap mm) {
-        AppraisalRequestDto appraisalDto = appraiseService.appraisalDetail(appraiseId);
+    public String appraiseDetail(@PathVariable Long appraiseId, ModelMap mm) {
+        AppraisalRequestResponse appraisalDto = AppraisalRequestResponse.from(appraiseService.appraisalDetail(appraiseId));
         List<CategoryBDto> categoryList = categoryBService.categoryList();
+
         mm.addAttribute("categoryList", categoryList);
         mm.addAttribute("appraisalDto",appraisalDto);
         return "front/appraise-detail";

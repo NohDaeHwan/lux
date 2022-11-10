@@ -46,7 +46,7 @@
                 <tr>
                     <td class="bg-light">상품명</td>
                     <td colspan="5">
-                        <div class="col-sm-10" th:text="${appraisalDto.appraisalName}">
+                        <div class="col-sm-10" th:text="${appraisalDto.appraisalProductName}">
                             샤넬 명품백
                         </div>
                     </td>
@@ -54,7 +54,7 @@
                 <tr>
                     <td  class="bg-light">브랜드</td>
                     <td colspan="3">
-                        <div class="col-sm-10" th:text="${appraisalDto.appraisalBrand.brandName}">
+                        <div class="col-sm-10" th:text="${appraisalDto.appraisalBrandName}">
                             가니
                         </div>
                     </td>
@@ -95,9 +95,7 @@
                     <td class="bg-light">이미지</td>
                     <td colspan="5">
                         <div class="col-sm-10 center flex-column align-items-center" style="display: flex; border: 0;">
-                            <img class="mb-2" src="#">
-                            <img class="mb-2" src="#">
-                            <img class="mb-2" src="#">
+                            <img class="mb-2" th:each="image : ${appraisalDto.imageList()}" th:src="${image.filePath}">
                         </div>
                     </td>
                 </tr>
