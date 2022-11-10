@@ -11,6 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @RequiredArgsConstructor
 @Transactional
 @Service
@@ -35,6 +37,11 @@ public class AppraiseService {
     //처리되지 않은 요청을 세는 메서드
     public Long countRequest() {
         return appraisalRepository.countByState1();
+    }
+
+    public Appraisal findById(Long id) {
+        Optional<Appraisal> appraisal = appraisalRepository.findById(id);
+        return appraisal.orElse(null);
     }
 
     /*

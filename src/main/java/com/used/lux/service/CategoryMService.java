@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -66,5 +67,10 @@ public class CategoryMService {
 
     public void middleCategoryDeleteById(Long categoryId) {
         categoryMRepository.deleteById(categoryId);
+    }
+
+    public CategoryM findById(Long id) {
+        Optional<CategoryM> categoryMOptional = categoryMRepository.findById(id);
+        return categoryMOptional.orElse(null);
     }
 }

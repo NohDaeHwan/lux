@@ -4,8 +4,8 @@ import com.used.lux.repository.ProductOrderLogRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -47,7 +47,90 @@ public class ProductOrderLogService {
         return productOrderLogRepository.countOrderByCreatedAt(sectionStartDate.toString(),nowDate.toString());
     }
 
-    public Long countorderByState() {
-        return productOrderLogRepository.countorderByState11();
+    public Long countOrderByState() {
+        return productOrderLogRepository.countOrderByState11();
+    }
+
+
+    public String findByState(String bannerDateType) {
+        LocalDate nowDate = LocalDate.now();
+        LocalDate sectionStartDate  = LocalDate.now();
+
+        if(bannerDateType.equals("month"))
+        {
+            sectionStartDate =  sectionStartDate.minusDays(31);
+
+        }else if(bannerDateType.equals("year"))
+        {
+            sectionStartDate =  sectionStartDate.minusYears(1);
+
+        }
+        return productOrderLogRepository.findBySellTypeOfState(sectionStartDate.toString(),nowDate.toString());
+    }
+
+    public String findByCategoryB(String bannerDateType) {
+        LocalDate nowDate = LocalDate.now();
+        LocalDate sectionStartDate  = LocalDate.now();
+
+        if(bannerDateType.equals("month"))
+        {
+            sectionStartDate =  sectionStartDate.minusDays(31);
+
+        }else if(bannerDateType.equals("year"))
+        {
+            sectionStartDate =  sectionStartDate.minusYears(1);
+
+        }
+
+        return productOrderLogRepository.findBySellTypeOfCategoryB(sectionStartDate.toString(),nowDate.toString());
+    }
+
+    public String findByCategoryM(String bannerDateType) {
+        LocalDate nowDate = LocalDate.now();
+        LocalDate sectionStartDate  = LocalDate.now();
+
+        if(bannerDateType.equals("month"))
+        {
+            sectionStartDate =  sectionStartDate.minusDays(31);
+
+        }else if(bannerDateType.equals("year"))
+        {
+            sectionStartDate =  sectionStartDate.minusYears(1);
+
+        }
+
+        return productOrderLogRepository.findBySellTypeOfCategoryM(sectionStartDate.toString(),nowDate.toString());
+    }
+
+    public List<String> findByPriceRange(String bannerDateType) {
+        LocalDate nowDate = LocalDate.now();
+        LocalDate sectionStartDate  = LocalDate.now();
+
+        if(bannerDateType.equals("month"))
+        {
+            sectionStartDate =  sectionStartDate.minusDays(31);
+
+        }else if(bannerDateType.equals("year"))
+        {
+            sectionStartDate =  sectionStartDate.minusYears(1);
+        }
+
+        return  productOrderLogRepository.findByPriceRange(sectionStartDate.toString(),nowDate.toString());
+    }
+
+    public String findByViewCount(String bannerDateType) {
+        LocalDate nowDate = LocalDate.now();
+        LocalDate sectionStartDate  = LocalDate.now();
+
+        if(bannerDateType.equals("month"))
+        {
+            sectionStartDate =  sectionStartDate.minusDays(31);
+
+        }else if(bannerDateType.equals("year"))
+        {
+            sectionStartDate =  sectionStartDate.minusYears(1);
+        }
+
+        return productOrderLogRepository.findByMostViewCount(sectionStartDate.toString(),nowDate.toString());
     }
 }

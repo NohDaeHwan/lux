@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -27,6 +28,10 @@ public class DashBoardRequestService {
     private final ProductOrderCancleService productOrderCancleService;
 
     private final AuctionService auctionService;
+
+    private final CategoryBService categoryBService;
+    private final CategoryMService categoryMService;
+
     public ModelMap pageCallRequest()
     {
         ModelMap mm = new ModelMap();
@@ -48,7 +53,7 @@ public class DashBoardRequestService {
         //검수요청
         Long countRequestAppraise = appraiseService.countRequest();
         //주문내역
-        Long countOrderNotTreat = productOrderLogService.countorderByState();
+        Long countOrderNotTreat = productOrderLogService.countOrderByState();
         //주문최소요청
         Long countRequestOrderCancle = productOrderCancleService.count();
 
@@ -60,10 +65,19 @@ public class DashBoardRequestService {
         auctions.add(auctionService.findByNearDateFailBid());
         auctions.add(auctionService.findByPriceWithState9());
         auctions.add(auctionService.findByMostBiddingWithState9());
-        //주목할만한 유형 판매
-        List<Product> products = new ArrayList<Product>();
-        //브랜드별 :: 카테고리별 :: 가격별 :: 성별 :: 가장 많은 조회 수
-        
+        System.out.println(Arrays.toString(auctions.toArray()));
+        //주목할만한 판매 유형
+        List<String> sellType = new ArrayList<String>();
+        //판매유형 :: 카테고리별(BIG.MIDDLE) :: 가격별 :: 가장 많은 조회 수
+        sellType.add(productOrderLogService.findByState(bannerDateType));
+        String  categoryB = categoryBService.findById(Long.valueOf(productOrderLogService.findByCategoryB(bannerDateType))).getCategoryBName();
+        String  categoryM = categoryMService.findById(Long.valueOf(productOrderLogService.findByCategoryM(bannerDateType))).getCategoryMName();
+        sellType.add(categoryB);
+        sellType.add(categoryM);
+        sellType.addAll(productOrderLogService.findByPriceRange(bannerDateType)); //가격대 그냥 숫자 반환
+        String productName = appraiseService.findById(Long.valueOf(productOrderLogService.findByViewCount(bannerDateType))).getAppraisalProductName();
+        sellType.add(productName);
+
         //최근 관리자 활동
 
         //예산보고
