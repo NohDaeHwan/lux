@@ -26,6 +26,7 @@ public class ProductOrderService {
 
     private final ProductOrderLogRepository productOrderLogRepository;
     private final UserAccountRepository userAccountRepository;
+    private final UserAccountLogRepository userAccountLogRepository;
     private final StateRepository stateRepository;
 
 
@@ -42,9 +43,14 @@ public class ProductOrderService {
     public void createOrder(Principal principal, Long productId, OrderCreateRequest request) {
         Product product = productRepository.findById(productId).get();
         UserAccount userAccount = userAccountRepository.findById(principal.id()).get();
+        int payment = userAccount.getPoint()-product.getProductPrice();
+
         State stateOrder = stateRepository.findByStateStep("주문완료");
         State stateProduct = stateRepository.findByStateStep("판매완료");
+
         product.setState(stateProduct);
+        userAccount.setPoint(payment);
+        userAccountRepository.save(userAccount);
         productRepository.save(product);
         productOrderRepository.save(ProductOrder.of(
                 request.name(), request.phoneNumber(), request.address(), request.email(),
@@ -59,7 +65,14 @@ public class ProductOrderService {
                 product.getProductPrice(),
                 product.getProductSellType()
         ));
-
+        userAccountLogRepository.save(UserAccountLog.of(
+                null,
+                principal.userEmail(),
+                principal.userGrade(),
+                product.getProductPrice(),
+                "차감",
+                "중고/"+productId
+        ));
     }
 
 

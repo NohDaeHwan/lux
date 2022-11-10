@@ -31,6 +31,10 @@ public class AppraiseService {
         AppraisalRequest appraisalRequest = appraisalRequestRepository.save(dto.toEntity(userAccount)); // 감정신청서 DB에 저장
     }
 
+    public AppraisalDto appraisalDetail(Long productId) {
+        return AppraisalDto.from(appraisalRepository.findById(productId).get());
+    }
+
     /*
     List<AppraisalImage> imgeList = fileHandler.parseFileInfo(dto, userAccount, appraisal); // 이미지 처리
 
