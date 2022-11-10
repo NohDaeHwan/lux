@@ -58,45 +58,19 @@
                     <th scope="col">적용일자</th>
                     <th scope="col">검수상태</th>
                 </tr>
-
                 </thead>
                 <tbody>
                 <tr th:each="appraisallist : ${appraisalList}">
                     <th scope="row" style="width: 120px;">
-                        <a th:href="@{|/appraisal/${appraisallist.id}|}"><img src="#" style="width: 100px; height:100px;"></a>
+                        <a th:href="@{|/appraisal/${appraisallist.id}|}"><img th:src="${appraisallist.imageList[0].filePath}" style="width: 100px; height:100px;"></a>
                     </th>
                     <td style="vertical-align: middle;">
-                        <string th:text="${appraisallist.appraisalBrandName}+'-'+${appraisallist.appraisalName}">브랜드-카테고리중,브랜드 상품명</string>
-                        <h6 style="font-weight: 300;" th:text="'작성자: '+${#strings.replace(appraisallist.userName,#strings.substring(appraisallist.userName,0,3),'***')}">유저명</h6>
+                        <string th:text="${appraisallist.appraisalBrandName}+'-'+${appraisallist.appraisalProductName}">브랜드-카테고리중,브랜드 상품명</string>
+                        <h6 style="font-weight: 300;" th:text="'작성자: '+${#strings.replace(appraisallist.userAccount.userName,#strings.substring(appraisallist.userAccount.userName,0,3),'***')}">유저명</h6>
                     </td>
                     <td style="vertical-align: middle; font-weight: 300; width: 150px;"><h6 th:text="${#temporals.format(appraisallist.createdAt,'yyyy-MM-dd HH:mm:ss')}">2022-11-02 18:04:05</h6></td>
-                    <td style="vertical-align: middle; font-weight: 300;" th:text="${appraisallist.appraisalState.stateStep}">검수완료</td>
+                    <td style="vertical-align: middle; font-weight: 300;" th:text="${appraisallist.appraisalStateStep}">검수완료</td>
                 </tr>
-                <tr>
-                    <th scope="row" style="width: 120px;">
-                        <a href="#"><img src="#" style="width: 100px; height:100px;"></a>
-                    </th>
-                    <td style="vertical-align: middle; font-weight: 300;"><h6>브랜드-카테고리중<br>브랜드 상품명<br>유저명</h6></td>
-                    <td style="vertical-align: middle; font-weight: 300; width: 150px;"><h6>2022-11-02 18:04:05</h6></td>
-                    <td style="vertical-align: middle; font-weight: 300;">검수완료</td>
-                </tr>
-                <tr>
-                    <th scope="row" style="width: 120px;">
-                        <a href="#"><img src="#" style="width: 100px; height:100px;"></a>
-                    </th>
-                    <td style="vertical-align: middle; font-weight: 300;"><h6>브랜드-카테고리중<br>브랜드 상품명<br>유저명</h6></td>
-                    <td style="vertical-align: middle; font-weight: 300; width: 150px;"><h6>2022-11-02 18:04:05</h6></td>
-                    <td style="vertical-align: middle; font-weight: 300;" >검수완료</td>
-                </tr>
-                <tr>
-                    <th scope="row" style="width: 120px;">
-                        <a href="#"><img src="#" style="width: 100px; height:100px;"></a>
-                    </th>
-                    <td style="vertical-align: middle; font-weight: 300;"><h6>브랜드-카테고리중<br>브랜드 상품명<br>유저명</h6></td>
-                    <td style="vertical-align: middle; font-weight: 300; width: 150px;"><h6>2022-11-02 18:04:05</h6></td>
-                    <td style="vertical-align: middle; font-weight: 300;">검수완료</td>
-                </tr>
-
                 </tbody>
             </table>
         </div>
