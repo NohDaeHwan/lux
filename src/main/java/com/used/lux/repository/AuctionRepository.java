@@ -30,7 +30,7 @@ public interface AuctionRepository extends JpaRepository<Auction, Long>, Auction
     Auction findByClosingNearDate();
 
     @Query(nativeQuery = true , value = "select * from auction where state_id = 10 and auction_closing_date >= :sD and auction_closing_date <= now()  order by closing_price desc  limit 1 ;")
-    Auction findByhighPriceWithState10(@Param("sD") String sectionStartDate, @Param("eD") String nowDate);
+    Auction findByhighPriceWithState10(@Param("sD") String sectionStartDate);
 
     @Query(nativeQuery = true ,value = "SELECT * FROM auction WHERE bidding_count>0  AND state_id = 10 ORDER BY auction_closing_date ASC LIMIT 1;")
     Auction findByDateWithFailBid();

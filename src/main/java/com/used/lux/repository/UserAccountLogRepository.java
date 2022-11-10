@@ -17,5 +17,5 @@ public interface UserAccountLogRepository extends JpaRepository<UserAccountLog, 
     List<UserAccountLog> findByUserEmail(String userEmail);
 
     @Query(nativeQuery = true,value = "select count(*) from user_account_log where created_at >=:sD and created_at <= now() ;")
-    Long countOrderByCreatedAt(@Param("sD") String sectionStartDate, @Param("eD") String nowDate);
+    Long countOrderByCreatedAt(@Param("sD") String sectionStartDate);
 }

@@ -31,6 +31,6 @@ public class UserAccountLogService {
             sectionStartDate =  sectionStartDate.minusYears(1);
 
         }
-        return userAccountLogRepository.countOrderByCreatedAt(sectionStartDate.toString(),nowDate.toString());
+        return userAccountLogRepository.countOrderByCreatedAt(sectionStartDate.toString());
     }
 }

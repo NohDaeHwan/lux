@@ -84,7 +84,7 @@ public class AuctionService {
 
         }
 
-        return auctionRepository.findByhighPriceWithState10(sectionStartDate.toString(),nowDate.toString());
+        return auctionRepository.findByhighPriceWithState10(sectionStartDate.toString());
     }
 
     //3.가장 최근에 유찰된 것

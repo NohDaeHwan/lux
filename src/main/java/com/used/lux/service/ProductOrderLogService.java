@@ -28,7 +28,7 @@ public class ProductOrderLogService {
             
         }
         
-        return productOrderLogRepository.countPriceByCreatedAt(sectionStartDate.toString(),nowDate.toString());
+        return productOrderLogRepository.countPriceByCreatedAt(sectionStartDate.toString());
     }
 
     public Long countOrderByDate(String bannerDateType) {
@@ -44,7 +44,7 @@ public class ProductOrderLogService {
             sectionStartDate =  sectionStartDate.minusYears(1);
 
         }
-        return productOrderLogRepository.countOrderByCreatedAt(sectionStartDate.toString(),nowDate.toString());
+        return productOrderLogRepository.countOrderByCreatedAt(sectionStartDate.toString());
     }
 
     public Long countOrderByState() {
@@ -65,7 +65,7 @@ public class ProductOrderLogService {
             sectionStartDate =  sectionStartDate.minusYears(1);
 
         }
-        return productOrderLogRepository.findBySellTypeOfState(sectionStartDate.toString(),nowDate.toString());
+        return productOrderLogRepository.findBySellTypeOfState(sectionStartDate.toString());
     }
 
     public String findByCategoryB(String bannerDateType) {
@@ -82,7 +82,7 @@ public class ProductOrderLogService {
 
         }
 
-        return productOrderLogRepository.findBySellTypeOfCategoryB(sectionStartDate.toString(),nowDate.toString());
+        return productOrderLogRepository.findBySellTypeOfCategoryB(sectionStartDate.toString());
     }
 
     public String findByCategoryM(String bannerDateType) {
@@ -99,7 +99,7 @@ public class ProductOrderLogService {
 
         }
 
-        return productOrderLogRepository.findBySellTypeOfCategoryM(sectionStartDate.toString(),nowDate.toString());
+        return productOrderLogRepository.findBySellTypeOfCategoryM(sectionStartDate.toString());
     }
 
     public List<String> findByPriceRange(String bannerDateType) {
@@ -115,7 +115,7 @@ public class ProductOrderLogService {
             sectionStartDate =  sectionStartDate.minusYears(1);
         }
 
-        return  productOrderLogRepository.findByPriceRange(sectionStartDate.toString(),nowDate.toString());
+        return  productOrderLogRepository.findByPriceRange(sectionStartDate.toString());
     }
 
     public String findByViewCount(String bannerDateType) {
@@ -131,6 +131,6 @@ public class ProductOrderLogService {
             sectionStartDate =  sectionStartDate.minusYears(1);
         }
 
-        return productOrderLogRepository.findByMostViewCount(sectionStartDate.toString(),nowDate.toString());
+        return productOrderLogRepository.findByMostViewCount(sectionStartDate.toString());
     }
 }
