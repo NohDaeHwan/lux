@@ -4,6 +4,8 @@ import com.used.lux.dto.*;
 import com.used.lux.response.UserAccountResponse;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -17,7 +19,6 @@ public record AppraisalRequestResponse(
         String appraisalStateName,
         String appraisalStateStep,
         UserAccountResponse userAccount,
-        Long appraisalId,
         Set<AppraisalImageResponse> imageList,
         LocalDateTime createdAt,
         String createdBy,
@@ -27,12 +28,13 @@ public record AppraisalRequestResponse(
 
     public static AppraisalRequestResponse of(Long id, String appraisalProductName, String appraisalBrandName, String appraisalGender, String appraisalColor,
                                     String appraisalSize, String appraisalStateName, String appraisalStateStep, UserAccountResponse userAccount,
-                                    Long appraisalId, Set<AppraisalImageResponse> imageList, LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
+                                    Set<AppraisalImageResponse> imageList, LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
         return new AppraisalRequestResponse(id, appraisalProductName, appraisalBrandName, appraisalGender, appraisalColor, appraisalSize,
-                appraisalStateName, appraisalStateStep, userAccount, appraisalId, imageList, createdAt, createdBy, modifiedAt, modifiedBy);
+                appraisalStateName, appraisalStateStep, userAccount, imageList, createdAt, createdBy, modifiedAt, modifiedBy);
     }
 
     public static AppraisalRequestResponse from(AppraisalRequestDto dto) {
+
         return new AppraisalRequestResponse(
                 dto.id(),
                 dto.appraisalProductName(),
@@ -43,7 +45,6 @@ public record AppraisalRequestResponse(
                 dto.appraisalState().stateName(),
                 dto.appraisalState().stateStep(),
                 UserAccountResponse.from(dto.userAccount()),
-                dto.appraisalId(),
                 dto.imageList().stream()
                         .map(AppraisalImageResponse::from)
                         .collect(Collectors.toUnmodifiableSet()),

@@ -49,10 +49,6 @@ public class AppraisalRequest extends AuditingFields {
 	@JoinColumn(name = "user_account_id")
 	private UserAccount userAccount;
 
-	@Setter
-	@Column(name = "appraisal_id")
-	private Long appraisalId;
-
 	@ToString.Exclude
 	@OneToMany(mappedBy = "appraisalRequest", cascade = CascadeType.ALL)
 	private final Set<AppraisalImage> images = new LinkedHashSet<>();
