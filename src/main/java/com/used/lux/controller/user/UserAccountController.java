@@ -1,5 +1,6 @@
 package com.used.lux.controller.user;
 
+import com.used.lux.dto.UserAccountDto;
 import com.used.lux.dto.UserGradeDto;
 import com.used.lux.dto.security.Principal;
 import com.used.lux.request.OrderCancelRequest;
@@ -107,13 +108,19 @@ public class UserAccountController {
             @PageableDefault(size = 30, sort = "created_at", direction = Sort.Direction.DESC) Pageable pageable) {
         UserAccountResponse userAccountResponse = UserAccountResponse.from(userAccountService.getUser(principal.id()));
         UserGradeDto nextGrade = userGradeService.getNextGrade(principal.userGrade().getGradeStep());
-        Page<UserAccountLogResponse> pointlist = userAccountLogService.getPointList("Barn@gmail.com", pageable)
+        Page<UserAccountLogResponse> pointlist = userAccountLogService.getPointList(principal.userEmail(), pageable)
                 .map(UserAccountLogResponse::from);
+
         mm.addAttribute("users", userAccountResponse);
         mm.addAttribute("nextGrade", nextGrade);
         mm.addAttribute("points", pointlist);
+
         Long totalPoint = userAccountLogService.getTotalPoint(principal.userEmail());
+
         mm.addAttribute("total", totalPoint);
+
+        System.out.println("악몽"+pointlist);
+
         return "/front/mypage-point";
     }
 

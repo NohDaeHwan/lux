@@ -132,7 +132,8 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="productResponse : ${productResponses}">
+                            <!--테이블 한행 자체에 링크-->
+                            <tr th:each="productResponse : ${productResponses}" th:onclick="|location.href='@{/admin/product/product-detail/{productId}(productId=${productResponse.id})}'|">
                                 <th scope="row">
                                     <a th:href="@{/admin/product/product-detail/{productId}(productId=${productResponse.id})}" th:text="${productResponse.productName}">user1@mail.com</a>
                                 </th>
