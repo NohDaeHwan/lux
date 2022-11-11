@@ -2,6 +2,7 @@ package com.used.lux.service.admin;
 
 import com.used.lux.component.FileHandler;
 import com.used.lux.domain.*;
+import com.used.lux.dto.AppraisalDto;
 import com.used.lux.dto.AppraisalRequestDto;
 import com.used.lux.dto.UserAccountDto;
 import com.used.lux.repository.*;
@@ -20,6 +21,7 @@ import java.util.List;
 public class AppraiseService {
 
     private final AppraisalRequestRepository appraisalRequestRepository;
+    private final AppraisalRepository appraisalRepository;
 
     private final AppraisalImageRepository appraisalImageRepository;
 
@@ -30,17 +32,18 @@ public class AppraiseService {
     private final FileHandler fileHandler;
 
     @Transactional(readOnly = true)
-    public Page<AppraisalRequestDto> findAllList(Pageable pageable) {
-        return appraisalRequestRepository.findAll(pageable).map(AppraisalRequestDto::from);
+    public Page<AppraisalDto> findAllList(Pageable pageable) {
+        return appraisalRepository.findAll(pageable).map(AppraisalDto::from);
     }
 
     @Transactional
     public void appraisalCreate(AppraisalCreateRequest request, UserAccountDto user) throws Exception {
         Brand brand = brandRepository.findById(request.brandId()).get();
         State state = stateRepository.findById(request.stateId()).get();
+
         AppraisalRequest appraisalRequest = appraisalRequestRepository.save(AppraisalRequest.of(
-                request.productName(), brand, request.gender(), request.color(), request.size(), state, user.toEntity()
-        )); // 감정신청서 DB에 저장
+                request.productName(), brand, request.gender(), request.color(),
+                request.size(), state, user.toEntity())); // 감정신청서 DB에 저장
 
         List<AppraisalImage> imageList = fileHandler.parseAppraisalFileInfo(request, appraisalRequest); // 파일 처리
         // 파일이 존재할 때에만 처리
@@ -52,6 +55,7 @@ public class AppraiseService {
             }
         }
         System.out.println("파일 저장 성공");
+        appraisalRepository.save(Appraisal.of(appraisalRequest));
     }
 
     public AppraisalRequestDto appraisalDetail(Long productId) {

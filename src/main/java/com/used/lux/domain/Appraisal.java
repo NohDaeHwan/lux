@@ -29,16 +29,27 @@ public class Appraisal extends AuditingFields {
 	@Column(name="appraisal_price")
 	private int appraisalPrice;
 
+	@Setter
+	@OneToOne(optional = false)
+	@JoinColumn(name = "appraisal_request_id")
+	private AppraisalRequest appraisalRequest;
+
+
 	protected Appraisal() {}
 
-	private Appraisal(String appraisalGrade, String appraisalComment, int appraisalPrice) {
+	private Appraisal(String appraisalGrade, String appraisalComment, int appraisalPrice,AppraisalRequest appraisalRequest) {
 		this.appraisalGrade = appraisalGrade;
 		this.appraisalComment = appraisalComment;
 		this.appraisalPrice = appraisalPrice;
+		this.appraisalRequest = appraisalRequest;
 	}
 
-	public static Appraisal of(String appraisalGrade, String appraisalComment, int appraisalPrice) {
-		return new Appraisal(appraisalGrade, appraisalComment, appraisalPrice);
+	public static Appraisal of(String appraisalGrade, String appraisalComment, int appraisalPrice,AppraisalRequest appraisalRequest) {
+		return new Appraisal(appraisalGrade, appraisalComment, appraisalPrice, appraisalRequest);
+	}
+
+	public static Appraisal of(AppraisalRequest appraisalRequest) {
+		return new Appraisal(null, null, 0, appraisalRequest);
 	}
 
 }

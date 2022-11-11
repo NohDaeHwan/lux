@@ -15,7 +15,6 @@ public record AppraisalRequestDto(
         String appraisalSize,
         StateDto appraisalState,
         UserAccountDto userAccount,
-        Long appraisalId,
         Set<AppraisalImageDto> imageList,
         LocalDateTime createdAt,
         String createdBy,
@@ -24,15 +23,15 @@ public record AppraisalRequestDto(
 )  {
     public static AppraisalRequestDto of(Long id, String appraisalProductName, BrandDto appraisalBrand, String appraisalGender,
                                String appraisalColor, String appraisalSize, StateDto appraisalState, UserAccountDto userAccount,
-                               Long appraisalId, Set<AppraisalImageDto> imageList, LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
+                                         Set<AppraisalImageDto> imageList, LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
         return new AppraisalRequestDto(id, appraisalProductName, appraisalBrand, appraisalGender, appraisalColor, appraisalSize,
-                appraisalState, userAccount, appraisalId, imageList, createdAt, createdBy, modifiedAt, modifiedBy);
+                appraisalState, userAccount, imageList, createdAt, createdBy, modifiedAt, modifiedBy);
     }
 
     public static AppraisalRequestDto of(String appraisalProductName, BrandDto appraisalBrand, String appraisalGender,
                                          String appraisalColor, String appraisalSize, StateDto appraisalState, UserAccountDto userAccount) {
         return new AppraisalRequestDto(null, appraisalProductName, appraisalBrand, appraisalGender, appraisalColor, appraisalSize,
-                appraisalState, userAccount, null, null, null, null, null, null);
+                appraisalState, userAccount, null, null, null, null, null);
     }
 
     public static AppraisalRequestDto from(AppraisalRequest entity) {
@@ -45,7 +44,6 @@ public record AppraisalRequestDto(
                 entity.getAppraisalSize(),
                 StateDto.from(entity.getAppraisalState()),
                 UserAccountDto.from(entity.getUserAccount()),
-                entity.getAppraisalId(),
                 entity.getImages().stream()
                         .map(AppraisalImageDto::from)
                         .collect(Collectors.toUnmodifiableSet()),

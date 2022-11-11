@@ -2,8 +2,7 @@ package com.used.lux.request.appraisal;
 
 public record AppraisalCommentRequest(
         String appraisalName,
-        String appraiseBrand,
-        String appraisalContent,
+        Long appraiseBrand,
         String appraisalGender,
         String appraisalColor,
         String appraisalSize,
@@ -11,10 +10,10 @@ public record AppraisalCommentRequest(
         int appraisalPrice,
         String appraisalComment
 )  {
-    public static AppraisalCommentRequest of(String appraisalName, String appraiseBrand, String appraisalContent,
+    public static AppraisalCommentRequest of(String appraisalName, Long appraiseBrand,
                                    String appraisalGender, String appraisalColor, String appraisalSize, String appraisalGrade,
                                    int appraisalPrice, String appraisalComment) {
-        return new AppraisalCommentRequest(appraisalName, appraiseBrand, appraisalContent, appraisalGender, appraisalColor,
+        return new AppraisalCommentRequest(appraisalName, appraiseBrand, appraisalGender, appraisalColor,
                 appraisalSize, appraisalGrade, appraisalPrice, appraisalComment);
     }
 }

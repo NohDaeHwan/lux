@@ -9,6 +9,7 @@ public record AppraisalResponse(
         String appraisalGrade,
         String appraisalComment,
         int appraisalPrice,
+        AppraisalRequestResponse appraisalRequest,
         LocalDateTime createdAt,
         String createdBy,
         LocalDateTime modifiedAt,
@@ -16,8 +17,8 @@ public record AppraisalResponse(
 )  {
 
     public static AppraisalResponse of(Long id, String appraisalGrade, String appraisalComment, int appraisalPrice, LocalDateTime createdAt,
-                             String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
-        return new AppraisalResponse(id, appraisalGrade, appraisalComment, appraisalPrice, createdAt, createdBy, modifiedAt, modifiedBy);
+                                       AppraisalRequestResponse appraisalRequest, String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
+        return new AppraisalResponse(id, appraisalGrade, appraisalComment, appraisalPrice, appraisalRequest, createdAt, createdBy, modifiedAt, modifiedBy);
     }
 
     public static AppraisalResponse from(AppraisalDto dto) {
@@ -26,6 +27,7 @@ public record AppraisalResponse(
                 dto.appraisalGrade(),
                 dto.appraisalComment(),
                 dto.appraisalPrice(),
+                AppraisalRequestResponse.from(dto.appraisalRequest()),
                 dto.createdAt(),
                 dto.createdBy(),
                 dto.modifiedAt(),

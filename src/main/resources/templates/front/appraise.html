@@ -60,16 +60,16 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="appraisallist : ${appraisalList}">
+                <tr th:each="appraisal : ${appraisalList}">
                     <th scope="row" style="width: 120px;">
-                        <a th:href="@{|/appraisal/${appraisallist.id}|}"><img th:src="${appraisallist.imageList[0].filePath}" style="width: 100px; height:100px;"></a>
+                        <a th:href="@{|/appraisal/${appraisal.id}|}"><img th:src="${appraisal.appraisalRequest.imageList[0].filePath}" style="width: 100px; height:100px;"></a>
                     </th>
                     <td style="vertical-align: middle;">
-                        <string th:text="${appraisallist.appraisalBrandName}+'-'+${appraisallist.appraisalProductName}">브랜드-카테고리중,브랜드 상품명</string>
-                        <h6 style="font-weight: 300;" th:text="'작성자: '+${#strings.replace(appraisallist.userAccount.userName,#strings.substring(appraisallist.userAccount.userName,0,3),'***')}">유저명</h6>
+                        <string th:text="${appraisal.appraisalRequest.appraisalBrandName}+'-'+${appraisal.appraisalRequest.appraisalProductName}">브랜드-카테고리중,브랜드 상품명</string>
+                        <h6 style="font-weight: 300;" th:text="'작성자: '+${#strings.replace(appraisal.appraisalRequest.userAccount.userName,#strings.substring(appraisal.appraisalRequest.userAccount.userName,0,3),'***')}">유저명</h6>
                     </td>
-                    <td style="vertical-align: middle; font-weight: 300; width: 150px;"><h6 th:text="${#temporals.format(appraisallist.createdAt,'yyyy-MM-dd HH:mm:ss')}">2022-11-02 18:04:05</h6></td>
-                    <td style="vertical-align: middle; font-weight: 300;" th:text="${appraisallist.appraisalStateStep}">검수완료</td>
+                    <td style="vertical-align: middle; font-weight: 300; width: 150px;"><h6 th:text="${#temporals.format(appraisal.appraisalRequest.createdAt,'yyyy-MM-dd HH:mm:ss')}">2022-11-02 18:04:05</h6></td>
+                    <td style="vertical-align: middle; font-weight: 300;" th:text="${appraisal.appraisalRequest.appraisalStateStep}">검수완료</td>
                 </tr>
                 </tbody>
             </table>

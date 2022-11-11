@@ -6,6 +6,7 @@ import com.used.lux.dto.CategoryBDto;
 import com.used.lux.dto.security.Principal;
 import com.used.lux.request.appraisal.AppraisalCreateRequest;
 import com.used.lux.response.appraisal.AppraisalRequestResponse;
+import com.used.lux.response.appraisal.AppraisalResponse;
 import com.used.lux.service.BrandService;
 import com.used.lux.service.CategoryBService;
 import com.used.lux.service.UserAccountService;
@@ -40,7 +41,7 @@ public class AppraiseController {
             @PageableDefault(size = 30, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
             ModelMap mm
     ) {
-        Page<AppraisalRequestResponse> appraisalList = appraiseService.findAllList(pageable).map(AppraisalRequestResponse::from);
+        Page<AppraisalResponse> appraisalList = appraiseService.findAllList(pageable).map(AppraisalResponse::from);
         List<CategoryBDto> categoryList = categoryBService.categoryList();
 
         mm.addAttribute("categoryList", categoryList);

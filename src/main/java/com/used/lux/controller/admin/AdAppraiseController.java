@@ -50,9 +50,9 @@ public class AdAppraiseController {
             return "redirect:/";
         }
 
-        Page<AppraisalRequestResponse> appraisalResponse = adAppraiseService.getAppraiseList(appraisalState,
+        Page<AppraisalResponse> appraisalResponse = adAppraiseService.getAppraiseList(appraisalState,
                 appraisalBrand, appraisalGender, appraisalSize, appraisalGrade, appraisalDate,
-                query, pageable).map(AppraisalRequestResponse::from);
+                query, pageable).map(AppraisalResponse::from);
         List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), appraisalResponse.getTotalPages());
         SearchResponse searchResponse = searchService.getSearchList();
 
@@ -62,20 +62,8 @@ public class AdAppraiseController {
         return "/admin/appraise";
     }
 
-    // 검수 결과 등록 페이지
-    @GetMapping("/new/{appraisalId}")
-    public String appraiseComment(@PathVariable Long appraisalId,
-                                  @AuthenticationPrincipal Principal principal) {
-        if (principal.role().getName() != "ROLE_ADMIN") {
-            return "redirect:/";
-        }
-
-        AppraisalRequestResponse appraisalResponse = AppraisalRequestResponse.from(adAppraiseService.appraiseCommentPage(appraisalId));
-        return "/admin/appraisal-create-form";
-    }
-
-    // 검수 결과 등록 페이지
-    @GetMapping("/{appraisalId}/new")
+    // 검수 결과 상세조회 페이지
+    @GetMapping("/{appraisalId}")
     public String appraiseComment(@PathVariable Long appraisalId,
                                   @AuthenticationPrincipal Principal principal,
                                   ModelMap mm) {
@@ -83,27 +71,56 @@ public class AdAppraiseController {
             return "redirect:/";
         }
 
-        AppraisalRequestResponse appraisalResponse = AppraisalRequestResponse.from(adAppraiseService.appraiseCommentPage(appraisalId));
-        List<BrandDto> brandList = adProductService.getBrandList();
+        AppraisalResponse appraisalResponse = AppraisalResponse.from(adAppraiseService.appraiseCommentPage(appraisalId));
         mm.addAttribute("appraisalResponse", appraisalResponse);
-        mm.addAttribute("brandList",brandList);
-        return "admin/appraisal-create-form";
-    }
-
-    //검수상세 수정 2022/10/26
-    @GetMapping("/{appraisalId}/detail/update")
-    public String appraiseDetail(@PathVariable Long appraisalId,
-                                 @AuthenticationPrincipal Principal principal,
-                                 ModelMap mm) {
-        AppraisalRequestResponse appraisalResponse = AppraisalRequestResponse.from(adAppraiseService.appraiseCommentPage(appraisalId));
-        List<BrandDto> brandList = adProductService.getBrandList();
-        mm.addAttribute("appraisalResponse", appraisalResponse);
-        mm.addAttribute("brandList",brandList);
         return "/admin/appraisal-detail";
     }
 
+    // 검수 결과 수정
+    @GetMapping("/{appraisalId}/update")
+    public String appraiseUpdate(@PathVariable Long appraisalId,
+                                  @AuthenticationPrincipal Principal principal,
+                                  ModelMap mm) {
+        if (principal.role().getName() != "ROLE_ADMIN") {
+            return "redirect:/";
+        }
+        AppraisalResponse appraisalResponse = AppraisalResponse.from(adAppraiseService.appraiseCommentPage(appraisalId));
+        List<BrandDto> brandList = adProductService.getBrandList();
+        mm.addAttribute("appraisalResponse", appraisalResponse);
+        mm.addAttribute("brandList",brandList);
+        return "admin/appraisal-update-form";
+    }
+    // 검수 결과 수정
+    @PostMapping("/{appraisalId}/update/loading")
+    public String appraiseUpdate(@PathVariable Long appraisalId,
+                                 @AuthenticationPrincipal Principal principal,
+                                 AppraisalCommentRequest appraisalCommentRequest) {
+        if (principal.role().getName() != "ROLE_ADMIN") {
+            return "redirect:/admin/appraise-detail/"+appraisalId;
+        }
+
+        return "redirect:/admin/appraise";
+    }
+
     // 검수 결과 등록
-    @PostMapping("/{appraisalId}/new/update")
+    @GetMapping("/{appraisalId}/new")
+    public String appraiseCommentAdd(@PathVariable Long appraisalId,
+                                  @AuthenticationPrincipal Principal principal,
+                                  ModelMap mm) {
+        if (principal.role().getName() != "ROLE_ADMIN") {
+            return "redirect:/";
+        }
+
+        AppraisalResponse appraisalResponse = AppraisalResponse.from(adAppraiseService.appraiseCommentPage(appraisalId));
+        List<BrandDto> brandList = adProductService.getBrandList();
+        mm.addAttribute("appraisalResponse", appraisalResponse);
+        mm.addAttribute("brandList",brandList);
+
+        return "admin/appraisal-create-form";
+    }
+
+    // 검수 결과 등록
+    @PostMapping("/{appraisalId}/new/loading")
     public String appraiseCommentAdd(@PathVariable Long appraisalId,
                                      @AuthenticationPrincipal Principal principal,
                                      AppraisalCommentRequest appraisalCommentRequest) {
@@ -116,6 +133,19 @@ public class AdAppraiseController {
         adAppraiseService.appraiseComment(appraisalCommentRequest, appraisalId);
         return "redirect:/admin/appraise";
     }
+
+    //검수상세 수정 2022/10/26
+//    @GetMapping("/{appraisalId}/detail/update")
+//    public String appraiseDetail(@PathVariable Long appraisalId,
+//                                 @AuthenticationPrincipal Principal principal,
+//                                 ModelMap mm) {
+//        AppraisalResponse appraisalResponse = AppraisalResponse.from(adAppraiseService.appraiseCommentPage(appraisalId));
+//        List<BrandDto> brandList = adProductService.getBrandList();
+//        mm.addAttribute("appraisalResponse", appraisalResponse);
+//        mm.addAttribute("brandList",brandList);
+//        return "/admin/appraisal-detail";
+//    }
+
 
 
 
