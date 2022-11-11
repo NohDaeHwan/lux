@@ -32,6 +32,7 @@ public class AdUserAccountController {
 
     private final PaginationService paginationService;
 
+
     // 회원 리스트
     @GetMapping
     public String userList(@AuthenticationPrincipal Principal principal,
@@ -47,11 +48,13 @@ public class AdUserAccountController {
         System.out.println(gender + " " + age + " " + grade + " " + date + " " + query);
         Page<UserAccountResponse> userList = adUserAccountService.getUserList(pageable, gender, age, grade, date, query).map(UserAccountResponse::from);
         List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), userList.getTotalPages());
+
         List<UserGradeDto> userGradeList = userGradeService.getGradeList();
         System.out.println(barNumbers);
         mm.addAttribute("paginationBarNumbers", barNumbers);
         mm.addAttribute("userGradeList", userGradeList);
         mm.addAttribute("userList", userList);
+
         return "/admin/user";
     }
 
