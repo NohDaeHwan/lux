@@ -81,10 +81,14 @@ public class MainController {
                               ModelMap mm) {
 
         List<CategoryBDto> categoryList = categoryBService.categoryList();
-        Page<ProductsResponse> products = productService.frontProductFind(productColor, productBrand, productGender,
-                productSize, productGrade, maxPrice, minPrice, query, pageable).map(ProductsResponse::from);
         List<BrandDto> brandList = brandService.brandList();
         CategoryMDto categoryMDto =categoryMService.getMcategoryid(mcategoryId);
+
+        List<ProductsResponse> products = productService.catesearch(mcategoryId ,productColor,productBrand,productGender,
+                productSize,productGrade,maxPrice,minPrice,query,pageable).stream().map(ProductsResponse::from).collect(Collectors.toUnmodifiableList());
+
+//        List<AuctionResponse> auctions= auctionService.catesearch(mcategoryId,productColor,productBrand,productGender,productSize,productGrade,maxPrice,minPrice,query,pageable)
+//                        .stream().map(AuctionResponse::from).collect(Collectors.toUnmodifiableList());
 
         mm.addAttribute("brandList", brandList);
         mm.addAttribute("categoryList", categoryList);

@@ -125,4 +125,12 @@ public class AuctionService {
     }
 
 
+    @Transactional(readOnly = true)
+    public List<AuctionDto> catesearch(Long mcategoryId, String auctionColor, String auctionBrand, String auctionGender, String auctionSize, String auctionGrade, String maxPrice, String minPrice, String query, Pageable pageable) {
+        return  auctionRepository.findByCategoryQuery(mcategoryId,auctionColor, auctionBrand,
+                        auctionGender, auctionSize, auctionGrade, maxPrice, minPrice, query, pageable).stream()
+                .map(AuctionDto::from).collect(Collectors.toUnmodifiableList());
+    }
+
+
 }

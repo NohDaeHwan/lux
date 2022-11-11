@@ -62,4 +62,27 @@ public class ProductRepositoryCustomImpl extends QuerydslRepositorySupport imple
         return new PageImpl<Product>(results, pageable, totalCount);
     }
 
+
+    // 카테고리 검색 중고
+    @Override
+    public List<Product> findByCategoryQuery(Long mcategoryId, String productColor, String productBrand, String productGender, String productSize,
+                                             String productGrade, String maxPrice, String minPrice, String query, Pageable pageable) {
+        QProduct product = QProduct.product;
+
+        JPQLQuery<Product> queryResult = from(product)
+                .select(product)
+                .where(product.appraisalRequest.appraisalColor.like("%"+productColor+"%"),
+                        product.appraisalRequest.appraisalBrand.brandName.like("%"+productBrand+"%"),
+                        product.appraisalRequest.appraisalGender.like("%"+productGender+"%"),
+                        product.appraisalRequest.appraisalSize.like("%"+productSize+"%"),
+                        product.appraisalRequest.appraisalProductName.like("%"+query+"%"),
+                        product.categoryM.id.eq(mcategoryId),
+                        product.productPrice.gt(Integer.parseInt(minPrice)),
+                        product.productPrice.lt(Integer.parseInt(maxPrice)),
+                        product.productSellType.eq("중고"),
+                        product.state.stateStep.eq("판매중")).limit(10)
+                .orderBy(product.createdAt.desc());
+        return queryResult.fetch();
+    }
+
 }

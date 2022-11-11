@@ -54,4 +54,21 @@ public class AuctionRepositoryCustomImpl extends QuerydslRepositorySupport imple
         return new PageImpl<Auction>(results, pageable, totalCount);
     }
 
+    @Override
+    public List<Auction> findByCategoryQuery(Long mcategoryId, String auctionColor, String auctionBrand, String auctionGender, String auctionSize, String auctionGrade, String maxPrice, String minPrice, String query, Pageable pageable) {
+        QAuction auction = QAuction.auction;
+
+        JPQLQuery<Auction> queryResult = from(auction)
+                .select(auction)
+                .where(auction.product.appraisalRequest.appraisalColor.like("%"+auctionColor+"%"),
+                        auction.product.appraisalRequest.appraisalBrand.brandName.eq("%"+auctionBrand+"%"),
+                        auction.product.appraisalRequest.appraisalGender.like("%"+auctionGender+"%"),
+                        auction.product.appraisalRequest.appraisalSize.like("%"+auctionSize+"%"),
+                        auction.product.appraisalRequest.appraisalProductName.like("%"+query+"%"),
+                        auction.product.productPrice.gt(Integer.parseInt(minPrice)),
+                        auction.product.productPrice.lt(Integer.parseInt(maxPrice))).limit(10)
+                .orderBy(auction.createdAt.desc());
+        return queryResult.fetch();
+    }
+
 }
