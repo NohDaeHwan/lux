@@ -1,5 +1,6 @@
 package com.used.lux.controller.admin;
 
+import com.used.lux.service.admin.DashBoardRequestService;
 import com.used.lux.dto.security.Principal;
 import com.used.lux.response.UserAccountResponse;
 import com.used.lux.service.admin.AdUserAccountService;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AdMainController {
 
     private final AdUserAccountService adUserAccountService;
-
+    private final DashBoardRequestService dashBoardRequestService;
     // 메인 페이지
     @GetMapping
     public String test(@AuthenticationPrincipal Principal principal,
@@ -25,7 +26,8 @@ public class AdMainController {
             return "redirect:/";
         }
 
-        mm.addAttribute("hello","대시보드");
+        mm.addAllAttributes(dashBoardRequestService.pageCallRequest());
+
         return "/admin/index";
     }
 

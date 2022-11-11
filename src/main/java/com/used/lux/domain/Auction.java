@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import javax.persistence.*;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -12,6 +13,7 @@ import lombok.ToString;
 @ToString(callSuper = true)
 @Table(name = "auction")
 @Entity
+@NoArgsConstructor
 public class Auction extends AuditingFields {
 
 	@Id
@@ -56,7 +58,7 @@ public class Auction extends AuditingFields {
 	@Column(length = 100)
 	private String bidder; // 입찰자
 
-	protected Auction() {}
+
 
 	private Auction(Product product, State state, int startPrice, int presentPrice, int closingPrice, LocalDateTime auctionStartDate,
 				   LocalDateTime auctionClosingDate, int biddingCount, String bidder) {

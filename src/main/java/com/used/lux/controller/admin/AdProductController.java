@@ -1,5 +1,7 @@
 package com.used.lux.controller.admin;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.used.lux.domain.CategoryB;
 import com.used.lux.dto.BrandDto;
 import com.used.lux.dto.CategoryBDto;
 import com.used.lux.dto.CategoryMDto;
@@ -17,10 +19,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,9 +40,12 @@ public class AdProductController {
 
     private final CategoryMService categoryMService;
 
+
+
     private final PaginationService paginationService;
 
     private final SearchService searchService;
+
 
     // 상품 리스트
     @GetMapping
@@ -88,7 +92,7 @@ public class AdProductController {
         if (productDetail.productDto().productState().getStateStep().equals("신규")) {
             List<BrandDto> brandDto = adProductService.getBrandList();
             List<CategoryBDto> categoryBDtos = adProductService.getCategoryList();
-            List<CategoryMDto> categoryMDtos = categoryMService.getCategoryList();
+            List<CategoryMDto> categoryMDtos = categoryMService.getMiddleCategoryList();
 
             mm.addAttribute("brandDto", brandDto);
             mm.addAttribute("categoryBDtos", categoryBDtos);
@@ -125,7 +129,7 @@ public class AdProductController {
         AdProductDto productDetail = adProductService.getProductDetail(productId);
         List<BrandDto> brandDto = adProductService.getBrandList();
         List<CategoryBDto> categoryBDtos = adProductService.getCategoryList();
-        List<CategoryMDto> categoryMDtos = categoryMService.getCategoryList();
+        List<CategoryMDto> categoryMDtos = categoryMService.getMiddleCategoryList();
 
         mm.addAttribute("productDetail", productDetail);
         mm.addAttribute("brandDto", brandDto);
@@ -205,19 +209,99 @@ public class AdProductController {
         if (principal.role().getName() != "ROLE_ADMIN") {
             return "redirect:/";
         }
-
-        List<CategoryBDto> categoryList = adProductService.getCategoryList();
-        mm.addAttribute("categoryList", categoryList);
+        List<CategoryBDto> BCategoryList = categoryBService.getBigCategoryAll();
+        mm.addAttribute("categoryList", BCategoryList);
         return "/admin/category";
     }
 
-    // 상품 카테고리 추가
-    @ResponseBody
-    @PostMapping("/category/new/create")
-    public ResponseEntity<CategoryBDto> productBrandCreate(@AuthenticationPrincipal Principal principal,
-                                             CategoryCreateRequest categoryCreateRequest){
-        CategoryBDto categoryBDto = categoryBService.createCategory(categoryCreateRequest);
-        return ResponseEntity.status(HttpStatus.OK).body(categoryBDto);
+    // 상품 카테고리 추가 페이지
+    @GetMapping("/category/new")
+    public String productCategoryCreate(@AuthenticationPrincipal Principal principal,ModelMap modelMap)
+    {
+        List<CategoryBDto> categoryBDtos = categoryBService.getBigCategoryAll();
+        modelMap.addAttribute("listDtos",categoryBDtos);
+        return "/admin/category-create-form";
     }
+
+    // 상품 카테고리 추가
+    @PostMapping("/category/new/create")
+    public String productCategoryCreate(@AuthenticationPrincipal Principal principal,
+                                             CategoryCreateRequest categoryCreateRequest,ModelMap mm){
+        System.out.println(categoryCreateRequest.categoryType());
+        System.out.println(categoryCreateRequest.categoryName());
+        System.out.println(categoryCreateRequest.Bid());
+        if(categoryCreateRequest.categoryType().equals("big")) {
+            if (!categoryBService.bigCategoryExist(categoryCreateRequest.categoryName())) {
+                categoryBService.createCategory(categoryCreateRequest);
+            } else {
+                //메세지박스 문자가 들어가야함 ::중복된 이름의 카테고리가 있습니다.
+            }
+        }else if(categoryCreateRequest.categoryType().equals("middle"))
+        {
+            if(!categoryMService.middleCategoryExsist(categoryCreateRequest.categoryName()))
+            {
+                categoryMService.middleCategoryCreate(categoryCreateRequest.categoryName(),categoryCreateRequest.Bid());
+            }else
+            {
+
+            }
+        }
+        return "redirect:/admin/product/category";
+    }
+    //상품 카테고리 삭제
+    @GetMapping("/category/{categoryId}/deleteB")
+    public String productCategoryDeleteB(@PathVariable Long categoryId,
+                                     @AuthenticationPrincipal Principal principal){
+        //bigcategory 삭제 메소드 1차 ::하위카테고리 삭제여부
+        List<String> list = categoryMService.middlecategoryExsistByBCategory(categoryId);
+
+        /*
+            메세지 Dto를 만들어서 넣어야함 ::삭제하려는 카테고리와 관계된 카테고리가 있습니다.
+                                            해당 카테고리를 삭제하면 다른 카테고리들도 삭제가 됩니다.
+                                            그래도 삭제하시겠습니까?
+         */
+
+        //bigcategory 삭제 메소드 2차 :: 하위카테고리가 없거나 확인하고 이를 요청한 경우 실행한다
+        //B카테고리에 종속된 M카테고리 먼저 제거한다
+        categoryMService.middelCategoryDeleteByBCategoryId(categoryId);
+
+        //B카테고리 제거
+        categoryBService.bigCategoryDelete(categoryId);
+
+
+        return "redirect:/admin/product/category";
+    }
+    //M카테고리 삭제
+    @GetMapping("/category/{categoryId}/deleteM")
+    public String productCategoryDeleteM(@PathVariable Long categoryId,
+                                        @AuthenticationPrincipal Principal principal){
+
+        categoryMService.middleCategoryDeleteById(categoryId);
+        return "redirect:/admin/product/category";
+    }
+    //카테고리 전환
+    @ResponseBody
+    @PostMapping("/category/changer")
+    public List  CategoryChanger(@RequestBody String type, ModelMap map)
+    {
+
+
+        List list = null;
+
+        if(type.equals("{\"check\":\"big\"}"))
+        {
+            System.out.println("B진입");
+            list = categoryBService.getBigCategoryAll();
+
+        }else if(type.equals("{\"check\":\"middle\"}"))
+        {
+            System.out.println("M진입");
+            list = categoryMService.getMiddleCategoryList();
+
+        }
+
+        return list;
+    }
+
 
 }

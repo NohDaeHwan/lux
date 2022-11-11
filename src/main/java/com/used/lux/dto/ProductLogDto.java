@@ -42,5 +42,4 @@ public record ProductLogDto(
                 entity.getModifiedBy()
         );
     }
-
 }
