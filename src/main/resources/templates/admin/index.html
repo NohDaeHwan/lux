@@ -36,9 +36,9 @@
                             <div class="filter">
                                 <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                    <li><a class="dropdown-item" href="#">오늘</a></li>
-                                    <li><a class="dropdown-item" href="#">이번달 </a></li>
-                                    <li><a class="dropdown-item" href="#">이번 년도</a></li>
+                                    <li><a class="dropdown-item" onclick="bannerChanger('salesCard','today')">오늘</a></li>
+                                    <li><a class="dropdown-item" onclick="bannerChanger('salesCard','month')">이번 달 </a></li>
+                                    <li><a class="dropdown-item" onclick="bannerChanger('salesCard','year')">이번 년도</a></li>
                                 </ul>
                             </div>
 
@@ -63,9 +63,9 @@
                             <div class="filter">
                                 <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                    <li><a class="dropdown-item" href="#">오늘</a></li>
-                                    <li><a class="dropdown-item" href="#">이번 달</a></li>
-                                    <li><a class="dropdown-item" href="#">이번 년도</a></li>
+                                    <li><a class="dropdown-item" onclick="bannerChanger('revenueCard','today')">오늘</a></li>
+                                    <li><a class="dropdown-item" onclick="bannerChanger('revenueCard','month')">이번 달</a></li>
+                                    <li><a class="dropdown-item" onclick="bannerChanger('revenueCard','year')">이번 년도</a></li>
                                 </ul>
                             </div>
 
@@ -95,9 +95,9 @@
                             <div class="filter">
                                 <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                    <li><a class="dropdown-item" href="#">오늘</a></li>
-                                    <li><a class="dropdown-item" href="#">이번 달</a></li>
-                                    <li><a class="dropdown-item" href="#">이번 년도</a></li>
+                                    <li><a class="dropdown-item" onclick="bannerChanger('costomersCard','today')">오늘</a></li>
+                                    <li><a class="dropdown-item" onclick="bannerChanger('costomersCard','month')">이번 달</a></li>
+                                    <li><a class="dropdown-item" onclick="bannerChanger('costomersCard','year')">이번 년도</a></li>
                                 </ul>
                             </div>
 
@@ -207,9 +207,9 @@
                             <div class="filter">
                                 <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                    <li><a class="dropdown-item" href="#">오늘</a></li>
-                                    <li><a class="dropdown-item" href="#">이번 달</a></li>
-                                    <li><a class="dropdown-item" href="#">이번 년도</a></li>
+                                    <li><a class="dropdown-item" onclick="bannerChanger('recentSales','today')">오늘</a></li>
+                                    <li><a class="dropdown-item" onclick="bannerChanger('recentSales','month')">이번 달</a></li>
+                                    <li><a class="dropdown-item" onclick="bannerChanger('recentSales','year')">이번 년도</a></li>
                                 </ul>
                             </div>
 
@@ -277,9 +277,9 @@
                             <div class="filter">
                                 <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                    <li><a class="dropdown-item" href="#">오늘</a></li>
-                                    <li><a class="dropdown-item" href="#">이번 달</a></li>
-                                    <li><a class="dropdown-item" href="#">이번 년도</a></li>
+                                    <li><a class="dropdown-item" onclick="bannerChanger('attentionPoint','today')">오늘</a></li>
+                                    <li><a class="dropdown-item" onclick="bannerChanger('attentionPoint','month')">이번 달</a></li>
+                                    <li><a class="dropdown-item" onclick="bannerChanger('attentionPoint','year')">이번 년도</a></li>
                                 </ul>
                             </div>
 
@@ -348,9 +348,9 @@
                         <div class="filter">
                             <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                <li><a class="dropdown-item" href="#">오늘</a></li>
-                                <li><a class="dropdown-item" href="#">이번 주</a></li>
-                                <li><a class="dropdown-item" href="#">이번 달</a></li>
+                                <li><a class="dropdown-item" onclick="bannerChanger('costReport','today')">오늘</a></li>
+                                <li><a class="dropdown-item" onclick="bannerChanger('costReport','week')">이번 주</a></li>
+                                <li><a class="dropdown-item" onclick="bannerChanger('costReport','month')">이번 달</a></li>
                             </ul>
                         </div>
                     <div class="card-body pb-0" id = "costReport">
@@ -588,6 +588,7 @@
 </th:block>
 <!-- bootstrap.js import-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../../static/assets/js/requestBannerChange.js"></script>
 </body>
 
 </html>
