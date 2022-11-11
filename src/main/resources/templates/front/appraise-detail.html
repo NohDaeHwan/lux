@@ -46,7 +46,7 @@
                 <tr>
                     <td class="bg-light">상품명</td>
                     <td colspan="5">
-                        <div class="col-sm-10" th:text="${appraisalDto.appraisalProductName}">
+                        <div class="col-sm-10" th:text="${appraisalDto.appraisalRequest.appraisalProductName}">
                             샤넬 명품백
                         </div>
                     </td>
@@ -54,13 +54,13 @@
                 <tr>
                     <td  class="bg-light">브랜드</td>
                     <td colspan="3">
-                        <div class="col-sm-10" th:text="${appraisalDto.appraisalBrandName}">
+                        <div class="col-sm-10" th:text="${appraisalDto.appraisalRequest.appraisalBrandName}">
                             가니
                         </div>
                     </td>
                     <td class="bg-light">사이즈</td>
                     <td colspan="3">
-                        <div class="col-sm-10" th:text="${appraisalDto.appraisalSize}">
+                        <div class="col-sm-10" th:text="${appraisalDto.appraisalRequest.appraisalSize}">
                             s
                         </div>
                     </td>
@@ -68,13 +68,13 @@
                 <tr>
                     <td class="bg-light"><label>성별</label></td>
                     <td colspan="3">
-                        <div class="col-sm-10" th:text="${appraisalDto.appraisalGender}">
+                        <div class="col-sm-10" th:text="${appraisalDto.appraisalRequest.appraisalGender}">
                             Female
                         </div>
                     </td>
                     <td class="bg-light">색상</td>
                     <td colspan="">
-                        <div class="col-sm-10" th:text="${appraisalDto.appraisalColor}">
+                        <div class="col-sm-10" th:text="${appraisalDto.appraisalRequest.appraisalColor}">
                             Orange
                         </div>
                     </td>
@@ -86,7 +86,7 @@
                         </div>
                     </td>
                     <td colspan="5">
-                        <div class="col-sm-10" th:text="${#temporals.format(appraisalDto.createdAt,'yyyy-MM-dd HH:mm:ss')}">
+                        <div class="col-sm-10" th:text="${#temporals.format(appraisalDto.appraisalRequest.createdAt,'yyyy-MM-dd HH:mm:ss')}">
                             2022-11-01 17:09:44
                         </div>
                     </td>
@@ -95,7 +95,7 @@
                     <td class="bg-light">이미지</td>
                     <td colspan="5">
                         <div class="col-sm-10 center flex-column align-items-center" style="display: flex; border: 0;">
-                            <img class="mb-2" th:each="image : ${appraisalDto.imageList()}" th:src="${image.filePath}">
+                            <img class="mb-2" th:each="image : ${appraisalDto.appraisalRequest.imageList}" th:src="${image.filePath}">
                         </div>
                     </td>
                 </tr>
