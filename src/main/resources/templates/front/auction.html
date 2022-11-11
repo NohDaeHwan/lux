@@ -25,13 +25,11 @@
                  th:aria-labelledby="'heading'+${bcategoryStat.count}" data-parent="#accordion">
                 <div class="nav-link collapsed" th:each="mcategory : ${bcategory.categoryMDtos()}">
                     <h6 class="mb-0" style="font-size:15px;">
-                        <a href="#" class="text-black-50" th:text="${mcategory.categoryMName()}">짧은 상의</a>
+                        <a th:href="@{|/searchcate/${mcategory.id}|}" class="text-black-50" th:text="${mcategory.categoryMName()}">짧은 상의</a>
                     </h6>
                 </div>
             </div>
-
         </div>
-
     </div>
 </aside>
 <!-- brand section -->
@@ -115,9 +113,9 @@
                                 <label class="col-sm-1 col-form-label" id="value2" name="maxPrice">10000000</label>
                                 <input type="hidden" name="maxPrice" id="maxPrice" value="10000000">
                             </div>
-                            <div class="search-bar mb-3 row pl-2">
-                                <input type="text" class="form-control mr-1" style="width: 95%;" name="query" placeholder="검색" title="Enter search keyword">
-                                <button type="submit" class="btn btn-info"><i class="bi bi-search">검색</i></button>
+                            <div class="search-bar mb-2 row pl-2">
+                                <input type="text" class="form-control mr-4" style="width: 90%;" name="query" placeholder="검색" title="Enter search keyword">
+                                <button type="submit" class="btn btn-outline-info row " style="width: 8%;"><i class="bi bi-search-heart">검색</i></button>
                             </div>
                         </form>
                     </div>

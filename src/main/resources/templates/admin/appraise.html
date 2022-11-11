@@ -123,6 +123,7 @@
                             </tr>
                             </thead>
                             <tbody>
+
                             <tr th:each="appraisalRes : ${appraisalResponse}">
                                 <th scope="row">
                                     <a th:if="${appraisalRes.appraisalRequest.appraisalStateStep} == '검수전'" th:href="@{|/admin/appraise/${appraisalRes.id}/new|}" th:text="${appraisalRes.appraisalRequest().appraisalProductName()}">user1@mail.com</a>
@@ -141,6 +142,8 @@
                                     <a href="#" style="color:#ffffff;" th:if="${appraisalRes.appraisalRequest.appraisalStateStep} =='검수중'" class="btn btn-warning">검수중</a>
                                     <a href="#" style="color:#ffffff;" th:if="${appraisalRes.appraisalRequest.appraisalStateStep} =='검수완료'" class="btn btn-secondary">검수완료</a>
                                 </td>
+
+
                             </tr>
                             </tbody>
                         </table>

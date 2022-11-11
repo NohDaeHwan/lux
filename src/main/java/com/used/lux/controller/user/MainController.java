@@ -2,10 +2,12 @@ package com.used.lux.controller.user;
 
 import com.used.lux.dto.BrandDto;
 import com.used.lux.dto.CategoryBDto;
+import com.used.lux.dto.CategoryMDto;
 import com.used.lux.response.auction.AuctionResponse;
 import com.used.lux.response.product.ProductsResponse;
 import com.used.lux.service.BrandService;
 import com.used.lux.service.CategoryBService;
+import com.used.lux.service.CategoryMService;
 import com.used.lux.service.ProductService;
 import com.used.lux.service.admin.AuctionService;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -29,6 +32,7 @@ public class MainController {
     private final AuctionService auctionService;
 
     private final CategoryBService categoryBService;
+    private final CategoryMService categoryMService;
 
     private final BrandService brandService;
 
@@ -47,7 +51,7 @@ public class MainController {
         return "/front/register"; // 회원가입 페이지를 보여줄 뷰 필요
     }
 
-    /*@GetMapping("/search")
+    @GetMapping("/search")
     public String register(@RequestParam(defaultValue = "") String query,
                            ModelMap mm) {
         List<ProductsResponse> productList = productService.productFind(query).stream()
@@ -61,7 +65,42 @@ public class MainController {
         mm.addAttribute("auctionList", auctionList);
         mm.addAttribute("categoryList", categoryList);
         mm.addAttribute("brandList", brandList);
-        return "/front/register"; // 회원가입 페이지를 보여줄 뷰 필요
-    }*/
+        return "/front/search"; // 회원가입 페이지를 보여줄 뷰 필요
+    }
+
+
+    @GetMapping("/searchcate/{mcategoryId}")
+    public  String searchcate(@PathVariable Long mcategoryId,
+            @RequestParam(defaultValue = "") String productColor,
+                              @RequestParam(defaultValue = "") String productBrand,
+                              @RequestParam(defaultValue = "") String productGender,
+                              @RequestParam(defaultValue = "") String productSize,
+                              @RequestParam(defaultValue = "") String productGrade,
+                              @RequestParam(defaultValue = "10000000") String maxPrice,
+                              @RequestParam(defaultValue = "100000") String minPrice,
+                              @RequestParam(defaultValue = "") String query,
+                              @PageableDefault(size = 30) Pageable pageable,
+                              ModelMap mm){
+
+        List<CategoryBDto> categoryList = categoryBService.categoryList();
+        Page<ProductsResponse> products = productService.productFind(productColor, productBrand, productGender,
+                productSize, productGrade, maxPrice, minPrice, query, pageable).map(ProductsResponse::from);
+        List<BrandDto> brandList = brandService.brandList();
+        CategoryMDto categoryMDto =categoryMService.getMcategoryid(mcategoryId);
+
+
+
+
+        mm.addAttribute("brandList", brandList);
+        mm.addAttribute("categoryList", categoryList);
+        mm.addAttribute("products", products);
+        mm.addAttribute("cateM",categoryMDto );
+
+        System.out.println("function"+categoryMDto);
+
+        System.out.println();
+
+        return "front/searchcate";
+    }
 
 }

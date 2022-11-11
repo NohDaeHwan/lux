@@ -28,14 +28,13 @@
 </aside>
     <!-- brand section -->
     <main id="main" class="main p-1">
-
+<!--        <script src="main.js"></script>-->
         <section class="section">
             <div class="row align-items-top">
                 <div class="col-lg-12">
-
                     <!-- Card with header and footer -->
                     <div class="card">
-                        <div class="card-header">옵션 검색
+                        <div class="card-header"><h2 th:text="${cateM.categoryMName()}"></h2>
                             <!--<button type="submit" class="btn btn-primary" style="float: right;">
                                 <a th:href="@{/admin/appraise/new}" stlye="color:#ffffff !important">
                                     새 검수등록
@@ -97,8 +96,8 @@
                                 <div class="row mb-3">
                                     <!--d아-->
                                     <label class="col-sm-2 col-form-label">상품가격</label>
-                                    <label class="col-sm-1 col-form-label" id="value1">1000</label>
-                                    <input type="hidden" name="minPrice" id="minPrice" value="1000">
+                                    <label class="col-sm-1 col-form-label" id="value1">100000</label>
+                                    <input type="hidden" name="minPrice" id="minPrice" value="100000">
                                     <div class="col-sm-8">
                                         <div class="slider">
                                             <input type="range" class="a"  id="input-left" min="1" max="100" value="1"  step="1" />
@@ -123,7 +122,7 @@
                 </div>
             </div>
         </section>
-
+    
         <section class="layout_padding2">
             <div class="container-fluid">
                 <div class="brand_heading">

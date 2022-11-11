@@ -51,14 +51,19 @@ public class ProductController {
                               ModelMap mm) {
         Page<ProductsResponse> products = productService.productFind(productColor, productBrand, productGender,
                 productSize, productGrade, maxPrice, minPrice, query, pageable).map(ProductsResponse::from);
+        List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), products.getTotalPages());
+
         List<CategoryBDto> categoryList = categoryBService.categoryList();
         List<BrandDto> brandList = brandService.brandList();
-        List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), products.getTotalPages());
+
 
         mm.addAttribute("paginationBarNumbers", barNumbers);
         mm.addAttribute("products", products);
         mm.addAttribute("categoryList", categoryList);
         mm.addAttribute("brandList", brandList);
+
+
+        System.out.println("function"+products);
         return "/front/product"; // 중고 명품 리스트 페이지
     }
 
@@ -74,6 +79,7 @@ public class ProductController {
         mm.addAttribute("categoryList", categoryList);
         mm.addAttribute("gradeList", gradeList);
         mm.addAttribute("productDto", productDto);
+
 
         return "/front/product-detail"; // 중고 명품 리스트 페이지
     }
@@ -107,5 +113,7 @@ public class ProductController {
         mm.addAttribute("categoryList", categoryList);
         return "front/success";
     }
+
+
 
 }

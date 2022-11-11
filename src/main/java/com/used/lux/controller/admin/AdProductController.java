@@ -63,6 +63,7 @@ public class AdProductController {
         Page<ProductResponse> productResponses = adProductService.getProductList(productSellType,
                 productBrand, productGender, productSize, productGrade, productState,
                 productDate, query, pageable).map(ProductResponse::from);
+
         List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), productResponses.getTotalPages());
         SearchResponse searchResponse = searchService.getSearchList();
 

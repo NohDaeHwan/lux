@@ -39,9 +39,9 @@
                     <strong style="color: #b50;">'뫄뫄'</strong>에 대한 검색결과 >
                 </h3>
                 <div style="display: flex; justify-content: space-between;">
-                    <p th:text="'전체결과: ' + ${points.getTotalElements} + ' 건'">
-                        전체 검색결과: n 건
-                    </p>
+<!--                    <p th:text="'전체결과: ' + ${points.getTotalElements} + ' 건'">-->
+<!--                        전체 검색결과: n 건-->
+<!--                    </p>-->
                 </div>
             </div>
         </div>
@@ -54,24 +54,36 @@
                     중고 >
                 </h3>
                 <div style="display: flex; justify-content: space-between;">
-                    <p th:text="'전체결과: ' + ${points.getTotalElements} + ' 건'">
-                        중고탭 검색결과: n 건
-                    </p>
+<!--                    <p th:text="'전체결과: ' + ${points.getTotalElements} + ' 건'">-->
+<!--                        중고탭 검색결과: n 건-->
+<!--                    </p>-->
                 </div>
             </div>
         </div>
         <div class="container-fluid brand_item-container" style="display: flex; justify-content:flex-start; flex-wrap: wrap;">
-            <a href="#" style="color: #000000;"><h6 class="mr-4">조거 팬츠 <strong> 1,206 ></strong></h6></a>
-            <a href="#" style="color: #000000;"><h6 class="mr-4">슈트팬츠/슬랙스 <strong> 1,206 ></strong></h6></a>
-            <a href="#" style="color: #000000;"><h6 class="mr-4">치마바지 <strong> 1,206 ></strong></h6></a>
-            <a href="#" style="color: #000000;"><h6 class="mr-4">숏팬츠 <strong> 1,206 ></strong></h6></a>
-            <a href="#" style="color: #000000;"><h6 class="mr-4">숏 팬츠 <strong> 1,206 ></strong></h6></a>
-            <a href="#" style="color: #000000;"><h6 class="mr-4">기타 바지 <strong> 1,206 ></strong></h6></a>
-            <a href="#" style="color: #000000;"><h6 class="mr-4">트레이닝/조거 팬츠 <strong> 1,206 ></strong></h6></a>
-            <a href="#" style="color: #000000;"><h6 class="mr-4">바지 Pants <strong> 1,206 ></strong></h6></a>
-            <a href="#" style="color: #000000;"><h6 class="mr-4">일자 팬츠 <strong> 1,206 ></strong></h6></a>
-            <a href="#" style="color: #000000;"><h6 class="mr-4">트레이닝 팬츠 <strong> 1,206 ></strong></h6></a>
-            <a href="#" style="color: #000000;"><h6 class="mr-4">코튼 팬츠 <strong> 1,206 ></strong></h6></a>
+
+
+            <a href="#">
+            <div class="brand_item-box">
+                    <div>
+                        <img src="width:300px;height:300px;">
+                        <div class="brand_detail-box">
+                            <h6 class="font-weight-light text-black-50">
+                                고야드-클러치백
+                            </h6>
+                            <h6 class="font-weight-normal text-black-50">
+                                💸 40,000P
+                            </h6>
+                            <h6 class="font-weight-normal text-black-50">
+                            </h6>
+                            <h6 class="font-weight-normal text-black-50">
+                                🖱 조회: 27
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
         </div>
 
     </section>
@@ -82,9 +94,9 @@
                     경매 >
                 </h3>
                 <div style="display: flex; justify-content: space-between;">
-                    <p th:text="'전체결과: ' + ${points.getTotalElements} + ' 건'">
-                        경매탭 전체결과: n 건
-                    </p>
+<!--                    <p th:text="'전체결과: ' + ${points.getTotalElements} + ' 건'">-->
+<!--                        경매탭 전체결과: n 건-->
+<!--                    </p>-->
                 </div>
             </div>
         </div>
@@ -188,63 +200,63 @@
         <div class="container-fluid">
             <div class="brand_heading">
                 <h3 class="custom_heading">
-                    검수 >
+                    검수
                 </h3>
                 <div style="display: flex; justify-content: space-between;">
-                    <p th:text="'전체결과: ' + ${points.getTotalElements} + ' 건'">
-                        검수탭 전체결과: n 건
-                    </p>
+<!--                    <p th:text="'전체결과: ' + ${points.getTotalElements} + ' 건'">-->
+<!--                        검수탭 전체결과: n 건-->
+<!--                    </p>-->
                 </div>
             </div>
         </div>
-        <div class="container-fluid brand_item-container">
-            <table class="table table-hover ">
-                <thead>
-                <tr>
-                    <th scope="col">상품</th>
-                    <th scope="col">내용</th>
-                    <th scope="col">적용일시</th>
-                    <th scope="col">상태</th>
-                </tr>
+<!--        <div class="container-fluid brand_item-container">-->
+<!--            <table class="table table-hover ">-->
+<!--                <thead>-->
+<!--                <tr>-->
+<!--                    <th scope="col">상품</th>-->
+<!--                    <th scope="col">내용</th>-->
+<!--                    <th scope="col">적용일시</th>-->
+<!--                    <th scope="col">상태</th>-->
+<!--                </tr>-->
 
-                </thead>
-                <tbody>
-                <tr>
-                    <th scope="row" style="width: 120px;">
-                        <a href="#"><img src="#" style="width: 100px; height:100px;"></a>
-                    </th>
-                    <td style="vertical-align: middle; font-weight: 300;"><h6>브랜드-카테고리중<br>브랜드 상품명<br>유저명</h6></td>
-                    <td style="vertical-align: middle; font-weight: 300; width: 150px;"><h6>2022-11-02 18:04:05</h6></td>
-                    <td style="vertical-align: middle; font-weight: 300;" th:text="${#temporals.format(point.createdAt,'yyyy-MM-dd HH:mm:ss')}">검수완료</td>
-                </tr>
-                <tr>
-                    <th scope="row" style="width: 120px;">
-                        <a href="#"><img src="#" style="width: 100px; height:100px;"></a>
-                    </th>
-                    <td style="vertical-align: middle; font-weight: 300;"><h6>브랜드-카테고리중<br>브랜드 상품명<br>유저명</h6></td>
-                    <td style="vertical-align: middle; font-weight: 300; width: 150px;"><h6>2022-11-02 18:04:05</h6></td>
-                    <td style="vertical-align: middle; font-weight: 300;" th:text="${#temporals.format(point.createdAt,'yyyy-MM-dd HH:mm:ss')}">검수완료</td>
-                </tr>
-                <tr>
-                    <th scope="row" style="width: 120px;">
-                        <a href="#"><img src="#" style="width: 100px; height:100px;"></a>
-                    </th>
-                    <td style="vertical-align: middle; font-weight: 300;"><h6>브랜드-카테고리중<br>브랜드 상품명<br>유저명</h6></td>
-                    <td style="vertical-align: middle; font-weight: 300; width: 150px;"><h6>2022-11-02 18:04:05</h6></td>
-                    <td style="vertical-align: middle; font-weight: 300;" th:text="${#temporals.format(point.createdAt,'yyyy-MM-dd HH:mm:ss')}">검수완료</td>
-                </tr>
-                <tr>
-                    <th scope="row" style="width: 120px;">
-                        <a href="#"><img src="#" style="width: 100px; height:100px;"></a>
-                    </th>
-                    <td style="vertical-align: middle; font-weight: 300;"><h6>브랜드-카테고리중<br>브랜드 상품명<br>유저명</h6></td>
-                    <td style="vertical-align: middle; font-weight: 300; width: 150px;"><h6>2022-11-02 18:04:05</h6></td>
-                    <td style="vertical-align: middle; font-weight: 300;" th:text="${#temporals.format(point.createdAt,'yyyy-MM-dd HH:mm:ss')}">검수완료</td>
-                </tr>
+<!--                </thead>-->
+<!--                <tbody>-->
+<!--                <tr>-->
+<!--                    <th scope="row" style="width: 120px;">-->
+<!--                        <a href="#"><img src="#" style="width: 100px; height:100px;"></a>-->
+<!--                    </th>-->
+<!--                    <td style="vertical-align: middle; font-weight: 300;"><h6>브랜드-카테고리중<br>브랜드 상품명<br>유저명</h6></td>-->
+<!--                    <td style="vertical-align: middle; font-weight: 300; width: 150px;"><h6>2022-11-02 18:04:05</h6></td>-->
+<!--                    <td style="vertical-align: middle; font-weight: 300;" th:text="${#temporals.format(point.createdAt,'yyyy-MM-dd HH:mm:ss')}">검수완료</td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <th scope="row" style="width: 120px;">-->
+<!--                        <a href="#"><img src="#" style="width: 100px; height:100px;"></a>-->
+<!--                    </th>-->
+<!--                    <td style="vertical-align: middle; font-weight: 300;"><h6>브랜드-카테고리중<br>브랜드 상품명<br>유저명</h6></td>-->
+<!--                    <td style="vertical-align: middle; font-weight: 300; width: 150px;"><h6>2022-11-02 18:04:05</h6></td>-->
+<!--                    <td style="vertical-align: middle; font-weight: 300;" th:text="${#temporals.format(point.createdAt,'yyyy-MM-dd HH:mm:ss')}">검수완료</td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <th scope="row" style="width: 120px;">-->
+<!--                        <a href="#"><img src="#" style="width: 100px; height:100px;"></a>-->
+<!--                    </th>-->
+<!--                    <td style="vertical-align: middle; font-weight: 300;"><h6>브랜드-카테고리중<br>브랜드 상품명<br>유저명</h6></td>-->
+<!--                    <td style="vertical-align: middle; font-weight: 300; width: 150px;"><h6>2022-11-02 18:04:05</h6></td>-->
+<!--                    <td style="vertical-align: middle; font-weight: 300;" th:text="${#temporals.format(point.createdAt,'yyyy-MM-dd HH:mm:ss')}">검수완료</td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <th scope="row" style="width: 120px;">-->
+<!--                        <a href="#"><img src="#" style="width: 100px; height:100px;"></a>-->
+<!--                    </th>-->
+<!--                    <td style="vertical-align: middle; font-weight: 300;"><h6>브랜드-카테고리중<br>브랜드 상품명<br>유저명</h6></td>-->
+<!--                    <td style="vertical-align: middle; font-weight: 300; width: 150px;"><h6>2022-11-02 18:04:05</h6></td>-->
+<!--                    <td style="vertical-align: middle; font-weight: 300;" th:text="${#temporals.format(point.createdAt,'yyyy-MM-dd HH:mm:ss')}">검수완료</td>-->
+<!--                </tr>-->
 
-                </tbody>
-            </table>
-        </div>
+<!--                </tbody>-->
+<!--            </table>-->
+<!--        </div>-->
 
     </section>
 

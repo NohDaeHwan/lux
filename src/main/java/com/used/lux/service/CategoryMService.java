@@ -19,4 +19,8 @@ public class CategoryMService {
         return categoryMRepository.findAll()
                 .stream().map(CategoryMDto::from).collect(Collectors.toCollection(ArrayList::new));
     }
+
+    public  CategoryMDto getMcategoryid(Long id){
+        return CategoryMDto.from(categoryMRepository.findById(id).get());
+    }
 }
