@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.DoubleStream;
 
 @RequiredArgsConstructor
 @Transactional
@@ -60,6 +61,10 @@ public class AppraiseService {
 
     public AppraisalRequestDto appraisalDetail(Long productId) {
         return AppraisalRequestDto.from(appraisalRequestRepository.findById(productId).get());
+    }
+
+    public Page<AppraisalRequestDto> getMypageAppraisal(Long id, Pageable pageable) {
+        return appraisalRequestRepository.findByUserAccountId(id, pageable).map(AppraisalRequestDto::from);
     }
 
     /*

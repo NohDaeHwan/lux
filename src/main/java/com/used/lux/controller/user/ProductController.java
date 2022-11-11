@@ -4,7 +4,7 @@ import com.used.lux.dto.ProductDto;
 import com.used.lux.dto.UserGradeDto;
 import com.used.lux.dto.security.Principal;
 import com.used.lux.request.OrderCreateRequest;
-import com.used.lux.request.UserUpdateRequest;
+import com.used.lux.response.product.ProductResponse;
 import com.used.lux.response.product.ProductsResponse;
 import com.used.lux.dto.BrandDto;
 import com.used.lux.dto.CategoryBDto;
@@ -32,8 +32,8 @@ public class ProductController {
     private final PaginationService paginationService;
 
     private final ProductService productService;
+
     private final ProductOrderService productOrderService;
-    private final ProductOrderLogService productOrderLogService;
 
     private final UserGradeService userGradeService;
 
@@ -49,7 +49,7 @@ public class ProductController {
                               @RequestParam(defaultValue = "") String query,
                               @PageableDefault(size = 30) Pageable pageable,
                               ModelMap mm) {
-        Page<ProductsResponse> products = productService.productFind(productColor, productBrand, productGender,
+        Page<ProductsResponse> products = productService.frontProductFind(productColor, productBrand, productGender,
                 productSize, productGrade, maxPrice, minPrice, query, pageable).map(ProductsResponse::from);
         List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), products.getTotalPages());
 

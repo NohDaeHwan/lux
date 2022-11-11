@@ -8,7 +8,9 @@ import com.used.lux.request.UserUpdateRequest;
 import com.used.lux.response.ProductOrderResponse;
 import com.used.lux.response.UserAccountLogResponse;
 import com.used.lux.response.UserAccountResponse;
+import com.used.lux.response.appraisal.AppraisalRequestResponse;
 import com.used.lux.service.*;
+import com.used.lux.service.admin.AppraiseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -38,6 +40,8 @@ public class UserAccountController {
     private final UserAccountLogService userAccountLogService;
 
     private final UserGradeService userGradeService;
+
+    private final AppraiseService appraiseService;
 
     // 주문내역조회
     @GetMapping
@@ -182,12 +186,11 @@ public class UserAccountController {
     @GetMapping("/appraise")
     public String appraise(@AuthenticationPrincipal Principal principal, Pageable pageable, ModelMap mm) {
         UserAccountResponse userAccountResponse = UserAccountResponse.from(userAccountService.getUser(principal.id()));
-        Page<ProductOrderResponse> productOrderResponse = productOrderService.productListAll(principal.id(), pageable)
-                .map(ProductOrderResponse::from);
+        Page<AppraisalRequestResponse> appraisalList = appraiseService.getMypageAppraisal(principal.id(), pageable).map(AppraisalRequestResponse::from);
         UserGradeDto nextGrade = userGradeService.getNextGrade(principal.userGrade().getGradeStep());
-        System.out.println(nextGrade);
+
         mm.addAttribute("users", userAccountResponse);
-        mm.addAttribute("orders", productOrderResponse);
+        mm.addAttribute("appraisals", appraisalList);
         mm.addAttribute("nextGrade", nextGrade);
         Long totalPoint = userAccountLogService.getTotalPoint(principal.userEmail());
         mm.addAttribute("total", totalPoint);

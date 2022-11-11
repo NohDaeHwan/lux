@@ -19,7 +19,7 @@ public class ProductService {
     private final ProductRepository productRepository;
 
     @Transactional(readOnly = true)
-    public Page<ProductDto> productFind(String productColor, String productBrand, String productGender, String productSize,
+    public Page<ProductDto> frontProductFind(String productColor, String productBrand, String productGender, String productSize,
                                         String productGrade, String maxPrice, String minPrice, String query, Pageable pageable) {
         return productRepository.findByQuery(productColor, productBrand,
                 productGender, productSize, productGrade, maxPrice, minPrice, query, pageable).map(ProductDto::from);
@@ -35,6 +35,5 @@ public class ProductService {
     public ProductDto productDetail(Long productId) {
         return ProductDto.from(productRepository.findById(productId).get());
     }
-
 
 }

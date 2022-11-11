@@ -52,8 +52,7 @@ public class MainController {
     }
 
     @GetMapping("/search")
-    public String register(@RequestParam(defaultValue = "") String query,
-                           ModelMap mm) {
+    public String search(@RequestParam(defaultValue = "") String query, ModelMap mm) {
         List<ProductsResponse> productList = productService.productFind(query).stream()
                 .map(ProductsResponse::from).collect(Collectors.toUnmodifiableList());
         List<AuctionResponse> auctionList = auctionService.productFind(query).stream()
@@ -68,10 +67,9 @@ public class MainController {
         return "/front/search"; // 회원가입 페이지를 보여줄 뷰 필요
     }
 
-
     @GetMapping("/searchcate/{mcategoryId}")
     public  String searchcate(@PathVariable Long mcategoryId,
-            @RequestParam(defaultValue = "") String productColor,
+                              @RequestParam(defaultValue = "") String productColor,
                               @RequestParam(defaultValue = "") String productBrand,
                               @RequestParam(defaultValue = "") String productGender,
                               @RequestParam(defaultValue = "") String productSize,
@@ -80,16 +78,13 @@ public class MainController {
                               @RequestParam(defaultValue = "100000") String minPrice,
                               @RequestParam(defaultValue = "") String query,
                               @PageableDefault(size = 30) Pageable pageable,
-                              ModelMap mm){
+                              ModelMap mm) {
 
         List<CategoryBDto> categoryList = categoryBService.categoryList();
-        Page<ProductsResponse> products = productService.productFind(productColor, productBrand, productGender,
+        Page<ProductsResponse> products = productService.frontProductFind(productColor, productBrand, productGender,
                 productSize, productGrade, maxPrice, minPrice, query, pageable).map(ProductsResponse::from);
         List<BrandDto> brandList = brandService.brandList();
         CategoryMDto categoryMDto =categoryMService.getMcategoryid(mcategoryId);
-
-
-
 
         mm.addAttribute("brandList", brandList);
         mm.addAttribute("categoryList", categoryList);

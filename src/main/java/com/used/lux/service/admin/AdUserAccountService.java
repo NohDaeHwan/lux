@@ -54,7 +54,7 @@ public class AdUserAccountService {
         // 검수내역
         // pageable일땐 stream이어도 map만해줘도된다. 상관없음.
         // list, arraylist, collection 등 다른 리스트 형태들은 파이프(stream) 역할을 해줘야한다.
-        List<AppraisalRequestDto> appraisalDtos = appraisalRequestRepository.findByUserAccountId(userAccountDto.id())
+        List<AppraisalRequestDto> appraisalDtos = appraisalRequestRepository.findByUserAccountId2(userAccountDto.id())
                 .stream().map(AppraisalRequestDto::from).collect(Collectors.toCollection(ArrayList::new));
         // 경매 내역
         List<AuctionLogDto> auctionLogDtos = auctionLogRepository.findByBidder(userAccountDto.userName())
