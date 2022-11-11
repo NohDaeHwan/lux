@@ -152,6 +152,25 @@ public class UserAccountController {
         mm.addAttribute("total", totalPoint);
         return "/front/mypage-grade";
     }
+    @GetMapping("/recentview")
+    public String recentview(@AuthenticationPrincipal Principal principal, Pageable pageable, ModelMap mm){
+
+        UserAccountResponse userAccountResponse = UserAccountResponse.from(userAccountService.getUser(principal.id()));
+        UserGradeDto nextGrade = userGradeService.getNextGrade(principal.userGrade().getGradeStep());
+        List<UserGradeDto> gradelist = userGradeService.getGradeList();
+        Page<ProductOrderResponse> productOrderResponse = productOrderService.productListAll(principal.id(), pageable)
+                .map(ProductOrderResponse::from);
+
+        mm.addAttribute("users", userAccountResponse);
+        mm.addAttribute("orders", productOrderResponse);
+        mm.addAttribute("nextGrade", nextGrade);
+        Long totalPoint = userAccountLogService.getTotalPoint(principal.userEmail());
+        mm.addAttribute("total", totalPoint);
+
+
+
+        return "/front/mypage-recentview";
+    }
 
     @GetMapping("/appraise")
     public String appraise(@AuthenticationPrincipal Principal principal, Pageable pageable, ModelMap mm) {

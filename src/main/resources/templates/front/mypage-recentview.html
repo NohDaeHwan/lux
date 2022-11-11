@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/front-head :: .head"></head>
+
+<body class="sub_page">
+
+<header th:replace="layout/front-header :: .header"></header>
+<header th:replace="layout/front-header-mypage :: #mypage-header"></header>
+
+<aside th:replace="layout/front-aside-mypage :: .mysidebar"></aside>
+
+
+<!-- brand section -->
+<main id="main" class="main">
+    <section class="layout_padding2">
+        <div class="container-fluid">
+
+        </div>
+        <div class="container-fluid brand_item-container">
+            <table class="table table-hover ">
+                <thead>
+                <tr>
+                    <th scope="col">상품정보</th>
+                    <th scope="col">가격(원)</th>
+                    <th scope="col">본 날짜 </th>
+                    <th scope="col">상태</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr CLASS="A"  >
+                        <td><p class="card-text font-weight-lighter mb-1 text-black-50" id="name"></p></td>
+                        <td><p class="card-text font-weight-lighter mb-1 text-black-50" id="price"></p></td>
+                        <td><p class="card-text font-weight-lighter mb-1 text-black-50" id="date"></p></td>
+                        <td>특징</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+
+<script th:inline="javascript">
+    let recnet=JSON.parse(sessionStorage.getItem("allEntries"));
+    let a = document.getElementsByClassName("a");
+    for(let i = 0; i < recnet.length; i++) {
+        document.getElementById("name").innerHTML+=recnet[i].name + '<br>';
+        document.getElementById("price").innerHTML+=recnet[i].price + '<br>';
+        document.getElementById("date").innerHTML+=recnet[i].date + '<br>';
+         document.write(recnet[i].name + '<br>');
+         document.write(recnet[i].date + '<br>');
+        document.write(recnet[i].price + '<br>');
+    }
+
+
+    console.log(recnet[0].name);
+    console.log(recnet[0].date);
+    console.log(recnet[0].price);
+
+
+</script>
+<footer th:replace="layout/front-footer :: .footer"></footer>
+
+</body>
+
+</html>
