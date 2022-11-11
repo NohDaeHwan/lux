@@ -9,7 +9,7 @@ import com.used.lux.service.BrandService;
 import com.used.lux.service.CategoryBService;
 import com.used.lux.service.CategoryMService;
 import com.used.lux.service.ProductService;
-import com.used.lux.service.admin.AuctionService;
+import com.used.lux.service.AuctionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

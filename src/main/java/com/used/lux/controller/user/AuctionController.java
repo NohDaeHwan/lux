@@ -2,12 +2,11 @@ package com.used.lux.controller.user;
 
 import com.used.lux.dto.BrandDto;
 import com.used.lux.dto.CategoryBDto;
-import com.used.lux.response.auction.AuctionResponse;
 import com.used.lux.response.auction.AuctionsResponse;
 import com.used.lux.service.BrandService;
 import com.used.lux.service.CategoryBService;
 import com.used.lux.service.PaginationService;
-import com.used.lux.service.admin.AuctionService;
+import com.used.lux.service.AuctionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

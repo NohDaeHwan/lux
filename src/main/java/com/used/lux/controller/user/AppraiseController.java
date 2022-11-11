@@ -1,6 +1,5 @@
 package com.used.lux.controller.user;
 
-import com.used.lux.dto.AppraisalRequestDto;
 import com.used.lux.dto.BrandDto;
 import com.used.lux.dto.CategoryBDto;
 import com.used.lux.dto.security.Principal;
@@ -10,7 +9,7 @@ import com.used.lux.response.appraisal.AppraisalResponse;
 import com.used.lux.service.BrandService;
 import com.used.lux.service.CategoryBService;
 import com.used.lux.service.UserAccountService;
-import com.used.lux.service.admin.AppraiseService;
+import com.used.lux.service.AppraiseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -72,7 +71,7 @@ public class AppraiseController {
 
     @GetMapping("/{appraiseId}")
     public String appraiseDetail(@PathVariable Long appraiseId, ModelMap mm) {
-        AppraisalRequestResponse appraisalDto = AppraisalRequestResponse.from(appraiseService.appraisalDetail(appraiseId));
+        AppraisalResponse appraisalDto = AppraisalResponse.from(appraiseService.appraisalDetail(appraiseId));
         List<CategoryBDto> categoryList = categoryBService.categoryList();
 
         mm.addAttribute("categoryList", categoryList);
