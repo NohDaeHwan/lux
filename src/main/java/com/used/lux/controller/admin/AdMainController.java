@@ -1,5 +1,6 @@
 package com.used.lux.controller.admin;
 
+import com.used.lux.dto.admin.AdDashboardRequestDto;
 import com.used.lux.service.admin.DashBoardRequestService;
 import com.used.lux.dto.security.Principal;
 import com.used.lux.response.UserAccountResponse;
@@ -8,8 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RequestMapping("/admin")
@@ -42,6 +42,21 @@ public class AdMainController {
         UserAccountResponse adminDetail = UserAccountResponse.from(adUserAccountService.getUserMemo(principal.id()));
         mm.addAttribute("adminDetail", adminDetail);
         return "/admin/admin-detail";
+    }
+
+    @PostMapping("/requestBannerChange")
+    @ResponseBody
+    public String bannerChange(@RequestBody AdDashboardRequestDto requestDto)
+    {
+
+        if(requestDto.getBanner().equals("salesCard")){}
+        else if(requestDto.getBanner().equals("revenueCard")){}
+        else if(requestDto.getBanner().equals("costomerCard")){}
+        else if(requestDto.getBanner().equals("recentSales")){}
+        else if(requestDto.getBanner().equals("attentionPoint")){}
+        else if(requestDto.getBanner().equals("costReport")){}
+
+        return null;
     }
 
 }
