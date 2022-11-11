@@ -71,7 +71,7 @@ public class AppraiseService {
 
     //처리되지 않은 요청을 세는 메서드
     public Long countRequest() {
-        return appraisalRepository.countByState1();
+        return appraisalRequestRepository.countByState1();
     }
 
     public Appraisal findById(Long id) {
@@ -80,7 +80,8 @@ public class AppraiseService {
     }
 
     public Long findAppraisePriceByProductId(Long aLong) {
-        return appraisalRepository.findAppraisePriceByProductId(aLong);
+        return null;
+        /*return appraisalRepository.findAppraisePriceByProductId(aLong);*/
     }
 
     /*

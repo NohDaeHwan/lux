@@ -1,6 +1,5 @@
 package com.used.lux.service.admin;
 
-
 import com.used.lux.domain.*;
 import com.used.lux.service.*;
 
@@ -23,6 +22,8 @@ public class DashBoardRequestService {
 
     private final UserGradeService userGradeService;
     private final AppraiseService appraiseService;
+
+    private final AppraisalRequestService appraisalRequestService;
     private final ProductOrderCancleService productOrderCancleService;
 
     private final AuctionService auctionService;
@@ -97,14 +98,14 @@ public class DashBoardRequestService {
 
         CategoryB categoryB = null;
         CategoryM categoryM = null;
-        Appraisal appraisal = null;
+        AppraisalRequest appraisalRequest = null;
 
         //null처리 하면서 값 삽입 :: 이게 맞나?
         if(Bid != null){categoryB = categoryBService.findById(Long.valueOf(Bid));}
 
         if(Mid != null){categoryM = categoryMService.findById(Long.valueOf(Mid));}
 
-        if(Aid != null){appraisal = appraiseService.findById(Long.valueOf(Aid));}
+        if(Aid != null){appraisalRequest = appraisalRequestService.findById(Long.valueOf(Aid));}
 
         if(sellRoute == null){sellRoute = "cannot search sell route because selling log is nowhere";}
         if(categoryB != null){ categoryBName = categoryB.getCategoryBName();}
@@ -112,7 +113,7 @@ public class DashBoardRequestService {
         if(categoryM != null){categoryMName = categoryM.getCategoryMName(); }
         else {categoryMName = "cannot search categoryM because selling log is nowhere";}
         if(priceRange == null){priceRange = "cannot search price range because selling log is nowhere";}
-        if(appraisal != null){productName = appraisal.getAppraisalProductName();}
+        if(appraisalRequest != null){productName = appraisalRequest.getAppraisalProductName();}
         else {productName = "cannot search product because selling log is nowhere";}
 
         sellType.add(sellRoute); // 0: 판매유형
@@ -159,10 +160,6 @@ public class DashBoardRequestService {
         costReport.add(String.valueOf(auction_net_profit)); // 4 : 경매순이익
         costReport.add(String.valueOf(selling_product)); // 5 : 팔고있는 상품 개수
         costReport.add(String.valueOf(progress_auction)); // 6 : 경매중인 상품 개수
-
-
-
-
 
         mm.addAttribute("countOrder", countOrder);
         mm.addAttribute("sumPrice",sumPrice);

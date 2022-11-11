@@ -43,8 +43,6 @@ public class CategoryBService {
             .stream().map(CategoryBDto::from).collect(Collectors.toCollection(ArrayList::new));}
 
 
-
-
     public boolean bigCategoryExist( String st){
         return categoryBRepository.existsByCategoryBName(st);
     }
@@ -56,6 +54,8 @@ public class CategoryBService {
         return categoryB.orElse(null);
     }
 
-
-
+    public List<CategoryBDto> categoryList() {
+        return categoryBRepository.findAll().stream()
+                .map(CategoryBDto::from).collect(Collectors.toUnmodifiableList());
+    }
 }

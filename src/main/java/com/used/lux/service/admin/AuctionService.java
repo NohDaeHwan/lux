@@ -1,5 +1,6 @@
 package com.used.lux.service.admin;
 
+import com.used.lux.domain.Auction;
 import com.used.lux.dto.AuctionDto;
 import com.used.lux.dto.ProductDto;
 import com.used.lux.repository.AuctionRepository;
