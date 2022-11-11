@@ -48,15 +48,15 @@ public class AdMainController {
     @ResponseBody
     public String bannerChange(@RequestBody AdDashboardRequestDto requestDto)
     {
-
-        if(requestDto.getBanner().equals("salesCard")){}
-        else if(requestDto.getBanner().equals("revenueCard")){}
-        else if(requestDto.getBanner().equals("costomerCard")){}
-        else if(requestDto.getBanner().equals("recentSales")){}
-        else if(requestDto.getBanner().equals("attentionPoint")){}
-        else if(requestDto.getBanner().equals("costReport")){}
-
-        return null;
+        String response = "what?";
+        if(requestDto.getBanner().equals("salesCard")){response = (String) dashBoardRequestService.requestSalesCard(requestDto.getBannerDateType());}
+        else if(requestDto.getBanner().equals("revenueCard")){response = (String) dashBoardRequestService.requestRevenueCard(requestDto.getBannerDateType());}
+        else if(requestDto.getBanner().equals("costomerCard")){response = (String) dashBoardRequestService.requestCostomerCard(requestDto.getBannerDateType());}
+        else if(requestDto.getBanner().equals("recentSales")){response = (String) dashBoardRequestService.requestRecentSales(requestDto.getBannerDateType());}
+        else if(requestDto.getBanner().equals("attentionPoint")){response = (String) dashBoardRequestService.requestAttentionpoint(requestDto.getBannerDateType());}
+        else if(requestDto.getBanner().equals("costReport")){response = (String) dashBoardRequestService.requestCostReport(requestDto.getBannerDateType());}
+        System.out.println(response);
+        return response;
     }
 
 }
