@@ -102,7 +102,7 @@ public class ProductOrderLogService {
         return productOrderLogRepository.findBySellTypeOfCategoryM(sectionStartDate.toString());
     }
 
-    public List<String> findByPriceRange(String bannerDateType) {
+    public String findByPriceRange(String bannerDateType) {
         LocalDate nowDate = LocalDate.now();
         LocalDate sectionStartDate  = LocalDate.now();
 

@@ -40,11 +40,11 @@ public interface ProductOrderLogRepository extends JpaRepository<ProductOrderLog
             "GROUP BY p.category_m_id ORDER BY COUNT(*) DESC LIMIT 1;")
     String findBySellTypeOfCategoryM(@Param("sD") String sectionStartDate);
 
-    @Query(nativeQuery = true,value = "SELECT TRUNCATE(product_price,-5) AS pricegroup ,COUNT(*) " +
+    @Query(nativeQuery = true,value = "SELECT TRUNCATE(product_price,-5) AS pricegroup " +
             "FROM product_order_log " +
             "WHERE created_at >= :sD AND created_at <= NOW() " +
             "GROUP BY pricegroup ORDER BY COUNT(*) desc LIMIT 1;")
-    List<String> findByPriceRange(@Param("sD") String sectionStartDate);
+    String findByPriceRange(@Param("sD") String sectionStartDate);
 
     @Query (nativeQuery = true,value = "SELECT p.appraisal_id " +
             "FROM (SELECT * FROM product_order_log il WHERE  il.product_state_id = 9 OR il.product_state_id = 5) as l " +

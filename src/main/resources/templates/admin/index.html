@@ -30,7 +30,7 @@
                 <div class="row">
 
                     <!-- Sales Card -->
-                    <div class="col-xxl-4 col-md-6">
+                    <div class="col-xxl-4 col-md-6" >
                         <div class="card info-card sales-card">
 
                             <div class="filter">
@@ -42,7 +42,7 @@
                                 </ul>
                             </div>
 
-                            <div class="card-body">
+                            <div class="card-body" id = "salesCard">
                                 <h5 class="card-title">판매 <span>| 오늘</span></h5>
                                 <div class="d-flex align-items-center">
                                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
@@ -58,7 +58,7 @@
                     </div><!-- End Sales Card -->
 
                     <!-- Revenue Card -->
-                    <div class="col-xxl-4 col-md-6">
+                    <div class="col-xxl-4 col-md-6" >
                         <div class="card info-card revenue-card">
                             <div class="filter">
                                 <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
@@ -69,7 +69,7 @@
                                 </ul>
                             </div>
 
-                            <div class="card-body">
+                            <div class="card-body" id = "revenueCard">
                                 <h5 class="card-title">수익 <span>| 오늘</span></h5>
 
                                 <div class="d-flex align-items-center">
@@ -77,7 +77,7 @@
                                         <i class="bi bi-currency-dollar"></i>
                                     </div>
                                     <div class="ps-3">
-                                        <h6><a th:text="${sumPrice}"></a>\</h6>
+                                        <h6><a th:text="${#numbers.formatInteger(sumPrice,3,'COMMA')}"></a>\</h6>
 
 
                                     </div>
@@ -101,7 +101,7 @@
                                 </ul>
                             </div>
 
-                            <div class="card-body">
+                            <div class="card-body" id  ="costomersCard">
                                 <h5 class="card-title">방문 고객 <span>| 오늘</span></h5>
 
                                 <div class="d-flex align-items-center">
@@ -213,7 +213,7 @@
                                 </ul>
                             </div>
 
-                            <div class="card-body">
+                            <div class="card-body" id ="recentSales">
                                 <h5 class="card-title">경매 상품 <span>| 오늘</span></h5>
 
                                 <table class="table table-borderless datatable">
@@ -221,46 +221,46 @@
                                     <tr>
                                         <th scope="col">종료 시간</th>
                                         <th scope="col">입찰 고객</th>
-                                        <th scope="col">상품</th>
-                                        <th scope="col">현재 가격</th>
+                                        <th scope="col">상품 번호</th>
+                                        <th scope="col">입찰/낙찰 가격</th>
                                         <th scope="col">상태</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr>
-                                        <th scope="row"><a th:text="${auctionBanner.get(0).getAuctionClosingDate}">#2457</a></th>
-                                        <td><a th:text="${auctionBanner.get(0).getBidder}">Brandon Jacob</a></td>
-                                        <td><a href="#" class="text-primary">상품</a></td>
-                                        <td>$64</td>
+                                        <th scope="row"><a th:text="${#temporals.format(auctionBanner.get(0).getAuctionClosingDate,'yyyy-MM-dd HH:mm:ss')}">상품없음</a></th>
+                                        <td><a th:text="${auctionBanner.get(0).getBidder}">상품없음</a></td>
+                                        <td><a class="text-primary" th:text="${auctionBanner.get(0).getId}" th:href="@{/admin/product/product-detail/{productId}(productId=${auctionBanner.get(0).getId})}">상품없음</a></td>
+                                        <td><a th:text="${#numbers.formatInteger(auctionBanner.get(0).getPresentPrice,3,'COMMA')}">상품없음</a></td>
                                         <td><span class="badge bg-success">입찰완료</span></td>
                                     </tr>
                                     <tr>
-                                        <th scope="row"><a href="#">#2147</a></th>
-                                        <td>Bridie Kessler</td>
-                                        <td><a href="#" class="text-primary">상품</a></td>
-                                        <td>$47</td>
-                                        <td><span class="badge bg-warning">입찰중</span></td>
+                                        <th scope="row"><a th:text="${#temporals.format(auctionBanner.get(1).getAuctionClosingDate,'yyyy-MM-dd HH:mm:ss')}">상품없음</a></th>
+                                        <td><a th:text="${auctionBanner.get(1).getBidder}">상품없음</a></td>
+                                        <td><a class="text-primary" th:text="${auctionBanner.get(1).getId}" th:href="@{/admin/product/product-detail/{productId}(productId=${auctionBanner.get(1).getId})}">상품없음</a></td>
+                                        <td><a th:text="${#numbers.formatInteger(auctionBanner.get(1).getPresentPrice,3,'COMMA')}">상품없음</a></td>
+                                        <td><span class="badge bg-info">가장 높은 낙찰가</span></td>
                                     </tr>
                                     <tr>
-                                        <th scope="row"><a href="#">#2049</a></th>
-                                        <td>Ashleigh Langosh</td>
-                                        <td><a href="#" class="text-primary">상품</a></td>
-                                        <td>$147</td>
-                                        <td><span class="badge bg-success">입찰완료</span></td>
+                                        <th scope="row"><a th:text="${#temporals.format(auctionBanner.get(2).getAuctionClosingDate,'yyyy-MM-dd HH:mm:ss')}">상품없음</a></th>
+                                        <td><a th:text="${auctionBanner.get(2).getBidder}">상품없음</a></td>
+                                        <td><a class="text-primary" th:text="${auctionBanner.get(2).getId}" th:href="@{/admin/product/product-detail/{productId}(productId=${auctionBanner.get(2).getId})}">상품없음</a></td>
+                                        <td><a th:text="${#numbers.formatInteger(auctionBanner.get(2).getPresentPrice,3,'COMMA')}">상품없음</a></td>
+                                        <td><span class="badge bg-danger">유찰</span></td>
                                     </tr>
                                     <tr>
-                                        <th scope="row"><a href="#">#2644</a></th>
-                                        <td>Angus Grady</td>
-                                        <td><a href="#" class="text-primar">상품</a></td>
-                                        <td>$67</td>
-                                        <td><span class="badge bg-danger">유찰됨</span></td>
+                                        <th scope="row"><a th:text="${#temporals.format(auctionBanner.get(3).getAuctionClosingDate,'yyyy-MM-dd HH:mm:ss')}">상품없음</a></th>
+                                        <td><a th:text="${auctionBanner.get(3).getBidder}">상품없음</a></td>
+                                        <td><a class="text-primary" th:text="${auctionBanner.get(3).getId}" th:href="@{/admin/product/product-detail/{productId}(productId=${auctionBanner.get(3).getId})}">상품없음</a></td>
+                                        <td><a th:text="${#numbers.formatInteger(auctionBanner.get(3).getPresentPrice,3,'COMMA')}">상품없음</a></td>
+                                        <td><span class="badge bg-secondary">가장 높은 입찰가</span></td>
                                     </tr>
                                     <tr>
-                                        <th scope="row"><a href="#">#2644</a></th>
-                                        <td>Raheem Lehner</td>
-                                        <td><a href="#" class="text-primary">상품</a></td>
-                                        <td>$165</td>
-                                        <td><span class="badge bg-success">입찰완료</span></td>
+                                        <th scope="row"><a th:text="${#temporals.format(auctionBanner.get(4).getAuctionClosingDate,'yyyy-MM-dd HH:mm:ss')}">상품없음</a></th>
+                                        <td><a th:text="${auctionBanner.get(4).getBidder}">상품없음</a></td>
+                                        <td><a class="text-primary" th:text="${auctionBanner.get(4).getId}" th:href="@{/admin/product/product-detail/{productId}(productId=${auctionBanner.get(4).getId})}">상품없음</a></td>
+                                        <td><a th:text="${#numbers.formatInteger((auctionBanner.get(4).getPresentPrice),3,'COMMA')}">상품없음</a></td>
+                                        <td><span class="badge bg-warning">높은 경쟁률</span></td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -283,59 +283,41 @@
                                 </ul>
                             </div>
 
-                            <div class="card-body pb-0">
-                                <h5 class="card-title">주목해야 하는 상품<span>| 오늘</span></h5>
+                            <div class="card-body pb-0" id ="attentionPoint">
+                                <h5 class="card-title">주목해야 하는 몇몇 유형<span>| 오늘</span></h5>
 
                                 <table class="table table-borderless">
                                     <thead>
                                     <tr>
-                                        <th scope="col">유형</th>
-                                        <th scope="col">상품</th>
-                                        <th scope="col">가격</th>
-                                        <th scope="col">판매량</th>
-                                        <th scope="col">수익</th>
+                                        <th scope="col">판매 유형</th>
+                                        <th scope="col">큰 카테고리</th>
+                                        <th scope="col">작은 카테고리</th>
+                                        <th scope="col">가격대</th>
+                                        <th scope="col">조회수</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr>
-                                        <th scope="row"><a href="#"><img src="/static/assets/img/product-1.jpg" alt=""></a>
-                                        </th>
-                                        <td><a href="#" class="text-primary fw-bold">상품</a></td>
-                                        <td>$64</td>
-                                        <td class="fw-bold">124</td>
-                                        <td>$5,828</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><a href="#"><img src="/static/assets/img/product-2.jpg" alt=""></a>
-                                        </th>
-                                        <td><a href="#" class="text-primary fw-bold">상품</a></td>
-                                        <td>$46</td>
-                                        <td class="fw-bold">98</td>
-                                        <td>$4,508</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><a href="#"><img src="/static/assets/img/product-3.jpg" alt=""></a>
-                                        </th>
-                                        <td><a href="#" class="text-primary fw-bold">상품</a></td>
-                                        <td>$59</td>
-                                        <td class="fw-bold">74</td>
-                                        <td>$4,366</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><a href="#"><img src="/static/assets/img/product-4.jpg" alt=""></a>
-                                        </th>
-                                        <td><a href="#" class="text-primary fw-bold">상품</a></td>
-                                        <td>$32</td>
-                                        <td class="fw-bold">63</td>
-                                        <td>$2,016</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><a href="#"><img src="/static/assets/img/product-5.jpg" alt=""></a>
-                                        </th>
-                                        <td><a href="#" class="text-primary fw-bold">상품</a></td>
-                                        <td>$79</td>
-                                        <td class="fw-bold">41</td>
-                                        <td>$3,239</td>
+                                        <td>
+                                        <h4><a th:text="${saleTypeBanner.get(0)}"></a></h4>
+                                        <h6>가장 활발한 판매 경로</h6>
+                                        </td>
+                                        <td>
+                                        <h4><a th:text="${saleTypeBanner.get(1)}"></a></h4>
+                                        <h6>가장 잘팔리는 큰 카테고리 유형</h6>
+                                        </td>
+                                        <td>
+                                        <h4><a th:text="${saleTypeBanner.get(2)}"></a></h4>
+                                        <h6>가장 잘팔리는 작은 카테고리 유형</h6>
+                                        </td>
+                                        <td>
+                                        <h4><a th:text="${saleTypeBanner.get(3)}"></a></h4>
+                                        <h6>가장 잘팔리는 가격대</h6>
+                                        </td>
+                                        <td>
+                                        <h4><a th:text="${saleTypeBanner.get(4)}"></a></h4>
+                                        <h6>가장 많이 본 상품</h6>
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -351,71 +333,6 @@
             <!-- Right side columns -->
             <div class="col-lg-4">
 
-                <!-- Recent Activity -->
-                <div class="card">
-<!--                    <div class="filter">-->
-<!--                        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>-->
-<!--                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">-->
-<!--                            <li><a class="dropdown-item" href="#">오늘</a></li>-->
-<!--                            <li><a class="dropdown-item" href="#">이번달 </a></li>-->
-<!--                            <li><a class="dropdown-item" href="#">이번 년도</a></li>-->
-<!--                        </ul>-->
-<!--                    </div>-->
-                    <div class="card-body">
-                        <h5 class="card-title">최근 관리자 활동</h5>
-                        <div class="activity">
-                            <div class="activity-item d-flex">
-                                <div class="activite-label">32 min</div>
-                                <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
-                                <div class="activity-content">
-                                    <a href="#" class="fw-bold text-dark">OOO</a>님이 회원탈퇴를 검토하였습니다.
-                                </div>
-                            </div><!-- End activity item-->
-
-                            <div class="activity-item d-flex">
-                                <div class="activite-label">56 min</div>
-                                <i class='bi bi-circle-fill activity-badge text-danger align-self-start'></i>
-                                <div class="activity-content">
-                                    예산보고가 갱신되었습니다.
-                                </div>
-                            </div><!-- End activity item-->
-
-                            <div class="activity-item d-flex">
-                                <div class="activite-label">2 hrs</div>
-                                <i class='bi bi-circle-fill activity-badge text-primary align-self-start'></i>
-                                <div class="activity-content">
-                                    <a href="#" class="fw-bold text-dark">OOO</a>님이 회원승급을 검토하였습니다.
-                                </div>
-                            </div><!-- End activity item-->
-
-                            <div class="activity-item d-flex">
-                                <div class="activite-label">1 day</div>
-                                <i class='bi bi-circle-fill activity-badge text-info align-self-start'></i>
-                                <div class="activity-content">
-                                    <a href="#" class="fw-bold text-dark">OOO</a>님이 회원강등을 검토하였습니다.
-                                </div>
-                            </div><!-- End activity item-->
-
-                            <div class="activity-item d-flex">
-                                <div class="activite-label">2 days</div>
-                                <i class='bi bi-circle-fill activity-badge text-warning align-self-start'></i>
-                                <div class="activity-content">
-                                    누적 방문자가 100000명을 넘었습니다.
-                                </div>
-                            </div><!-- End activity item-->
-
-                            <div class="activity-item d-flex">
-                                <div class="activite-label">4 weeks</div>
-                                <i class='bi bi-circle-fill activity-badge text-muted align-self-start'></i>
-                                <div class="activity-content">
-                                    예산보고가 갱신되었습니다.
-                                </div>
-                            </div><!-- End activity item-->
-
-                        </div>
-
-                    </div>
-                </div><!-- End Recent Activity -->
 
                 <!-- Budget Report -->
                 <div class="card">
@@ -427,7 +344,7 @@
 <!--                            <li><a class="dropdown-item" href="#">이번 년도</a></li>-->
 <!--                        </ul>-->
 <!--                    </div>-->
-                    <div class="card-body pb-0">
+
                         <div class="filter">
                             <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
@@ -436,10 +353,41 @@
                                 <li><a class="dropdown-item" href="#">이번 달</a></li>
                             </ul>
                         </div>
-
+                    <div class="card-body pb-0" id = "costReport">
                         <h5 class="card-title">예산 보고</h5>
-
-                        <div id="budgetChart" style="min-height: 400px;" class="echart"></div>
+                        <table>
+                            <tbody>
+                            <tr>
+                                <td><h4 class="card-title">총수익</h4></td>
+                                <td><h4 class="card-title"><a th:text="${costReport.get(0)}"></a></h4></td>
+                            </tr>
+                            <tr>
+                                <td><h4 class="card-title">상품 수익</h4></td>
+                                <td><h4 class="card-title"><a th:text="${costReport.get(1)}"></a></h4></td>
+                            </tr>
+                            <tr>
+                                <td><h4 class="card-title">경매수익</h4></td>
+                                <td><h4 class="card-title"><a th:text="${costReport.get(2)}"></a></h4></td>
+                            </tr>
+                            <tr>
+                                <td><h4 class="card-title">상품 순이익</h4></td>
+                                <td><h4 class="card-title"><a th:text="${costReport.get(3)}"></a></h4></td>
+                            </tr>
+                            <tr>
+                                <td><h4 class="card-title">경매 순이익</h4></td>
+                                <td><h4 class="card-title"><a th:text="${costReport.get(4)}"></a></h4></td>
+                            </tr>
+                            <tr>
+                                <td><h4 class="card-title">판매중인 상품</h4></td>
+                                <td><h4 class="card-title"><a th:text="${costReport.get(5)}"></a></h4></td>
+                            </tr>
+                            <tr>
+                                <td><h4 class="card-title">진행중인 경매</h4></td>
+                                <td><h4 class="card-title"><a th:text="${costReport.get(6)}"></a></h4></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                       <!-- <div id="budgetChart" style="min-height: 400px;" class="echart"></div> -->
 
                         <script>
                             document.addEventListener("DOMContentLoaded", () => {
