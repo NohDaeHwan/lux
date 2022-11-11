@@ -1,4 +1,4 @@
-package com.used.lux.service.admin;
+package com.used.lux.service;
 
 import com.used.lux.component.FileHandler;
 import com.used.lux.domain.*;
@@ -58,8 +58,8 @@ public class AppraiseService {
         appraisalRepository.save(Appraisal.of(appraisalRequest));
     }
 
-    public AppraisalRequestDto appraisalDetail(Long productId) {
-        return AppraisalRequestDto.from(appraisalRequestRepository.findById(productId).get());
+    public AppraisalDto appraisalDetail(Long appraisalId) {
+        return AppraisalDto.from(appraisalRepository.findById(appraisalId).get());
     }
 
     /*
