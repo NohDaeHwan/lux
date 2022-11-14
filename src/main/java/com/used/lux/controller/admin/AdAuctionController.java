@@ -42,7 +42,7 @@ public class AdAuctionController {
     public String auctionList(@AuthenticationPrincipal Principal principal,
                               @PageableDefault(size = 30) Pageable pageable,
                               @RequestParam(defaultValue = "") String auctionState,
-                              @RequestParam(defaultValue = "2000-01-01") String auctionDate,
+                              @RequestParam(defaultValue = "") String auctionDate,
                               @RequestParam(defaultValue = "") String query,
                               ModelMap mm){
         if (principal.role().getName() != "ROLE_ADMIN") {
