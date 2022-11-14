@@ -32,6 +32,9 @@ public class AdAuctionService {
     // Admin 경매 리스트 조회(+검색)
     @Transactional(readOnly = true)
     public Page<AuctionDto> getAuctionList(String auctionState, String auctionDate, String query, Pageable pageable) {
+        if (auctionDate.equals("") && auctionState.equals("") && query.equals("")) {
+            return auctionRepository.findAll(pageable).map(AuctionDto::from);
+        }
         return auctionRepository.searchAuction(auctionState, auctionDate, query, pageable).map(AuctionDto::from);
     }
 
