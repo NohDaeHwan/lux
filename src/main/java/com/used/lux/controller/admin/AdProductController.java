@@ -112,7 +112,6 @@ public class AdProductController {
             return "redirect:/";
         }
 
-        System.out.println(productCreateRequest);
         adProductService.productCreate(productCreateRequest);
         return "redirect:/admin/product/product-detail/"+productCreateRequest.productId();
     }

@@ -3,16 +3,16 @@ package com.used.lux.request;
 public record ProductUpdateRequest(
         String productName,
         String content,
-        String brandName,
-        String categoryBName,
-        String categoryMName,
+        Long brandId,
+        Long categoryBId,
+        Long categoryMId,
         String productSellType,
         String stateStep,
         int productPrice
 ) {
-    public static ProductUpdateRequest of(String productName, String content, String brandName, String categoryBName,
-                                          String categoryMName, String productSellType, String stateStep, int productPrice) {
-        return new ProductUpdateRequest(productName, content, brandName, categoryBName, categoryMName,
+    public static ProductUpdateRequest of(String productName, String content, Long brandId,
+                                          Long categoryBId, Long categoryMId,String productSellType, String stateStep, int productPrice) {
+        return new ProductUpdateRequest(productName, content, brandId, categoryBId, categoryMId,
                 productSellType, stateStep, productPrice);
     }
 }

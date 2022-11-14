@@ -106,8 +106,8 @@
                 <legend class="col-form-label col-sm-2 pt-0">상품상태</legend>
                 <div class="col-sm-10">
                   <div class="form-check">
-                    <input th:if="${productDetail.productDto.productState.stateStep == '판매중'}" class="form-check-input" type="checkbox" checked>
-                    <input th:unless="${productDetail.productDto.productState.stateStep == '판매중'}" class="form-check-input" type="checkbox">
+                    <input th:if="${productDetail.productDto.productState.stateStep == '판매중'}" class="form-check-input" type="checkbox" checked disabled>
+                    <input th:unless="${productDetail.productDto.productState.stateStep == '판매중'}" class="form-check-input" type="checkbox" disabled>
                     <label class="form-check-label">
                       상품노출중
                     </label>

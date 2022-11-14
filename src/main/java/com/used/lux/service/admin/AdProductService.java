@@ -83,6 +83,7 @@ public class AdProductService {
     public void productCreate(ProductCreateRequest request) throws Exception {
         Product product = productRepository.findById(request.productId()).get();
         Brand brand = brandRepository.findById(request.brandId()).get();
+        State state = stateRepository.findByStateStep("판매대기");
         CategoryB categoryB = categoryBRepository.findById(request.categoryBId()).get();
         CategoryM categoryM = categoryMRepository.findById(request.categoryMId()).get();
 
@@ -90,6 +91,7 @@ public class AdProductService {
         product.setProductPrice(request.productPrice());
         product.setProductSellType(request.productSellType());
         product.getAppraisalRequest().setAppraisalBrand(brand);
+        product.setState(state);
         product.setCategoryB(categoryB);
         product.setCategoryM(categoryM);
         product.setProductContent(request.productContent());
@@ -104,15 +106,14 @@ public class AdProductService {
                 imageRepository.save(image); // 이미지 이름 및 경로 DB에 저장
             }
         }
-        System.out.println("파일 저장 성공");
     }
 
     @Transactional
     public void productUpdate(Long productId, ProductUpdateRequest productUpdateRequest){
         // 업데이트에 필요한 entity 가져오기
-        CategoryB categoryB = categoryBRepository.findByCategoryBName(productUpdateRequest.categoryBName());
-        CategoryM categoryM = categoryMRepository.findByCategoryMName(productUpdateRequest.categoryMName());
-        Brand brand = brandRepository.findByBrandName(productUpdateRequest.brandName());
+        CategoryB categoryB = categoryBRepository.findById(productUpdateRequest.categoryBId()).get();
+        CategoryM categoryM = categoryMRepository.findById(productUpdateRequest.categoryMId()).get();
+        Brand brand = brandRepository.findById(productUpdateRequest.brandId()).get();
         Product product= productRepository.getReferenceById(productId);
         State state = stateRepository.findByStateStep(productUpdateRequest.stateStep());
 
@@ -122,11 +123,11 @@ public class AdProductService {
         product.getAppraisalRequest().setAppraisalBrand(brand);
         product.setCategoryB(categoryB);
         product.setCategoryM(categoryM);
-        product.setState(state);
         product.setProductSellType(productUpdateRequest.productSellType());
+        product.setState(state);
+        product.setProductPrice(productUpdateRequest.productPrice());
 
         // 레포지토리 저장
-        appraisalRepository.save(product.getAppraisalRequest());
         productRepository.save(product);
     }
 

@@ -30,9 +30,8 @@
 
                 <div class="card">
                     <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-
-                        <img src="/static/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-
+                        <img th:each="image : ${productDetail.productDto.imageDtos}"
+                             th:src="${image.filePath}" style="width: 150px; height: 120px" class="mb-3 mt-3">
                     </div>
                 </div>
 
@@ -82,13 +81,19 @@
                                     <legend class="col-form-label col-sm-2 pt-0" name="productSellType">판매그룹</legend>
                                     <div class="col-sm-10">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" checked name="productSellType" value="중고">
+                                            <input th:if="${productDetail.productDto.productSellType == '중고'}"
+                                                   class="form-check-input" type="radio" name="productSellType" value="중고" checked>
+                                            <input th:unless="${productDetail.productDto.productSellType == '중고'}"
+                                                   class="form-check-input" type="radio" name="productSellType" value="중고">
                                             <label class="form-check-label">
                                                 중고
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="productSellType" value="경매">
+                                            <input th:if="${productDetail.productDto.productSellType == '경매'}"
+                                                   class="form-check-input" type="radio" name="productSellType" value="경매" checked>
+                                            <input th:unless="${productDetail.productDto.productSellType == '경매'}"
+                                                   class="form-check-input" type="radio" name="productSellType" value="경매">
                                             <label class="form-check-label">
                                                 경매
                                             </label>
@@ -98,8 +103,9 @@
                                 <div class="row mb-3">
                                     <label class="col-sm-2 col-form-label">브랜드</label>
                                     <div class="col-sm-10">
-                                        <select class="form-select" aria-label="Default select example" name="brandName">
-                                            <option th:each="list : ${brandDto}" th:text="${list.brandName}">Open this select menu</option>
+                                        <select class="form-select" aria-label="Default select example" name="brandId">
+                                            <option selected th:value="${productDetail.productDto.productBrandId}" th:text="${productDetail.productDto.productBrandName}"></option>
+                                            <option th:each="list : ${brandDto}" th:value="${list.id}" th:text="${list.brandName}">Open this select menu</option>
                                         </select>
                                     </div>
                                 </div>
@@ -107,13 +113,15 @@
                                 <div class="row mb-3">
                                     <label class="col-sm-2 col-form-label">카테고리(대,중)</label>
                                     <div class="col-sm-5 mb-3">
-                                        <select class="form-select" multiple aria-label="multiple select example" name="categoryBName">
-                                            <option th:each="list : ${categoryBDtos}" th:value="${list.categoryBName}" th:text="${list.categoryBName}">Open this select menu</option>
+                                        <select class="form-select" multiple aria-label="multiple select example" name="categoryBId">
+                                            <option selected th:value="${productDetail.productDto.categoryBId}" th:text="${productDetail.productDto.categoryBName()}"></option>
+                                            <option th:each="list : ${categoryBDtos}" th:value="${list.id}" th:text="${list.categoryBName}">Open this select menu</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-5">
-                                        <select class="form-select" multiple aria-label="multiple select example" name="categoryMName" >
-                                            <option th:each="list : ${categoryMDtos}" th:value="${list.categoryMName}" th:text="${list.categoryMName}">Open this select menu</option>
+                                        <select class="form-select" multiple aria-label="multiple select example" name="categoryMId" >
+                                            <option selected th:value="${productDetail.productDto.categoryMId}" th:text="${productDetail.productDto.categoryMName}"></option>
+                                            <option th:each="list : ${categoryMDtos}" th:value="${list.id}" th:text="${list.categoryMName}">Open this select menu</option>
                                         </select>
                                     </div>
                                 </div>
@@ -129,10 +137,17 @@
                                     <legend class="col-form-label col-sm-2 pt-0">상품상태</legend>
                                     <div class="col-sm-10">
                                         <div class="form-check">
-                                            <input th:if="${productDetail.productDto.productState.stateStep == '판매중'}" class="form-check-input" name="stateStep" value="판매대기" type="checkbox" checked>
-                                            <input th:unless="${productDetail.productDto.productState.stateStep == '판매중'}" class="form-check-input" name="stateStep" value="판매중" type="checkbox">
+                                            <input th:if="${productDetail.productDto.productState.stateStep == '판매대기'}" class="form-check-input" name="stateStep" value="판매대기" type="radio" checked>
+                                            <input th:unless="${productDetail.productDto.productState.stateStep == '판매대기'}" class="form-check-input" name="stateStep" value="판매대기" type="radio">
                                             <label class="form-check-label">
-                                                상품노출중
+                                                판매대기
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input th:if="${productDetail.productDto.productState.stateStep == '판매중'}" class="form-check-input" name="stateStep" value="판매중" type="radio" checked>
+                                            <input th:unless="${productDetail.productDto.productState.stateStep == '판매중'}" class="form-check-input" name="stateStep" value="판매중" type="radio">
+                                            <label class="form-check-label">
+                                                판매중
                                             </label>
                                         </div>
 

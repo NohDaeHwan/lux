@@ -10,12 +10,15 @@ import java.util.stream.Collectors;
 public record ProductDto(
         Long id,
         String productName,
+        Long productBrandId,
         String productBrandName,
         String productGender,
         String productColor,
         String productSize,
         String productGrade,
+        Long categoryBId,
         String categoryBName,
+        Long categoryMId,
         String categoryMName,
         State productState,
         int productPrice,
@@ -29,25 +32,28 @@ public record ProductDto(
         String modifiedBy
 ) {
 
-    public static ProductDto of(Long id, String productName, String brandName, String gender, String color, String size, String grade,
-                                String categoryBName, String categoryMName, State productState, int productPrice,
+    public static ProductDto of(Long id, String productName, Long productBrandId, String brandName, String gender, String color, String size, String grade,
+                                Long categoryBId, String categoryBName, Long categoryMId, String categoryMName, State productState, int productPrice,
                                 String productSellType, String productContent, int productViewCount, Set<ImageDto> imageDtos,
                                 LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
-        return new ProductDto(id, productName, brandName, gender, color, size, grade, categoryBName, categoryMName, productState,
-                productPrice, productSellType, productContent, productViewCount, imageDtos, createdAt, createdBy,
-                modifiedAt, modifiedBy);
+        return new ProductDto(id, productName, productBrandId, brandName, gender, color, size, grade, categoryBId, categoryBName,
+                categoryMId, categoryMName, productState, productPrice, productSellType, productContent, productViewCount,
+                imageDtos, createdAt, createdBy, modifiedAt, modifiedBy);
     }
 
     public static ProductDto from(Product entity) {
         return new ProductDto(
                 entity.getId(),
                 entity.getAppraisalRequest().getAppraisalProductName(),
+                entity.getAppraisalRequest().getAppraisalBrand().getId(),
                 entity.getAppraisalRequest().getAppraisalBrand().getBrandName(),
                 entity.getAppraisalRequest().getAppraisalGender(),
                 entity.getAppraisalRequest().getAppraisalColor(),
                 entity.getAppraisalRequest().getAppraisalSize(),
                 "S", // 수정필요
+                entity.getCategoryB().getId(),
                 entity.getCategoryB().getCategoryBName(),
+                entity.getCategoryM().getId(),
                 entity.getCategoryM().getCategoryMName(),
                 entity.getState(),
                 entity.getProductPrice(),
