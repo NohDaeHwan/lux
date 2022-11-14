@@ -43,11 +43,15 @@ public interface AuctionRepository extends JpaRepository<Auction, Long>, Auction
     @Query(nativeQuery = true,value = "select sum(closing_price) FROM (SELECT * FROM auction WHERE auction_closing_date >= :sD AND auction_closing_date <= NOW()) AS au WHERE au.state_id = 10; ")
     Long sumProfitByDate(@Param("sD") String sectionStartDate);
 
-    //직접 쿼리짜서 던지기
+
+//카테고리 서치
     @Query(value ="select a from Auction a where a.product.appraisalRequest.appraisalBrand.brandName Like %:productBrand% AND a.product.categoryM.id =:mcategoryId and " +
             "a.product.appraisalRequest.appraisalColor like %:productColor% and a.product.appraisalRequest.appraisalGender like %:productGender% " +
             "and a.product.appraisalRequest.appraisalSize like %:productSize% and a.presentPrice between :minPrice and :maxPrice" )
     List<Auction> searchAuctionBy(@Param("productBrand") String brandName,Long mcategoryId, String productColor,String productGender,String productSize, int maxPrice,int minPrice);
 
+
+
+    void deleteByProductId(Long id);
 
 }

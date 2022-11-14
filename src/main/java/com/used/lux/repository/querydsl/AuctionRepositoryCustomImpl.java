@@ -20,15 +20,25 @@ public class AuctionRepositoryCustomImpl extends QuerydslRepositorySupport imple
     @Override
     public Page<Auction> searchAuction(String auctionState, String auctionDate, String query, Pageable pageable) {
         QAuction auction = QAuction.auction;
+        JPQLQuery<Auction> queryResult;
 
-        String[] dateResult = auctionDate.split("-");
+        if (auctionDate.equals("")) {
+            queryResult = from(auction)
+                    .select(auction)
+                    .where(auction.state.stateStep.like("%"+auctionState+"%"),
+                            auction.product.appraisalRequest.appraisalProductName.like("%"+query+"%"));
+        } else {
+            String[] dateResult = auctionDate.split("-");
 
-        JPQLQuery<Auction> queryResult = from(auction)
-                .select(auction)
-                .where(auction.state.stateStep.like("%"+auctionState+"%"),
-                        auction.product.appraisalRequest.appraisalProductName.like("%"+query+"%"),
-                        auction.auctionStartDate.after(LocalDateTime.of(Integer.parseInt(dateResult[0]),
-                                Integer.parseInt(dateResult[1]), Integer.parseInt(dateResult[2]), 00, 00)));
+            queryResult = from(auction)
+                    .select(auction)
+                    .where(auction.state.stateStep.like("%"+auctionState+"%"),
+                            auction.product.appraisalRequest.appraisalProductName.like("%"+query+"%"),
+                            auction.auctionStartDate.after(LocalDateTime.of(Integer.parseInt(dateResult[0]),
+                                    Integer.parseInt(dateResult[1]), Integer.parseInt(dateResult[2]), 00, 00)));
+        }
+        
+
         long totalCount = queryResult.fetchCount();
         List<Auction> results = getQuerydsl().applyPagination(pageable, queryResult).fetch();
         return new PageImpl<Auction>(results, pageable, totalCount);

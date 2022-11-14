@@ -97,7 +97,6 @@
                     <div class="card-body">
                         <h5 class="card-title">검수 기록 페이지</h5>
 
-                        <form id="app" th:action="@{|/admin/appraise/${appraisalResponse.id}/new/update|}" method="POST">
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">검수상품명</label>
                                 <div class="col-sm-10" th:text="${appraisalResponse.appraisalRequest.appraisalProductName}">
@@ -149,7 +148,7 @@
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label"></label>
                                 <div class="col-sm-10">
-                                    <button type="submit" class="btn btn-success" style="float: right;">
+                                    <button type="button" class="btn btn-success" style="float: right;">
                                         <a stlye="color:#ffffff !important" th:href="@{/admin/appraise}">
                                             뒤로가기
                                         </a>

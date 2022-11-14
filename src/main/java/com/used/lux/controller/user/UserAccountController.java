@@ -1,6 +1,5 @@
 package com.used.lux.controller.user;
 
-import com.used.lux.dto.UserAccountDto;
 import com.used.lux.dto.UserGradeDto;
 import com.used.lux.dto.security.Principal;
 import com.used.lux.request.OrderCancelRequest;
@@ -11,6 +10,7 @@ import com.used.lux.response.UserAccountResponse;
 import com.used.lux.response.appraisal.AppraisalRequestResponse;
 import com.used.lux.service.*;
 import com.used.lux.service.admin.AdAppraiseService;
+import com.used.lux.service.AppraiseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -1,13 +1,10 @@
 package com.used.lux.service.admin;
 
 import com.used.lux.domain.Appraisal;
-import com.used.lux.domain.AppraisalRequest;
 import com.used.lux.domain.Brand;
 import com.used.lux.domain.State;
 import com.used.lux.dto.AppraisalDto;
-import com.used.lux.dto.AppraisalRequestDto;
 import com.used.lux.repository.AppraisalRepository;
-import com.used.lux.repository.AppraisalRequestRepository;
 import com.used.lux.repository.BrandRepository;
 import com.used.lux.repository.StateRepository;
 import com.used.lux.request.appraisal.AppraisalCommentRequest;
@@ -19,8 +16,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class AdAppraiseService {
-
-    private final AppraisalRequestRepository appraisalRequestRepository;
 
     private final AppraisalRepository appraisalRepository;
 
@@ -36,8 +31,8 @@ public class AdAppraiseService {
 
     public void appraiseComment(AppraisalCommentRequest request, Long appraisalId) {
         Appraisal appraisal = appraisalRepository.getReferenceById(appraisalId);
-        State state = stateRepository.findById(3L).get();
-        Brand brand = brandRepository.findById(request.appraiseBrand()).get();
+        State state = stateRepository.findById(request.appraisalStateId()).get();
+        Brand brand = brandRepository.findById(request.appraisalBrand()).get();
 
         appraisal.getAppraisalRequest().setAppraisalState(state);
         appraisal.getAppraisalRequest().setAppraisalBrand(brand);
@@ -54,5 +49,6 @@ public class AdAppraiseService {
     public AppraisalDto appraiseCommentPage(Long appraisalId) {
         return AppraisalDto.from(appraisalRepository.findById(appraisalId).get());
     }
+
 
 }

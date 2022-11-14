@@ -43,6 +43,9 @@ public class AdProductService {
 
     private final StateRepository stateRepository;
 
+    private final AuctionRepository auctionRepository;
+
+    // 상품 리스트 조회
     @Transactional(readOnly = true)
     public Page<ProductDto> getProductList(String productSellType, String productBrand, String productGender,
                                        String productSize, String productGrade, String productState,
@@ -51,6 +54,7 @@ public class AdProductService {
                 productGrade, productState, productDate, query, pageable).map(ProductDto::from);
     }
 
+    // 상품 세부사항
     @Transactional(readOnly = true)
     public AdProductDto getProductDetail(Long productId) {
         // 상품 상세
@@ -67,22 +71,26 @@ public class AdProductService {
         return AdProductDto.of(productDto, productLogDtos, productOrderLogDtos, auctionLogDtos);
     }
 
+    // 카테고리 리스트 조회
     @Transactional(readOnly = true)
     public List<CategoryBDto> getCategoryList() {
         return categoryBRepository.findAll()
                 .stream().map(CategoryBDto::from).collect(Collectors.toCollection(ArrayList::new));
     }
 
+    // 브랜드 리스트 조회
     @Transactional(readOnly = true)
     public List<BrandDto> getBrandList() {
         return brandRepository.findAll()
                 .stream().map(BrandDto::from).collect(Collectors.toCollection(ArrayList::new));
     }
 
+    // Admin 상품 등록
     @Transactional
     public void productCreate(ProductCreateRequest request) throws Exception {
         Product product = productRepository.findById(request.productId()).get();
         Brand brand = brandRepository.findById(request.brandId()).get();
+        State state = stateRepository.findByStateStep("판매대기");
         CategoryB categoryB = categoryBRepository.findById(request.categoryBId()).get();
         CategoryM categoryM = categoryMRepository.findById(request.categoryMId()).get();
 
@@ -90,6 +98,7 @@ public class AdProductService {
         product.setProductPrice(request.productPrice());
         product.setProductSellType(request.productSellType());
         product.getAppraisalRequest().setAppraisalBrand(brand);
+        product.setState(state);
         product.setCategoryB(categoryB);
         product.setCategoryM(categoryM);
         product.setProductContent(request.productContent());
@@ -104,15 +113,15 @@ public class AdProductService {
                 imageRepository.save(image); // 이미지 이름 및 경로 DB에 저장
             }
         }
-        System.out.println("파일 저장 성공");
     }
 
+    // Admin 상품 업데이트
     @Transactional
     public void productUpdate(Long productId, ProductUpdateRequest productUpdateRequest){
         // 업데이트에 필요한 entity 가져오기
-        CategoryB categoryB = categoryBRepository.findByCategoryBName(productUpdateRequest.categoryBName());
-        CategoryM categoryM = categoryMRepository.findByCategoryMName(productUpdateRequest.categoryMName());
-        Brand brand = brandRepository.findByBrandName(productUpdateRequest.brandName());
+        CategoryB categoryB = categoryBRepository.findById(productUpdateRequest.categoryBId()).get();
+        CategoryM categoryM = categoryMRepository.findById(productUpdateRequest.categoryMId()).get();
+        Brand brand = brandRepository.findById(productUpdateRequest.brandId()).get();
         Product product= productRepository.getReferenceById(productId);
         State state = stateRepository.findByStateStep(productUpdateRequest.stateStep());
 
@@ -122,12 +131,21 @@ public class AdProductService {
         product.getAppraisalRequest().setAppraisalBrand(brand);
         product.setCategoryB(categoryB);
         product.setCategoryM(categoryM);
-        product.setState(state);
         product.setProductSellType(productUpdateRequest.productSellType());
+        product.setState(state);
+        product.setProductPrice(productUpdateRequest.productPrice());
 
         // 레포지토리 저장
-        appraisalRepository.save(product.getAppraisalRequest());
-        productRepository.save(product);
+        Product result = productRepository.save(product);
+
+        if (result.getProductSellType().equals("경매")) {
+            State auctionState = stateRepository.findByStateStep("경매전");
+            auctionRepository.save(Auction.of(result, auctionState, 0, result.getProductPrice(), 0,
+                    null, null, 0, null));
+        } else {
+            auctionRepository.deleteByProductId(result.getId());
+        }
+        System.out.println("모든 로직 정상 수행");
     }
 
 }

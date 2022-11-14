@@ -24,6 +24,8 @@ public class SecurityConfig {
                                 "/mypage/**", "/admin/**", "/product/**/order",
                                 "/appraisal/new"
                         ).authenticated()
+                        .antMatchers("/admin/appraise/**/new/loading")
+                        .permitAll()
                         .antMatchers("/admin/**").hasRole("ROLE_ADMIN")
                         .anyRequest().permitAll()
                 )
