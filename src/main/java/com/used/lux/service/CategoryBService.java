@@ -13,6 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 @RequiredArgsConstructor
 @Service
 public class CategoryBService {
@@ -20,17 +25,37 @@ public class CategoryBService {
     private final CategoryBRepository categoryBRepository;
 
 
+    //B카테고리 추가 BDto반환
     @Transactional
     public CategoryBDto createCategory(CategoryCreateRequest categoryCreateRequest) {
         return CategoryBDto.from(categoryBRepository.save(CategoryB.of(categoryCreateRequest.categoryName())));
     }
 
-    @Transactional(readOnly = true)
+    //B카테고리 추가 void
+    public void bigCategoryCreate(String st)
+    {
+        CategoryB CB = CategoryB.of(null,st);
+        categoryBRepository.save(CB);
+    }
+
+    //B 카테고리 모두 출력하기
+    public List<CategoryBDto> getBigCategoryAll(){return categoryBRepository.findAll()
+            .stream().map(CategoryBDto::from).collect(Collectors.toCollection(ArrayList::new));}
+
+
+    public boolean bigCategoryExist( String st){
+        return categoryBRepository.existsByCategoryBName(st);
+    }
+
+    public void bigCategoryDelete(Long categoryId) {categoryBRepository.deleteById(categoryId);}
+
+    public CategoryB findById(Long id){
+        Optional<CategoryB> categoryB = categoryBRepository.findById(id);
+        return categoryB.orElse(null);
+    }
+
     public List<CategoryBDto> categoryList() {
         return categoryBRepository.findAll().stream()
                 .map(CategoryBDto::from).collect(Collectors.toUnmodifiableList());
     }
-
-
-
 }

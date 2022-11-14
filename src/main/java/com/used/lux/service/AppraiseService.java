@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.DoubleStream;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Transactional
@@ -65,6 +66,22 @@ public class AppraiseService {
 
     public Page<AppraisalRequestDto> getMypageAppraisal(Long id, Pageable pageable) {
         return appraisalRequestRepository.findByUserAccountId(id, pageable).map(AppraisalRequestDto::from);
+    }
+
+
+    //처리되지 않은 요청을 세는 메서드
+    public Long countRequest() {
+        return appraisalRequestRepository.countByState1();
+    }
+
+    public Appraisal findById(Long id) {
+        Optional<Appraisal> appraisal = appraisalRepository.findById(id);
+        return appraisal.orElse(null);
+    }
+
+    public Long findAppraisePriceByProductId(Long aLong) {
+        return null;
+        /*return appraisalRepository.findAppraisePriceByProductId(aLong);*/
     }
 
     /*

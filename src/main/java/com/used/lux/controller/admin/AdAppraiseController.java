@@ -136,7 +136,4 @@ public class AdAppraiseController {
 //        return "/admin/appraisal-detail";
 //    }
 
-
-
-
 }

@@ -10,7 +10,8 @@ import org.springframework.data.repository.query.Param;
 
 public interface ProductOrderRepository extends JpaRepository<ProductOrder, Long>, ProductOrderRepositoryCustom {
 
-    @Query(nativeQuery = true, value = "select * from product_order where user_account_id=:id order by id", countQuery = "select count(*) from product_order where user_account_id=:id")
+    @Query(nativeQuery = true, value = "select * from product_order where user_account_id=:id order by id",
+            countQuery = "select count(*) from product_order where user_account_id=:id")
     Page<ProductOrder> findByUserAccountId(@Param("id") Long id, Pageable pageable);
 
     // 1. findById()는 pk 가져오기.
@@ -20,4 +21,5 @@ public interface ProductOrderRepository extends JpaRepository<ProductOrder, Long
     // 5. row 한줄 데이터를 수정할때 getReferenceById():주소를 가져온다.
 
     ProductOrder findByStateId(Long stateId);
+
 }

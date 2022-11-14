@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @RequiredArgsConstructor
 @Service
 public class UserAccountLogService {
@@ -23,5 +25,21 @@ public class UserAccountLogService {
             return 0L;
         }
         return totalPointDto.point();
+    }
+    
+    public Long countCustomerByDate(String bannerDateType) {
+        LocalDate nowDate = LocalDate.now();
+        LocalDate sectionStartDate  = LocalDate.now();
+
+        if(bannerDateType.equals("month"))
+        {
+            sectionStartDate =  sectionStartDate.minusDays(31);
+
+        }else if(bannerDateType.equals("year"))
+        {
+            sectionStartDate =  sectionStartDate.minusYears(1);
+
+        }
+        return userAccountLogRepository.countOrderByCreatedAt(sectionStartDate.toString());
     }
 }

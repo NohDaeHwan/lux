@@ -14,6 +14,7 @@ public class CategoryM {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
     @Setter
     @ManyToOne(optional = false)
     @JoinColumn(name = "category_b_id")

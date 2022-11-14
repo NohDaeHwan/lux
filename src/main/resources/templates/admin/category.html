@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layout/head :: .head"></head>
+<head th:replace="layout/head :: .head">
+
+</head>
 <body>
 
 <header th:replace="layout/header :: .header">
@@ -83,27 +85,61 @@
     <!--            </ol>-->
     <!--        </nav>-->
     <!--    </div>&lt;!&ndash; End Page Title &ndash;&gt;-->
+    <section class="section" id="top">
+        <div class="row align-items-top">
+            <div class="col-lg-12">
 
-    <section class="section">
+                <!-- Card with header and footer -->
+                <div class="card">
+                    <div class="card-header" style="display: flex; justify-content: space-between;">
+                        <div>
+                            <button  class="btn btn-success">
+                                <a th:onclick="changeCategory('big')"  stlye="color:#ffffff !important">
+                                    대분류 보기
+                                </a>
+                            </button>
+                            <button  class="btn  btn-success">
+                                <a  th:onclick="changeCategory('middle')" stlye="color:#ffffff !important">
+                                    중분류 보기
+                                </a>
+                            </button>
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-primary" style="float: right;">
+                                <a th:href="@{/admin/product/category/new}" stlye="color:#ffffff !important">
+                                    새 분류 등록
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section" id = "bottom">
         <div class="row">
             <div class="col-lg-12">
 
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">등급 설정</h5>
+                        <h5 class="card-title" id = "cardTitle">대분류 보기</h5>
 
                         <!-- Table with hoverable rows -->
                         <table class="table table-hover ">
-                            <thead>
+                            <thead >
                             <tr>
-                                <th scope="col">등급명</th>
-                                <th scope="col">할인율(%)</th>
+                                <th scope="col">번호</th>
+                                <th scope="col">분류명</th>
+                                <th scope="col" style="display: none" id ="usemcate">대분류명</th>
+                                <th scope="col">삭제</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <tr th:each="usergd : ${userGrade}">
-                                <th scope="row"><a href="#" th:text="${usergd.gradeName}">user1@mail.com</a></th>
-                                <td th:text="${usergd.discount}">Brandon Jacob</td>
+                            <tbody id ="list">
+                            <tr th:each="BCategoryList : ${categoryList}">
+                                <th scope="row" style="vertical-align: middle;" th:text="${BCategoryList.id}">user1@mail.com</th>
+                                <td th:text="${BCategoryList.categoryBName}" style="vertical-align: middle;">Brandon Jacob</td>
+                                <td><a class="btn btn-danger" th:href="|javascript:deleteBcategory(${BCategoryList.categoryMDtos().size()} ,${BCategoryList.id})|">삭제</a></td>
+                                <!-- @{/admin/product/category/{categoryId}/delete(categoryId=${BCategoryList.id})}-->
                             </tr>
                             </tbody>
                         </table>
@@ -114,12 +150,125 @@
             </div>
         </div>
     </section>
+
     </th:block>
 
 </main><!-- End #main -->
 <th:block th:replace="layout/footer :: #footer">
 
 </th:block>
+    <!-- SCRIPT DO NOT CHANGE IN THIS PLACE -->
+<script  type="text/javascript" th:inline="javascript">
+
+    function deleteBcategory(count,id)
+    {
+        if(count ===0)
+        {
+            location.href ="category/"+id+"/deleteB";
+            return;
+        }
+
+        if(confirm(count + "개의 종속된 카테고리가 있습니다. 그래도 삭제하시겠습니까?"))
+        {
+            location.href ="category/"+id+"/deleteB";
+
+        }else
+        {
+            alert("취소하셨습니다.");
+        }
+
+    }
+
+    function changeCategory(check)
+    {
+        console.log(check)
+        var httpRequest = new XMLHttpRequest();
+
+        //ajax상태 체크
+        httpRequest.onreadystatechange = () =>{
+            if(httpRequest.readyState === 4) {if(httpRequest.status === 200) {console.log("사용가능");}}
+        }
+
+        //ajax 전송
+        const sdata = {
+            check: check
+        };
+        httpRequest.open("POST","/admin/product/category/changer",true)
+        httpRequest.setRequestHeader("Context-Type","application/json");
+        httpRequest.send(JSON.stringify(sdata));
+
+        httpRequest.onload = () =>{
+            if(httpRequest.status === 200) {
+                let data = JSON.parse(httpRequest.response);
+                let textHTML="";
+                let id,name;
+                let  textHTMLForm;
+
+
+
+                if(check === "big")
+                {
+                    //카드 재작성
+                    document.getElementById("cardTitle").textContent = "대분류 보기"
+                    document.getElementById("usemcate").style.display = 'none';
+
+                    //html 작성
+
+                    for(const key in data)
+                    {
+
+                        id = data[key].id;
+                        name = data[key].categoryBName;
+                        let countSubo = data[key].categoryMDtos.length;
+
+                        textHTMLForm =
+                            "<tr> " +
+                            "<th scope='row' style='vertical-align: middle;'  >"+id+"</th>"+
+                            "<td  style='vertical-align: middle;' >"+name+"</td>" +
+                            "<td id = 'deleteButton'><a class='btn btn-danger' href='javascript:deleteBcategory("+ countSubo+ "," + id +")'>삭제</a></td>"+
+                            //"<td id = 'deleteButton'><a class='btn btn-danger' href='" + id +"/deleteB'>삭제</a></td>"+
+                            "</tr>";
+                        textHTML += textHTMLForm;
+                    }
+                    document.getElementById("list").innerHTML = textHTML;
+                }else if(check === "middle")
+                {
+                    document.getElementById("cardTitle").textContent = "중분류 보기"
+                    document.getElementById("usemcate").style.display = 'block';
+                    let Bid;
+
+                    for(const key in data)
+                    {
+
+                        id = data[key].id;
+                        name = data[key].categoryMName;
+                        Bid = data[key].categoryBId;
+                        textHTMLForm =
+                            "<tr> " +
+                            "<th scope='row' style='vertical-align: middle;'  >"+id+"</th>"+
+                            "<td  style='vertical-align: middle;' >"+name+"</td>" +
+                            "<td  style='vertical-align: middle;' >"+Bid +"</td> " +
+                            "<td id = 'deleteButton'><a class='btn btn-danger' href='category/" + id + "/deleteM'>삭제</a></td>"+
+                            "</tr>";
+                        textHTML += textHTMLForm;
+                    }
+
+                    document.getElementById("list").innerHTML = textHTML;
+                }
+
+            }else
+            {
+                console.log("???????");
+            }
+
+        }
+
+
+
+    }
+
+
+</script>
 </body>
 
 </html>

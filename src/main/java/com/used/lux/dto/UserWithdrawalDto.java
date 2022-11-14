@@ -10,15 +10,14 @@ public record UserWithdrawalDto(
         String userName,
         String phoneNumber,
         String content,
-        LocalDateTime createdAt,
-        String createdBy,
+        LocalDateTime createAt,
+        String createBy,
         LocalDateTime modifiedAt,
         String modifiedBy
 ) {
-    public static UserWithdrawalDto of(Long id, String userEmail, String userName, String phoneNumber,
-                             String content, LocalDateTime createdAt, String createdBy,
-                             LocalDateTime modifiedAt, String modifiedBy) {
-        return new UserWithdrawalDto(id, userEmail, userName, phoneNumber, content, createdAt, createdBy, modifiedAt, modifiedBy);
+    public static UserWithdrawalDto of(Long id, String userEmail, String userName, String phoneNumber, String content,
+                             LocalDateTime createAt, String createBy, LocalDateTime modifiedAt, String modifiedBy) {
+        return new UserWithdrawalDto(id, userEmail, userName, phoneNumber, content, createAt, createBy, modifiedAt, modifiedBy);
     }
 
     public static UserWithdrawalDto from(UserWithdrawal entity) {
@@ -34,5 +33,4 @@ public record UserWithdrawalDto(
                 entity.getModifiedBy()
         );
     }
-
 }

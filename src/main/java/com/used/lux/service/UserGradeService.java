@@ -41,4 +41,7 @@ public class UserGradeService {
         return UserGradeDto.from(userGradeRepository.findByGradeStep(gradeStep+1));
     }
 
+    public Long countAll() {
+        return userGradeRepository.count();
+    }
 }

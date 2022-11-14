@@ -22,5 +22,4 @@ public record UserGradeDto(
                 entity.getRankUp()
         );
     }
-
 }
