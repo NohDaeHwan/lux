@@ -2,8 +2,7 @@ package com.used.lux.controller.user;
 
 import com.used.lux.dto.BrandDto;
 import com.used.lux.dto.CategoryBDto;
-import com.used.lux.response.auction.AuctionResponse;
-import com.used.lux.response.auction.AuctionsResponse;
+import com.used.lux.repository.response.auction.AuctionsResponse;
 import com.used.lux.service.BrandService;
 import com.used.lux.service.CategoryBService;
 import com.used.lux.service.PaginationService;

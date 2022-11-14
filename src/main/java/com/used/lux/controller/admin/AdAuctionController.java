@@ -4,7 +4,7 @@ import com.used.lux.dto.StateDto;
 import com.used.lux.dto.admin.AdAuctionDto;
 import com.used.lux.dto.security.Principal;
 import com.used.lux.request.AuctionUpdateRequest;
-import com.used.lux.response.auction.AuctionResponse;
+import com.used.lux.repository.response.auction.AuctionResponse;
 import com.used.lux.service.PaginationService;
 import com.used.lux.service.StateService;
 import com.used.lux.service.admin.AdAuctionService;

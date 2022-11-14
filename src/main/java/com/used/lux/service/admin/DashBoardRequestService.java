@@ -84,22 +84,22 @@ public class DashBoardRequestService {
         return mm;
     }
 
-    public Object requestSalesCard(String bannerDateType)
+    public Long requestSalesCard(String bannerDateType)
     {
         return productOrderLogService.countOrderByDate(bannerDateType);
     }
 
-    public Object requestRevenueCard(String bannerDateType)
+    public Long requestRevenueCard(String bannerDateType)
     {
         return productOrderLogService.countPriceByDate(bannerDateType);
     }
 
-    public Object requestCostomerCard(String bannerDateType)
+    public Long requestCostomerCard(String bannerDateType)
     {
         return userAccountLogService.countCustomerByDate(bannerDateType);
     }
 
-    public Object requestRecentSales(String bannerDateType)
+    public List<Auction> requestRecentSales(String bannerDateType)
     {
         //주목할만한 경매 상품
         List<Auction> auctions = new ArrayList<Auction>();
@@ -130,7 +130,7 @@ public class DashBoardRequestService {
         return auctions;
     }
 
-    public Object requestAttentionpoint(String bannerDateType)
+    public List<String> requestAttentionpoint(String bannerDateType)
     {
         //주목할만한 판매 유형
         List<String> sellType = new ArrayList<String>();
@@ -175,7 +175,7 @@ public class DashBoardRequestService {
         return sellType;
     }
 
-    public Object requestCostReport(String bannerDateType)
+    public List<String> requestCostReport(String bannerDateType)
     {
         //예산보고
         List<String> costReport = new ArrayList<>();

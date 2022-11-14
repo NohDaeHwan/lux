@@ -1,9 +1,10 @@
 package com.used.lux.controller.admin;
 
 import com.used.lux.dto.admin.AdDashboardRequestDto;
+import com.used.lux.dto.admin.DashBoardResponseVO;
 import com.used.lux.service.admin.DashBoardRequestService;
 import com.used.lux.dto.security.Principal;
-import com.used.lux.response.UserAccountResponse;
+import com.used.lux.repository.response.UserAccountResponse;
 import com.used.lux.service.admin.AdUserAccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -46,17 +47,26 @@ public class AdMainController {
 
     @PostMapping("/requestBannerChange")
     @ResponseBody
-    public String bannerChange(@RequestBody AdDashboardRequestDto requestDto)
+    public DashBoardResponseVO bannerChange(@RequestBody AdDashboardRequestDto requestDto)
     {
-        String response = "what?";
-        if(requestDto.getBanner().equals("salesCard")){response = (String) dashBoardRequestService.requestSalesCard(requestDto.getBannerDateType());}
-        else if(requestDto.getBanner().equals("revenueCard")){response = (String) dashBoardRequestService.requestRevenueCard(requestDto.getBannerDateType());}
-        else if(requestDto.getBanner().equals("costomerCard")){response = (String) dashBoardRequestService.requestCostomerCard(requestDto.getBannerDateType());}
-        else if(requestDto.getBanner().equals("recentSales")){response = (String) dashBoardRequestService.requestRecentSales(requestDto.getBannerDateType());}
-        else if(requestDto.getBanner().equals("attentionPoint")){response = (String) dashBoardRequestService.requestAttentionpoint(requestDto.getBannerDateType());}
-        else if(requestDto.getBanner().equals("costReport")){response = (String) dashBoardRequestService.requestCostReport(requestDto.getBannerDateType());}
-        System.out.println(response);
-        return response;
+
+        DashBoardResponseVO dashBoardResponseVO = new DashBoardResponseVO();
+
+        if(requestDto.getBanner().equals("salesCard"))
+        {dashBoardResponseVO.setLResult(dashBoardRequestService.requestSalesCard(requestDto.getBannerDateType()));}
+        else if(requestDto.getBanner().equals("revenueCard"))
+        {dashBoardResponseVO.setLResult(dashBoardRequestService.requestRevenueCard(requestDto.getBannerDateType())); }
+        else if(requestDto.getBanner().equals("costomerCard"))
+        {dashBoardResponseVO.setLResult(dashBoardRequestService.requestCostomerCard(requestDto.getBannerDateType())); }
+        else if(requestDto.getBanner().equals("recentSales"))
+        {dashBoardResponseVO.setAuctions(dashBoardRequestService.requestRecentSales(requestDto.getBannerDateType())); }
+        else if(requestDto.getBanner().equals("attentionPoint"))
+        {dashBoardResponseVO.setStResult(dashBoardRequestService.requestAttentionpoint(requestDto.getBannerDateType()));}
+        else if(requestDto.getBanner().equals("costReport"))
+        {dashBoardResponseVO.setStResult(dashBoardRequestService.requestCostReport(requestDto.getBannerDateType()));}
+
+
+        return dashBoardResponseVO;
     }
 
 }

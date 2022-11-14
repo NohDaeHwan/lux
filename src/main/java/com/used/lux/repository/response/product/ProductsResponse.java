@@ -1,4 +1,4 @@
-package com.used.lux.response.product;
+package com.used.lux.repository.response.product;
 
 import com.used.lux.domain.State;
 import com.used.lux.dto.ImageDto;

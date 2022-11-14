@@ -1,8 +1,7 @@
-package com.used.lux.response.auction;
+package com.used.lux.repository.response.auction;
 
 import com.used.lux.dto.AuctionDto;
 import com.used.lux.dto.ImageDto;
-import com.used.lux.response.product.ProductsResponse;
 
 import java.time.LocalDateTime;
 import java.util.Set;
