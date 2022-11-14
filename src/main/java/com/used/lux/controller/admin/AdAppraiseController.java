@@ -76,31 +76,20 @@ public class AdAppraiseController {
         return "/admin/appraisal-detail";
     }
 
-    // 검수 결과 수정
-    @GetMapping("/{appraisalId}/update")
-    public String appraiseUpdate(@PathVariable Long appraisalId,
-                                  @AuthenticationPrincipal Principal principal,
-                                  ModelMap mm) {
-        if (principal.role().getName() != "ROLE_ADMIN") {
-            return "redirect:/";
-        }
-        AppraisalResponse appraisalResponse = AppraisalResponse.from(adAppraiseService.appraiseCommentPage(appraisalId));
-        List<BrandDto> brandList = adProductService.getBrandList();
-        mm.addAttribute("appraisalResponse", appraisalResponse);
-        mm.addAttribute("brandList",brandList);
-        return "admin/appraisal-update-form";
-    }
-    // 검수 결과 수정
-    @PostMapping("/{appraisalId}/update/loading")
-    public String appraiseUpdate(@PathVariable Long appraisalId,
-                                 @AuthenticationPrincipal Principal principal,
-                                 AppraisalCommentRequest appraisalCommentRequest) {
-        if (principal.role().getName() != "ROLE_ADMIN") {
-            return "redirect:/admin/appraise-detail/"+appraisalId;
-        }
-
-        return "redirect:/admin/appraise";
-    }
+//    // 검수 결과 수정
+//    @GetMapping("/{appraisalId}/update")
+//    public String appraiseUpdate(@PathVariable Long appraisalId,
+//                                  @AuthenticationPrincipal Principal principal,
+//                                  ModelMap mm) {
+//        if (principal.role().getName() != "ROLE_ADMIN") {
+//            return "redirect:/";
+//        }
+//        AppraisalResponse appraisalResponse = AppraisalResponse.from(adAppraiseService.appraiseCommentPage(appraisalId));
+//        List<BrandDto> brandList = adProductService.getBrandList();
+//        mm.addAttribute("appraisalResponse", appraisalResponse);
+//        mm.addAttribute("brandList",brandList);
+//        return "admin/appraisal-update-form";
+//    }
 
     // 검수 결과 등록
     @GetMapping("/{appraisalId}/new")
@@ -112,6 +101,7 @@ public class AdAppraiseController {
         }
 
         AppraisalResponse appraisalResponse = AppraisalResponse.from(adAppraiseService.appraiseCommentPage(appraisalId));
+
         List<BrandDto> brandList = adProductService.getBrandList();
         mm.addAttribute("appraisalResponse", appraisalResponse);
         mm.addAttribute("brandList",brandList);

@@ -36,7 +36,7 @@ public class AdAppraiseService {
 
     public void appraiseComment(AppraisalCommentRequest request, Long appraisalId) {
         Appraisal appraisal = appraisalRepository.getReferenceById(appraisalId);
-        State state = stateRepository.findById(3L).get();
+        State state = stateRepository.findById(request.stateId()).get();
         Brand brand = brandRepository.findById(request.appraiseBrand()).get();
 
         appraisal.getAppraisalRequest().setAppraisalState(state);
@@ -52,7 +52,11 @@ public class AdAppraiseService {
     }
 
     public AppraisalDto appraiseCommentPage(Long appraisalId) {
-        return AppraisalDto.from(appraisalRepository.findById(appraisalId).get());
+        Appraisal appraisal = appraisalRepository.getReferenceById(appraisalId);
+        State state = stateRepository.findById(2L).get();
+        appraisal.getAppraisalRequest().setAppraisalState(state);
+        return AppraisalDto.from(appraisalRepository.save(appraisal));
     }
+
 
 }
