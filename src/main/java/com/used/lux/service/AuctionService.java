@@ -2,7 +2,6 @@ package com.used.lux.service;
 
 import com.used.lux.domain.Auction;
 import com.used.lux.dto.AuctionDto;
-import com.used.lux.dto.ProductDto;
 import com.used.lux.repository.AuctionRepository;
 import com.used.lux.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,14 +12,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.persistence.EntityNotFoundException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -41,6 +35,12 @@ public class AuctionService {
     public List<AuctionDto> productFind(String query) {
         return auctionRepository.findByQuery(query, PageRequest.of(0, 10)).stream()
                 .map(AuctionDto::from).collect(Collectors.toUnmodifiableList());
+    }
+
+    @Transactional(readOnly = true)
+    public  List<AuctionDto> searchcate(String brandName,Long mcategoryId, String productColor,String productGender,String productSize, String maxPrice,String minPrice){
+
+        return auctionRepository.searchAuctionBy(brandName,mcategoryId,productColor,productGender,productSize,Integer.parseInt(maxPrice),Integer.parseInt(minPrice)).stream().map(AuctionDto::from).collect(Collectors.toList());
     }
 
     /*public AuctionDto auctionFind(Long id) {
@@ -131,6 +131,8 @@ public class AuctionService {
                         auctionGender, auctionSize, auctionGrade, maxPrice, minPrice, query, pageable).stream()
                 .map(AuctionDto::from).collect(Collectors.toUnmodifiableList());
     }
+
+
 
 
 }

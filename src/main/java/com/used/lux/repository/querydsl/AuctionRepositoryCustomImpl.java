@@ -60,13 +60,15 @@ public class AuctionRepositoryCustomImpl extends QuerydslRepositorySupport imple
 
         JPQLQuery<Auction> queryResult = from(auction)
                 .select(auction)
-                .where(auction.product.appraisalRequest.appraisalColor.like("%"+auctionColor+"%"),
-                        auction.product.appraisalRequest.appraisalBrand.brandName.eq("%"+auctionBrand+"%"),
+                .where( auction.product.categoryM.id.eq(mcategoryId),
+                        auction.product.appraisalRequest.appraisalColor.like("%"+auctionColor+"%"),
                         auction.product.appraisalRequest.appraisalGender.like("%"+auctionGender+"%"),
                         auction.product.appraisalRequest.appraisalSize.like("%"+auctionSize+"%"),
                         auction.product.appraisalRequest.appraisalProductName.like("%"+query+"%"),
                         auction.product.productPrice.gt(Integer.parseInt(minPrice)),
-                        auction.product.productPrice.lt(Integer.parseInt(maxPrice))).limit(10)
+                        auction.product.productPrice.lt(Integer.parseInt(maxPrice)),
+                        auction.product.productSellType.eq("경매"),
+                        auction.product.state.stateStep.eq("경매중")).limit(10)
                 .orderBy(auction.createdAt.desc());
         return queryResult.fetch();
     }

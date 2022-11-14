@@ -96,8 +96,8 @@
                                 <div class="row mb-3">
                                     <!--d아-->
                                     <label class="col-sm-2 col-form-label">상품가격</label>
-                                    <label class="col-sm-1 col-form-label" id="value1">100000</label>
-                                    <input type="hidden" name="minPrice" id="minPrice" value="100000">
+                                    <label class="col-sm-1 col-form-label" id="value1">1000</label>
+                                    <input type="hidden" name="minPrice" id="minPrice" value="1000">
                                     <div class="col-sm-8">
                                         <div class="slider">
                                             <input type="range" class="a"  id="input-left" min="1" max="100" value="1"  step="1" />
@@ -135,7 +135,6 @@
             <div class="album py-3 bg-light">
                 <div class="container-fluid">
                   <div class="row">
-
                     <div class="col-md-2" th:each="product: ${products}">
                       <div class="card mb-4 box-shadow">
                         <a th:href="@{|/product/${product.id()}|}">
@@ -166,8 +165,25 @@
                     <h3 class="custom_heading font-weight-light">
                         경매 탭 검색결과 >
                     </h3>
-<!--                    <p th:text="'전체결과: ' + ${points.getTotalElements} + ' 건'"></p>-->
-                </div>
+                    <div class="col-md-2" th:each="auction: ${a}">
+                        <div class="card mb-4 box-shadow">
+                            <a th:href="@{|/auction/${auction.id()}|}">
+                                <img class="card-img-top p-1" th:src="${auction.imageDtos()}" style="width: 150px;height: 150px;" alt="Card image cap">
+                                <div class="p-2">
+                                    <p class="card-text font-weight-lighter mb-1 text-black-50" th:text="${auction.brandName}">브랜드</p>
+                                    <p class="card-text font-weight-light mb-1"><a th:href="@{|/auctions/${auction.id}|}" th:text="${auction.productName()}">상품명</a></p>
+                                    <p class="card-text font-weight-light" th:text="${auction.presentPrice()}">40.000P</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <!-- <div class="btn-group">
+                                          <button type="button" class="btn btn-sm btn-outline-secondary">상세보기</button>
+                                        </div>
+                                        <small class="text-muted">9 mins</small> -->
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+            </div>
             </div>
         </section>
 
