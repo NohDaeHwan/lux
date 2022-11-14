@@ -1,7 +1,5 @@
 package com.used.lux.request.appraisal;
 
-import com.used.lux.domain.State;
-
 public record AppraisalCommentRequest(
         String appraisalName,
         Long appraiseBrand,

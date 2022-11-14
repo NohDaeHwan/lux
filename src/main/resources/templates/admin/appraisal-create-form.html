@@ -112,7 +112,7 @@
                     <div class="card-body">
                         <h5 class="card-title">검수 기록 페이지</h5>
 
-                        <form id="app" th:action="@{|/admin/appraise/${appraisalResponse.id}/new/loading|}" method="POST">
+                        <form id="appraisalForm" method="POST">
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">검수상품명</label>
                                 <div class="col-sm-10">
@@ -162,8 +162,8 @@
                                 <label class="col-sm-2 col-form-label">검수 코멘트</label>
                                 <div class="col-sm-10">
                                     <div class="form-floating mb-3">
-                                        <textarea name='appraisalComment' id="appraisalComment" class="form-control" placeholder="손상상태/담당자 이름 등 검수 코멘트를 기록해주세요." id="floatingTextarea" style="height: 100px;"></textarea>
-                                        <label for="floatingTextarea"></label>
+                                        <textarea name='appraisalComment' id="appraisalComment" class="form-control" placeholder="손상상태/담당자 이름 등 검수 코멘트를 기록해주세요." style="height: 100px;"></textarea>
+                                        <label for="appraisalComment"></label>
                                     </div>
                                 </div>
                             </div>
@@ -176,8 +176,8 @@
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label"></label>
                                 <div class="col-sm-10">
-                                    <button type="button" class="btn btn-success" onclick="save_btn()" id="modifyingData" style="float: right;">저장하기</button>
-                                    <button type="button" class="btn btn-danger" id="lastData" style="float: right; margin-right: 8px;" >검수확정</button>
+                                    <button type="button" class="btn btn-success" onClick="save_btn()" id="modifyingData" style="float: right;">저장하기</button>
+                                    <button type="button" class="btn btn-danger" onClick="complete_btn()" id="lastData" style="float: right; margin-right: 8px;" >검수확정</button>
                                 </div>
                             </div>
                         </form>
@@ -191,7 +191,11 @@
 
 <th:block th:replace="layout/footer :: #footer">
 </th:block>
+<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 <script>
+    console.log("i'm loaded")
+
+
     function save_btn() {
         let data = {
             appraisalName: $('#appraisalName').val(),
@@ -208,7 +212,35 @@
         console.log(data);
         $.ajax({
             type:"POST",
-            url:"/loading",
+            url:"/admin/appraise/"+[[${appraisalResponse.id}]]+"/new/loading",
+            data:JSON.stringify(data),
+            contentType:"application/json; charset=utf-8",
+            dataType:"json",
+        }).done(function(res){
+            console.log(res);
+            location.href="/admin/appraise";
+        }).fail(function(error){
+            console.log("function error : "+error);
+        });
+    }
+
+    function complete_btn() {
+        let data = {
+            appraisalName: $('#appraisalName').val(),
+            appraisalPrice: $('#appraisalPrice').val(),
+            appraisalBrand: $("select[name=appraiseBrand]").val(),
+            appraisalGender: $('#appraisalGender').val(),
+            appraisalColor: $('#appraisalColor').val(),
+            appraisalSize: $('#appraisalSize').val(),
+            appraisalGrade: $('#appraisalGrade').val(),
+            appraisalComment: $('#appraisalComment').val(),
+            appraisalId: $('#appraisalId').text(),
+            appraisalStateId: 3
+        }
+        console.log(data);
+        $.ajax({
+            type:"POST",
+            url:"/admin/appraise/"+[[${appraisalResponse.id}]]+"/new/loading",
             data:JSON.stringify(data),
             contentType:"application/json; charset=utf-8",
             dataType:"json",

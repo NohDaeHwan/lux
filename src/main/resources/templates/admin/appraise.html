@@ -133,13 +133,15 @@
                                 <td th:text="${appraisalRes.appraisalRequest.appraisalGender}">dfd</td>
                                 <td th:text="${appraisalRes.appraisalRequest.appraisalSize}">Designer</td>
                                 <td th:if="${appraisalRes.appraisalRequest.appraisalStateStep} == '검수완료'" th:text="${#numbers.formatInteger(appraisalRes.appraisalPrice,3,'COMMA')}+'원'">28</td>
+                                <td th:if="${appraisalRes.appraisalRequest.appraisalStateStep} == '검수중'" th:text="${#numbers.formatInteger(appraisalRes.appraisalPrice,3,'COMMA')}+'원'">28</td>
+                                <td th:if="${appraisalRes.appraisalRequest.appraisalStateStep} == '검수중'" th:text="${appraisalRes.appraisalGrade}">28</td>
                                 <td th:if="${appraisalRes.appraisalRequest.appraisalStateStep} == '검수완료'" th:text="${appraisalRes.appraisalGrade}">28</td>
                                 <td th:if="${appraisalRes.appraisalRequest.appraisalStateStep} == '검수전'" th:text="'-'">28</td>
                                 <td th:if="${appraisalRes.appraisalRequest.appraisalStateStep} == '검수전'" th:text="'-'">28</td>
                                 <td th:text="${#temporals.format(appraisalRes.appraisalRequest.createdAt,'yyyy-MM-dd HH:mm:ss')}">2016-05-25</td>
                                 <td>
                                     <a th:href="@{|/admin/appraise/${appraisalRes.id}/new|}" style="display:flex; flex-direction: column; color:#ffffff;" th:if="${appraisalRes.appraisalRequest.appraisalStateStep} =='검수전'" class="btn btn-success">검수전</a>
-                                    <a th:href="@{|/admin/appraise/${appraisalRes.id}/update|}" style="display:flex; flex-direction: column; color:#ffffff;" th:if="${appraisalRes.appraisalRequest.appraisalStateStep} =='검수중'" class="btn btn-warning">검수중</a>
+                                    <a th:href="@{|/admin/appraise/${appraisalRes.id}/new|}" style="display:flex; flex-direction: column; color:#ffffff;" th:if="${appraisalRes.appraisalRequest.appraisalStateStep} =='검수중'" class="btn btn-warning">검수중</a>
                                     <a th:href="@{|/admin/appraise/${appraisalRes.id}|}" style="display:flex; flex-direction: column; color:#ffffff;" th:if="${appraisalRes.appraisalRequest.appraisalStateStep} =='검수완료'" class="btn btn-secondary">검수완료</a>
                                 </td>
 
