@@ -57,7 +57,7 @@ public class AdProductController {
                               @RequestParam(defaultValue = "") String productSize,
                               @RequestParam(defaultValue = "") String productGrade,
                               @RequestParam(defaultValue = "") String productState,
-                              @RequestParam(defaultValue = "2000-01-01 00:00:00.000") String productDate,
+                              @RequestParam(defaultValue = "2000-01-01") String productDate,
                               @RequestParam(defaultValue = "") String query,
                               ModelMap mm) {
         if (principal.role().getName() != "ROLE_ADMIN") {
