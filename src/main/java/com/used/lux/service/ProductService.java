@@ -21,8 +21,8 @@ public class ProductService {
     @Transactional(readOnly = true)
     public Page<ProductDto> frontProductFind(String productColor, String productBrand, String productGender, String productSize,
                                         String productGrade, String maxPrice, String minPrice, String query, Pageable pageable) {
-        return productRepository.findByQuery(productColor, productBrand,
-                productGender, productSize, productGrade, maxPrice, minPrice, query, pageable).map(ProductDto::from);
+        return productRepository.findByFrontProductList(productColor, productBrand,
+                productGender, productSize, productGrade, Integer.parseInt(maxPrice), Integer.parseInt(minPrice), query, pageable).map(ProductDto::from);
     }
 
     @Transactional(readOnly = true)
