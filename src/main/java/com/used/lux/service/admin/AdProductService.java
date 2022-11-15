@@ -94,10 +94,10 @@ public class AdProductService {
         CategoryB categoryB = categoryBRepository.findById(request.categoryBId()).get();
         CategoryM categoryM = categoryMRepository.findById(request.categoryMId()).get();
 
-        product.getAppraisalRequest().setAppraisalProductName(request.productName());
+        product.getAppraisal().getAppraisalRequest().setAppraisalProductName(request.productName());
         product.setProductPrice(request.productPrice());
         product.setProductSellType(request.productSellType());
-        product.getAppraisalRequest().setAppraisalBrand(brand);
+        product.getAppraisal().getAppraisalRequest().setAppraisalBrand(brand);
         product.setState(state);
         product.setCategoryB(categoryB);
         product.setCategoryM(categoryM);
@@ -126,9 +126,9 @@ public class AdProductService {
         State state = stateRepository.findByStateStep(productUpdateRequest.stateStep());
 
         // 내용 업데이트
-        product.getAppraisalRequest().setAppraisalProductName(productUpdateRequest.productName());
+        product.getAppraisal().getAppraisalRequest().setAppraisalProductName(productUpdateRequest.productName());
         product.setProductContent(productUpdateRequest.content());
-        product.getAppraisalRequest().setAppraisalBrand(brand);
+        product.getAppraisal().getAppraisalRequest().setAppraisalBrand(brand);
         product.setCategoryB(categoryB);
         product.setCategoryM(categoryM);
         product.setProductSellType(productUpdateRequest.productSellType());

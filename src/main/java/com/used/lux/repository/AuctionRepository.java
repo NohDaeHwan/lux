@@ -21,7 +21,7 @@ public interface AuctionRepository extends JpaRepository<Auction, Long>, Auction
 
     Auction findByStartPrice(int startPrice);
 
-    @Query(value ="SELECT a FROM Auction a WHERE a.product.appraisalRequest.appraisalProductName LIKE %:query%")
+    @Query(value ="SELECT a FROM Auction a WHERE a.product.appraisal.appraisalRequest.appraisalProductName LIKE %:query%")
     List<Auction> findByQuery(@Param("query") String query, Pageable pageable);
 
     Auction findByauctionClosingDate(LocalDateTime auctionClosingDate);
@@ -45,9 +45,9 @@ public interface AuctionRepository extends JpaRepository<Auction, Long>, Auction
 
 
 //카테고리 서치
-    @Query(value ="select a from Auction a where a.product.appraisalRequest.appraisalBrand.brandName Like %:productBrand% AND a.product.categoryM.id =:mcategoryId and " +
-            "a.product.appraisalRequest.appraisalColor like %:productColor% and a.product.appraisalRequest.appraisalGender like %:productGender% " +
-            "and a.product.appraisalRequest.appraisalSize like %:productSize% and a.presentPrice between :minPrice and :maxPrice" )
+    @Query(value ="select a from Auction a where a.product.appraisal.appraisalRequest.appraisalBrand.brandName Like %:productBrand% AND a.product.categoryM.id =:mcategoryId and " +
+            "a.product.appraisal.appraisalRequest.appraisalColor like %:productColor% and a.product.appraisal.appraisalRequest.appraisalGender like %:productGender% " +
+            "and a.product.appraisal.appraisalRequest.appraisalSize like %:productSize% and a.presentPrice between :minPrice and :maxPrice" )
     List<Auction> searchAuctionBy(@Param("productBrand") String brandName,Long mcategoryId, String productColor,String productGender,String productSize, int maxPrice,int minPrice);
 
 

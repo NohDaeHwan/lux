@@ -63,7 +63,7 @@ public class ProductOrderService {
                 null,
                 principal.userEmail(),
                 productId,
-                product.getAppraisalRequest().getAppraisalProductName(),
+                product.getAppraisal().getAppraisalRequest().getAppraisalProductName(),
                 stateOrder,
                 product.getProductPrice(),
                 product.getProductSellType()

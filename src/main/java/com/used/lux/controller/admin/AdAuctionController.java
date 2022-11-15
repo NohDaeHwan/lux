@@ -88,12 +88,7 @@ public class AdAuctionController {
         }
         System.out.println(auctionUpdateRequest);
 
-        /*adAuctionService .auctionUpdate(auctionId,auctionUpdateRequest);*/
-
-        String str = auctionUpdateRequest.auctionClosingDate();
-        str = str.replaceAll("T", " ");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
+        adAuctionService.auctionUpdate(auctionId,auctionUpdateRequest);
 
         return "redirect:/admin/auction/{auctionId}";
     }

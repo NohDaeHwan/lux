@@ -28,11 +28,11 @@ public class ProductRepositoryCustomImpl extends QuerydslRepositorySupport imple
         JPQLQuery<Product> queryResult = from(product)
                 .select(product)
                 .where(product.productSellType.like("%"+productSellType+"%"),
-                        product.appraisalRequest.appraisalBrand.brandName.like("%"+productBrand+"%"),
-                        product.appraisalRequest.appraisalGender.like("%"+productGender+"%"),
-                        product.appraisalRequest.appraisalSize.like("%"+productSize+"%"),
+                        product.appraisal.appraisalRequest.appraisalBrand.brandName.like("%"+productBrand+"%"),
+                        product.appraisal.appraisalRequest.appraisalGender.like("%"+productGender+"%"),
+                        product.appraisal.appraisalRequest.appraisalSize.like("%"+productSize+"%"),
                         product.state.stateStep.like("%"+productState+"%"),
-                        product.appraisalRequest.appraisalProductName.like("%"+query+"%"),
+                        product.appraisal.appraisalRequest.appraisalProductName.like("%"+query+"%"),
                         product.createdAt.after(LocalDateTime.of(Integer.parseInt(dateResult[0]),
                                 Integer.parseInt(dateResult[1]), Integer.parseInt(dateResult[2]), 00, 00)));
         long totalCount = queryResult.fetchCount();
@@ -47,11 +47,11 @@ public class ProductRepositoryCustomImpl extends QuerydslRepositorySupport imple
 
         JPQLQuery<Product> queryResult = from(product)
                 .select(product)
-                .where(product.appraisalRequest.appraisalColor.like("%"+productColor+"%"),
-                        product.appraisalRequest.appraisalBrand.brandName.like("%"+productBrand+"%"),
-                        product.appraisalRequest.appraisalGender.like("%"+productGender+"%"),
-                        product.appraisalRequest.appraisalSize.like("%"+productSize+"%"),
-                        product.appraisalRequest.appraisalProductName.like("%"+query+"%"),
+                .where(product.appraisal.appraisalRequest.appraisalColor.like("%"+productColor+"%"),
+                        product.appraisal.appraisalRequest.appraisalBrand.brandName.like("%"+productBrand+"%"),
+                        product.appraisal.appraisalRequest.appraisalGender.like("%"+productGender+"%"),
+                        product.appraisal.appraisalRequest.appraisalSize.like("%"+productSize+"%"),
+                        product.appraisal.appraisalRequest.appraisalProductName.like("%"+query+"%"),
                         product.productPrice.gt(Integer.parseInt(minPrice)),
                         product.productPrice.lt(Integer.parseInt(maxPrice)),
                         product.productSellType.eq("중고"),
@@ -71,11 +71,11 @@ public class ProductRepositoryCustomImpl extends QuerydslRepositorySupport imple
 
         JPQLQuery<Product> queryResult = from(product)
                 .select(product)
-                .where(product.appraisalRequest.appraisalColor.like("%"+productColor+"%"),
-                        product.appraisalRequest.appraisalBrand.brandName.like("%"+productBrand+"%"),
-                        product.appraisalRequest.appraisalGender.like("%"+productGender+"%"),
-                        product.appraisalRequest.appraisalSize.like("%"+productSize+"%"),
-                        product.appraisalRequest.appraisalProductName.like("%"+query+"%"),
+                .where(product.appraisal.appraisalRequest.appraisalColor.like("%"+productColor+"%"),
+                        product.appraisal.appraisalRequest.appraisalBrand.brandName.like("%"+productBrand+"%"),
+                        product.appraisal.appraisalRequest.appraisalGender.like("%"+productGender+"%"),
+                        product.appraisal.appraisalRequest.appraisalSize.like("%"+productSize+"%"),
+                        product.appraisal.appraisalRequest.appraisalProductName.like("%"+query+"%"),
                         product.categoryM.id.eq(mcategoryId),
                         product.productPrice.gt(Integer.parseInt(minPrice)),
                         product.productPrice.lt(Integer.parseInt(maxPrice)),

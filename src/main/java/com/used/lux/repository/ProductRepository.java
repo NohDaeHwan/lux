@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Long>, ProductRepositoryCustom {
 
-    @Query(value ="SELECT p FROM Product p WHERE p.appraisalRequest.appraisalProductName LIKE %:query% AND p.productSellType = '중고'")
+    @Query(value ="SELECT p FROM Product p WHERE p.appraisal.appraisalRequest.appraisalProductName LIKE %:query% AND p.productSellType = '중고'")
     List<Product> findByQuery(@Param("query") String query, Pageable pageable);
 
 }

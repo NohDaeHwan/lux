@@ -27,7 +27,7 @@ public class ProductOrderCancelService {
         productOrderLogRepository.save(ProductOrderLog.of(
                 principal.userEmail(),
                 order.getProduct().getId(),
-                order.getProduct().getAppraisalRequest().getAppraisalProductName(),
+                order.getProduct().getAppraisal().getAppraisalRequest().getAppraisalProductName(),
                 state,
                 order.getProduct().getProductPrice(),
                 order.getProduct().getProductSellType()
@@ -36,7 +36,7 @@ public class ProductOrderCancelService {
         productOrderCancelRepository.save(ProductOrderCancel.of(
                 orderId,
                 principal.userName(),
-                order.getProduct().getAppraisalRequest().getAppraisalProductName(),
+                order.getProduct().getAppraisal().getAppraisalRequest().getAppraisalProductName(),
                 order.getProduct().getProductPrice(),
                 "주문취소할래용!")
         );
