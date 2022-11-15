@@ -7,10 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.security.core.parameters.P;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.List;
 
 public interface AuctionRepository extends JpaRepository<Auction, Long>, AuctionRepositoryCustom {
@@ -55,4 +53,18 @@ public interface AuctionRepository extends JpaRepository<Auction, Long>, Auction
     void deleteByProductId(Long id);
 
     Auction findByProductId(Long id);
+
+    @Query(value ="SELECT a FROM Auction a WHERE a.state.stateStep LIKE %:auctionState% " +
+            "AND a.product.appraisal.appraisalRequest.appraisalProductName LIKE %:query%",
+            countQuery = "SELECT a FROM Auction a WHERE a.state.stateStep LIKE %:auctionState% " +
+                    "AND a.product.appraisal.appraisalRequest.appraisalProductName LIKE %:query%")
+    Page<Auction> findByBackAuctionList(String auctionState, String query, Pageable pageable);
+
+    @Query(value ="SELECT a FROM Auction a WHERE a.state.stateStep LIKE %:auctionState% " +
+            "AND a.product.appraisal.appraisalRequest.appraisalProductName LIKE %:query% " +
+            "AND a.auctionStartDate >= :auctionDate",
+            countQuery = "SELECT a FROM Auction a WHERE a.state.stateStep LIKE %:auctionState% " +
+                    "AND a.product.appraisal.appraisalRequest.appraisalProductName LIKE %:query% " +
+                    "AND a.auctionStartDate >= :auctionDate")
+    Page<Auction> findByBackAuctionListDate(String auctionState, LocalDateTime auctionDate, String query, Pageable pageable);
 }

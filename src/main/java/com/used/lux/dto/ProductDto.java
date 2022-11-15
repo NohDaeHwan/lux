@@ -50,7 +50,7 @@ public record ProductDto(
                 entity.getAppraisal().getAppraisalRequest().getAppraisalGender(),
                 entity.getAppraisal().getAppraisalRequest().getAppraisalColor(),
                 entity.getAppraisal().getAppraisalRequest().getAppraisalSize(),
-                "S", // 수정필요
+                entity.getAppraisal().getAppraisalGrade(),
                 entity.getCategoryB().getId(),
                 entity.getCategoryB().getCategoryBName(),
                 entity.getCategoryM().getId(),
