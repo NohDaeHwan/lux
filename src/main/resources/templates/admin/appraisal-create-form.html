@@ -114,19 +114,20 @@
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">검수상품명</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="appraisalName" id="appraisalName" class="form-control">
+                                    <input type="text" name="appraisalName" id="appraisalName" class="form-control" th:value="${appraisalResponse.appraisalRequest.appraisalProductName}">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">매입가격(원)</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="appraisalPrice" id="appraisalPrice" class="form-control">
+                                    <input type="text" name="appraisalPrice" id="appraisalPrice" class="form-control" th:value="${appraisalResponse.appraisalPrice}">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">브랜드</label>
                                 <div class="col-sm-10">
                                     <select class="form-select form-control" id="appraiseBrand" name="appraiseBrand">
+                                        <option th:value="${appraisalResponse.appraisalRequest.appraisalBrandName}" disabled>example</option>
                                         <option th:each="brand : ${brandList}" th:value="${brand.id}" th:text="${brand.brandName}">example</option>
                                     </select>
                                 </div>
@@ -134,33 +135,33 @@
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">성별</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="appraisalGender" id="appraisalGender" class="form-control">
+                                    <input type="text" name="appraisalGender" id="appraisalGender" class="form-control" th:value="${appraisalResponse.appraisalRequest.appraisalGender}">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">색상</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="appraisalColor" id="appraisalColor" class="form-control">
+                                    <input type="text" name="appraisalColor" id="appraisalColor" class="form-control" th:value="${appraisalResponse.appraisalRequest.appraisalColor}">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">사이즈</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="appraisalSize" id="appraisalSize" class="form-control">
+                                    <input type="text" name="appraisalSize" id="appraisalSize" class="form-control" th:value="${appraisalResponse.appraisalRequest.appraisalSize}">
                                 </div>
                             </div>
 
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">검수등급</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="appraisalGrade" id="appraisalGrade" class="form-control">
+                                    <input type="text" name="appraisalGrade" id="appraisalGrade" class="form-control" th:value="${appraisalResponse.appraisalGrade}">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">검수 코멘트</label>
                                 <div class="col-sm-10">
                                     <div class="form-floating mb-3">
-                                        <textarea name='appraisalComment' id="appraisalComment" class="form-control" placeholder="손상상태/담당자 이름 등 검수 코멘트를 기록해주세요." style="height: 100px;"></textarea>
+                                        <textarea name='appraisalComment' id="appraisalComment" class="form-control" placeholder="손상상태/담당자 이름 등 검수 코멘트를 기록해주세요." style="height: 100px;" th:value="${appraisalResponse.appraisalComment}"></textarea>
                                         <label for="appraisalComment"></label>
                                     </div>
                                 </div>
@@ -178,7 +179,6 @@
                                     <button type="button" class="btn btn-danger" onclick="complete_btn()" id="lastData" style="float: right; margin-right: 8px;" >검수확정</button>
                                 </div>
                             </div>
-
                     </div>
                 </div>
             </div>

@@ -106,7 +106,8 @@
                         </div>
                     </td>
                     <td colspan="5">
-                        <div class="col-sm-10" th:if="${appraisalDto.appraisalRequest.userAccount.id} == ${users.id}" th:text="${appraisalDto.appraisalPrice}">
+                        <div class="col-sm-10" th:if="(${appraisalDto.appraisalRequest.userAccount.id} == ${users.id}) and (${appraisalDto.appraisalPrice} >= 1000)" th:text="${#numbers.formatInteger(appraisalDto.appraisalPrice,3,'COMMA')}">
+                        <div class="col-sm-10" th:if="(${appraisalDto.appraisalRequest.userAccount.id} == ${users.id}) and (${appraisalDto.appraisalPrice} < 1000)" th:text="${appraisalDto.appraisalPrice}">
                             게시자만 볼 수 있게 처리
                         </div>
                         <div class="col-sm-10" th:if="${appraisalDto.appraisalRequest.userAccount.id} != ${users.id}">
