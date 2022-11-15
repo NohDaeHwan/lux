@@ -34,28 +34,34 @@
                     </thead>
                     <tbody>
                     <tr th:each="appraisal : ${appraisals}">
-                    <form th:action="@{|/appraisal/${appraisal.id}/delete|}" method="post">
+                    <form th:action="@{|/appraisal/${appraisal.appraisalRequest.id}/delete|}" method="post">
                         <th scope="row">
                                 <div style="display:flex;">
                                     <div>
-                                        <img th:src="${appraisal.imageList[0].filePath}" style="width: 100px; height:100px;" alt="" class="" />
+                                        <img th:src="${appraisal.appraisalRequest.imageList[0].filePath}" style="width: 100px; height:100px;" alt="" class="" />
                                     </div>
                                     <div style="display: flex;flex-direction: column;justify-content: center;">
-                                        <h6 style="vertical-align: middle;" th:text="${appraisal.appraisalBrandName}">브랜드</h6>
-                                        <h6 style="vertical-align: middle;" th:text="${appraisal.appraisalProductName}">검수요청상품명</h6>
+                                        <h6 style="vertical-align: middle;" th:text="${appraisal.appraisalRequest.appraisalBrandName}">브랜드</h6>
+                                        <h6 style="vertical-align: middle;" th:text="${appraisal.appraisalRequest.appraisalProductName}">검수요청상품명</h6>
                                     </div>
                                 </div>
                         </th>
-                        <td style="vertical-align: middle;" th:if="${appraisal.appraisalId == null}"><h6>-</h6></td>
-                        <td style="vertical-align: middle;" th:unless="${appraisal.appraisalId == null}"><h6 th:text="${appraisal.modifiedAt}">-</h6></td>
-                        <td style="vertical-align: middle;" th:text="${appraisal.id}"><h6>12345678</h6></td>
-                        <td style="vertical-align: middle;" th:if="${appraisal.appraisalId == null}"><h6>-</h6></td>
-                        <td style="vertical-align: middle;" th:unless="${appraisal.appraisalId == null}"><h6>4,500,000원</h6></td>
+                        <td style="vertical-align: middle;" th:if="${appraisal.appraisalRequest.id == null}"><h6>-</h6></td>
+                        <td style="vertical-align: middle;" th:unless="${appraisal.appraisalRequest.id == null}"><h6 th:text="${appraisal.createdAt}">-</h6></td>
+                        <td style="vertical-align: middle;" th:text="${appraisal.appraisalRequest.id}"><h6>12345678</h6></td>
+                        <td style="vertical-align: middle;" th:if="${appraisal.appraisalRequest.id == null}"><h6>-</h6></td>
+                        <td style="vertical-align: middle;" th:unless="${appraisal.appraisalRequest.id == null}"><h6>4,500,000원</h6></td>
                         <td style="vertical-align: middle;">
                             <div style="display:flex; flex-direction: column; align-items: flex-start;">
-                                <h6 style="margin-left: 17px;" th:text="${appraisal.appraisalStateStep}">검수전</h6>
-                                <button th:if="${appraisal.appraisalId == null}" type="submit" class="btn btn-danger" >삭제하기</button>
-                                <a th:unless="${appraisal.appraisalId == null}" th:href="@{|/appraisal/${appraisal.id}|}" >결과보기 ></a>
+                                <h6 style="margin-left: 17px;" th:if="${appraisal.appraisalRequest.appraisalStateStep} == '검수전'" th:text="${appraisal.appraisalRequest.appraisalStateStep}">검수전</h6>
+                                <h6 style="margin-left: 17px;" th:if="(${appraisal.appraisalRequest.appraisalStateStep} == '검수완료') and (${appraisal.appraisalGrade} == 'F')" th:text="${appraisal.appraisalRequest.appraisalStateStep} + '(거절)'">검수전</h6>
+                                <h6 style="margin-left: 17px;" th:if="(${appraisal.appraisalRequest.appraisalStateStep} == '검수완료') and (${appraisal.appraisalGrade} != 'F')" th:text="${appraisal.appraisalRequest.appraisalStateStep} + '(매입)'">검수전</h6>
+                                <button th:if="${appraisal.appraisalRequest.appraisalStateStep} == '검수전'" type="submit" class="btn btn-danger" >삭제하기</button>
+                                <button class="btn btn-danger" type="button" disabled  th:if="${appraisal.appraisalRequest.appraisalStateStep} == '검수중'">
+                                    <span class="spinner-border spinner-border-sm " role="status" aria-hidden="true"></span>
+                                    검수중..
+                                </button>
+                                <a style="margin-left: 17px;" th:if="${appraisal.appraisalRequest.appraisalStateStep} == '검수완료'" th:href="@{|/appraisal/${appraisal.id}|}" >결과보기 ></a>
                             </div>
                         </td>
                     </form>

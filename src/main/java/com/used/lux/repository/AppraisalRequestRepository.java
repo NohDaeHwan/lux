@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface AppraisalRequestRepository extends JpaRepository<AppraisalRequest, Long> {
 
-    Page<AppraisalRequest> findByUserAccountId(Long id, Pageable pageable);
+
 
     @Query(nativeQuery = true, value = "SELECT * FROM appraisal_request WHERE user_account_id = :id")
     List<AppraisalRequest> findByUserAccountId2(Long id);

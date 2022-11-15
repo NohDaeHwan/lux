@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="layout/front-head :: .head"></head>
 <header th:replace="layout/front-header :: .header"></header>
@@ -106,19 +106,25 @@
                         </div>
                     </td>
                     <td colspan="5">
-                        <div class="col-sm-10">
+                        <div class="col-sm-10" th:if="${appraisalDto.appraisalRequest.userAccount.id} == ${users.id}" th:text="${appraisalDto.appraisalPrice}">
+                            게시자만 볼 수 있게 처리
+                        </div>
+                        <div class="col-sm-10" th:if="${appraisalDto.appraisalRequest.userAccount.id} != ${users.id}">
                             게시자만 볼 수 있게 처리
                         </div>
                     </td>
                 </tr>
                 <tr>
-                    <td class="bg-light">
+                    <td class="bg-light" >
                         <div>
                             검수등급
                         </div>
                     </td>
                     <td colspan="5">
-                        <div class="col-sm-10">
+                        <div class="col-sm-10" th:if="${appraisalDto.appraisalRequest.userAccount.id} == ${users.id}" th:text="${appraisalDto.appraisalGrade}">
+                            게시자만 볼 수 있게 처리
+                        </div>
+                        <div class="col-sm-10" th:if="${appraisalDto.appraisalRequest.userAccount.id} != ${users.id}">
                             게시자만 볼 수 있게 처리
                         </div>
                     </td>
@@ -130,7 +136,10 @@
                         </div>
                     </td>
                     <td colspan="5">
-                        <div class="col-sm-10">
+                        <div class="col-sm-10" th:if="${appraisalDto.appraisalRequest.userAccount.id} == ${users.id}" th:text="${appraisalDto.appraisalComment}">
+                            게시자만 볼 수 있게 처리
+                        </div>
+                        <div class="col-sm-10" th:if="${appraisalDto.appraisalRequest.userAccount.id} != ${users.id}">
                             게시자만 볼 수 있게 처리
                         </div>
                     </td>
@@ -142,7 +151,10 @@
                         </div>
                     </td>
                     <td colspan="5">
-                        <div class="col-sm-10">
+                        <div class="col-sm-10" th:if="${appraisalDto.appraisalRequest.userAccount.id} == ${users.id}" th:text="${#temporals.format(appraisalDto.modifiedAt, 'yyyy-MM-dd HH:mm:ss')}">
+                            게시자만 볼 수 있게 처리
+                        </div>
+                        <div class="col-sm-10" th:if="${appraisalDto.appraisalRequest.userAccount.id} != ${users.id}">
                             게시자만 볼 수 있게 처리
                         </div>
                     </td>

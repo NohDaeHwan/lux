@@ -4,6 +4,7 @@ import com.used.lux.dto.BrandDto;
 import com.used.lux.dto.CategoryBDto;
 import com.used.lux.dto.security.Principal;
 import com.used.lux.request.appraisal.AppraisalCreateRequest;
+import com.used.lux.response.UserAccountResponse;
 import com.used.lux.response.appraisal.AppraisalRequestResponse;
 import com.used.lux.response.appraisal.AppraisalResponse;
 import com.used.lux.service.BrandService;
@@ -69,14 +70,29 @@ public class AppraiseController {
         return "redirect:/appraisal";
     }
 
+    // 검수 상세 조회
     @GetMapping("/{appraiseId}")
-    public String appraiseDetail(@PathVariable Long appraiseId, ModelMap mm) {
+    public String appraiseDetail(@PathVariable Long appraiseId, ModelMap mm, @AuthenticationPrincipal Principal principal) {
+        long loginId = 0L;
+        if (principal != null) {
+            loginId = principal.id();
+       }
+        UserAccountResponse userAccountResponse = UserAccountResponse.from(userAccountService.getUser(loginId));
+
         AppraisalResponse appraisalDto = AppraisalResponse.from(appraiseService.appraisalDetail(appraiseId));
         List<CategoryBDto> categoryList = categoryBService.categoryList();
 
+        mm.addAttribute("users", userAccountResponse);
         mm.addAttribute("categoryList", categoryList);
         mm.addAttribute("appraisalDto",appraisalDto);
         return "front/appraise-detail";
+    }
+
+    // 검수 삭제
+    @PostMapping("/{appraisalRequestId}/delete")
+    public String appraiseDelete(@PathVariable Long appraisalRequestId) {
+        appraiseService.apprisalDelete(appraisalRequestId);
+        return "redirect:/admin/appraise";
     }
 
 }

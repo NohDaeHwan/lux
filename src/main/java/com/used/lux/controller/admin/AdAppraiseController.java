@@ -122,11 +122,6 @@ public class AdAppraiseController {
                                              @AuthenticationPrincipal Principal principal,
                                              @RequestBody AppraisalCommentRequest appraisalCommentRequest) {
 
-    @ResponseBody
-    @PostMapping("/{appraisalId}/new/loading")
-    public ResponseEntity<Integer> appraiseCommentAdd(@PathVariable Long appraisalId,
-            @AuthenticationPrincipal Principal principal,
-            AppraisalCommentRequest appraisalCommentRequest) {
         System.out.println("functioncall~~~~~~~~~~~");
         if (principal.role().getName() != "ROLE_ADMIN") {
             return ResponseEntity.status(HttpStatus.OK).body(-1);
