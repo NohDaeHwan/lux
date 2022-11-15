@@ -4,10 +4,9 @@ import com.used.lux.dto.ProductDto;
 import com.used.lux.dto.UserGradeDto;
 import com.used.lux.dto.security.Principal;
 import com.used.lux.request.OrderCreateRequest;
-import com.used.lux.response.product.ProductResponse;
-import com.used.lux.response.product.ProductsResponse;
 import com.used.lux.dto.BrandDto;
 import com.used.lux.dto.CategoryBDto;
+import com.used.lux.response.product.ProductResponse;
 import com.used.lux.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -45,12 +44,13 @@ public class ProductController {
                               @RequestParam(defaultValue = "") String productSize,
                               @RequestParam(defaultValue = "") String productGrade,
                               @RequestParam(defaultValue = "10000000") String maxPrice,
-                              @RequestParam(defaultValue = "100000") String minPrice,
+                              @RequestParam(defaultValue = "1000") String minPrice,
                               @RequestParam(defaultValue = "") String query,
                               @PageableDefault(size = 30) Pageable pageable,
                               ModelMap mm) {
-        Page<ProductsResponse> products = productService.frontProductFind(productColor, productBrand, productGender,
-                productSize, productGrade, maxPrice, minPrice, query, pageable).map(ProductsResponse::from);
+
+        Page<ProductResponse> products = productService.frontProductFind(productColor, productBrand, productGender,
+                productSize, productGrade, maxPrice, minPrice, query, pageable).map(ProductResponse::from);
         List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), products.getTotalPages());
 
         List<CategoryBDto> categoryList = categoryBService.categoryList();

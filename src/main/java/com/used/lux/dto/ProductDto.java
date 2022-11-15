@@ -44,12 +44,12 @@ public record ProductDto(
     public static ProductDto from(Product entity) {
         return new ProductDto(
                 entity.getId(),
-                entity.getAppraisalRequest().getAppraisalProductName(),
-                entity.getAppraisalRequest().getAppraisalBrand().getId(),
-                entity.getAppraisalRequest().getAppraisalBrand().getBrandName(),
-                entity.getAppraisalRequest().getAppraisalGender(),
-                entity.getAppraisalRequest().getAppraisalColor(),
-                entity.getAppraisalRequest().getAppraisalSize(),
+                entity.getAppraisal().getAppraisalRequest().getAppraisalProductName(),
+                entity.getAppraisal().getAppraisalRequest().getAppraisalBrand().getId(),
+                entity.getAppraisal().getAppraisalRequest().getAppraisalBrand().getBrandName(),
+                entity.getAppraisal().getAppraisalRequest().getAppraisalGender(),
+                entity.getAppraisal().getAppraisalRequest().getAppraisalColor(),
+                entity.getAppraisal().getAppraisalRequest().getAppraisalSize(),
                 "S", // 수정필요
                 entity.getCategoryB().getId(),
                 entity.getCategoryB().getCategoryBName(),
@@ -70,8 +70,8 @@ public record ProductDto(
         );
     }
 
-    public Product toEntity(AppraisalRequest appraisalRequest, CategoryB categoryB, CategoryM categoryM) {
-        return Product.of(appraisalRequest, categoryB, categoryM, productState, productPrice, productSellType, productContent,
+    public Product toEntity(Appraisal appraisal, CategoryB categoryB, CategoryM categoryM) {
+        return Product.of(appraisal, categoryB, categoryM, productState, productPrice, productSellType, productContent,
                 productViewCount);
     }
 
