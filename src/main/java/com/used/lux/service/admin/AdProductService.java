@@ -13,6 +13,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -50,8 +52,11 @@ public class AdProductService {
     public Page<ProductDto> getProductList(String productSellType, String productBrand, String productGender,
                                        String productSize, String productGrade, String productState,
                                        String productDate, String query, Pageable pageable) {
-        return productRepository.searchProduct(productSellType, productBrand, productGender, productSize,
-                productGrade, productState, productDate, query, pageable).map(ProductDto::from);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+        LocalDateTime dateTime = LocalDateTime.parse(productDate, formatter);
+        System.out.println(dateTime);
+        return productRepository.findByBackProductList(productSellType, productBrand, productGender, productSize,
+                productGrade, productState, dateTime, query, pageable).map(ProductDto::from);
     }
 
     // 상품 세부사항
