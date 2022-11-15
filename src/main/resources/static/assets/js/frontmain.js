@@ -22,8 +22,8 @@ const setLeftValue = e => {
     const percent = ((+_this.value - +min) / (+max - +min)) * 100;
 
     //최솟값
-    document.getElementById('value1').innerHTML = _this.value * 1000;
-    document.getElementById('minPrice').value = _this.value * 1000;
+    document.getElementById('value1').innerHTML = _this.value * 10000;
+    document.getElementById('minPrice').value = _this.value * 10000;
 
     thumbLeft.style.left = `${percent}%`;
     range.style.left = `${percent}%`;

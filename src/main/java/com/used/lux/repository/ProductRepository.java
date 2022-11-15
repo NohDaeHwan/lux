@@ -20,11 +20,12 @@ public interface ProductRepository extends JpaRepository<Product, Long>, Product
     @Query(value ="SELECT p FROM Product p WHERE p.appraisal.appraisalRequest.appraisalBrand.brandName LIKE %:productBrand% AND " +
             "p.appraisal.appraisalRequest.appraisalColor LIKE %:productColor% AND p.appraisal.appraisalRequest.appraisalGender LIKE %:productGender% " +
             "AND p.appraisal.appraisalRequest.appraisalSize LIKE %:productSize% AND p.appraisal.appraisalRequest.appraisalProductName LIKE %:query% " +
-            "AND p.appraisal.appraisalGrade LIKE %:productGrade% AND p.productPrice BETWEEN :maxPrice AND :minPrice",
+            "AND p.appraisal.appraisalGrade LIKE %:productGrade% AND p.productSellType = '중고' AND p.state.stateStep = '판매중' " +
+            "AND p.productPrice BETWEEN :minPrice AND :maxPrice",
             countQuery = "SELECT p FROM Product p WHERE p.appraisal.appraisalRequest.appraisalBrand.brandName LIKE %:productBrand% AND " +
                     "p.appraisal.appraisalRequest.appraisalColor LIKE %:productColor% AND p.appraisal.appraisalRequest.appraisalGender LIKE %:productGender% " +
                     "AND p.appraisal.appraisalRequest.appraisalSize LIKE %:productSize% AND p.appraisal.appraisalRequest.appraisalProductName LIKE %:query% " +
-                    "AND p.productPrice BETWEEN :minPrice AND :maxPrice")
+                    "AND p.productSellType = '중고' AND p.state.stateStep = '판매중' AND p.productPrice BETWEEN :minPrice AND :maxPrice")
     Page<Product> findByFrontProductList(String productColor, String productBrand, String productGender,
                                          String productSize, String productGrade, int maxPrice, int minPrice,
                                          String query, Pageable pageable);
