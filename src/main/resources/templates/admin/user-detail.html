@@ -110,14 +110,24 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th scope="col">사용내역</th>
-                            <th scope="col">등급내역</th>
-                            <th scope="col">날짜 </th>
+                            <th scope="col">상태</th>
+                            <th scope="col">포인트</th>
+                            <th scope="col">세부내용</th>
+                            <th scope="col">판매그룹/번호</th>
+                            <th scope="col">등급</th>
+                            <th scope="col">적용일시</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr th:each="point : ${userDetail.userAccountLogDtos()}">
-                            <td th:text="${point.point} + ' p'"></td>
+                            <td scope="row">
+                                <h6 th:if="${point.usageDetail} == '충전'" style="vertical-align: middle; color:blue; font-weight: 300;">충전</h6>
+                                <h6 th:if="${point.usageDetail} != '충전'" style="vertical-align: middle; color:red; font-weight: 300;">차감</h6>
+                            </td>
+                            <td th:if="${point.usageDetail} == '충전'" style="vertical-align: middle;color:blue; font-weight: 300;" th:text="'+'+${point.point}"><h6>+5,000</h6></td>
+                            <td th:if="${point.usageDetail} != '충전'" style="vertical-align: middle;color:red; font-weight: 300;" th:text="'-'+${point.point}"><h6>-5,000</h6></td>
+                            <td style="vertical-align: middle; font-weight: 300;" th:text="${point.usageDetail}"><h6>충전</h6></td>
+                            <td style="vertical-align: middle; font-weight: 300;" th:text="${point.saleNumber}"><h6>-</h6></td>
                             <td th:text="${point.gradeName}"></td>
                             <td th:text="${#temporals.format(point.createdAt,'yyyy-MM-dd HH:mm:ss')}"></td>
                         </tr>
