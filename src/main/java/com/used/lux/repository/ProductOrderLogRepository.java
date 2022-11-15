@@ -48,7 +48,7 @@ public interface ProductOrderLogRepository extends JpaRepository<ProductOrderLog
             "GROUP BY pricegroup ORDER BY COUNT(*) desc LIMIT 1;")
     String findByPriceRange(@Param("sD") String sectionStartDate);
 
-    @Query (nativeQuery = true,value = "SELECT p.appraisal_request_id " +
+    @Query (nativeQuery = true,value = "SELECT p.appraisal_id " +
             "FROM (SELECT * FROM product_order_log il WHERE  il.product_state_id = 9 OR il.product_state_id = 5) as l " +
             "JOIN product p ON l.product_id = p.id " +
             "WHERE l.created_at >= :sD AND l.created_at <= NOW() " +
