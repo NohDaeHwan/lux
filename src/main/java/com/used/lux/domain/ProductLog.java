@@ -47,4 +47,25 @@ public class ProductLog extends AuditingFields {
     @Column(name = "product_sell_type", nullable = false, length = 100)
     private String productSellType;
 
+    protected ProductLog() {}
+
+    public ProductLog(Long id, Long productId, String productName, State productState, CategoryB categoryB, CategoryM categoryM, int productPrice, String productSellType) {
+        this.id = id;
+        this.productId = productId;
+        this.productName = productName;
+        this.productState = productState;
+        this.categoryB = categoryB;
+        this.categoryM = categoryM;
+        this.productPrice = productPrice;
+        this.productSellType = productSellType;
+    }
+
+    public static ProductLog of(Long id, Long productId, String productName, State productState, CategoryB categoryB, CategoryM categoryM, int productPrice, String productSellType) {
+        return new ProductLog(id, productId, productName,productState, categoryB, categoryM, productPrice, productSellType);
+    }
+
+    public static ProductLog of(Long productId, String productName, State productState, CategoryB categoryB, CategoryM categoryM, int productPrice, String productSellType) {
+        return new ProductLog(null, productId, productName,productState,categoryB,categoryM,productPrice, productSellType);
+    }
+
 }

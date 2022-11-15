@@ -65,7 +65,7 @@ public class AdProductService {
         // 상품 상세
         ProductDto productDto = ProductDto.from(productRepository.findById(productId).get());
         // 수정 로그(수정 전)
-        List<ProductLogDto> productLogDtos = productLogRepository.findByProductId(productId)
+        List<ProductLogDto> productLogDtos = productLogRepository.findByProductIdOrderByCreatedAtDesc(productId)
                 .stream().map(ProductLogDto::from).collect(Collectors.toCollection(ArrayList::new));
         // 주문내역
         List<ProductOrderLogDto> productOrderLogDtos = productOrderLogRepository.findByProductId(productId)
@@ -130,6 +130,7 @@ public class AdProductService {
         Product product= productRepository.getReferenceById(productId);
         State state = stateRepository.findByStateStep(productUpdateRequest.stateStep());
 
+        productLogRepository.save(ProductLog.of(null, productId,productUpdateRequest.productName(),state,categoryB,categoryM,productUpdateRequest.productPrice(), productUpdateRequest.productSellType()));
         // 내용 업데이트
         product.getAppraisal().getAppraisalRequest().setAppraisalProductName(productUpdateRequest.productName());
         product.setProductContent(productUpdateRequest.content());
