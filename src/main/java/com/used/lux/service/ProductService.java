@@ -36,4 +36,12 @@ public class ProductService {
         return ProductDto.from(productRepository.findById(productId).get());
     }
 
+    @Transactional(readOnly = true)
+    public List<ProductDto> catesearch(Long mcategoryId,String productColor, String productBrand, String productGender, String productSize,
+                                             String productGrade, String maxPrice, String minPrice, String query, Pageable pageable) {
+        return productRepository.findByCategoryQuery(mcategoryId,productColor, productBrand,
+                productGender, productSize, productGrade, maxPrice, minPrice, query, pageable).stream()
+                .map(ProductDto::from).collect(Collectors.toUnmodifiableList());
+    }
+
 }

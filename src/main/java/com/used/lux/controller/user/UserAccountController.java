@@ -9,6 +9,7 @@ import com.used.lux.response.UserAccountLogResponse;
 import com.used.lux.response.UserAccountResponse;
 import com.used.lux.response.appraisal.AppraisalRequestResponse;
 import com.used.lux.service.*;
+import com.used.lux.service.admin.AdAppraiseService;
 import com.used.lux.service.AppraiseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

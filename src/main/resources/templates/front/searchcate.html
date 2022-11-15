@@ -43,7 +43,7 @@
                         </div>
                         <div class="card-body">
                             <h5 class="card-title">상세 조건</h5>
-                            <form class="search-form" action="/product">
+                            <form class="search-form" th:action="@{|/searchcate/${cateM.id}|}">
                                 <div class="row mb-3">
                                     <label class="col-sm-2 col-form-label">색상</label>
                                     <div class="col-sm-10">
@@ -96,8 +96,8 @@
                                 <div class="row mb-3">
                                     <!--d아-->
                                     <label class="col-sm-2 col-form-label">상품가격</label>
-                                    <label class="col-sm-1 col-form-label" id="value1">100000</label>
-                                    <input type="hidden" name="minPrice" id="minPrice" value="100000">
+                                    <label class="col-sm-1 col-form-label" id="value1">1000</label>
+                                    <input type="hidden" name="minPrice" id="minPrice" value="1000">
                                     <div class="col-sm-8">
                                         <div class="slider">
                                             <input type="range" class="a"  id="input-left" min="1" max="100" value="1"  step="1" />
@@ -129,18 +129,15 @@
                 <h3 class="custom_heading font-weight-light">
                     중고 탭 검색결과 >
                 </h3>
-                <p th:text="'전체결과: ' +${products.totalElements}+' 건'">
-                    전체결과: n 건
-                </p>
+<!--                <p th:text="'전체결과: ' +${products.totalElements}+' 건'"></p>-->
                 </div>
             </div>
             <div class="album py-3 bg-light">
                 <div class="container-fluid">
                   <div class="row">
-
                     <div class="col-md-2" th:each="product: ${products}">
                       <div class="card mb-4 box-shadow">
-                        <a th:href="@{|/product/${product.id}|}">
+                        <a th:href="@{|/product/${product.id()}|}">
                         <img class="card-img-top p-1" th:src="${product.imagePath()}" style="width: 150px;height: 150px;" alt="Card image cap">
                         <div class="p-2">
                           <p class="card-text font-weight-lighter mb-1 text-black-50" th:text="${product.productBrand}">브랜드</p>
@@ -160,36 +157,35 @@
                   </div>
                 </div>
               </div>
-
             </div>
         </section>
-
-        <!-- Pagination with icons -->
-        <nav id="pagination" aria-label="Page navigation example">
-            <ul class="pagination">
-                <li class="page-item">
-                    <a class="page-link" th:href="@{/product(page=${products.number - 1}, sort=(${param.sort} != null ? ${param.sort} : '') + (${products.sort.getOrderFor('param.sort')} != null ? (${products.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
-                      query=${param.query})}" aria-label="Previous" th:class="'page-link' + (${products.number} <= 0 ? ' disabled' : '')">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li class="page-item" th:each="pageNumber : ${paginationBarNumbers}">
-                    <a th:text="${pageNumber + 1}"
-                       th:href="@{/product(page=${pageNumber},
-                          sort=(${param.sort} != null ? ${param.sort} : '') + (${products.sort.getOrderFor('param.sort')} != null ? (${products.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
-                          query=${param.query}
-                      )}"
-                       th:class="'page-link' + (${pageNumber} == ${products.number} <= 0 ? ' disabled' : '')">
-                    </a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" th:href="@{/product(page=${products.number + 1}, sort=(${param.sort} != null ? ${param.sort} : '') + (${products.sort.getOrderFor('param.sort')} != null ? (${products.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
-                      query=${param.query})}" aria-label="Next" th:class="'page-link' + (${products.number} >= ${products.totalPages - 1} ? ' disabled' : '')">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav><!-- End Pagination with icons -->
+        <section class="layout_padding2">
+            <div class="container-fluid">
+                <div class="brand_heading">
+                    <h3 class="custom_heading font-weight-light">
+                        경매 탭 검색결과 >
+                    </h3>
+                    <div class="col-md-2" th:each="auction: ${a}">
+                        <div class="card mb-4 box-shadow">
+                            <a th:href="@{|/auction/${auction.id()}|}">
+                                <img class="card-img-top p-1" th:src="${auction.imageDtos()}" style="width: 150px;height: 150px;" alt="Card image cap">
+                                <div class="p-2">
+                                    <p class="card-text font-weight-lighter mb-1 text-black-50" th:text="${auction.brandName}">브랜드</p>
+                                    <p class="card-text font-weight-light mb-1"><a th:href="@{|/auctions/${auction.id}|}" th:text="${auction.productName()}">상품명</a></p>
+                                    <p class="card-text font-weight-light" th:text="${auction.presentPrice()}">40.000P</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <!-- <div class="btn-group">
+                                          <button type="button" class="btn btn-sm btn-outline-secondary">상세보기</button>
+                                        </div>
+                                        <small class="text-muted">9 mins</small> -->
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+            </div>
+            </div>
+        </section>
 
     </main>
 
