@@ -53,7 +53,7 @@ public class AdAppraiseService {
             CategoryM categoryM = categoryMRepository.findByOneCategory();
             State productState = stateRepository.findByStateStep("신규");
             productRepository.save(Product.of(result, categoryB, categoryM, productState, 0,
-                    null, null, 0));
+                    "", "", 0));
         }
    }
 
