@@ -3,8 +3,7 @@ import com.used.lux.dto.BrandDto;
 import com.used.lux.dto.CategoryBDto;
 import com.used.lux.dto.CategoryMDto;
 import com.used.lux.response.auction.AuctionResponse;
-import com.used.lux.response.auction.AuctionsResponse;
-import com.used.lux.response.product.ProductsResponse;
+import com.used.lux.response.product.ProductResponse;
 import com.used.lux.service.BrandService;
 import com.used.lux.service.CategoryBService;
 import com.used.lux.service.CategoryMService;
@@ -52,8 +51,8 @@ public class MainController {
 
     @GetMapping("/search")
     public String search(@RequestParam(defaultValue = "") String query, ModelMap mm) {
-        List<ProductsResponse> productList = productService.productFind(query).stream()
-                .map(ProductsResponse::from).collect(Collectors.toUnmodifiableList());
+        List<ProductResponse> productList = productService.productFind(query).stream()
+                .map(ProductResponse::from).collect(Collectors.toUnmodifiableList());
         List<AuctionResponse> auctionList = auctionService.productFind(query).stream()
                 .map(AuctionResponse::from).collect(Collectors.toUnmodifiableList());
         List<CategoryBDto> categoryList = categoryBService.categoryList();
@@ -85,13 +84,13 @@ public class MainController {
         List<BrandDto> brandList = brandService.brandList();
         CategoryMDto categoryMDto =categoryMService.getMcategoryid(mcategoryId);
 
-        List<ProductsResponse> products = productService.catesearch(mcategoryId ,productColor,productBrand,productGender,
-                productSize,productGrade,maxPrice,minPrice,query,pageable).stream().map(ProductsResponse::from).collect(Collectors.toUnmodifiableList());
+        List<ProductResponse> products = productService.catesearch(mcategoryId ,productColor,productBrand,productGender,
+                productSize,productGrade,maxPrice,minPrice,query,pageable).stream().map(ProductResponse::from).collect(Collectors.toUnmodifiableList());
 
-        List<AuctionsResponse> auctions= auctionService.catesearch(mcategoryId ,productColor,productBrand,productGender,
-                productSize,productGrade,maxPrice,minPrice,query,pageable).stream().map(AuctionsResponse::from).collect(Collectors.toUnmodifiableList());
+        List<AuctionResponse> auctions= auctionService.catesearch(mcategoryId ,productColor,productBrand,productGender,
+                productSize,productGrade,maxPrice,minPrice,query,pageable).stream().map(AuctionResponse::from).collect(Collectors.toUnmodifiableList());
 
-        List<AuctionsResponse> auction= auctionService.searchcate(productBrand,mcategoryId,productColor,productGender,productSize,maxPrice,minPrice).stream().map(AuctionsResponse::from).collect(Collectors.toList());
+        List<AuctionResponse> auction= auctionService.searchcate(productBrand,mcategoryId,productColor,productGender,productSize,maxPrice,minPrice).stream().map(AuctionResponse::from).collect(Collectors.toList());
 
 
         mm.addAttribute("brandList", brandList);

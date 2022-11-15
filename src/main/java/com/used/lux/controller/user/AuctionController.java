@@ -2,7 +2,7 @@ package com.used.lux.controller.user;
 
 import com.used.lux.dto.BrandDto;
 import com.used.lux.dto.CategoryBDto;
-import com.used.lux.response.auction.AuctionsResponse;
+import com.used.lux.response.auction.AuctionResponse;
 import com.used.lux.service.BrandService;
 import com.used.lux.service.CategoryBService;
 import com.used.lux.service.PaginationService;
@@ -33,7 +33,7 @@ public class AuctionController {
     @GetMapping
     public  String auctionList(@PageableDefault(size = 30) Pageable pageable, ModelMap mm)
     {
-        Page<AuctionsResponse> auctions = auctionService.auctionListFind(pageable).map(AuctionsResponse::from);
+        Page<AuctionResponse> auctions = auctionService.auctionListFind(pageable).map(AuctionResponse::from);
         List<CategoryBDto> categoryList = categoryBService.categoryList();
         List<BrandDto> brandList = brandService.brandList();
         List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), auctions.getTotalPages());

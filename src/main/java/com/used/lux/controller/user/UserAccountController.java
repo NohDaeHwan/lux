@@ -8,6 +8,7 @@ import com.used.lux.response.ProductOrderResponse;
 import com.used.lux.response.UserAccountLogResponse;
 import com.used.lux.response.UserAccountResponse;
 import com.used.lux.response.appraisal.AppraisalRequestResponse;
+import com.used.lux.response.appraisal.AppraisalResponse;
 import com.used.lux.service.*;
 import com.used.lux.service.admin.AdAppraiseService;
 import com.used.lux.service.AppraiseService;
@@ -186,7 +187,7 @@ public class UserAccountController {
     @GetMapping("/appraise")
     public String appraise(@AuthenticationPrincipal Principal principal, Pageable pageable, ModelMap mm) {
         UserAccountResponse userAccountResponse = UserAccountResponse.from(userAccountService.getUser(principal.id()));
-        Page<AppraisalRequestResponse> appraisalList = appraiseService.getMypageAppraisal(principal.id(), pageable).map(AppraisalRequestResponse::from);
+        Page<AppraisalResponse> appraisalList = appraiseService.getMypageAppraisal(principal.id(), pageable).map(AppraisalResponse::from);
         UserGradeDto nextGrade = userGradeService.getNextGrade(principal.userGrade().getGradeStep());
 
         mm.addAttribute("users", userAccountResponse);

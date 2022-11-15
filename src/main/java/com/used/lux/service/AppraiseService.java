@@ -64,8 +64,8 @@ public class AppraiseService {
         return AppraisalDto.from(appraisalRepository.findById(appraisalId).get());
     }
 
-    public Page<AppraisalRequestDto> getMypageAppraisal(Long id, Pageable pageable) {
-        return appraisalRequestRepository.findByUserAccountId(id, pageable).map(AppraisalRequestDto::from);
+    public Page<AppraisalDto> getMypageAppraisal(Long id, Pageable pageable) {
+        return appraisalRepository.findByUserAccountId(id, pageable).map(AppraisalDto::from);
     }
 
 

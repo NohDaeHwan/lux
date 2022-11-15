@@ -139,9 +139,12 @@ public class AdProductService {
         Product result = productRepository.save(product);
 
         if (result.getProductSellType().equals("경매")) {
-            State auctionState = stateRepository.findByStateStep("경매전");
-            auctionRepository.save(Auction.of(result, auctionState, 0, result.getProductPrice(), 0,
-                    null, null, 0, null));
+            Auction auction = auctionRepository.findByProductId(result.getId());
+            if (auction == null) {
+                State auctionState = stateRepository.findByStateStep("경매전");
+                auctionRepository.save(Auction.of(result, auctionState, 0, result.getProductPrice(), 0,
+                        null, null, 0, null));
+            }
         } else {
             auctionRepository.deleteByProductId(result.getId());
         }
