@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layout/head :: .head"></head>
+<head th:replace="layout/head :: .head">
+
+</head>
 <body>
 
 <header th:replace="layout/header :: .header">
@@ -34,7 +36,7 @@
                         <div class="card info-card sales-card">
 
                             <div class="filter">
-                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                                <a class="icon " href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                     <li><a class="dropdown-item" onclick="bannerChanger('salesCard','today')">오늘</a></li>
                                     <li><a class="dropdown-item" onclick="bannerChanger('salesCard','month')">이번 달 </a></li>
@@ -140,7 +142,7 @@
                                     <h5 class="card-title">주문 <a th:text="${countOrderNotTreat}"></a>개가 대기하고 있습니다.</h5>
                                     <h5 class="card-title">주문을 취소하는 요청 <a th:text="${countCancle}"></a>개가 있습니다.</h5>
                                 </div>
-
+<!--
                                 <script>
                                     document.addEventListener("DOMContentLoaded", () => {
                                         new ApexCharts(document.querySelector("#reportsChart"), {
@@ -193,6 +195,7 @@
                                         }).render();
                                     });
                                 </script>
+                                -->
                                 <!-- End Line Chart -->
 
                             </div>
@@ -216,7 +219,7 @@
                             <div class="card-body" id ="recentSales">
                                 <h5 class="card-title">경매 상품 <span>| 오늘</span></h5>
 
-                                <table class="table table-borderless datatable">
+                                <table class="table table-borderless"> //datatable 삭제
                                     <thead>
                                     <tr>
                                         <th scope="col">종료 시간</th>
@@ -366,7 +369,7 @@
                                 <td><h4 class="card-title"><a th:text="${costReport.get(1)}"></a></h4></td>
                             </tr>
                             <tr>
-                                <td><h4 class="card-title">경매수익</h4></td>
+                                <td><h4 class="card-title">경매   수익</h4></td>
                                 <td><h4 class="card-title"><a th:text="${costReport.get(2)}"></a></h4></td>
                             </tr>
                             <tr>
@@ -388,7 +391,7 @@
                             </tbody>
                         </table>
                        <!-- <div id="budgetChart" style="min-height: 400px;" class="echart"></div> -->
-
+<!--
                         <script>
                             document.addEventListener("DOMContentLoaded", () => {
                                 var budgetChart = echarts.init(document.querySelector("#budgetChart")).setOption({
@@ -439,7 +442,7 @@
                                 });
                             });
                         </script>
-
+                        -->
                     </div>
                 </div><!-- End Budget Report -->
 
@@ -587,7 +590,7 @@
 
 </th:block>
 <!-- bootstrap.js import-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../../static/assets/js/bootstrap.js"></script>
 <script src="../../static/assets/js/requestBannerChange.js"></script>
 </body>
 
