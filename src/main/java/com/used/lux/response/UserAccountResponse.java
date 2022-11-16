@@ -1,4 +1,4 @@
-package com.used.lux.repository.response;
+package com.used.lux.response;
 
 import com.used.lux.domain.UserGrade;
 import com.used.lux.domain.constant.RoleType;

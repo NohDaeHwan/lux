@@ -1,9 +1,12 @@
 package com.used.lux.service;
 
 import com.used.lux.domain.Auction;
+import com.used.lux.domain.State;
 import com.used.lux.dto.AuctionDto;
 import com.used.lux.repository.AuctionRepository;
 import com.used.lux.repository.ProductRepository;
+import com.used.lux.repository.StateRepository;
+import com.used.lux.request.AuctionTimer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -25,6 +28,8 @@ public class AuctionService {
     private final AuctionRepository auctionRepository;
 
     private final ProductRepository productRepository;
+
+    private final StateRepository stateRepository;
 
     @Transactional(readOnly = true)
     public Page<AuctionDto> auctionListFind(Pageable pageable) {
@@ -130,6 +135,21 @@ public class AuctionService {
         return  auctionRepository.findByCategoryQuery(mcategoryId,auctionColor, auctionBrand,
                         auctionGender, auctionSize, auctionGrade, maxPrice, minPrice, query, pageable).stream()
                 .map(AuctionDto::from).collect(Collectors.toUnmodifiableList());
+    }
+
+
+    public  void  presentTimer(Long auctionId, Long stateId){
+        Auction auction = auctionRepository.getReferenceById(auctionId);
+        State state = stateRepository.findById(stateId).get();
+        auction.setState(state);
+        auctionRepository.save(auction);
+    }
+    public  void  afterTimer(Long auctionId, Long stateId){
+        Auction auction = auctionRepository.getReferenceById(auctionId);
+        State state = stateRepository.findById(stateId).get();
+        auction.setState(state);
+        auction.setClosingPrice(auction.getPresentPrice());
+        auctionRepository.save(auction);
     }
 
 

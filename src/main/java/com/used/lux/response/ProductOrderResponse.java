@@ -1,4 +1,4 @@
-package com.used.lux.repository.response;
+package com.used.lux.response;
 
 import com.used.lux.domain.State;
 import com.used.lux.dto.ProductOrderDto;
