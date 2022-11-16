@@ -1,4 +1,4 @@
-package com.used.lux.response.appraisal;
+package com.used.lux.repository.response.appraisal;
 
 import com.used.lux.dto.AppraisalDto;
 

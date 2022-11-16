@@ -4,7 +4,7 @@ import com.used.lux.dto.BrandDto;
 import com.used.lux.dto.StateDto;
 import com.used.lux.repository.BrandRepository;
 import com.used.lux.repository.StateRepository;
-import com.used.lux.response.SearchResponse;
+import com.used.lux.repository.response.SearchResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

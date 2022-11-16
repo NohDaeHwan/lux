@@ -52,11 +52,11 @@ public class AdProductService {
     public Page<ProductDto> getProductList(String productSellType, String productBrand, String productGender,
                                        String productSize, String productGrade, String productState,
                                        String productDate, String query, Pageable pageable) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
-        LocalDateTime dateTime = LocalDateTime.parse(productDate, formatter);
-        System.out.println(dateTime);
+        String[] dateResult = productDate.split("-");
+        LocalDateTime date = LocalDateTime.of(Integer.parseInt(dateResult[0]),
+                Integer.parseInt(dateResult[1]), Integer.parseInt(dateResult[2]), 00, 00);
         return productRepository.findByBackProductList(productSellType, productBrand, productGender, productSize,
-                productGrade, productState, dateTime, query, pageable).map(ProductDto::from);
+                productGrade, productState, date, query, pageable).map(ProductDto::from);
     }
 
     // 상품 세부사항

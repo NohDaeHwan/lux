@@ -3,9 +3,8 @@ package com.used.lux.controller.admin;
 import com.used.lux.dto.BrandDto;
 import com.used.lux.dto.security.Principal;
 import com.used.lux.request.appraisal.AppraisalCommentRequest;
-import com.used.lux.response.SearchResponse;
-import com.used.lux.response.appraisal.AppraisalRequestResponse;
-import com.used.lux.response.appraisal.AppraisalResponse;
+import com.used.lux.repository.response.SearchResponse;
+import com.used.lux.repository.response.appraisal.AppraisalResponse;
 import com.used.lux.service.PaginationService;
 import com.used.lux.service.SearchService;
 import com.used.lux.service.admin.AdAppraiseService;
@@ -80,7 +79,7 @@ public class AdAppraiseController {
         return "/admin/appraisal-detail";
     }
 
-    // 검수 결과 등록
+    // 검수 결과 등록 페이지
     @GetMapping("/{appraisalId}/new")
     public String appraiseCommentAdd(@PathVariable Long appraisalId,
             @AuthenticationPrincipal Principal principal,
@@ -106,7 +105,6 @@ public class AdAppraiseController {
             @AuthenticationPrincipal Principal principal,
             @RequestBody AppraisalCommentRequest appraisalCommentRequest) {
 
-        System.out.println("functioncall~~~~~~~~~~~");
         if (principal.role().getName() != "ROLE_ADMIN") {
             return ResponseEntity.status(HttpStatus.OK).body(-1);
         }
@@ -114,18 +112,5 @@ public class AdAppraiseController {
         adAppraiseService.appraiseComment(appraisalCommentRequest, appraisalId);
         return ResponseEntity.status(HttpStatus.OK).body(1);
     }
-
-    // 검수상세 수정 2022/10/26
-    // @GetMapping("/{appraisalId}/detail/update")
-    // public String appraiseDetail(@PathVariable Long appraisalId,
-    // @AuthenticationPrincipal Principal principal,
-    // ModelMap mm) {
-    // AppraisalResponse appraisalResponse =
-    // AppraisalResponse.from(adAppraiseService.appraiseCommentPage(appraisalId));
-    // List<BrandDto> brandList = adProductService.getBrandList();
-    // mm.addAttribute("appraisalResponse", appraisalResponse);
-    // mm.addAttribute("brandList",brandList);
-    // return "/admin/appraisal-detail";
-    // }
 
 }

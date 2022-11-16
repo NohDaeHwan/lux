@@ -34,8 +34,13 @@ public class AdAuctionService {
     public Page<AuctionDto> getAuctionList(String auctionState, String auctionDate, String query, Pageable pageable) {
         if (auctionDate.equals("") && auctionState.equals("") && query.equals("")) {
             return auctionRepository.findAll(pageable).map(AuctionDto::from);
+        } else if (auctionDate.equals("")) {
+            return auctionRepository.findByBackAuctionList(auctionState, query, pageable).map(AuctionDto::from);
         }
-        return auctionRepository.searchAuction(auctionState, auctionDate, query, pageable).map(AuctionDto::from);
+        String[] dateResult = auctionDate.split("-");
+        LocalDateTime date = LocalDateTime.of(Integer.parseInt(dateResult[0]),
+                Integer.parseInt(dateResult[1]), Integer.parseInt(dateResult[2]), 00, 00);
+        return auctionRepository.findByBackAuctionListDate(auctionState, date, query, pageable).map(AuctionDto::from);
     }
 
     // Admin 경매 상세 조회(+경매로그)

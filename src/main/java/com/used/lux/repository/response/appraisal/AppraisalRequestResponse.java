@@ -1,11 +1,9 @@
-package com.used.lux.response.appraisal;
+package com.used.lux.repository.response.appraisal;
 
 import com.used.lux.dto.*;
-import com.used.lux.response.UserAccountResponse;
+import com.used.lux.repository.response.UserAccountResponse;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 

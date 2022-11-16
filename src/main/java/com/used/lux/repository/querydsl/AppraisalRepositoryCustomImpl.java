@@ -31,6 +31,7 @@ public class AppraisalRepositoryCustomImpl extends QuerydslRepositorySupport imp
                         appraisal.appraisalRequest.appraisalBrand.brandName.like("%"+appraisalBrand+"%"),
                         appraisal.appraisalRequest.appraisalGender.like("%"+appraisalGender+"%"),
                         appraisal.appraisalRequest.appraisalSize.like("%"+appraisalSize+"%"),
+                        appraisal.appraisalGrade.like("%"+appraisalGrade+"%"),
                         appraisal.appraisalRequest.appraisalProductName.like("%"+query+"%"),
                         appraisal.createdAt.after(LocalDateTime.of(Integer.parseInt(dateResult[0]),
                                 Integer.parseInt(dateResult[1]), Integer.parseInt(dateResult[2]), 00, 00)));

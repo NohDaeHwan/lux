@@ -38,11 +38,11 @@ public class DashBoardRequestService {
         //오늘로 통일
         String bannerDateType = "today";
         //주문량
-        Long countOrder = productOrderLogService.countOrderByDate(bannerDateType);
+        Long countOrder = (Long) requestSalesCard(bannerDateType);
         //판매수익
-        Long sumPrice =  productOrderLogService.countPriceByDate(bannerDateType);
+        Long sumPrice = (Long) requestRevenueCard(bannerDateType);
         //방문고객
-        Long countCustomer = userAccountLogService.countCustomerByDate(bannerDateType);
+        Long countCustomer = (Long) requestCostomerCard(bannerDateType);
 
         //보고
         //탈퇴회원
@@ -56,6 +56,51 @@ public class DashBoardRequestService {
         //주문최소요청
         Long countRequestOrderCancle = productOrderCancleService.count();
 
+        //주목할만한 경매 상품
+        List<Auction> auctions = new ArrayList<Auction>();
+        auctions = (List<Auction>) requestRecentSales(bannerDateType);
+        //주목할만한 판매 유형
+        List<String> sellType = new ArrayList<String>();
+
+        sellType = (List<String>) requestAttentionpoint(bannerDateType);
+
+        //예산보고
+        List<String> costReport = new ArrayList<>();
+        //일간 주간 월간 판매 수익 판매와 경매 나누어서  :: 판매 순이익 계산  :: 경매 수수료를 통한 순이익 계산 :: 판매중인 상품 개수 :: 경매중인 상품 개수
+        costReport = (List<String>) requestCostReport(bannerDateType);
+
+        mm.addAttribute("countOrder", countOrder);
+        mm.addAttribute("sumPrice",sumPrice);
+        mm.addAttribute("countCustomer",countCustomer);
+        mm.addAttribute("countWithdrawal",countRequestWithdrawalCostomer);
+        mm.addAttribute("countGrade",countUserGradeRequest);
+        mm.addAttribute("countAppraise",countRequestAppraise);
+        mm.addAttribute("countOrderNotTreat",countOrderNotTreat);
+        mm.addAttribute("countCancle",countRequestOrderCancle);
+        mm.addAttribute("auctionBanner",auctions);
+        mm.addAttribute("saleTypeBanner",sellType);
+        mm.addAttribute("costReport",costReport);
+
+        return mm;
+    }
+
+    public Long requestSalesCard(String bannerDateType)
+    {
+        return productOrderLogService.countOrderByDate(bannerDateType);
+    }
+
+    public Long requestRevenueCard(String bannerDateType)
+    {
+        return productOrderLogService.countPriceByDate(bannerDateType);
+    }
+
+    public Long requestCostomerCard(String bannerDateType)
+    {
+        return userAccountLogService.countCustomerByDate(bannerDateType);
+    }
+
+    public List<Auction> requestRecentSales(String bannerDateType)
+    {
         //주목할만한 경매 상품
         List<Auction> auctions = new ArrayList<Auction>();
         Auction nullCol = new Auction();
@@ -82,6 +127,11 @@ public class DashBoardRequestService {
         if(result != null){auctions.add(result); }
         else {auctions.add(nullCol);}
 
+        return auctions;
+    }
+
+    public List<String> requestAttentionpoint(String bannerDateType)
+    {
         //주목할만한 판매 유형
         List<String> sellType = new ArrayList<String>();
 
@@ -122,10 +172,11 @@ public class DashBoardRequestService {
         sellType.add(priceRange); // 3 : 가격별
         sellType.add(productName); // 4 : 조회 수
 
+        return sellType;
+    }
 
-
-        //최근 관리자 활동
-
+    public List<String> requestCostReport(String bannerDateType)
+    {
         //예산보고
         List<String> costReport = new ArrayList<>();
         //일간 주간 월간 판매 수익 판매와 경매 나누어서  :: 판매 순이익 계산  :: 경매 수수료를 통한 순이익 계산 :: 판매중인 상품 개수 :: 경매중인 상품 개수
@@ -161,19 +212,6 @@ public class DashBoardRequestService {
         costReport.add(String.valueOf(selling_product)); // 5 : 팔고있는 상품 개수
         costReport.add(String.valueOf(progress_auction)); // 6 : 경매중인 상품 개수
 
-        mm.addAttribute("countOrder", countOrder);
-        mm.addAttribute("sumPrice",sumPrice);
-        mm.addAttribute("countCustomer",countCustomer);
-        mm.addAttribute("countWithdrawal",countRequestWithdrawalCostomer);
-        mm.addAttribute("countGrade",countUserGradeRequest);
-        mm.addAttribute("countAppraise",countRequestAppraise);
-        mm.addAttribute("countOrderNotTreat",countOrderNotTreat);
-        mm.addAttribute("countCancle",countRequestOrderCancle);
-        mm.addAttribute("auctionBanner",auctions);
-        mm.addAttribute("saleTypeBanner",sellType);
-        mm.addAttribute("costReport",costReport);
-
-        return mm;
+        return costReport;
     }
-
 }
