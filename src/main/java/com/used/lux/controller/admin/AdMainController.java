@@ -4,7 +4,7 @@ import com.used.lux.dto.admin.AdDashboardRequestDto;
 import com.used.lux.dto.admin.DashBoardResponseVO;
 import com.used.lux.service.admin.DashBoardRequestService;
 import com.used.lux.dto.security.Principal;
-import com.used.lux.repository.response.UserAccountResponse;
+import com.used.lux.response.UserAccountResponse;
 import com.used.lux.service.admin.AdUserAccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

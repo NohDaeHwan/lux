@@ -1,5 +1,6 @@
 package com.used.lux.request.appraisal;
 
+import com.used.lux.domain.AppraisalRequestLog;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
