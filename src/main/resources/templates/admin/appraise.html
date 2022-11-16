@@ -108,7 +108,7 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">로그 내역</h5>
+                        <h5 class="card-title">검수 내역</h5>
 
                         <!-- Table with hoverable rows -->
                         <table class="table table-hover ">
@@ -128,8 +128,7 @@
 
                             <tr th:each="appraisalRes : ${appraisalResponse}">
                                 <th scope="row">
-                                    <a th:if="${appraisalRes.appraisalRequest.appraisalStateStep} == '검수전'" th:href="@{|/admin/appraise/${appraisalRes.id}/new|}" th:text="${appraisalRes.appraisalRequest().appraisalProductName()}">user1@mail.com</a>
-                                    <a th:unless="${appraisalRes.appraisalRequest.appraisalStateStep} == '검수전'" th:href="@{|/admin/appraise/${appraisalRes.id}|}" th:text="${appraisalRes.appraisalRequest().appraisalProductName()}">user1@mail.com</a>
+                                    <a th:href="@{|/admin/appraise/${appraisalRes.id}/new|}" th:text="${appraisalRes.appraisalRequest().appraisalProductName()}">user1@mail.com</a>
                                 </th>
                                 <td th:text="${appraisalRes.appraisalRequest.appraisalBrandName}">Brandon Jacob</td>
                                 <td th:text="${appraisalRes.appraisalRequest.appraisalGender}">dfd</td>

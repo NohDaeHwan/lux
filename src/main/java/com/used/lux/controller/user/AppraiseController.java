@@ -76,6 +76,7 @@ public class AppraiseController {
         if (principal != null) {
             loginId = principal.id();
        }
+
         UserAccountResponse userAccountResponse = UserAccountResponse.from(userAccountService.getUser(loginId));
 
         AppraisalResponse appraisalDto = AppraisalResponse.from(appraiseService.appraisalDetail(appraiseId));

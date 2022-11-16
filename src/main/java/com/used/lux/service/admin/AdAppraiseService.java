@@ -2,6 +2,7 @@ package com.used.lux.service.admin;
 
 import com.used.lux.domain.*;
 import com.used.lux.dto.AppraisalDto;
+import com.used.lux.dto.AppraisalRequestLogDto;
 import com.used.lux.repository.*;
 import com.used.lux.request.appraisal.AppraisalCommentRequest;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
 public class AdAppraiseService {
 
     private final AppraisalRepository appraisalRepository;
-
+    private final AppraisalRequestLogRepository appraisalRequestLogRepository;
     private final StateRepository stateRepository;
 
     private final BrandRepository brandRepository;
@@ -36,7 +37,6 @@ public class AdAppraiseService {
         Appraisal appraisal = appraisalRepository.getReferenceById(appraisalId);
         State state = stateRepository.findById(request.appraisalStateId()).get();
         Brand brand = brandRepository.findById(request.appraisalBrand()).get();
-
         appraisal.getAppraisalRequest().setAppraisalState(state);
         appraisal.getAppraisalRequest().setAppraisalBrand(brand);
         appraisal.getAppraisalRequest().setAppraisalGender(request.appraisalGender());
@@ -46,8 +46,11 @@ public class AdAppraiseService {
         appraisal.setAppraisalPrice(request.appraisalPrice());
         appraisal.getAppraisalRequest().setAppraisalSize(request.appraisalSize());
         appraisal.getAppraisalRequest().setAppraisalProductName(request.appraisalName());
+        appraisalRequestLogRepository.save(AppraisalRequestLog.of(
+                request.appraisalName(),request.appraisalGrade(), request.appraisalPrice(),
+                state,appraisal.getAppraisalRequest().getUserAccount().getId(),appraisalId
+        ));
         Appraisal result = appraisalRepository.save(appraisal);
-
         if (!result.getAppraisalGrade().equals("F")) {
             CategoryB categoryB = categoryBRepository.findByOneCategory();
             CategoryM categoryM = categoryMRepository.findByOneCategory();

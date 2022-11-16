@@ -26,6 +26,7 @@ public class AppraiseService {
     private final AppraisalRepository appraisalRepository;
 
     private final AppraisalImageRepository appraisalImageRepository;
+    private final AppraisalRequestLogRepository appraisalRequestLogRepository;
 
     private final BrandRepository brandRepository;
 
@@ -57,7 +58,8 @@ public class AppraiseService {
             }
         }
         System.out.println("파일 저장 성공");
-        appraisalRepository.save(Appraisal.of(appraisalRequest));
+        Appraisal appraisal = appraisalRepository.save(Appraisal.of(appraisalRequest));
+        appraisalRequestLogRepository.save(AppraisalRequestLog.of(request.productName(),null,0,state, user.id(), appraisal.getId()));
     }
 
     public AppraisalDto appraisalDetail(Long appraisalId) {

@@ -49,7 +49,7 @@ public class Appraisal extends AuditingFields {
 	}
 
 	public static Appraisal of(AppraisalRequest appraisalRequest) {
-		return new Appraisal(null, null, 0, appraisalRequest);
+		return new Appraisal("", "", 0, appraisalRequest);
 	}
 
 }

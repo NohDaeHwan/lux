@@ -66,7 +66,8 @@ public class ProductOrderService {
                 product.getAppraisal().getAppraisalRequest().getAppraisalProductName(),
                 stateOrder,
                 product.getProductPrice(),
-                product.getProductSellType()
+                product.getProductSellType(),
+                principal.id()
         ));
         userAccountLogRepository.save(UserAccountLog.of(
                 null,

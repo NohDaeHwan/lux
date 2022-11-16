@@ -1,5 +1,6 @@
 package com.used.lux.service.admin;
 
+import com.used.lux.domain.AppraisalRequestLog;
 import com.used.lux.domain.UserAccount;
 import com.used.lux.dto.*;
 import com.used.lux.dto.admin.AdUserAccountDto;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 public class AdUserAccountService {
 
     private final UserAccountRepository userAccountRepository;
+    private final AppraisalRequestLogRepository appraisalRequestLogRepository;
 
     private final ProductOrderLogRepository productOrderLogRepository;
 
@@ -63,8 +65,10 @@ public class AdUserAccountService {
         List<UserAccountLogDto> userAccountLogDtos = userAccountLogRepository.findByUserEmail(userAccountDto.userEmail())
                 .stream().map(UserAccountLogDto::from).collect(Collectors.toCollection(ArrayList::new));
 
+        List<AppraisalRequestLogDto> userAppraisalLogDtos = appraisalRequestLogRepository.findByUserIdOrderByModifiedAtDesc(userAccountDto.id())
+                .stream().map(AppraisalRequestLogDto::from).collect(Collectors.toCollection(ArrayList::new));
         return AdUserAccountDto.of(userAccountDto, productOrderLogDtos, productOrderCancelDtos,
-                appraisalDtos, auctionLogDtos, userAccountLogDtos);
+                appraisalDtos, auctionLogDtos, userAccountLogDtos, userAppraisalLogDtos);
     }
 
     @Transactional(readOnly = true)
