@@ -48,7 +48,7 @@ public class ProductRepositoryCustomImpl extends QuerydslRepositorySupport imple
         JPQLQuery<Product> queryResult = from(product)
                 .select(product)
                 .where(product.appraisal.appraisalRequest.appraisalColor.like("%"+productColor+"%"),
-                        product.appraisal.appraisalRequest.appraisalBrand.brandName.like("%"+productBrand+"%"),
+//                        product.appraisal.appraisalRequest.appraisalBrand.brandName.like("%"+productBrand+"%"),
                         product.appraisal.appraisalRequest.appraisalGender.like("%"+productGender+"%"),
                         product.appraisal.appraisalRequest.appraisalSize.like("%"+productSize+"%"),
                         product.appraisal.appraisalRequest.appraisalProductName.like("%"+query+"%"),

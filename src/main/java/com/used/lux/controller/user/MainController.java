@@ -3,9 +3,9 @@ import com.used.lux.dto.BrandDto;
 import com.used.lux.dto.CategoryBDto;
 import com.used.lux.dto.CategoryMDto;
 
-import com.used.lux.repository.response.auction.AuctionResponse;
-import com.used.lux.repository.response.product.ProductsResponse;
+import com.used.lux.response.auction.AuctionResponse;
 
+import com.used.lux.response.product.ProductResponse;
 import com.used.lux.service.BrandService;
 import com.used.lux.service.CategoryBService;
 import com.used.lux.service.CategoryMService;
@@ -89,8 +89,8 @@ public class MainController {
         List<ProductResponse> products = productService.catesearch(mcategoryId ,productColor,productBrand,productGender,
                 productSize,productGrade,maxPrice,minPrice,query,pageable).stream().map(ProductResponse::from).collect(Collectors.toUnmodifiableList());
 
-        List<AuctionResponse> auctions= auctionService.catesearch(mcategoryId ,productColor,productBrand,productGender,
-                productSize,productGrade,maxPrice,minPrice,query,pageable).stream().map(AuctionResponse::from).collect(Collectors.toUnmodifiableList());
+//        List<AuctionResponse> auctions= auctionService.catesearch(mcategoryId ,productColor,productBrand,productGender,
+//                productSize,productGrade,maxPrice,minPrice,query,pageable).stream().map(AuctionResponse::from).collect(Collectors.toUnmodifiableList());
 
         List<AuctionResponse> auction= auctionService.searchcate(productBrand,mcategoryId,productColor,productGender,productSize,maxPrice,minPrice).stream().map(AuctionResponse::from).collect(Collectors.toList());
 
@@ -99,7 +99,7 @@ public class MainController {
         mm.addAttribute("categoryList", categoryList);
         mm.addAttribute("products", products);
         mm.addAttribute("cateM",categoryMDto );
-        mm.addAttribute("auctions",auctions);
+//        mm.addAttribute("auctions",auctions);
         mm.addAttribute("a",auction);
 
         System.out.println("function"+categoryMDto);
@@ -108,7 +108,7 @@ public class MainController {
 
 
         System.out.println("중고 검색:"+products.stream().toList());
-        System.out.println("경매 검색:"+auctions.stream().toList());
+//        System.out.println("경매 검색:"+auctions.stream().toList());
         System.out.println("실험 :"+ auction.stream().toList());
 
         return "front/searchcate";

@@ -1,4 +1,4 @@
-package com.used.lux.repository.response.auction;
+package com.used.lux.response.auction;
 
 import com.used.lux.dto.AuctionDto;
 import com.used.lux.dto.ImageDto;

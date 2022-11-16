@@ -2,7 +2,8 @@ package com.used.lux.controller.user;
 
 import com.used.lux.dto.BrandDto;
 import com.used.lux.dto.CategoryBDto;
-import com.used.lux.repository.response.auction.AuctionsResponse;
+import com.used.lux.response.auction.AuctionResponse;
+
 import com.used.lux.service.BrandService;
 import com.used.lux.service.CategoryBService;
 import com.used.lux.service.PaginationService;
@@ -11,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -38,11 +41,33 @@ public class AuctionController {
         List<BrandDto> brandList = brandService.brandList();
         List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), auctions.getTotalPages());
 
+
+
+
         mm.addAttribute("paginationBarNumbers", barNumbers);
         mm.addAttribute("auctions", auctions);
         mm.addAttribute("categoryList", categoryList);
         mm.addAttribute("brandList", brandList);
+
+
+        System.out.println("기능:"+auctions.stream().toList());
+
+
         return "/front/auction";
+    }
+
+    @ResponseBody
+    @PostMapping("/present/{auctionId}/{stateId}")
+    public ResponseEntity<Integer> presentAuction(@PathVariable Long auctionId, @PathVariable Long stateId){
+        auctionService.presentTimer(auctionId, stateId);
+        return ResponseEntity.status(HttpStatus.OK).body(1);
+    }
+
+    @ResponseBody
+    @PostMapping("/after/{auctionId}/{stateId}")
+    public ResponseEntity<Integer> afterAuction(@PathVariable Long auctionId, @PathVariable Long stateId){
+        auctionService.afterTimer(auctionId, stateId);
+        return ResponseEntity.status(HttpStatus.OK).body(1);
     }
 
 //    @GetMapping("/detail/{id}")
