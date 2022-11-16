@@ -7,7 +7,7 @@ import com.used.lux.dto.admin.AdUserAccountDto;
 import com.used.lux.dto.security.Principal;
 import com.used.lux.request.GradeCreateRequest;
 import com.used.lux.request.UserMemoUpdateRequest;
-import com.used.lux.response.UserAccountResponse;
+import com.used.lux.repository.response.UserAccountResponse;
 import com.used.lux.service.PaginationService;
 import com.used.lux.service.UserGradeService;
 import com.used.lux.service.admin.AdUserAccountService;
