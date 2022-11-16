@@ -13,16 +13,17 @@ public record ProductOrderLogDto(
         int productPrice,
         String productSellType,
         State productState,
+        Long userId,
         LocalDateTime createdAt,
         String createdBy,
         LocalDateTime modifiedAt,
         String modifiedBy
 ) {
     public static ProductOrderLogDto of(Long id, String userEmail, Long productId, String productName, int productPrice,
-                                        String productSellType, State productState, LocalDateTime createdAt,
+                                        String productSellType, State productState,Long userId, LocalDateTime createdAt,
                                         String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
         return new ProductOrderLogDto(id, userEmail, productId, productName, productPrice, productSellType,
-                productState, createdAt, createdBy, modifiedAt, modifiedBy);
+                productState, userId, createdAt, createdBy, modifiedAt, modifiedBy);
     }
 
     public static ProductOrderLogDto from(ProductOrderLog entity) {
@@ -34,6 +35,7 @@ public record ProductOrderLogDto(
                 entity.getProductPrice(),
                 entity.getProductSellType(),
                 entity.getProductState(),
+                entity.getUserId(),
                 entity.getCreatedAt(),
                 entity.getCreatedBy(),
                 entity.getModifiedAt(),

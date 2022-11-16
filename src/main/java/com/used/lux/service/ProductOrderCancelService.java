@@ -30,7 +30,8 @@ public class ProductOrderCancelService {
                 order.getProduct().getAppraisal().getAppraisalRequest().getAppraisalProductName(),
                 state,
                 order.getProduct().getProductPrice(),
-                order.getProduct().getProductSellType()
+                order.getProduct().getProductSellType(),
+                principal.id()
         ));
 
         productOrderCancelRepository.save(ProductOrderCancel.of(

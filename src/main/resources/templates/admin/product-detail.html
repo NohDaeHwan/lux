@@ -190,7 +190,7 @@
                 <tbody>
                 <tr th:each="productorder : ${productDetail.ProductOrderLogDtos()}">
                   <td th:text="${productorder.productName}"></td> <!-- 주문번호 a link -->
-                  <td th:text="${productorder.userEmail}"></td>
+                  <td><a th:href="@{|/admin/user/${productorder.userId}|}" th:text="${productorder.userEmail}"></a></td>
                   <td th:text="${productorder.productState.stateStep}"></td>
                   <td th:text="${#temporals.format(productorder.createdAt,'yyyy-MM-dd HH:mm:ss')}">28</td>
                 </tr>
