@@ -4,6 +4,7 @@ import com.used.lux.dto.CategoryBDto;
 import com.used.lux.dto.CategoryMDto;
 
 import com.used.lux.repository.response.auction.AuctionResponse;
+import com.used.lux.repository.response.product.ProductResponse;
 import com.used.lux.repository.response.product.ProductsResponse;
 
 import com.used.lux.service.BrandService;

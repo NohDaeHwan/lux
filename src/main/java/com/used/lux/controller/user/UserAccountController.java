@@ -2,6 +2,7 @@ package com.used.lux.controller.user;
 
 import com.used.lux.dto.UserGradeDto;
 import com.used.lux.dto.security.Principal;
+import com.used.lux.repository.response.appraisal.AppraisalResponse;
 import com.used.lux.request.OrderCancelRequest;
 import com.used.lux.request.UserUpdateRequest;
 import com.used.lux.repository.response.ProductOrderResponse;

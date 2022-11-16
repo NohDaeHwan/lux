@@ -3,6 +3,7 @@ package com.used.lux.controller.user;
 import com.used.lux.dto.BrandDto;
 import com.used.lux.dto.CategoryBDto;
 import com.used.lux.dto.security.Principal;
+import com.used.lux.repository.response.UserAccountResponse;
 import com.used.lux.request.appraisal.AppraisalCreateRequest;
 import com.used.lux.repository.response.appraisal.AppraisalRequestResponse;
 import com.used.lux.repository.response.appraisal.AppraisalResponse;
