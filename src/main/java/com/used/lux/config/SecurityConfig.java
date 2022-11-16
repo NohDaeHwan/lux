@@ -22,7 +22,7 @@ public class SecurityConfig {
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         .antMatchers(
                                 "/mypage/**", "/admin/**", "/product/**/order",
-                                "/appraisal/new"
+                                "/appraisal/new", "/auction/detail/**"
                         ).authenticated()
                         .antMatchers("/admin/appraise/**/new/loading")
                         .permitAll()

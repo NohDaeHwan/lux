@@ -142,7 +142,7 @@
 
                     <div class="col-md-2" th:each="auction: ${auctions}">
                         <div class="card mb-4 box-shadow">
-                            <a th:href="@{|/auction/${auction.id}|}">
+                            <a th:href="@{|/auction/detail/${auction.id}|}">
                                 <img class="card-img-top p-1" th:src="${auction.productResponse.imageList[0].filePath}" style="width: 150px;height: 150px;" alt="Card image cap">
                                 <div class="p-2">
                                     <p class="card-text font-weight-lighter mb-1 text-black-50" th:text="${auction.productResponse.productBrandName}">브랜드</p>

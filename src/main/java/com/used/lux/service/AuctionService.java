@@ -48,14 +48,13 @@ public class AuctionService {
         return auctionRepository.searchAuctionBy(brandName,mcategoryId,productColor,productGender,productSize,Integer.parseInt(maxPrice),Integer.parseInt(minPrice)).stream().map(AuctionDto::from).collect(Collectors.toList());
     }
 
-    /*public AuctionDto auctionFind(Long id) {
+    public AuctionDto auctionFind(Long id) {
         Auction auction = auctionRepository.getReferenceById(id);
         auction.getProduct().setProductViewCount(auction.getProduct().getProductViewCount()+1);
-        productRepository.save(auction.getProduct());
         return AuctionDto.from(auctionRepository.save(auction));
     }
 
-    public Page<AuctionDto> auctionResultFind(Pageable pageable) {
+    /*public Page<AuctionDto> auctionResultFind(Pageable pageable) {
         return auctionRepository.findResult(pageable).map(AuctionDto::from);
     }
 
