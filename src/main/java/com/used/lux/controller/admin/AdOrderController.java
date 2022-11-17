@@ -4,6 +4,8 @@ import com.used.lux.dto.ProductOrderCancelDto;
 import com.used.lux.dto.ProductOrderDto;
 import com.used.lux.dto.StateDto;
 import com.used.lux.dto.security.Principal;
+import com.used.lux.request.OrderCancelRequest;
+import com.used.lux.request.OrderUpdateRequest;
 import com.used.lux.response.ProductOrderResponse;
 import com.used.lux.service.PaginationService;
 import com.used.lux.service.StateService;
@@ -15,10 +17,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -75,6 +74,18 @@ public class AdOrderController {
 
         mm.addAttribute("orderDetail", orderDetail);
         return "/admin/order-detail";
+    }
+
+    // 주문 취소수리
+    @PostMapping("/{orderId}/cancel")
+    public String orderCancel(@PathVariable Long orderId,
+                              @AuthenticationPrincipal Principal principal,
+                              OrderUpdateRequest orderUpdateRequest) {
+        if (principal.role().getName() != "ROLE_ADMIN") {
+            return "redirect:/";
+        }
+        adOrderService.updateCancel(orderId, orderUpdateRequest);
+        return "redirect:/admin/order/"+orderId;
     }
 
 }

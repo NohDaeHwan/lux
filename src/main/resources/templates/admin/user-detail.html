@@ -258,7 +258,7 @@
                             <th scope="col">취소자</th>
                             <th scope="col">상품명</th>
                             <th scope="col">상품가격</th>
-                            <th scope="col">취소날짜 </th>
+                            <th scope="col">취소요청날짜 </th>
                         </tr>
                         </thead>
                         <tbody>
@@ -266,7 +266,7 @@
                             <th scope="row"><a th:text="${usercancel.userName}"></a></th>
                             <td th:text="${usercancel.productName}"></td>
                             <td th:text="${#numbers.formatInteger(usercancel.productPrice,3,'COMMA')} + '원'"></td>
-                            <td th:text="${#temporals.format(usercancel.createdAt,'yyyy-MM-dd HH:mm:ss')}"></td>
+                            <td th:text="${#temporals.format(usercancel.modifiedAt,'yyyy-MM-dd HH:mm:ss')}"></td>
                         </tr>
                         </tbody>
                     </table>
