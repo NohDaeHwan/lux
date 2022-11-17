@@ -22,7 +22,7 @@
                  th:aria-labelledby="'heading'+${bcategoryStat.count}" data-parent="#accordion">
                 <div class="nav-link collapsed" th:each="mcategory : ${bcategory.categoryMDtos()}">
                     <h6 class="mb-0" style="font-size:15px;">
-                        <a href="#" class="text-black-50" th:text="${mcategory.categoryMName()}">짧은 상의</a>
+                        <a th:href="@{|/searchcate/${mcategory.id}|}" class="text-black-50" th:text="${mcategory.categoryMName()}">짧은 상의</a>
                     </h6>
                 </div>
             </div>

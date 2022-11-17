@@ -19,7 +19,7 @@
                th:aria-labelledby="'heading'+${bcategoryStat.count}" data-parent="#accordion">
             <div class="nav-link collapsed" th:each="mcategory : ${bcategory.categoryMDtos}">
                 <h6 class="mb-0" style="font-size:15px;">
-                    <a href="#" class="text-black-50" th:text="${mcategory.categoryMName()}">짧은 상의</a>
+                    <a th:href="@{|/searchcate/${mcategory.id}|}" class="text-black-50" th:text="${mcategory.categoryMName()}">짧은 상의</a>
                 </h6>
             </div>
           </div>
@@ -93,7 +93,7 @@
                                 <div class="row mb-3">
                                     <label class="col-sm-2 col-form-label">경매 열린시간</label>
                                     <div class="col-sm-10" style="padding: 7px 12px;">
-                                        <div class="col-sm-10" style="font-weight: 300;" th:text="${auction.auctionStartDate}">몇날몇시몇분</div>
+                                        <div class="col-sm-10" style="font-weight: 300;" th:text="${#temporals.format(auction.auctionStartDate,'yyyy-MM-dd HH:mm:ss')}">몇날몇시몇분</div>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
@@ -108,15 +108,15 @@
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <label class="col-sm-2 col-form-label" style="color:red;">입찰자</label>
+                                    <label class="col-sm-2 col-form-label" style="color:red;">마지막 입찰자</label>
                                     <div class="col-sm-10" style="padding: 7px 12px;">
-                                        <div class="col-sm-10" style="font-weight: 300;" id="bidder" th:text="${auction.bidder == null} ? '입찰이 없음' : ${auction.bidder}">입찰자</div>
+                                        <div class="col-sm-10" style="font-weight: 300;" id="bidder" th:text="${auction.bidder == null} ? '입찰이 없음' : ${#strings.replace(auction.bidder,#strings.substring(auction.bidder,0,3),'***')}">입찰자</div>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <label class="col-sm-2 col-form-label">참여인원</label>
                                     <div class="col-sm-10" style="padding: 7px 12px;">
-                                        <div class="col-sm-10" style="font-weight: 300;">5명</div>
+                                        <div class="col-sm-10" style="font-weight: 300;" th:text="${auctionLogList.size}+'명'">5명</div>
                                     </div>
                                 </di>
                             </div>
@@ -180,12 +180,12 @@
                         <tbody>
                         <tr th:each="auctionLog : ${auctionLogList}">
                             <th scope="row">
-                                <h6 style="vertical-align: middle; color:blue; font-weight: 300;" th:text="${auctionLog.createdAt}">2022-11-17 15:27:45</h6>
+                                <h6 style="vertical-align: middle; color:blue; font-weight: 300;" th:text="${#temporals.format(auctionLog.createdAt,'yyyy-MM-dd HH:mm:ss')}">2022-11-17 15:27:45</h6>
                             </th>
-                            <td style="vertical-align: middle;color:blue; font-weight: 300;" th:text="${auctionLog.bidder}"><h6>***n</h6></td>
+                            <td style="vertical-align: middle;color:blue; font-weight: 300;" th:text="${#strings.replace(auctionLog.bidder,#strings.substring(auctionLog.bidder,0,3),'***')}"><h6>***n</h6></td>
                             <td style="vertical-align: middle;color:red; font-weight: 300;" th:if="${auctionLog.presentPrice == auction.closingPrice}"><h6>낙찰자</h6></td>
-                            <td style="vertical-align: middle;color:red; font-weight: 300;" th:unless="${auctionLog.presentPrice == auction.closingPrice}"><h6>-</h6></td>
-                            <td style="vertical-align: middle;color:blue; font-weight: 300;" th:text="${auctionLog.presentPrice}"><h6>100,000P</h6></td>
+                            <td style="vertical-align: middle;color:red; font-weight: 300;" th:unless="${auctionLog.presentPrice == auction.closingPrice}"><h6>입찰</h6></td>
+                            <td style="vertical-align: middle;color:blue; font-weight: 300;" th:text="${#numbers.formatInteger(auctionLog.presentPrice,3,'COMMA')}+'원'"><h6>100,000P</h6></td>
                         </tr>
                         </tbody>
                     </table>
