@@ -1,13 +1,13 @@
 package com.used.lux.controller.admin;
 
-import com.used.lux.dto.UserAccountDto;
+import com.used.lux.dto.user.useraccount.UserAccountDto;
 import com.used.lux.dto.UserGradeDto;
-import com.used.lux.dto.UserWithdrawalDto;
+import com.used.lux.dto.user.useraccount.UserWithdrawalDto;
 import com.used.lux.dto.admin.AdUserAccountDto;
 import com.used.lux.dto.security.Principal;
 import com.used.lux.request.GradeCreateRequest;
-import com.used.lux.request.UserMemoUpdateRequest;
-import com.used.lux.response.UserAccountResponse;
+import com.used.lux.request.useraccount.UserMemoUpdateRequest;
+import com.used.lux.response.useraccount.UserAccountResponse;
 import com.used.lux.service.PaginationService;
 import com.used.lux.service.UserGradeService;
 import com.used.lux.service.admin.AdUserAccountService;

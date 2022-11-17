@@ -2,7 +2,7 @@ package com.used.lux.dto.security;
 
 import com.used.lux.domain.UserGrade;
 import com.used.lux.domain.constant.RoleType;
-import com.used.lux.dto.UserAccountDto;
+import com.used.lux.dto.user.useraccount.UserAccountDto;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

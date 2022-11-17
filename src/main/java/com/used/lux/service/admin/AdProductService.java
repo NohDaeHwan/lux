@@ -2,11 +2,26 @@ package com.used.lux.service.admin;
 
 import com.used.lux.component.FileHandler;
 import com.used.lux.domain.*;
+import com.used.lux.domain.auction.Auction;
+import com.used.lux.domain.product.Image;
+import com.used.lux.domain.product.Product;
+import com.used.lux.domain.product.ProductLog;
 import com.used.lux.dto.*;
 import com.used.lux.dto.admin.AdProductDto;
+import com.used.lux.dto.user.auction.AuctionLogDto;
+import com.used.lux.dto.user.order.ProductOrderLogDto;
+import com.used.lux.dto.user.product.ProductDto;
+import com.used.lux.dto.user.product.ProductLogDto;
 import com.used.lux.repository.*;
-import com.used.lux.request.ProductCreateRequest;
-import com.used.lux.request.ProductUpdateRequest;
+import com.used.lux.repository.appraisal.AppraisalRequestRepository;
+import com.used.lux.repository.auction.AuctionLogRepository;
+import com.used.lux.repository.auction.AuctionRepository;
+import com.used.lux.repository.order.ProductOrderLogRepository;
+import com.used.lux.repository.product.ImageRepository;
+import com.used.lux.repository.product.ProductLogRepository;
+import com.used.lux.repository.product.ProductRepository;
+import com.used.lux.request.product.ProductCreateRequest;
+import com.used.lux.request.product.ProductUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,7 +29,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -50,8 +64,8 @@ public class AdProductService {
     // 상품 리스트 조회
     @Transactional(readOnly = true)
     public Page<ProductDto> getProductList(String productSellType, String productBrand, String productGender,
-                                       String productSize, String productGrade, String productState,
-                                       String productDate, String query, Pageable pageable) {
+                                           String productSize, String productGrade, String productState,
+                                           String productDate, String query, Pageable pageable) {
         String[] dateResult = productDate.split("-");
         LocalDateTime date = LocalDateTime.of(Integer.parseInt(dateResult[0]),
                 Integer.parseInt(dateResult[1]), Integer.parseInt(dateResult[2]), 00, 00);

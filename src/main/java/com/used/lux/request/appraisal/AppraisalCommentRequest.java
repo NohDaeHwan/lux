@@ -1,7 +1,5 @@
 package com.used.lux.request.appraisal;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public record AppraisalCommentRequest(
                 String appraisalName,
                 Long appraisalBrand,

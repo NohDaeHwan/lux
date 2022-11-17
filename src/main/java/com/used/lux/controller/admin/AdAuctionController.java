@@ -3,7 +3,7 @@ package com.used.lux.controller.admin;
 import com.used.lux.dto.StateDto;
 import com.used.lux.dto.admin.AdAuctionDto;
 import com.used.lux.dto.security.Principal;
-import com.used.lux.request.AuctionUpdateRequest;
+import com.used.lux.request.auction.AuctionUpdateRequest;
 import com.used.lux.response.auction.AuctionResponse;
 import com.used.lux.service.PaginationService;
 import com.used.lux.service.StateService;

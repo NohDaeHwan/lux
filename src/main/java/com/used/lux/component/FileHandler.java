@@ -1,10 +1,10 @@
 package com.used.lux.component;
 
-import com.used.lux.domain.AppraisalImage;
-import com.used.lux.domain.AppraisalRequest;
-import com.used.lux.domain.Image;
-import com.used.lux.domain.Product;
-import com.used.lux.request.ProductCreateRequest;
+import com.used.lux.domain.appraisal.AppraisalImage;
+import com.used.lux.domain.appraisal.AppraisalRequest;
+import com.used.lux.domain.product.Image;
+import com.used.lux.domain.product.Product;
+import com.used.lux.request.product.ProductCreateRequest;
 import com.used.lux.request.appraisal.AppraisalCreateRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;

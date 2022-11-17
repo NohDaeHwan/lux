@@ -1,10 +1,9 @@
 package com.used.lux.service.socket;
 
-import com.used.lux.repository.AuctionRepository;
+import com.used.lux.repository.auction.AuctionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;

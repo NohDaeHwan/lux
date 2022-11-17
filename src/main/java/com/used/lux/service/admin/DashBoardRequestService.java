@@ -1,14 +1,21 @@
 package com.used.lux.service.admin;
 
 import com.used.lux.domain.*;
+import com.used.lux.domain.appraisal.AppraisalRequest;
+import com.used.lux.domain.auction.Auction;
 import com.used.lux.service.*;
 
+import com.used.lux.service.user.appraisal.AppraiseService;
+import com.used.lux.service.user.auction.AuctionService;
+import com.used.lux.service.user.order.ProductOrderCancelService;
+import com.used.lux.service.user.order.ProductOrderLogService;
+import com.used.lux.service.user.useraccount.UserAccountLogService;
+import com.used.lux.service.user.useraccount.UserWithDrawalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -24,7 +31,7 @@ public class DashBoardRequestService {
     private final AppraiseService appraiseService;
 
     private final AppraisalRequestService appraisalRequestService;
-    private final ProductOrderCancleService productOrderCancleService;
+    private final ProductOrderCancelService productOrderCancelService;
 
     private final AuctionService auctionService;
 
@@ -54,7 +61,7 @@ public class DashBoardRequestService {
         //주문내역
         Long countOrderNotTreat = productOrderLogService.countOrderByState();
         //주문최소요청
-        Long countRequestOrderCancle = productOrderCancleService.count();
+        Long countRequestOrderCancle = productOrderCancelService.count();
 
         //주목할만한 경매 상품
         List<Auction> auctions = new ArrayList<Auction>();

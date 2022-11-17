@@ -1,9 +1,9 @@
 package com.used.lux.service.admin;
 
-import com.used.lux.dto.ProductOrderCancelDto;
-import com.used.lux.dto.ProductOrderDto;
-import com.used.lux.repository.ProductOrderCancelRepository;
-import com.used.lux.repository.ProductOrderRepository;
+import com.used.lux.dto.user.order.ProductOrderCancelDto;
+import com.used.lux.dto.user.order.ProductOrderDto;
+import com.used.lux.repository.order.ProductOrderCancelRepository;
+import com.used.lux.repository.order.ProductOrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

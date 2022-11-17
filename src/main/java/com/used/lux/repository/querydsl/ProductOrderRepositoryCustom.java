@@ -1,6 +1,6 @@
 package com.used.lux.repository.querydsl;
 
-import com.used.lux.domain.ProductOrder;
+import com.used.lux.domain.order.ProductOrder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

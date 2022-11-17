@@ -1,6 +1,6 @@
 package com.used.lux.repository.querydsl;
 
-import com.used.lux.domain.Auction;
+import com.used.lux.domain.auction.Auction;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

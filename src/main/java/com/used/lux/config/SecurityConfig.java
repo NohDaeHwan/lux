@@ -1,8 +1,8 @@
 package com.used.lux.config;
 
-import com.used.lux.dto.UserAccountDto;
+import com.used.lux.dto.user.useraccount.UserAccountDto;
 import com.used.lux.dto.security.Principal;
-import com.used.lux.repository.UserAccountRepository;
+import com.used.lux.repository.useraccount.UserAccountRepository;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

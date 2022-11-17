@@ -1,8 +1,8 @@
 package com.used.lux.response.product;
 
 import com.used.lux.domain.State;
-import com.used.lux.dto.ImageDto;
-import com.used.lux.dto.ProductDto;
+import com.used.lux.dto.user.product.ImageDto;
+import com.used.lux.dto.user.product.ProductDto;
 
 import java.time.LocalDateTime;
 import java.util.Set;

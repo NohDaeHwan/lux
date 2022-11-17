@@ -1,9 +1,14 @@
 package com.used.lux.service.admin;
 
 import com.used.lux.domain.*;
-import com.used.lux.dto.AppraisalDto;
-import com.used.lux.dto.AppraisalRequestLogDto;
+import com.used.lux.domain.appraisal.Appraisal;
+import com.used.lux.domain.appraisal.AppraisalRequestLog;
+import com.used.lux.domain.product.Product;
+import com.used.lux.dto.user.appraisal.AppraisalDto;
 import com.used.lux.repository.*;
+import com.used.lux.repository.appraisal.AppraisalRepository;
+import com.used.lux.repository.appraisal.AppraisalRequestLogRepository;
+import com.used.lux.repository.product.ProductRepository;
 import com.used.lux.request.appraisal.AppraisalCommentRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

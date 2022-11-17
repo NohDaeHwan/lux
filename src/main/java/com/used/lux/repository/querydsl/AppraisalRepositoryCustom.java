@@ -1,7 +1,6 @@
 package com.used.lux.repository.querydsl;
 
-import com.used.lux.domain.Appraisal;
-import com.used.lux.domain.AppraisalRequest;
+import com.used.lux.domain.appraisal.Appraisal;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

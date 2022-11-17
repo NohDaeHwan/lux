@@ -1,6 +1,6 @@
 package com.used.lux.dto.admin;
 
-import com.used.lux.domain.Auction;
+import com.used.lux.domain.auction.Auction;
 import lombok.*;
 
 import java.util.List;

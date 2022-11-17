@@ -1,9 +1,8 @@
 package com.used.lux.repository.querydsl;
 
 import com.querydsl.jpa.JPQLQuery;
-import com.used.lux.domain.Product;
-import com.used.lux.domain.QUserAccount;
-import com.used.lux.domain.UserAccount;
+import com.used.lux.domain.useraccount.QUserAccount;
+import com.used.lux.domain.useraccount.UserAccount;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -15,7 +14,7 @@ import java.util.List;
 public class UserAccountRepositoryCustomImpl extends QuerydslRepositorySupport implements UserAccountRepositoryCustom {
 
     public UserAccountRepositoryCustomImpl() {
-        super(Product.class);
+        super(UserAccount.class);
     }
 
     @Override

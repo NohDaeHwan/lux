@@ -1,8 +1,7 @@
 package com.used.lux.service.admin;
 
-import com.used.lux.domain.Appraisal;
-import com.used.lux.domain.AppraisalRequest;
-import com.used.lux.repository.AppraisalRequestRepository;
+import com.used.lux.domain.appraisal.AppraisalRequest;
+import com.used.lux.repository.appraisal.AppraisalRequestRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

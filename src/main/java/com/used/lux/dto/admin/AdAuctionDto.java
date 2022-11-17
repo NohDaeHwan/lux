@@ -1,9 +1,7 @@
 package com.used.lux.dto.admin;
 
-import com.used.lux.dto.AuctionDto;
-import com.used.lux.dto.AuctionLogDto;
-import com.used.lux.dto.BrandDto;
-import com.used.lux.dto.CategoryBDto;
+import com.used.lux.dto.user.auction.AuctionDto;
+import com.used.lux.dto.user.auction.AuctionLogDto;
 
 import java.util.List;
 

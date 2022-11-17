@@ -1,8 +1,8 @@
 package com.used.lux.repository.querydsl;
 
 import com.querydsl.jpa.JPQLQuery;
-import com.used.lux.domain.Auction;
-import com.used.lux.domain.QAuction;
+import com.used.lux.domain.auction.Auction;
+import com.used.lux.domain.auction.QAuction;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
