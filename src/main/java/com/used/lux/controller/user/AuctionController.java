@@ -74,17 +74,24 @@ public class AuctionController {
     // 경매 상세 페이지
     @GetMapping("/detail/{auctionId}")
     public String auctionDetail(@PathVariable Long auctionId,
-                                @AuthenticationPrincipal Principal principal, ModelMap mm) {
+                                @AuthenticationPrincipal Principal principal, ModelMap mm
+                                ) {
+
         List<CategoryBDto> categoryList = categoryBService.categoryList();
         List<UserGradeDto> gradeList = userGradeService.getGradeList();
         AuctionResponse auction = AuctionResponse.from(auctionService.auctionFind(auctionId));
         List<AuctionLogDto> auctionLogList = auctionLogService.auctionLogList(auctionId);
+
 
         mm.addAttribute("principal",principal);
         mm.addAttribute("categoryList", categoryList);
         mm.addAttribute("gradeList", gradeList);
         mm.addAttribute("auction",auction);
         mm.addAttribute("auctionLogList", auctionLogList);
+
+
+
+
         return "/front/auction-detail";
     }
 
