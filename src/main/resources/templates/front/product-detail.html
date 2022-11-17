@@ -487,10 +487,12 @@
             let name = [[${productDto.productName}]];
             let price= [[${productDto.productPrice}]];
             let date = new Date();
+            let state= [[${productDto.productSellType}]];
             let entry = {
                 "name": name,
                 "price":price,
-                "date": date.toLocaleDateString()
+                "date": date.toLocaleDateString(),
+                "state": state
             };
             sessionStorage.setItem("entry", JSON.stringify(entry));
             // Save allEntries back to local storage
@@ -498,6 +500,7 @@
             sessionStorage.setItem("allEntries", JSON.stringify(existingEntries));
 
             console.log(JSON.parse(sessionStorage.getItem("allEntries")));
+            console.log(state);
 
 </script>
 

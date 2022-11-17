@@ -31,7 +31,7 @@
                         <td><p class="card-text font-weight-lighter mb-1 text-black-50" id="name"></p></td>
                         <td><p class="card-text font-weight-lighter mb-1 text-black-50" id="price"></p></td>
                         <td><p class="card-text font-weight-lighter mb-1 text-black-50" id="date"></p></td>
-                        <td>특징</td>
+                        <td><p class="card-text font-weight-lighter mb-1 text-black-50" id="state"></p></td>
                     </tr>
                 </tbody>
             </table>
@@ -46,15 +46,15 @@
         document.getElementById("name").innerHTML+=recnet[i].name + '<br>';
         document.getElementById("price").innerHTML+=recnet[i].price + '<br>';
         document.getElementById("date").innerHTML+=recnet[i].date + '<br>';
-         document.write(recnet[i].name + '<br>');
-         document.write(recnet[i].date + '<br>');
-        document.write(recnet[i].price + '<br>');
+        document.getElementById("state").innerHTML+=recnet[i].state+'<br>';
+
     }
 
 
     console.log(recnet[0].name);
     console.log(recnet[0].date);
     console.log(recnet[0].price);
+    console.log(recnet[0].state);
 
 
 </script>

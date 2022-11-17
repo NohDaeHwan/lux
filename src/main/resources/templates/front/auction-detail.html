@@ -66,22 +66,6 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label">시작가격</label>
-                                <div class="col-sm-10" style="padding: 7px 12px;">
-                                    <div class="col-sm-10" style="font-weight: 300;" th:text="${#numbers.formatInteger(auction.startPrice,3,'COMMA')} +'원'">1,996,460원</div>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label">현재가격</label>
-                                <div class="col-sm-10" style="padding: 7px 12px;">
-                                    <div class="col-sm-10" style="font-weight: 300;" id="presentPrice" th:text="${#numbers.formatInteger(auction.presentPrice,3,'COMMA')} +'원'">1,996,460원</div>
-                                </div>
-                                <label class="col-sm-2 col-form-label">입찰자</label>
-                                <div class="col-sm-10" style="padding: 7px 12px;">
-                                    <div class="col-sm-10" style="font-weight: 300;" id="bidder" th:text="${auction.bidder == null} ? '입찰이 없음' : ${auction.bidder}">입찰자</div>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">브랜드</label>
                                 <div class="col-sm-10" style="padding: 7px 12px;">
                                     <div class="col-sm-10" style="font-weight: 300;" th:text="${auction.productResponse.productBrandName}" id="LOVE">끌로엦</div>
@@ -93,17 +77,48 @@
                                     <div class="col-sm-10" style="font-weight: 300;" th:text="${auction.productResponse.categoryBName} + ' > ' + ${auction.productResponse.categoryMName}">악세서리 > 넥타이</div>
                                 </div>
                             </div>
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label">등급별<br>혜택</label>
-                                <div class="col-sm-10" >
-                                    <div class="w-100 bg-light p-1 m-2" style="font-weight: 300;" th:each="list : ${gradeList}" th:text="${list.gradeName} + '👑 : ' +${list.discount} + '% 할인'">
-                                        어떻게 저렇게 해서 얼마얼마</div>
+                            <div class="bg-light">
+                                <div class="row mb-3">
+                                    <label class="col-sm-2 col-form-label">시작가격</label>
+                                    <div class="col-sm-10" style="padding: 7px 12px;">
+                                        <div class="col-sm-10" style="font-weight: 300;" th:text="${#numbers.formatInteger(auction.startPrice,3,'COMMA')} +'원'">1,996,460원</div>
+                                    </div>
                                 </div>
+                                <div class="row mb-3">
+                                    <label class="col-sm-2 col-form-label">현재가격</label>
+                                    <div class="col-sm-10" style="padding: 7px 12px;">
+                                        <div class="col-sm-10" style="font-weight: 300;" id="presentPrice" th:text="${#numbers.formatInteger(auction.presentPrice,3,'COMMA')} +'원'">1,996,460원</div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label class="col-sm-2 col-form-label">경매 열린시간</label>
+                                    <div class="col-sm-10" style="padding: 7px 12px;">
+                                        <div class="col-sm-10" style="font-weight: 300;">몇날몇시몇분</div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label class="col-sm-2 col-form-label">경매 종료까지</label>
+                                    <div class="col-sm-10" style="padding: 7px 12px;">
+                                        <div class="col-sm-10" style="font-weight: 300;">몇날몇시몇분</div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label class="col-sm-2 col-form-label" style="color:red;">입찰자</label>
+                                    <div class="col-sm-10" style="padding: 7px 12px;">
+                                        <div class="col-sm-10" style="font-weight: 300;" id="bidder" th:text="${auction.bidder == null} ? '입찰이 없음' : ${auction.bidder}">입찰자</div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label class="col-sm-2 col-form-label">참여인원</label>
+                                    <div class="col-sm-10" style="padding: 7px 12px;">
+                                        <div class="col-sm-10" style="font-weight: 300;">5명</div>
+                                    </div>
+                                </di>
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">입찰 가격 : </label>
                                 <div class="col-sm-10">
-                                    <input class="w-100 bg-light p-1 m-2" type="text" name="bidderPrice" id="bidderPrice">
+                                    <input class="w-100 bg-light p-1 m-2 form-control" type="text" name="bidderPrice" id="bidderPrice">
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -114,330 +129,745 @@
                                     </button>
                                 </div>
                             </div>
+                            <div class="sec7-text-box">
+                                <p class="time-title" id="title"></p>
+                                <div class="time" >
+                                    <span id="days"></span>
+                                    <span id="hours"></span>
+                                    <span id="minutes"></span>
+                                    <span id="seconds"></span>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <div class="container" style="font-weight: 300;">
-
-            <div class="gy-4 mb-5 bg-light" style="display:flex;justify-content: center">
-                <div>
-                    <div class="mb-3 text-center"><strong>상품설명💁🏻‍️</strong></div>
-                    <div class="mb-3 text-center" th:text="${auction.productResponse.productContent}">상품설명입니다~~</div>
-                    <div class="mb-3" th:each="img:${auction.productResponse.imageList}"><img src="#" th:src="${img.filePath}"></div>
-                </div>
-            </div>
-            <!--문의사항 -->
-            <div class="row gy-4 mb-5 bg-light" id="ordAndPur">
+        <div class="main p-5" style="font-weight: 300;">
+            <div class="gy-4 mb-5" id="auctionLog">
                 <ul class="nav nav-tabs nav-justified">
                     <li class="nav-item">
-                        <a class="nav-link active" stlye="color:#000000;" href="#ordAndPur">주문취소 및 구매제한 제도</a>
+                        <a class="nav-link active" href="#auctionLog">입찰내역</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" stlye="color:#000000;" href="#delivery">배송안내</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" stlye="color:#000000;" href="#productInfo">상품 정보 제공 및 거래 조건</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" stlye="color:#000000;" href="#refund">반품 및 환불제도</a>
+                        <a class="nav-link" href="#auctionDetail">경매상품정보</a>
                     </li>
                 </ul>
-                <div>
-                    <div class="mb-3"><strong>주문취소</strong></div>
-                    <ul>
-                        <li>상품대금을 결제하기 전에는 언제든지 주문취소 가능.</li>
-                        <li>무통장 입금 시 주문 후 익일 오후7시(주말 및 공휴일 제외)이내에 미입금 되면 자동주문취소 및 허수구매로 간주하여 벌점부과.</li>
-                        <li>
-                            허수구매 : 무통장입금 방식으로 주문 후 익일 오후7시(주말 및 공휴일 제외)이내에 미입금으로 인한 자동주문취소 구매건<br/>
-                            단, 자동취소 전 주문취소 또는 전화, 게시판 등을 통해 주문취소를 알린경우 허수구매에서 제외되며,<br/>
-                            업데이트 미리보기 상품(오후8시30분 ~ 익일오전11시)은 구매취소를 요청하셔도 허수구매율에서 구제가 되지 않습니다.
-                        </li>
-                    </ul>
-                    <div class="mb-3"><strong>구매제한</strong></div>
-                    <ul>
-                        <li>최근 주문건(10건) 대비 허수구매가 6건(허수구매율 60%) 이상이면 아래 상품들은 구매가 불가능 합니다<br/>
-                            - 업데이트 미리보기 상품 및 최근 업데이트 후 3일 이내의 상품<br/>
-                            - 가격조정 후 3일 이내의 상품</li>
-                        <li>원활한 상품회전을 위하여 배송건에 대한 반품율이 과도할 시에는 거래정지나 회원탈퇴 등의 조치를 취합니다.</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="row gy-4 mb-5 bg-light" id="delivery">
-                <ul class="nav nav-tabs nav-justified">
-                    <li class="nav-item">
-                        <a class="nav-link" stlye="color:#000000;" href="#ordAndPur">주문취소 및 구매제한 제도</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" stlye="color:#000000;" href="#delivery">배송안내</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" stlye="color:#000000;" href="#productInfo">상품 정보 제공 및 거래 조건</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" stlye="color:#000000;" href="#refund">반품 및 환불제도</a>
-                    </li>
-                </ul>
-                <div>
-                    <ul>
-                        <li>배송방법 : 일반택배, 프리미엄배송, 매장픽업</li>
-                        <li>주문하신 상품의 특성 및 배송 지역에 따라 분류됩니다.</li>
-                        <li>
-                            매장 픽업(보고구매)는 구구스 전용차량에 의해 이동되며, 지정된 매장으로 도착 시 고객님께 문자 또는 전화로 알려드립니다.(토요일 이용불가)
-                        </li>
-                        <li>온라인 판매점 구매 전 게시판으로 재고 확인 부탁드립니다.(구구스 매장 이동 및 당일 배송 불가)</li>
-                        <li>이벤트 행사장 상품은 배송기간이 4~5일 소요됩니다.</li>
-                    </ul>
-                    <div class="mb-3"><strong>보유매장별 배송마감 안내</strong></div>
-                    <ul>
-                        <li>수도권 : 월~토 오전 10시30분</li>
-                        <li>충청권 : 월~금 오전 10시30분</li>
-                        <li>영남권 : 월~토 오전 10시30분</li>
-                        <li>온라인 판매점 : 월~금(배송마감시간 상품별 고지)</li>
-                        <li style="color: red;">운송업체의 사정 또는 기상악화 시 익일 발송될 수 있습니다.</li>
-                    </ul>
-                    <table class="table">
+                <div class="container-fluid brand_item-container">
+                    <div class="gy-4 mb-5 bg-light" style="display:flex;justify-content: center">
+                        <div>
+                            <div class="mt-3 mb-3 text-center"><strong>입찰내역💁🏻</strong></div>
+                            <div class="mt-3 mb-3 text-center">
+                                경매 종료까지
+                            </div>
+                            <div class="mt-3 mb-3 text-center">
+                                <strong class="font-italic bold" style="font-size: 24px;">몇날몇시몇분</strong> 남았습니다.
+                            </div>
+                            <div class="mb-3 text-center">실시간 경매정보입니다~~~~~~ <br>실시간 입찰내역을 확인하시려면 F5를 눌러주세요!</div>
+                        </div>
+                    </div>
+                    <table class="table table-hover ">
                         <thead>
                         <tr>
-                            <th>구분</th>
-                            <th>택배배송(당일)</th>
-                            <th>택배배송(전국)</th>
-                            <th>익스프레스배송(퀵서비스)</th>
-                            <th>매장픽업(보고구매)</th>
+                            <th scope="col">참여일</th>
+                            <th scope="col">닉네임</th>
+                            <th scope="col">세부내용</th>
+                            <th scope="col">입찰가격</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
-                            <th>특징</th>
-                            <td>택배업체를 통해 배송<br/>(서울, 경기일부지역)</td>
-                            <td>택배업체를 통해 배송<br/>(수도권포함한 전국)</td>
-                            <td>퀵서비스, 지하철 택배 등</td>
-                            <td>원하는 매장으로 물류이동 후<br/>고객이 직접 수령</td>
+                            <th scope="row">
+                                <h6 style="vertical-align: middle; color:blue; font-weight: 300;">2022-11-17 15:27:45</h6>
+                            </th>
+                            <td style="vertical-align: middle;color:blue; font-weight: 300;" ><h6>***n</h6></td>
+                            <td style="vertical-align: middle;color:red; font-weight: 300;"><h6>입찰자이면 내용 표시</h6></td>
+                            <td style="vertical-align: middle;color:blue; font-weight: 300;"><h6>100,000P</h6></td>
                         </tr>
                         <tr>
-                            <th>배송기간</th>
-                            <td>배송마감전 주문건에 한해<br/>당일배송시 20시~22시 도착<br/>(매장별 배송마감시간 상이)</td>
-                            <td>배송마감전 주문건에 한해<br/>2~3일내(도서산간+1일)<br/>(매장별 배송마감시간 상이)</td>
-                            <td>선택한 예약시간내</td>
-                            <td>주문일로부터 1~2일내</td>
+                            <th scope="row">
+                                <h6 style="vertical-align: middle; color:blue; font-weight: 300;">2022-11-17 15:27:45</h6>
+                            </th>
+                            <td style="vertical-align: middle;color:blue; font-weight: 300;" ><h6>***n</h6></td>
+                            <td style="vertical-align: middle;color:red; font-weight: 300;"><h6>-</h6></td>
+                            <td style="vertical-align: middle;color:blue; font-weight: 300;"><h6>100,000P</h6></td>
                         </tr>
                         <tr>
-                            <th>배송비</th>
-                            <td>4,000원 부과</td>
-                            <td>4,000원 부과<br/>(도서산간 추가비용)</td>
-                            <td>매장과의 거리에 따라<br/>거리요율적용</td>
-                            <td>무료</td>
+                            <th scope="row">
+                                <h6 style="vertical-align: middle; color:blue; font-weight: 300;">2022-11-17 15:27:45</h6>
+                            </th>
+                            <td style="vertical-align: middle;color:blue; font-weight: 300;" ><h6>***n</h6></td>
+                            <td style="vertical-align: middle;color:red; font-weight: 300;"><h6>-</h6></td>
+                            <td style="vertical-align: middle;color:blue; font-weight: 300;"><h6>100,000P</h6></td>
                         </tr>
                         <tr>
-                            <th>배송지역</th>
-                            <td>서울,경기일부지역<br/>당일배송문의1577-5210</td>
-                            <td>수도권을 포함한 전국<br/>수도권(배송문의1588-1300)<br/>영남(배송문의1588-1255)</td>
-                            <td>보유매장 인접지역</td>
-                            <td>오프라인매장 참고</td>
+                            <th scope="row">
+                                <h6 style="vertical-align: middle; color:blue; font-weight: 300;">2022-11-17 15:27:45</h6>
+                            </th>
+                            <td style="vertical-align: middle;color:blue; font-weight: 300;" ><h6>***n</h6></td>
+                            <td style="vertical-align: middle;color:red; font-weight: 300;"><h6>-</h6></td>
+                            <td style="vertical-align: middle;color:blue; font-weight: 300;"><h6>100,000P</h6></td>
                         </tr>
                         <tr>
-                            <th>기타</th>
-                            <td>일요일, 공휴일 포함될 경우<br/>추가 배송기일 소요</td>
-                            <td>일요일, 공휴일 포함될 경우<br/>추가 배송기일 소요</td>
-                            <td>일부지역에 한함</td>
-                            <td>수도권과 영남매장간<br/>물류이동은 불가</td>
+                            <th scope="row">
+                                <h6 style="vertical-align: middle; color:blue; font-weight: 300;">2022-11-17 15:27:45</h6>
+                            </th>
+                            <td style="vertical-align: middle;color:blue; font-weight: 300;" ><h6>***n</h6></td>
+                            <td style="vertical-align: middle;color:red; font-weight: 300;"><h6>-</h6></td>
+                            <td style="vertical-align: middle;color:blue; font-weight: 300;"><h6>100,000P</h6></td>
                         </tr>
                         </tbody>
                     </table>
-                    <div class="mb-3"><strong>프리미엄 배송</strong></div>
-                    <ul>
-                        <li>귀중품 운송 서비스社 ‘발렉스’와의 제휴로, 고객님의 소중한 상품을 안전하게 전달해드리는 구구스만의 차별화된 프리미엄 배송 서비스입니다.</li>
-                    </ul>
-                    <div class="mb-3"><strong>무상 또는 유상 AS서비스 안내</strong></div>
-                    <ul>
-                        <li>구구스 구매건은 직접 AS원칙으로 하며, 정식 브랜드 매장의 부속 및 AS방법과는 상이할 수 있습니다.</li>
-                        <li>고객님의 부주의로 인한 경우 A/S가 안될수도 있습니다.</li>
-                    </ul>
                 </div>
             </div>
-            <div class="row gy-4 mb-5 bg-light" id="productInfo">
+            <div class="gy-4 mb-5" id="auctionDetail">
                 <ul class="nav nav-tabs nav-justified">
                     <li class="nav-item">
-                        <a class="nav-link" stlye="color:#000000;" href="#ordAndPur">주문취소 및 구매제한 제도</a>
+                        <a class="nav-link" href="#auctionLog">입찰내역</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" stlye="color:#000000;" href="#delivery">배송안내</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" stlye="color:#000000;" href="#productInfo">상품 정보 제공 및 거래 조건</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" stlye="color:#000000;" href="#refund">반품 및 환불제도</a>
+                        <a class="nav-link active" href="#auctionDetail">경매상품정보</a>
                     </li>
                 </ul>
                 <div>
-                    <div class="mb-3"><strong>상품 정보 제공에 대한 고시</strong></div>
-                    <table class="table">
-                        <tbody>
-                        <tr>
-                            <th>소재/순도/밴드재질</th>
-                            <td>상품 상세 정보에 별도 표기</td>
-                        </tr>
-                        <tr>
-                            <th>중량</th>
-                            <td>중고 상품 특성상 확인 불가</td>
-                        </tr>
-                        <tr>
-                            <th>제조자/수입자</th>
-                            <td>중고 상품 특성상 확인 불가</td>
-                        </tr>
-                        <tr>
-                            <th>제조국</th>
-                            <td>상품 상세 정보에 별도 표기 or 중고 상품 특성상 확인 불가</td>
-                        </tr>
-                        <tr>
-                            <th>치수</th>
-                            <td>상품 상세 정보에 별도 표기</td>
-                        </tr>
-                        <tr>
-                            <th>착용 시 주의사항</th>
-                            <td>
-                                ★ 충격에 의한 파손 및 훼손 주의<br/>
-                                - 쥬얼리 제품이 딱딱한 물체에 닿아 충격을 받지 않도록 보호하고 거친 물체로 인해 보석의<br/>
-                                표면이 손상되지 않도록 주의 하여 주십시오.<br/>
-                                - 다이아몬드 역시 강한 충격을 받게 되면 깨질 수 있습니다.<br/>
-                                - 애머시스트, 에머랄드, 쿤자이트, 오팔, 진주, 페리도트, 탄자나이트 및 투어멀린과 같은<br/>
-                                보석류는 매우 연약하여 쉽게 흠집이 날 수 있습니다.<br/>
-                                - 에나멜 또한 외부 충격으로 인해 벗겨지거나 긁힐 수 있습니다.<br/>
-                                - 보석끼리도 서로 부딪혀 긁히거나 마모되어 제품에서 떨어져 나갈 수 있습니다. 그러므로<br/>
-                                마모에 취약한 반지나 팔찌를 함께 보관하지 마십시오.<br/>
-                                - 지나친 온도 변화,향수, 화장품, 초음파 세척 및 가정용 화학 제품 또한 주얼리에 손상을<br/>
-                                입힐 수 있습니다<br/>
-                                - 골드 주얼리의 경우, 가정용 표백제에 닿으면 탈색되거나 손상될 수 있으므로 주의 해야<br/>
-                                합니다.
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>주요 사양</th>
-                            <td>상품 상세 정보에 별도 표기</td>
-                        </tr>
-                        <tr>
-                            <th>보증서 제공여부</th>
-                            <td>상품 상세 정보에 별도 표기</td>
-                        </tr>
-                        <tr>
-                            <th>보증서</th>
-                            <td>있음</td>
-                        </tr>
-                        <tr>
-                            <th>품질보증기준</th>
-                            <td>중고 상품 특성상 확인 불가하나 구매자 요청시 유상 수선 가능</td>
-                        </tr>
-                        <tr>
-                            <th>A/S 책임자와 전화번호</th>
-                            <td>고객센터 1544-9964 (중고 상품으로 유상 A/S)</td>
-                        </tr>
-                        <tr>
-                            <th>예상배송일</th>
-                            <td>결제일로부터 영업일 2일 이내 발송</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <div class="mb-3"><strong>거래조건</strong></div>
-                    <table class="table">
-                        <tbody>
-                        <tr>
-                            <th>재화등의 공급방법 및 공급시기</th>
-                        </tr>
-                        <tr>
-                            <td>결제일로부터 영업일 2일 이내 택배 발송</td>
-                        </tr>
-                        <tr>
-                            <th>청약철회 및 계약의 해제에 관한 사항</th>
-                        </tr>
-                        <tr>
-                            <td>이용약관에 별도 표기</td>
-                        </tr>
-                        <tr>
-                            <th>재화등의 교환/반품/보증과 그 대금 환불 및 환불의 지연에 따른 배상금 지급의 조건/절차</th>
-                        </tr>
-                        <tr>
-                            <td>이용약관에 별도 표기</td>
-                        </tr>
-                        <tr>
-                            <th>소비자피해보상의 처리, 재화등에 대한 불만 처리 및 소비자와 사업자 사이의 분쟁처리에 관한 사항</th>
-                        </tr>
-                        <tr>
-                            <td>이용약관에 별도 표기</td>
-                        </tr>
-                        <tr>
-                            <th>거래에 관한 약관의 내용 또는 확인할 수 있는 방법</th>
-                        </tr>
-                        <tr>
-                            <td>사이트 하단 이용약관 메뉴에서 확인 가능</td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    <div class="gy-4 mb-5 bg-light" style="display:flex;justify-content: center">
+                        <div>
+                            <div class="mt-3 mb-3 text-center"><strong>상품설명💁🏻‍️</strong></div>
+                            <div class="mb-3 text-center" th:text="${auction.productResponse.productContent}">상품설명입니다~~</div>
+                            <div class="mb-3" th:each="img:${auction.productResponse.imageList}"> <img src="#" th:src="${img.filePath}"></div>
+                        </div>
+                    </div>
+                    <!--문의사항 -->
+                    <div class="row gy-4 mb-5 bg-light" id="ordAndPur">
+                        <ul class="nav nav-tabs nav-justified">
+                            <li class="nav-item">
+                                <a class="nav-link active" stlye="color:#000000;" href="#ordAndPur">주문취소 및 구매제한 제도</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" stlye="color:#000000;" href="#delivery">배송안내</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" stlye="color:#000000;" href="#productInfo">상품 정보 제공 및 거래 조건</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" stlye="color:#000000;" href="#refund">반품 및 환불제도</a>
+                            </li>
+                        </ul>
+                        <div>
+                            <div class="mb-3"><strong>주문취소</strong></div>
+                            <ul>
+                                <li>상품대금을 결제하기 전에는 언제든지 주문취소 가능.</li>
+                                <li>무통장 입금 시 주문 후 익일 오후7시(주말 및 공휴일 제외)이내에 미입금 되면 자동주문취소 및 허수구매로 간주하여 벌점부과.</li>
+                                <li>
+                                    허수구매 : 무통장입금 방식으로 주문 후 익일 오후7시(주말 및 공휴일 제외)이내에 미입금으로 인한 자동주문취소 구매건<br/>
+                                    단, 자동취소 전 주문취소 또는 전화, 게시판 등을 통해 주문취소를 알린경우 허수구매에서 제외되며,<br/>
+                                    업데이트 미리보기 상품(오후8시30분 ~ 익일오전11시)은 구매취소를 요청하셔도 허수구매율에서 구제가 되지 않습니다.
+                                </li>
+                            </ul>
+                            <div class="mb-3"><strong>구매제한</strong></div>
+                            <ul>
+                                <li>최근 주문건(10건) 대비 허수구매가 6건(허수구매율 60%) 이상이면 아래 상품들은 구매가 불가능 합니다<br/>
+                                    - 업데이트 미리보기 상품 및 최근 업데이트 후 3일 이내의 상품<br/>
+                                    - 가격조정 후 3일 이내의 상품</li>
+                                <li>원활한 상품회전을 위하여 배송건에 대한 반품율이 과도할 시에는 거래정지나 회원탈퇴 등의 조치를 취합니다.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row gy-4 mb-5 bg-light" id="delivery">
+                        <ul class="nav nav-tabs nav-justified">
+                            <li class="nav-item">
+                                <a class="nav-link" stlye="color:#000000;" href="#ordAndPur">주문취소 및 구매제한 제도</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" stlye="color:#000000;" href="#delivery">배송안내</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" stlye="color:#000000;" href="#productInfo">상품 정보 제공 및 거래 조건</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" stlye="color:#000000;" href="#refund">반품 및 환불제도</a>
+                            </li>
+                        </ul>
+                        <div>
+                            <ul>
+                                <li>배송방법 : 일반택배, 프리미엄배송, 매장픽업</li>
+                                <li>주문하신 상품의 특성 및 배송 지역에 따라 분류됩니다.</li>
+                                <li>
+                                    매장 픽업(보고구매)는 구구스 전용차량에 의해 이동되며, 지정된 매장으로 도착 시 고객님께 문자 또는 전화로 알려드립니다.(토요일 이용불가)
+                                </li>
+                                <li>온라인 판매점 구매 전 게시판으로 재고 확인 부탁드립니다.(구구스 매장 이동 및 당일 배송 불가)</li>
+                                <li>이벤트 행사장 상품은 배송기간이 4~5일 소요됩니다.</li>
+                            </ul>
+                            <div class="mb-3"><strong>보유매장별 배송마감 안내</strong></div>
+                            <ul>
+                                <li>수도권 : 월~토 오전 10시30분</li>
+                                <li>충청권 : 월~금 오전 10시30분</li>
+                                <li>영남권 : 월~토 오전 10시30분</li>
+                                <li>온라인 판매점 : 월~금(배송마감시간 상품별 고지)</li>
+                                <li style="color: red;">운송업체의 사정 또는 기상악화 시 익일 발송될 수 있습니다.</li>
+                            </ul>
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>구분</th>
+                                    <th>택배배송(당일)</th>
+                                    <th>택배배송(전국)</th>
+                                    <th>익스프레스배송(퀵서비스)</th>
+                                    <th>매장픽업(보고구매)</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th>특징</th>
+                                    <td>택배업체를 통해 배송<br/>(서울, 경기일부지역)</td>
+                                    <td>택배업체를 통해 배송<br/>(수도권포함한 전국)</td>
+                                    <td>퀵서비스, 지하철 택배 등</td>
+                                    <td>원하는 매장으로 물류이동 후<br/>고객이 직접 수령</td>
+                                </tr>
+                                <tr>
+                                    <th>배송기간</th>
+                                    <td>배송마감전 주문건에 한해<br/>당일배송시 20시~22시 도착<br/>(매장별 배송마감시간 상이)</td>
+                                    <td>배송마감전 주문건에 한해<br/>2~3일내(도서산간+1일)<br/>(매장별 배송마감시간 상이)</td>
+                                    <td>선택한 예약시간내</td>
+                                    <td>주문일로부터 1~2일내</td>
+                                </tr>
+                                <tr>
+                                    <th>배송비</th>
+                                    <td>4,000원 부과</td>
+                                    <td>4,000원 부과<br/>(도서산간 추가비용)</td>
+                                    <td>매장과의 거리에 따라<br/>거리요율적용</td>
+                                    <td>무료</td>
+                                </tr>
+                                <tr>
+                                    <th>배송지역</th>
+                                    <td>서울,경기일부지역<br/>당일배송문의1577-5210</td>
+                                    <td>수도권을 포함한 전국<br/>수도권(배송문의1588-1300)<br/>영남(배송문의1588-1255)</td>
+                                    <td>보유매장 인접지역</td>
+                                    <td>오프라인매장 참고</td>
+                                </tr>
+                                <tr>
+                                    <th>기타</th>
+                                    <td>일요일, 공휴일 포함될 경우<br/>추가 배송기일 소요</td>
+                                    <td>일요일, 공휴일 포함될 경우<br/>추가 배송기일 소요</td>
+                                    <td>일부지역에 한함</td>
+                                    <td>수도권과 영남매장간<br/>물류이동은 불가</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="mb-3"><strong>프리미엄 배송</strong></div>
+                            <ul>
+                                <li>귀중품 운송 서비스社 ‘발렉스’와의 제휴로, 고객님의 소중한 상품을 안전하게 전달해드리는 구구스만의 차별화된 프리미엄 배송 서비스입니다.</li>
+                            </ul>
+                            <div class="mb-3"><strong>무상 또는 유상 AS서비스 안내</strong></div>
+                            <ul>
+                                <li>구구스 구매건은 직접 AS원칙으로 하며, 정식 브랜드 매장의 부속 및 AS방법과는 상이할 수 있습니다.</li>
+                                <li>고객님의 부주의로 인한 경우 A/S가 안될수도 있습니다.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row gy-4 mb-5 bg-light" id="productInfo">
+                        <ul class="nav nav-tabs nav-justified">
+                            <li class="nav-item">
+                                <a class="nav-link" stlye="color:#000000;" href="#ordAndPur">주문취소 및 구매제한 제도</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" stlye="color:#000000;" href="#delivery">배송안내</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" stlye="color:#000000;" href="#productInfo">상품 정보 제공 및 거래 조건</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" stlye="color:#000000;" href="#refund">반품 및 환불제도</a>
+                            </li>
+                        </ul>
+                        <div>
+                            <div class="mb-3"><strong>상품 정보 제공에 대한 고시</strong></div>
+                            <table class="table">
+                                <tbody>
+                                <tr>
+                                    <th>소재/순도/밴드재질</th>
+                                    <td>상품 상세 정보에 별도 표기</td>
+                                </tr>
+                                <tr>
+                                    <th>중량</th>
+                                    <td>중고 상품 특성상 확인 불가</td>
+                                </tr>
+                                <tr>
+                                    <th>제조자/수입자</th>
+                                    <td>중고 상품 특성상 확인 불가</td>
+                                </tr>
+                                <tr>
+                                    <th>제조국</th>
+                                    <td>상품 상세 정보에 별도 표기 or 중고 상품 특성상 확인 불가</td>
+                                </tr>
+                                <tr>
+                                    <th>치수</th>
+                                    <td>상품 상세 정보에 별도 표기</td>
+                                </tr>
+                                <tr>
+                                    <th>착용 시 주의사항</th>
+                                    <td>
+                                        ★ 충격에 의한 파손 및 훼손 주의<br/>
+                                        - 쥬얼리 제품이 딱딱한 물체에 닿아 충격을 받지 않도록 보호하고 거친 물체로 인해 보석의<br/>
+                                        표면이 손상되지 않도록 주의 하여 주십시오.<br/>
+                                        - 다이아몬드 역시 강한 충격을 받게 되면 깨질 수 있습니다.<br/>
+                                        - 애머시스트, 에머랄드, 쿤자이트, 오팔, 진주, 페리도트, 탄자나이트 및 투어멀린과 같은<br/>
+                                        보석류는 매우 연약하여 쉽게 흠집이 날 수 있습니다.<br/>
+                                        - 에나멜 또한 외부 충격으로 인해 벗겨지거나 긁힐 수 있습니다.<br/>
+                                        - 보석끼리도 서로 부딪혀 긁히거나 마모되어 제품에서 떨어져 나갈 수 있습니다. 그러므로<br/>
+                                        마모에 취약한 반지나 팔찌를 함께 보관하지 마십시오.<br/>
+                                        - 지나친 온도 변화,향수, 화장품, 초음파 세척 및 가정용 화학 제품 또한 주얼리에 손상을<br/>
+                                        입힐 수 있습니다<br/>
+                                        - 골드 주얼리의 경우, 가정용 표백제에 닿으면 탈색되거나 손상될 수 있으므로 주의 해야<br/>
+                                        합니다.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>주요 사양</th>
+                                    <td>상품 상세 정보에 별도 표기</td>
+                                </tr>
+                                <tr>
+                                    <th>보증서 제공여부</th>
+                                    <td>상품 상세 정보에 별도 표기</td>
+                                </tr>
+                                <tr>
+                                    <th>보증서</th>
+                                    <td>있음</td>
+                                </tr>
+                                <tr>
+                                    <th>품질보증기준</th>
+                                    <td>중고 상품 특성상 확인 불가하나 구매자 요청시 유상 수선 가능</td>
+                                </tr>
+                                <tr>
+                                    <th>A/S 책임자와 전화번호</th>
+                                    <td>고객센터 1544-9964 (중고 상품으로 유상 A/S)</td>
+                                </tr>
+                                <tr>
+                                    <th>예상배송일</th>
+                                    <td>결제일로부터 영업일 2일 이내 발송</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="mb-3"><strong>거래조건</strong></div>
+                            <table class="table">
+                                <tbody>
+                                <tr>
+                                    <th>재화등의 공급방법 및 공급시기</th>
+                                </tr>
+                                <tr>
+                                    <td>결제일로부터 영업일 2일 이내 택배 발송</td>
+                                </tr>
+                                <tr>
+                                    <th>청약철회 및 계약의 해제에 관한 사항</th>
+                                </tr>
+                                <tr>
+                                    <td>이용약관에 별도 표기</td>
+                                </tr>
+                                <tr>
+                                    <th>재화등의 교환/반품/보증과 그 대금 환불 및 환불의 지연에 따른 배상금 지급의 조건/절차</th>
+                                </tr>
+                                <tr>
+                                    <td>이용약관에 별도 표기</td>
+                                </tr>
+                                <tr>
+                                    <th>소비자피해보상의 처리, 재화등에 대한 불만 처리 및 소비자와 사업자 사이의 분쟁처리에 관한 사항</th>
+                                </tr>
+                                <tr>
+                                    <td>이용약관에 별도 표기</td>
+                                </tr>
+                                <tr>
+                                    <th>거래에 관한 약관의 내용 또는 확인할 수 있는 방법</th>
+                                </tr>
+                                <tr>
+                                    <td>사이트 하단 이용약관 메뉴에서 확인 가능</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row gy-4 mb-5 bg-light" id="refund">
+                        <ul class="nav nav-tabs nav-justified">
+                            <li class="nav-item">
+                                <a class="nav-link" stlye="color:#000000;" href="#ordAndPur">주문취소 및 구매제한 제도</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" stlye="color:#000000;" href="#delivery">배송안내</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" stlye="color:#000000;" href="#productInfo">상품 정보 제공 및 거래 조건</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" stlye="color:#000000;" href="#refund">반품 및 환불제도</a>
+                            </li>
+                        </ul>
+                        <div>
+                            <div class="mb-3"><strong>반품 안내</strong></div>
+                            <div class="mb-3">반품에 관한 사항은 고객센터로 문의주시기 바랍니다. 고객센터 1544-9964</div>
+                            <table class="table">
+                                <tbody>
+                                <tr>
+                                    <th>발송매장</th>
+                                    <td>압구점</td>
+                                </tr>
+                                <tr>
+                                    <th>반품배송비</th>
+                                    <td>왕복배송비 부담 (상품 금액만 환불)<br/>
+                                        전자상거래 등에서의 소비자보호에 관한 법률 제17조(청약 철회등)9항에 의거 소비자의 사정에
+                                        의한 청약 철회 시 배송비는 소비자 부담입니다.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>보내실 곳</th>
+                                    <td>(우)06149 서울특별시 강남구 역삼동 694-10 택시공제조합빌딩 B1 (주)구구스</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="mb-3"><strong>반품 사유에 따른 요청 가능 기간</strong></div>
+                            <div class="mb-3">반품 시 먼저 구구스와 연락하셔서 반품사유, 배송비, 반품지 주소 등을 접수하신 후 반품상품을 발송해 주시기 바랍니다.</div>
+                            <ul>
+                                <li>구매자 단순 변심은 상품 수령 후 7일 이내만 가능합니다.</li>
+                                <li>반품 시 소요되는 왕복 택배비는 구매자 부담으로, 상품 금액만 환불됩니다.</li>
+                                <li>
+                                    반품 편도 택배비는 배송업체에 선지불 후 발송해주셔야 합니다.(착불 반송 시 상품 금액에서 공제 후 환불됩니다)
+                                </li>
+                            </ul>
+                            <div class="mb-3"><strong>반품 불가능 사유</strong></div>
+                            <div class="mb-3">아래와 같은 경우 반품이 불가능합니다</div>
+                            <ul>
+                                <li>반품 요청 기간이 지난 경우</li>
+                                <li>구매자의 책임 있는 사유로 상품 및 부속품 등이 멸실 또는 훼손된 경우(단, 상품의 내용을 확인하기 위하여 포장 등을 훼손한 경우는 제외)</li>
+                                <li>
+                                    구매자의 사용 또는 일부 소비에 의하여 상품의 가치가 현저히 감소한 경우(사용방지텍, 라벨, 장식등이 떨어진 경우)
+                                </li>
+                                <li>
+                                    시간의 경과에 의하여 재판매가 곤란할 정도의 상품 등의 가치가 현저히 감소한 경우
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--문의사항 종료 -->
                 </div>
             </div>
-            <div class="row gy-4 mb-5 bg-light" id="refund">
-                <ul class="nav nav-tabs nav-justified">
-                    <li class="nav-item">
-                        <a class="nav-link" stlye="color:#000000;" href="#ordAndPur">주문취소 및 구매제한 제도</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" stlye="color:#000000;" href="#delivery">배송안내</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" stlye="color:#000000;" href="#productInfo">상품 정보 제공 및 거래 조건</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" stlye="color:#000000;" href="#refund">반품 및 환불제도</a>
-                    </li>
-                </ul>
-                <div>
-                    <div class="mb-3"><strong>반품 안내</strong></div>
-                    <div class="mb-3">반품에 관한 사항은 고객센터로 문의주시기 바랍니다. 고객센터 1544-9964</div>
-                    <table class="table">
-                        <tbody>
-                        <tr>
-                            <th>발송매장</th>
-                            <td>압구점</td>
-                        </tr>
-                        <tr>
-                            <th>반품배송비</th>
-                            <td>왕복배송비 부담 (상품 금액만 환불)<br/>
-                                전자상거래 등에서의 소비자보호에 관한 법률 제17조(청약 철회등)9항에 의거 소비자의 사정에
-                                의한 청약 철회 시 배송비는 소비자 부담입니다.
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>보내실 곳</th>
-                            <td>(우)06149 서울특별시 강남구 역삼동 694-10 택시공제조합빌딩 B1 (주)구구스</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <div class="mb-3"><strong>반품 사유에 따른 요청 가능 기간</strong></div>
-                    <div class="mb-3">반품 시 먼저 구구스와 연락하셔서 반품사유, 배송비, 반품지 주소 등을 접수하신 후 반품상품을 발송해 주시기 바랍니다.</div>
-                    <ul>
-                        <li>구매자 단순 변심은 상품 수령 후 7일 이내만 가능합니다.</li>
-                        <li>반품 시 소요되는 왕복 택배비는 구매자 부담으로, 상품 금액만 환불됩니다.</li>
-                        <li>
-                            반품 편도 택배비는 배송업체에 선지불 후 발송해주셔야 합니다.(착불 반송 시 상품 금액에서 공제 후 환불됩니다)
-                        </li>
-                    </ul>
-                    <div class="mb-3"><strong>반품 불가능 사유</strong></div>
-                    <div class="mb-3">아래와 같은 경우 반품이 불가능합니다</div>
-                    <ul>
-                        <li>반품 요청 기간이 지난 경우</li>
-                        <li>구매자의 책임 있는 사유로 상품 및 부속품 등이 멸실 또는 훼손된 경우(단, 상품의 내용을 확인하기 위하여 포장 등을 훼손한 경우는 제외)</li>
-                        <li>
-                            구매자의 사용 또는 일부 소비에 의하여 상품의 가치가 현저히 감소한 경우(사용방지텍, 라벨, 장식등이 떨어진 경우)
-                        </li>
-                        <li>
-                            시간의 경과에 의하여 재판매가 곤란할 정도의 상품 등의 가치가 현저히 감소한 경우
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <!--문의사항 종료 -->
+
+
+<!--            <div class="gy-4 mb-5 bg-light" style="display:flex;justify-content: center">-->
+<!--                <div>-->
+<!--                    <div class="mb-3 text-center"><strong>상품설명💁🏻‍️</strong></div>-->
+<!--                    <div class="mb-3 text-center" th:text="${auction.productResponse.productContent}">상품설명입니다~~</div>-->
+<!--                    <div class="mb-3" th:each="img:${auction.productResponse.imageList}"> <img src="#" th:src="${img.filePath}"></div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            &lt;!&ndash;문의사항 &ndash;&gt;-->
+<!--            <div class="row gy-4 mb-5 bg-light" id="ordAndPur">-->
+<!--                <ul class="nav nav-tabs nav-justified">-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link active" stlye="color:#000000;" href="#ordAndPur">주문취소 및 구매제한 제도</a>-->
+<!--                    </li>-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" stlye="color:#000000;" href="#delivery">배송안내</a>-->
+<!--                    </li>-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" stlye="color:#000000;" href="#productInfo">상품 정보 제공 및 거래 조건</a>-->
+<!--                    </li>-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" stlye="color:#000000;" href="#refund">반품 및 환불제도</a>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--                <div>-->
+<!--                    <div class="mb-3"><strong>주문취소</strong></div>-->
+<!--                    <ul>-->
+<!--                        <li>상품대금을 결제하기 전에는 언제든지 주문취소 가능.</li>-->
+<!--                        <li>무통장 입금 시 주문 후 익일 오후7시(주말 및 공휴일 제외)이내에 미입금 되면 자동주문취소 및 허수구매로 간주하여 벌점부과.</li>-->
+<!--                        <li>-->
+<!--                            허수구매 : 무통장입금 방식으로 주문 후 익일 오후7시(주말 및 공휴일 제외)이내에 미입금으로 인한 자동주문취소 구매건<br/>-->
+<!--                            단, 자동취소 전 주문취소 또는 전화, 게시판 등을 통해 주문취소를 알린경우 허수구매에서 제외되며,<br/>-->
+<!--                            업데이트 미리보기 상품(오후8시30분 ~ 익일오전11시)은 구매취소를 요청하셔도 허수구매율에서 구제가 되지 않습니다.-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                    <div class="mb-3"><strong>구매제한</strong></div>-->
+<!--                    <ul>-->
+<!--                        <li>최근 주문건(10건) 대비 허수구매가 6건(허수구매율 60%) 이상이면 아래 상품들은 구매가 불가능 합니다<br/>-->
+<!--                            - 업데이트 미리보기 상품 및 최근 업데이트 후 3일 이내의 상품<br/>-->
+<!--                            - 가격조정 후 3일 이내의 상품</li>-->
+<!--                        <li>원활한 상품회전을 위하여 배송건에 대한 반품율이 과도할 시에는 거래정지나 회원탈퇴 등의 조치를 취합니다.</li>-->
+<!--                    </ul>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="row gy-4 mb-5 bg-light" id="delivery">-->
+<!--                <ul class="nav nav-tabs nav-justified">-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" stlye="color:#000000;" href="#ordAndPur">주문취소 및 구매제한 제도</a>-->
+<!--                    </li>-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link active" stlye="color:#000000;" href="#delivery">배송안내</a>-->
+<!--                    </li>-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" stlye="color:#000000;" href="#productInfo">상품 정보 제공 및 거래 조건</a>-->
+<!--                    </li>-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" stlye="color:#000000;" href="#refund">반품 및 환불제도</a>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--                <div>-->
+<!--                    <ul>-->
+<!--                        <li>배송방법 : 일반택배, 프리미엄배송, 매장픽업</li>-->
+<!--                        <li>주문하신 상품의 특성 및 배송 지역에 따라 분류됩니다.</li>-->
+<!--                        <li>-->
+<!--                            매장 픽업(보고구매)는 구구스 전용차량에 의해 이동되며, 지정된 매장으로 도착 시 고객님께 문자 또는 전화로 알려드립니다.(토요일 이용불가)-->
+<!--                        </li>-->
+<!--                        <li>온라인 판매점 구매 전 게시판으로 재고 확인 부탁드립니다.(구구스 매장 이동 및 당일 배송 불가)</li>-->
+<!--                        <li>이벤트 행사장 상품은 배송기간이 4~5일 소요됩니다.</li>-->
+<!--                    </ul>-->
+<!--                    <div class="mb-3"><strong>보유매장별 배송마감 안내</strong></div>-->
+<!--                    <ul>-->
+<!--                        <li>수도권 : 월~토 오전 10시30분</li>-->
+<!--                        <li>충청권 : 월~금 오전 10시30분</li>-->
+<!--                        <li>영남권 : 월~토 오전 10시30분</li>-->
+<!--                        <li>온라인 판매점 : 월~금(배송마감시간 상품별 고지)</li>-->
+<!--                        <li style="color: red;">운송업체의 사정 또는 기상악화 시 익일 발송될 수 있습니다.</li>-->
+<!--                    </ul>-->
+<!--                    <table class="table">-->
+<!--                        <thead>-->
+<!--                        <tr>-->
+<!--                            <th>구분</th>-->
+<!--                            <th>택배배송(당일)</th>-->
+<!--                            <th>택배배송(전국)</th>-->
+<!--                            <th>익스프레스배송(퀵서비스)</th>-->
+<!--                            <th>매장픽업(보고구매)</th>-->
+<!--                        </tr>-->
+<!--                        </thead>-->
+<!--                        <tbody>-->
+<!--                        <tr>-->
+<!--                            <th>특징</th>-->
+<!--                            <td>택배업체를 통해 배송<br/>(서울, 경기일부지역)</td>-->
+<!--                            <td>택배업체를 통해 배송<br/>(수도권포함한 전국)</td>-->
+<!--                            <td>퀵서비스, 지하철 택배 등</td>-->
+<!--                            <td>원하는 매장으로 물류이동 후<br/>고객이 직접 수령</td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <th>배송기간</th>-->
+<!--                            <td>배송마감전 주문건에 한해<br/>당일배송시 20시~22시 도착<br/>(매장별 배송마감시간 상이)</td>-->
+<!--                            <td>배송마감전 주문건에 한해<br/>2~3일내(도서산간+1일)<br/>(매장별 배송마감시간 상이)</td>-->
+<!--                            <td>선택한 예약시간내</td>-->
+<!--                            <td>주문일로부터 1~2일내</td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <th>배송비</th>-->
+<!--                            <td>4,000원 부과</td>-->
+<!--                            <td>4,000원 부과<br/>(도서산간 추가비용)</td>-->
+<!--                            <td>매장과의 거리에 따라<br/>거리요율적용</td>-->
+<!--                            <td>무료</td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <th>배송지역</th>-->
+<!--                            <td>서울,경기일부지역<br/>당일배송문의1577-5210</td>-->
+<!--                            <td>수도권을 포함한 전국<br/>수도권(배송문의1588-1300)<br/>영남(배송문의1588-1255)</td>-->
+<!--                            <td>보유매장 인접지역</td>-->
+<!--                            <td>오프라인매장 참고</td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <th>기타</th>-->
+<!--                            <td>일요일, 공휴일 포함될 경우<br/>추가 배송기일 소요</td>-->
+<!--                            <td>일요일, 공휴일 포함될 경우<br/>추가 배송기일 소요</td>-->
+<!--                            <td>일부지역에 한함</td>-->
+<!--                            <td>수도권과 영남매장간<br/>물류이동은 불가</td>-->
+<!--                        </tr>-->
+<!--                        </tbody>-->
+<!--                    </table>-->
+<!--                    <div class="mb-3"><strong>프리미엄 배송</strong></div>-->
+<!--                    <ul>-->
+<!--                        <li>귀중품 운송 서비스社 ‘발렉스’와의 제휴로, 고객님의 소중한 상품을 안전하게 전달해드리는 구구스만의 차별화된 프리미엄 배송 서비스입니다.</li>-->
+<!--                    </ul>-->
+<!--                    <div class="mb-3"><strong>무상 또는 유상 AS서비스 안내</strong></div>-->
+<!--                    <ul>-->
+<!--                        <li>구구스 구매건은 직접 AS원칙으로 하며, 정식 브랜드 매장의 부속 및 AS방법과는 상이할 수 있습니다.</li>-->
+<!--                        <li>고객님의 부주의로 인한 경우 A/S가 안될수도 있습니다.</li>-->
+<!--                    </ul>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="row gy-4 mb-5 bg-light" id="productInfo">-->
+<!--                <ul class="nav nav-tabs nav-justified">-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" stlye="color:#000000;" href="#ordAndPur">주문취소 및 구매제한 제도</a>-->
+<!--                    </li>-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" stlye="color:#000000;" href="#delivery">배송안내</a>-->
+<!--                    </li>-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link active" stlye="color:#000000;" href="#productInfo">상품 정보 제공 및 거래 조건</a>-->
+<!--                    </li>-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" stlye="color:#000000;" href="#refund">반품 및 환불제도</a>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--                <div>-->
+<!--                    <div class="mb-3"><strong>상품 정보 제공에 대한 고시</strong></div>-->
+<!--                    <table class="table">-->
+<!--                        <tbody>-->
+<!--                        <tr>-->
+<!--                            <th>소재/순도/밴드재질</th>-->
+<!--                            <td>상품 상세 정보에 별도 표기</td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <th>중량</th>-->
+<!--                            <td>중고 상품 특성상 확인 불가</td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <th>제조자/수입자</th>-->
+<!--                            <td>중고 상품 특성상 확인 불가</td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <th>제조국</th>-->
+<!--                            <td>상품 상세 정보에 별도 표기 or 중고 상품 특성상 확인 불가</td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <th>치수</th>-->
+<!--                            <td>상품 상세 정보에 별도 표기</td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <th>착용 시 주의사항</th>-->
+<!--                            <td>-->
+<!--                                ★ 충격에 의한 파손 및 훼손 주의<br/>-->
+<!--                                - 쥬얼리 제품이 딱딱한 물체에 닿아 충격을 받지 않도록 보호하고 거친 물체로 인해 보석의<br/>-->
+<!--                                표면이 손상되지 않도록 주의 하여 주십시오.<br/>-->
+<!--                                - 다이아몬드 역시 강한 충격을 받게 되면 깨질 수 있습니다.<br/>-->
+<!--                                - 애머시스트, 에머랄드, 쿤자이트, 오팔, 진주, 페리도트, 탄자나이트 및 투어멀린과 같은<br/>-->
+<!--                                보석류는 매우 연약하여 쉽게 흠집이 날 수 있습니다.<br/>-->
+<!--                                - 에나멜 또한 외부 충격으로 인해 벗겨지거나 긁힐 수 있습니다.<br/>-->
+<!--                                - 보석끼리도 서로 부딪혀 긁히거나 마모되어 제품에서 떨어져 나갈 수 있습니다. 그러므로<br/>-->
+<!--                                마모에 취약한 반지나 팔찌를 함께 보관하지 마십시오.<br/>-->
+<!--                                - 지나친 온도 변화,향수, 화장품, 초음파 세척 및 가정용 화학 제품 또한 주얼리에 손상을<br/>-->
+<!--                                입힐 수 있습니다<br/>-->
+<!--                                - 골드 주얼리의 경우, 가정용 표백제에 닿으면 탈색되거나 손상될 수 있으므로 주의 해야<br/>-->
+<!--                                합니다.-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <th>주요 사양</th>-->
+<!--                            <td>상품 상세 정보에 별도 표기</td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <th>보증서 제공여부</th>-->
+<!--                            <td>상품 상세 정보에 별도 표기</td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <th>보증서</th>-->
+<!--                            <td>있음</td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <th>품질보증기준</th>-->
+<!--                            <td>중고 상품 특성상 확인 불가하나 구매자 요청시 유상 수선 가능</td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <th>A/S 책임자와 전화번호</th>-->
+<!--                            <td>고객센터 1544-9964 (중고 상품으로 유상 A/S)</td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <th>예상배송일</th>-->
+<!--                            <td>결제일로부터 영업일 2일 이내 발송</td>-->
+<!--                        </tr>-->
+<!--                        </tbody>-->
+<!--                    </table>-->
+<!--                    <div class="mb-3"><strong>거래조건</strong></div>-->
+<!--                    <table class="table">-->
+<!--                        <tbody>-->
+<!--                        <tr>-->
+<!--                            <th>재화등의 공급방법 및 공급시기</th>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <td>결제일로부터 영업일 2일 이내 택배 발송</td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <th>청약철회 및 계약의 해제에 관한 사항</th>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <td>이용약관에 별도 표기</td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <th>재화등의 교환/반품/보증과 그 대금 환불 및 환불의 지연에 따른 배상금 지급의 조건/절차</th>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <td>이용약관에 별도 표기</td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <th>소비자피해보상의 처리, 재화등에 대한 불만 처리 및 소비자와 사업자 사이의 분쟁처리에 관한 사항</th>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <td>이용약관에 별도 표기</td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <th>거래에 관한 약관의 내용 또는 확인할 수 있는 방법</th>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <td>사이트 하단 이용약관 메뉴에서 확인 가능</td>-->
+<!--                        </tr>-->
+<!--                        </tbody>-->
+<!--                    </table>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="row gy-4 mb-5 bg-light" id="refund">-->
+<!--                <ul class="nav nav-tabs nav-justified">-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" stlye="color:#000000;" href="#ordAndPur">주문취소 및 구매제한 제도</a>-->
+<!--                    </li>-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" stlye="color:#000000;" href="#delivery">배송안내</a>-->
+<!--                    </li>-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" stlye="color:#000000;" href="#productInfo">상품 정보 제공 및 거래 조건</a>-->
+<!--                    </li>-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link active" stlye="color:#000000;" href="#refund">반품 및 환불제도</a>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--                <div>-->
+<!--                    <div class="mb-3"><strong>반품 안내</strong></div>-->
+<!--                    <div class="mb-3">반품에 관한 사항은 고객센터로 문의주시기 바랍니다. 고객센터 1544-9964</div>-->
+<!--                    <table class="table">-->
+<!--                        <tbody>-->
+<!--                        <tr>-->
+<!--                            <th>발송매장</th>-->
+<!--                            <td>압구점</td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <th>반품배송비</th>-->
+<!--                            <td>왕복배송비 부담 (상품 금액만 환불)<br/>-->
+<!--                                전자상거래 등에서의 소비자보호에 관한 법률 제17조(청약 철회등)9항에 의거 소비자의 사정에-->
+<!--                                의한 청약 철회 시 배송비는 소비자 부담입니다.-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <th>보내실 곳</th>-->
+<!--                            <td>(우)06149 서울특별시 강남구 역삼동 694-10 택시공제조합빌딩 B1 (주)구구스</td>-->
+<!--                        </tr>-->
+<!--                        </tbody>-->
+<!--                    </table>-->
+<!--                    <div class="mb-3"><strong>반품 사유에 따른 요청 가능 기간</strong></div>-->
+<!--                    <div class="mb-3">반품 시 먼저 구구스와 연락하셔서 반품사유, 배송비, 반품지 주소 등을 접수하신 후 반품상품을 발송해 주시기 바랍니다.</div>-->
+<!--                    <ul>-->
+<!--                        <li>구매자 단순 변심은 상품 수령 후 7일 이내만 가능합니다.</li>-->
+<!--                        <li>반품 시 소요되는 왕복 택배비는 구매자 부담으로, 상품 금액만 환불됩니다.</li>-->
+<!--                        <li>-->
+<!--                            반품 편도 택배비는 배송업체에 선지불 후 발송해주셔야 합니다.(착불 반송 시 상품 금액에서 공제 후 환불됩니다)-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                    <div class="mb-3"><strong>반품 불가능 사유</strong></div>-->
+<!--                    <div class="mb-3">아래와 같은 경우 반품이 불가능합니다</div>-->
+<!--                    <ul>-->
+<!--                        <li>반품 요청 기간이 지난 경우</li>-->
+<!--                        <li>구매자의 책임 있는 사유로 상품 및 부속품 등이 멸실 또는 훼손된 경우(단, 상품의 내용을 확인하기 위하여 포장 등을 훼손한 경우는 제외)</li>-->
+<!--                        <li>-->
+<!--                            구매자의 사용 또는 일부 소비에 의하여 상품의 가치가 현저히 감소한 경우(사용방지텍, 라벨, 장식등이 떨어진 경우)-->
+<!--                        </li>-->
+<!--                        <li>-->
+<!--                            시간의 경과에 의하여 재판매가 곤란할 정도의 상품 등의 가치가 현저히 감소한 경우-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            &lt;!&ndash;문의사항 종료 &ndash;&gt;-->
         </div>
 
 
@@ -534,6 +964,9 @@
             }*/
         }
     })
+
+    //타이머
+
 </script>
 
 </body>
