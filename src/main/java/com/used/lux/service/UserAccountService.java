@@ -28,6 +28,10 @@ public class UserAccountService {
 
     private final UserAccountLogRepository userAccountLogRepository;
 
+    public  boolean exsistByUserEmail(String userName) {
+        return userAccountRepository.existsByUserEmail(userName);
+    }
+
     public Page<ProductOrder> orderlistAll(Long id, Pageable pageable){
         Page<ProductOrder> orders = productOrderRepository.findByUserAccountId(id,pageable);
         return orders;
