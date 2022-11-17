@@ -15,6 +15,7 @@ Spring Boot
 * Spring Data JPA
 * Thymeleaf
 * Spring Security
+* Spring WebSocket
 * H2 Database
 * MySQL Driver
 * Lombok
