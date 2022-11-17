@@ -56,9 +56,8 @@ public class AdAppraiseService {
                 state,appraisal.getAppraisalRequest().getUserAccount().getId(),appraisalId
         ));
         Appraisal result = appraisalRepository.save(appraisal);
-        //검수 임시 저장
-        if (result.getAppraisalRequest().getAppraisalState().getStateStep().equals("검수중")){}
-        else if (!result.getAppraisalGrade().equals("F")) {
+        if (result.getAppraisalRequest().getAppraisalState().getStateStep().equals("검수중")) {} // 검수 임시 저장
+        else if (!result.getAppraisalGrade().equals("F")) { // 검수 확정 후 등급이 F가 아니면 Product 생성
             CategoryB categoryB = categoryBRepository.findByOneCategory();
             CategoryM categoryM = categoryMRepository.findByOneCategory();
             State productState = stateRepository.findByStateStep("신규");

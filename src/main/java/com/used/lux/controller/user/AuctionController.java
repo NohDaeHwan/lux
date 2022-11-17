@@ -4,8 +4,10 @@ import com.used.lux.dto.BrandDto;
 import com.used.lux.dto.CategoryBDto;
 import com.used.lux.dto.UserGradeDto;
 import com.used.lux.dto.security.Principal;
+import com.used.lux.dto.user.auction.AuctionLogDto;
 import com.used.lux.response.auction.AuctionResponse;
 import com.used.lux.service.*;
+import com.used.lux.service.user.auction.AuctionLogService;
 import com.used.lux.service.user.auction.AuctionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -26,6 +28,8 @@ import java.util.List;
 public class AuctionController {
 
     private final AuctionService auctionService;
+
+    private final AuctionLogService auctionLogService;
 
     private final BrandService brandService;
 
@@ -74,11 +78,13 @@ public class AuctionController {
         List<CategoryBDto> categoryList = categoryBService.categoryList();
         List<UserGradeDto> gradeList = userGradeService.getGradeList();
         AuctionResponse auction = AuctionResponse.from(auctionService.auctionFind(auctionId));
+        List<AuctionLogDto> auctionLogList = auctionLogService.auctionLogList(auctionId);
 
         mm.addAttribute("principal",principal);
         mm.addAttribute("categoryList", categoryList);
         mm.addAttribute("gradeList", gradeList);
         mm.addAttribute("auction",auction);
+        mm.addAttribute("auctionLogList", auctionLogList);
         return "/front/auction-detail";
     }
 

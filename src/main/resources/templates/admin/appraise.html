@@ -128,7 +128,7 @@
 
                             <tr th:each="appraisalRes : ${appraisalResponse}">
                                 <th scope="row">
-                                    <a th:href="@{|/admin/appraise/${appraisalRes.id}/new|}" th:text="${appraisalRes.appraisalRequest().appraisalProductName()}">user1@mail.com</a>
+                                    <a th:text="${appraisalRes.appraisalRequest().appraisalProductName()}">user1@mail.com</a>
                                 </th>
                                 <td th:text="${appraisalRes.appraisalRequest.appraisalBrandName}">Brandon Jacob</td>
                                 <td th:text="${appraisalRes.appraisalRequest.appraisalGender}">dfd</td>

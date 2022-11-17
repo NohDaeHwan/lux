@@ -7,6 +7,8 @@ import java.time.LocalDateTime;
 public record AuctionLogDto(
         Long id,
         String bidder,
+        Long auctionId,
+        Long productId,
         String productName,
         int presentPrice,
         LocalDateTime createdAt,
@@ -14,15 +16,17 @@ public record AuctionLogDto(
         LocalDateTime modifiedAt,
         String modifiedBy
 ) {
-    public static AuctionLogDto of(Long id, String bidder, String productName, int presentPrice,
+    public static AuctionLogDto of(Long id, String bidder, Long auctionId, Long productId, String productName, int presentPrice,
                          LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
-        return new AuctionLogDto(id, bidder, productName, presentPrice, createdAt, createdBy, modifiedAt, modifiedBy);
+        return new AuctionLogDto(id, bidder, auctionId, productId, productName, presentPrice, createdAt, createdBy, modifiedAt, modifiedBy);
     }
 
     public static AuctionLogDto from(AuctionLog entity) {
         return new AuctionLogDto(
                 entity.getId(),
                 entity.getBidder(),
+                entity.getAuctionId(),
+                entity.getProductId(),
                 entity.getProductName(),
                 entity.getPresentPrice(),
                 entity.getCreatedAt(),

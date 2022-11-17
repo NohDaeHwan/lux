@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 
 public record ProductDto(
         Long id,
+        Long appraisalId,
         String productName,
         Long productBrandId,
         String productBrandName,
@@ -34,11 +35,11 @@ public record ProductDto(
         String modifiedBy
 ) {
 
-    public static ProductDto of(Long id, String productName, Long productBrandId, String brandName, String gender, String color, String size, String grade,
+    public static ProductDto of(Long id, Long appraisalId, String productName, Long productBrandId, String brandName, String gender, String color, String size, String grade,
                                 Long categoryBId, String categoryBName, Long categoryMId, String categoryMName, State productState, int productPrice,
                                 String productSellType, String productContent, int productViewCount, Set<ImageDto> imageDtos,
                                 LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
-        return new ProductDto(id, productName, productBrandId, brandName, gender, color, size, grade, categoryBId, categoryBName,
+        return new ProductDto(id, appraisalId, productName, productBrandId, brandName, gender, color, size, grade, categoryBId, categoryBName,
                 categoryMId, categoryMName, productState, productPrice, productSellType, productContent, productViewCount,
                 imageDtos, createdAt, createdBy, modifiedAt, modifiedBy);
     }
@@ -46,6 +47,7 @@ public record ProductDto(
     public static ProductDto from(Product entity) {
         return new ProductDto(
                 entity.getId(),
+                entity.getAppraisal().getId(),
                 entity.getAppraisal().getAppraisalRequest().getAppraisalProductName(),
                 entity.getAppraisal().getAppraisalRequest().getAppraisalBrand().getId(),
                 entity.getAppraisal().getAppraisalRequest().getAppraisalBrand().getBrandName(),

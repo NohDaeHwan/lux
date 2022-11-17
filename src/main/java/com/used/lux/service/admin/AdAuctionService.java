@@ -51,7 +51,7 @@ public class AdAuctionService {
         // 경매 상세
         AuctionDto auctionDto = AuctionDto.from(auctionRepository.findById(auctionId).get());
         // 경매 로그
-        List<AuctionLogDto> auctionLogDtos = auctionLogRepository.findByProductId(auctionDto.productDto().id())
+        List<AuctionLogDto> auctionLogDtos = auctionLogRepository.findByAuctionId(auctionId)
                 .stream().map(AuctionLogDto::from).collect(Collectors.toCollection(ArrayList::new));
         return AdAuctionDto.of(auctionDto, auctionLogDtos);
     }
