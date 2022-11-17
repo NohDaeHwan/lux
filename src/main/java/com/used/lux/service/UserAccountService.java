@@ -53,4 +53,8 @@ public class UserAccountService {
         userAccount.setPoint(userUpdateRequest.userPoint()+ userAccount.getPoint());
         userAccountLogRepository.save(UserAccountLog.of(principal.userEmail(), principal.userGrade(),userUpdateRequest.userPoint(),"충전","-"));
     }
+
+    public void addUser(UserAccount userAccount) {
+        userAccountRepository.save(userAccount);
+    }
 }

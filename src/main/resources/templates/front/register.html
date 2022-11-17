@@ -27,7 +27,7 @@
                                         <form action="/login_request" method="post">
                                             <h4 class="mb-4 pb-3">회원가입</h4>
                                             <div class="form-group">
-                                                <input type="email" name="userName" th:value="${joinMemberDto.getUserName()} eq null ? null : ${joinMemberDto.getUserName()}" class="form-control"
+                                                <input type="email" name="userName" th:value="${joinMemberDto.getUserName()} == null ? null : ${joinMemberDto.getUserName()}" class="form-control"
                                                        placeholder="이메일을 입력해주세요." id="username" autocomplete="off">
                                                 <th:block th:if="${userName != null}">
                                                     <a th:if="${userName == 'emailRegexpError'}"  class="text-danger">입력한
@@ -40,7 +40,7 @@
                                                 <i class="input-icon uil uil-at"></i>
                                             </div>
                                             <div class="form-group mt-2">
-                                                <input type="password" name="password"  th:value="${joinMemberDto.getPassword()} eq null ? null : ${joinMemberDto.password}" class="form-control"
+                                                <input type="password" name="password"  th:value="${joinMemberDto.getPassword()} == null ? null : ${joinMemberDto.password}" class="form-control"
                                                        placeholder="패스워드를 입력해주세요." id="password" autocomplete="off">
                                                 <th:block th:if="${password != null}">
                                                     <a th:if="${password == 'passwordRegexpError'}" class="text-danger">입력한
@@ -51,7 +51,7 @@
                                                 <i class="input-icon uil uil-lock-alt"></i>
                                             </div>
                                             <div class="form-group mt-2">
-                                                <input type="password" name="passwordRepeat" th:value="${joinMemberDto.getPasswordRepeat()} eq null ? null : ${joinMemberDto.getPasswordRepeat()}" class="form-control"
+                                                <input type="password" name="passwordRepeat" th:value="${joinMemberDto.getPasswordRepeat()} == null ? null : ${joinMemberDto.getPasswordRepeat()}" class="form-control"
                                                        placeholder="패스워드를 한번 더 입력해주세요." id="passwordRepeat"
                                                        autocomplete="off">
                                                 <th:block th:if="${passwordRepeat != null}">
@@ -61,14 +61,14 @@
                                                 <i class="input-icon uil uil-lock-alt"></i>
                                             </div>
                                             <div class="form-group mt-2">
-                                                <input type="text" class="form-control" th:value="${joinMemberDto.getName() } eq null ? null : ${joinMemberDto.getName()}" placeholder="이름을 입력해 주세요" id ="name" name ="name">
+                                                <input type="text" class="form-control" th:value="${joinMemberDto.getName()} == null ? null : ${joinMemberDto.getName()}" placeholder="이름을 입력해 주세요" id ="name" name ="name">
                                                 <th:block th:if="${name != null}">
                                                     <a th:if="${name == 'nullTypeName'}"
-                                                       class="text-danger">입력하신 비밀번호와 일치하지 않습니다. 다시 입력해 주세요.</a>
+                                                       class="text-danger">이름을 입력해 주세요.</a>
                                                 </th:block>
                                             </div>
                                             <div class="form-group mt-2">
-                                                <input type="tel" class="form-control" th:value="${joinMemberDto.getPhoneNumber() } eq null ? null : ${ joinMemberDto.getPhoneNumber()}" placeholder="휴대폰 번호를 입력해 주세요"  id ="phoneNumber" name = "phoneNumber">
+                                                <input type="tel" class="form-control" th:value="${joinMemberDto.getPhoneNumber() } == null ? null : ${ joinMemberDto.getPhoneNumber()}" placeholder="휴대폰 번호를 입력해 주세요"  id ="phoneNumber" name = "phoneNumber">
                                                 <th:block th:if="${phoneNumber != null}">
                                                     <a th:if="${phoneNumber == 'nullTypePhoneNumber'}"
                                                        class="text-danger">휴대폰 번호를 입력해 주세요.</a>
@@ -76,9 +76,9 @@
                                                 </th:block>
                                             </div>
                                             <div class="form-group mt-2">
-                                                <input type="text" class="form-control"th:value="${joinMemberDto.getAge() } eq null ? null : ${joinMemberDto.getAge()}"  placeholder="나이를 입력해 주세요" id="age" name ="age" >
+                                                <input type="text" class="form-control"th:value="${joinMemberDto.getAge() } == null ? null : ${joinMemberDto.getAge()}"  placeholder="나이를 입력해 주세요" id="age" name ="age" >
                                                 <th:block th:if="${age != null}">
-                                                    <a th:if="${age == 'notMatchPassword'}"
+                                                    <a th:if="${age == 'nullTypeAge'}"
                                                        class="text-danger">나이를 입력해 주세요</a>
                                                 </th:block>
                                             </div>

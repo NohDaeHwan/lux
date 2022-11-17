@@ -1,4 +1,7 @@
 package com.used.lux.controller.user;
+import com.used.lux.domain.UserAccount;
+import com.used.lux.domain.UserGrade;
+import com.used.lux.domain.constant.RoleType;
 import com.used.lux.dto.BrandDto;
 import com.used.lux.dto.CategoryBDto;
 import com.used.lux.dto.CategoryMDto;
@@ -37,6 +40,8 @@ public class MainController {
 
     private final BrandService brandService;
 
+    private final UserGradeService userGradeService;
+
     @GetMapping("/")
     public String index() {
         return "/front/index"; // 루트 페이지를 보여줄 뷰 필요
@@ -48,7 +53,9 @@ public class MainController {
     }
 
     @GetMapping("/register")
-    public String register() {
+    public String register(ModelMap mm) {
+        JoinMemberDto joinMemberDto = new JoinMemberDto();
+        mm.addAttribute("joinMemberDto",joinMemberDto);
         return "/front/register"; // 회원가입 페이지를 보여줄 뷰 필요
     }
 
@@ -75,12 +82,27 @@ public class MainController {
         //이메일 중복체크
         if(userAccountService.exsistByUserEmail(joinMemberDto.getUserName()))
         {mm.addAttribute("userName","duplicationEmail");}
+        System.out.println(joinMemberDto.getUserName());
+        System.out.println(joinMemberDto.getPassword());
+        System.out.println(joinMemberDto.getPhoneNumber());
+        System.out.println(joinMemberDto.getName());
+        System.out.println(joinMemberDto.getAge());
+        System.out.println(joinMemberDto.getGender());
+        System.out.println(joinMemberDto.getPasswordRepeat());
 
 
-        if(!mm.isEmpty()){
+        //제약 조건 전부 통과 못하면 기존값 유지하고 refresh
+        if(mm.isEmpty()){
+            System.out.println("nulllllll");
             mm.addAttribute("joinMemberDto",joinMemberDto);
             return "/front/register";
         }
+
+        UserGrade userGrade = userGradeService.getGradeName(1);
+        UserAccount userAccount = UserAccount.of(null,
+                joinMemberDto.getUserName(), joinMemberDto.getPassword(), joinMemberDto.getName(), joinMemberDto.getPhoneNumber(), Integer.parseInt(joinMemberDto.getAge()), joinMemberDto.getGender(),0,userGrade, RoleType.USER,"TEST USER" );
+
+        userAccountService.addUser(userAccount);
         return "/front/login";
     }
 
