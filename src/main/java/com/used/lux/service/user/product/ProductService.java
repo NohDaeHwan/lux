@@ -36,11 +36,11 @@ public class ProductService {
         return ProductDto.from(productRepository.findById(productId).get());
     }
 
+    //카테고리 중고 검색
     @Transactional(readOnly = true)
-    public List<ProductDto> catesearch(Long mcategoryId,String productColor, String productBrand, String productGender, String productSize,
-                                             String productGrade, String maxPrice, String minPrice, String query, Pageable pageable) {
-        return productRepository.findByCategoryQuery(mcategoryId,productColor, productBrand,
-                productGender, productSize, productGrade, maxPrice, minPrice, query, pageable).stream()
+    public List<ProductDto> catesearch(Long mcategoryId,String productColor, String productBrand, String productGender, String productSize
+                                             ,String productGrade, String maxPrice, String minPrice, String query) {
+        return productRepository.searchProductBy(mcategoryId,productBrand,productColor,productGender,productSize,productGrade,Integer.parseInt(maxPrice),Integer.parseInt(minPrice),query).stream()
                 .map(ProductDto::from).collect(Collectors.toUnmodifiableList());
     }
 
