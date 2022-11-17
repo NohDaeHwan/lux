@@ -20,16 +20,16 @@
             <table class="table table-hover ">
                 <thead>
                 <tr>
+                    <th scope="col">사진</th>
                     <th scope="col">상품정보</th>
-                    <th scope="col">가격(원)</th>
                     <th scope="col">본 날짜 </th>
                     <th scope="col">상태</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id = "a">
                     <tr CLASS="A"  >
+                        <td><img class="card-text font-weight-lighter mb-1 text-black-50" id="image" style="width:100px;height: 100px;" ></td>
                         <td><p class="card-text font-weight-lighter mb-1 text-black-50" id="name"></p></td>
-                        <td><p class="card-text font-weight-lighter mb-1 text-black-50" id="price"></p></td>
                         <td><p class="card-text font-weight-lighter mb-1 text-black-50" id="date"></p></td>
                         <td><p class="card-text font-weight-lighter mb-1 text-black-50" id="state"></p></td>
                     </tr>
@@ -41,20 +41,28 @@
 
 <script th:inline="javascript">
     let recnet=JSON.parse(sessionStorage.getItem("allEntries"));
-    let a = document.getElementsByClassName("a");
+    let a = document.getElementById("a");
+   // let a = document.getElementsByClassName("a");
+    let str ="";
     for(let i = 0; i < recnet.length; i++) {
-        document.getElementById("name").innerHTML+=recnet[i].name + '<br>';
-        document.getElementById("price").innerHTML+=recnet[i].price + '<br>';
-        document.getElementById("date").innerHTML+=recnet[i].date + '<br>';
-        document.getElementById("state").innerHTML+=recnet[i].state+'<br>';
+        str +="  <tr></tr><td><img class=\"card-text font-weight-lighter mb-1 text-black-50\" id=\"image\" style=\"width:100px;height: 100px;\" src =' "+recnet[i].image+"' ></td>" +
+            "                        <td><p class=\"card-text font-weight-lighter mb-1 text-black-50\" id=\"name\">"+recnet[i].name+"</p></td>" +
+            "                        <td><p class=\"card-text font-weight-lighter mb-1 text-black-50\" id=\"date\">"+recnet[i].date+"</p></td>" +
+            "                        <td><p class=\"card-text font-weight-lighter mb-1 text-black-50\" id=\"state\">"+recnet[i].state+"</p></td></tr>  "
 
+
+        /*
+        document.getElementById("image").src = recnet[i].image;
+        document.getElementById("name").innerHTML =recnet[i].name + '<br>';
+        document.getElementById("date").innerHTML =recnet[i].date + '<br>';
+        document.getElementById("state").innerHTML =recnet[i].state+'<br>';
+           */
     }
+    a.innerHTML = str;
+    console.log(name);
 
 
-    console.log(recnet[0].name);
-    console.log(recnet[0].date);
-    console.log(recnet[0].price);
-    console.log(recnet[0].state);
+
 
 
 </script>

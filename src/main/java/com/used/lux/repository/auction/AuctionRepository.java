@@ -1,6 +1,7 @@
 package com.used.lux.repository.auction;
 
 import com.used.lux.domain.auction.Auction;
+import com.used.lux.domain.order.ProductOrder;
 import com.used.lux.repository.querydsl.AuctionRepositoryCustom;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,8 @@ public interface AuctionRepository extends JpaRepository<Auction, Long>, Auction
     @Query(nativeQuery = true, value ="SELECT * FROM auction WHERE closing_price != 0 ORDER BY created_at",
             countQuery="SELECT count(*) FROM auction WHERE closing_price != 0")
     Page<Auction> findResult(Pageable pageable);
+
+
 
     Auction findByStartPrice(int startPrice);
 

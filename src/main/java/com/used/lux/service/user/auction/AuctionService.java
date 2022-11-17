@@ -35,6 +35,7 @@ public class AuctionService {
     public Page<AuctionDto> auctionListFind(Pageable pageable) {
         return auctionRepository.findAll(pageable).map(AuctionDto::from);
     }
+ 
 
     @Transactional(readOnly = true)
     public List<AuctionDto> productFind(String query) {
