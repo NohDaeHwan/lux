@@ -1,6 +1,6 @@
 package com.used.lux.repository.querydsl;
 
-import com.used.lux.domain.UserAccount;
+import com.used.lux.domain.useraccount.UserAccount;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

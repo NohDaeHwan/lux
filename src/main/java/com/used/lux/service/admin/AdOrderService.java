@@ -1,13 +1,15 @@
 package com.used.lux.service.admin;
 
-import com.used.lux.dto.ProductOrderCancelDto;
-import com.used.lux.dto.ProductOrderDto;
-import com.used.lux.repository.ProductOrderCancelRepository;
-import com.used.lux.repository.ProductOrderRepository;
+import com.used.lux.dto.user.order.ProductOrderCancelDto;
+import com.used.lux.dto.user.order.ProductOrderDto;
+import com.used.lux.repository.order.ProductOrderCancelRepository;
+import com.used.lux.repository.order.ProductOrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
 @Service
@@ -18,7 +20,10 @@ public class AdOrderService {
     private final ProductOrderCancelRepository productOrderCancelRepository;
 
     public Page<ProductOrderDto> getOrderList(String orderState, String orderSellType, String orderDate, String query, Pageable pageable) {
-        return productOrderRepository.searchProductOrder(orderState, orderSellType, orderDate,
+        String[] dateResult = orderDate.split("-");
+        LocalDateTime date = LocalDateTime.of(Integer.parseInt(dateResult[0]),
+                Integer.parseInt(dateResult[1]), Integer.parseInt(dateResult[2]), 00, 00);
+        return productOrderRepository.findByBackProductOrderList(orderState, orderSellType, date,
                 query, pageable).map(ProductOrderDto::from);
     }
 

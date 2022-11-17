@@ -1,9 +1,8 @@
 package com.used.lux.repository.querydsl;
 
 import com.querydsl.jpa.JPQLQuery;
-import com.used.lux.domain.Appraisal;
-import com.used.lux.domain.ProductOrder;
-import com.used.lux.domain.QProductOrder;
+import com.used.lux.domain.order.ProductOrder;
+import com.used.lux.domain.order.QProductOrder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -15,7 +14,7 @@ import java.util.List;
 public class ProductOrderRepositoryCustomImpl extends QuerydslRepositorySupport implements ProductOrderRepositoryCustom {
 
     public ProductOrderRepositoryCustomImpl() {
-        super(Appraisal.class);
+        super(ProductOrder.class);
     }
 
     @Override

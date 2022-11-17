@@ -170,15 +170,17 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <!--수정중-->
-<!--                        <tr th:each="userapp : ${userDetail.appraisalDtos()}">-->
-<!--                            <th scope="row"><a th:href="@{|/admin/appraise/${userapp.id}/new|}" th:text="${userapp.appraisalName()}"></a></th>-->
-<!--                            <td th:text="${userapp.appraisalGrade()}"></td>-->
-<!--                            <td th:text="${#numbers.formatInteger(userapp.appraisalPrice,3,'COMMA')} + '원'"></td>-->
-<!--                            <td th:text="${userapp.appraisalState().stateStep}"></td>-->
-<!--                            <td th:text="${#temporals.format(userapp.createdAt,'yyyy-MM-dd HH:mm:ss')}"></td>-->
-<!--                        </tr>-->
-<!--                        </tbody>-->
+                        <tr th:each="userapp : ${userDetail.appraisalRequestLogDtos}">
+                            <th scope="row"><a th:href="@{|/admin/appraise/${userapp.appraisalId}/new|}" th:text="${userapp.appraisalProductName}"></a></th>
+                            <td th:if="${userapp.appraisalState.stateStep} == '검수전'">-</td>
+                            <td th:if="${userapp.appraisalState.stateStep} != '검수전'" th:text="${userapp.appraisalGrade}"></td>
+                            <td th:if="${userapp.appraisalState.stateStep} == '검수전'">-</td>
+                            <td th:if="(${userapp.appraisalState.stateStep} != '검수전') and (${userapp.appraisalPrice} >= 1000)" th:text="${#numbers.formatInteger(userapp.appraisalPrice,3,'COMMA')} + '원'"></td>
+                            <td th:if="(${userapp.appraisalState.stateStep} != '검수전') and (${userapp.appraisalPrice} < 1000)" th:text="${userapp.appraisalPrice} + '원'"></td>
+                            <td th:text="${userapp.appraisalState.stateStep}"></td>
+                            <td th:text="${#temporals.format(userapp.modifiedAt,'yyyy-MM-dd HH:mm:ss')}"></td>
+                        </tr>
+                        </tbody>
                     </table>
                     <!-- End Default Table Example -->
                     <div class="float-lg-end">
@@ -261,7 +263,7 @@
                         </thead>
                         <tbody>
                         <tr th:each="usercancel : ${userDetail.productOrderCancelDtos}">
-                            <th scope="row"><a th:text="${usercancel.productPrice}"></a></th>
+                            <th scope="row"><a th:text="${usercancel.userName}"></a></th>
                             <td th:text="${usercancel.productName}"></td>
                             <td th:text="${#numbers.formatInteger(usercancel.productPrice,3,'COMMA')} + '원'"></td>
                             <td th:text="${#temporals.format(usercancel.createdAt,'yyyy-MM-dd HH:mm:ss')}"></td>

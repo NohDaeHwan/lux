@@ -1,10 +1,26 @@
 package com.used.lux.service.admin;
 
-import com.used.lux.domain.UserAccount;
-import com.used.lux.dto.*;
+import com.used.lux.domain.useraccount.UserAccount;
 import com.used.lux.dto.admin.AdUserAccountDto;
+import com.used.lux.dto.user.appraisal.AppraisalRequestDto;
+import com.used.lux.dto.user.appraisal.AppraisalRequestLogDto;
+import com.used.lux.dto.user.auction.AuctionLogDto;
+import com.used.lux.dto.user.order.ProductOrderCancelDto;
+import com.used.lux.dto.user.order.ProductOrderLogDto;
+import com.used.lux.dto.user.useraccount.UserAccountDto;
+import com.used.lux.dto.user.useraccount.UserAccountLogDto;
+import com.used.lux.dto.UserGradeDto;
+import com.used.lux.dto.user.useraccount.UserWithdrawalDto;
 import com.used.lux.repository.*;
-import com.used.lux.request.UserMemoUpdateRequest;
+import com.used.lux.repository.appraisal.AppraisalRequestLogRepository;
+import com.used.lux.repository.appraisal.AppraisalRequestRepository;
+import com.used.lux.repository.auction.AuctionLogRepository;
+import com.used.lux.repository.order.ProductOrderCancelRepository;
+import com.used.lux.repository.order.ProductOrderLogRepository;
+import com.used.lux.repository.useraccount.UserAccountLogRepository;
+import com.used.lux.repository.useraccount.UserAccountRepository;
+import com.used.lux.repository.useraccount.UserWithdrawalRepository;
+import com.used.lux.request.useraccount.UserMemoUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +36,7 @@ import java.util.stream.Collectors;
 public class AdUserAccountService {
 
     private final UserAccountRepository userAccountRepository;
+    private final AppraisalRequestLogRepository appraisalRequestLogRepository;
 
     private final ProductOrderLogRepository productOrderLogRepository;
 
@@ -63,8 +80,10 @@ public class AdUserAccountService {
         List<UserAccountLogDto> userAccountLogDtos = userAccountLogRepository.findByUserEmail(userAccountDto.userEmail())
                 .stream().map(UserAccountLogDto::from).collect(Collectors.toCollection(ArrayList::new));
 
+        List<AppraisalRequestLogDto> userAppraisalLogDtos = appraisalRequestLogRepository.findByUserIdOrderByModifiedAtDesc(userAccountDto.id())
+                .stream().map(AppraisalRequestLogDto::from).collect(Collectors.toCollection(ArrayList::new));
         return AdUserAccountDto.of(userAccountDto, productOrderLogDtos, productOrderCancelDtos,
-                appraisalDtos, auctionLogDtos, userAccountLogDtos);
+                appraisalDtos, auctionLogDtos, userAccountLogDtos, userAppraisalLogDtos);
     }
 
     @Transactional(readOnly = true)

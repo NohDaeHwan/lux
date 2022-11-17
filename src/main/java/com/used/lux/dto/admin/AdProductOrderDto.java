@@ -1,6 +1,7 @@
 package com.used.lux.dto.admin;
 
-import com.used.lux.dto.*;
+import com.used.lux.dto.user.order.ProductOrderCancelDto;
+import com.used.lux.dto.user.order.ProductOrderDto;
 
 public record AdProductOrderDto(
         ProductOrderDto productOrderDto,

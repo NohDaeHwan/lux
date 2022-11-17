@@ -1,5 +1,7 @@
 package com.used.lux.service.socket;
 
+import com.used.lux.repository.auction.AuctionRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.CloseStatus;
@@ -10,21 +12,29 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import javax.websocket.server.ServerEndpoint;
 import java.util.*;
 
+@RequiredArgsConstructor
 @Service
 @Slf4j
-@ServerEndpoint(value="/auction/21/bidder")
+@ServerEndpoint(value="/auction/{auctionId}/bidder")
 public class WebSocketService extends TextWebSocketHandler {
 
     private static List<WebSocketSession> list = new ArrayList<>();
 
+    private final AuctionRepository auctionRepository;
+
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        String payload = message.getPayload();
-        log.info("payload : " + payload);
+            String payload = message.getPayload();
 
-        for(WebSocketSession sess: list) {
-            sess.sendMessage(message);
-        }
+            String[] data = payload.split(":");
+            for (String d : data) {
+                log.info(d);
+            }
+
+            for(WebSocketSession sess: list) {
+                System.out.println(sess.getPrincipal().getName());
+                sess.sendMessage(message);
+            }
     }
 
     /* Client가 접속 시 호출되는 메서드 */

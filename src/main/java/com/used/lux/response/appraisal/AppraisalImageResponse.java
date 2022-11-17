@@ -1,6 +1,6 @@
 package com.used.lux.response.appraisal;
 
-import com.used.lux.dto.AppraisalImageDto;
+import com.used.lux.dto.user.appraisal.AppraisalImageDto;
 
 import java.time.LocalDateTime;
 

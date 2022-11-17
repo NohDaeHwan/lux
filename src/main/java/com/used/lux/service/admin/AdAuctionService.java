@@ -1,12 +1,14 @@
 package com.used.lux.service.admin;
 
-import com.used.lux.domain.Auction;
 import com.used.lux.domain.State;
-import com.used.lux.dto.AuctionDto;
-import com.used.lux.dto.AuctionLogDto;
+import com.used.lux.domain.auction.Auction;
+import com.used.lux.dto.user.auction.AuctionDto;
+import com.used.lux.dto.user.auction.AuctionLogDto;
 import com.used.lux.dto.admin.AdAuctionDto;
 import com.used.lux.repository.*;
-import com.used.lux.request.AuctionUpdateRequest;
+import com.used.lux.repository.auction.AuctionLogRepository;
+import com.used.lux.repository.auction.AuctionRepository;
+import com.used.lux.request.auction.AuctionUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

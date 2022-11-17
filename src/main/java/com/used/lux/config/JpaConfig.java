@@ -17,9 +17,9 @@ public class JpaConfig {
 
     @Bean
     public AuditorAware<String> auditorAware() {
-        if (SecurityContextHolder.getContext().getAuthentication()==null){
-            return () ->Optional.ofNullable("SYSTEM");
-        }else {
+        if (SecurityContextHolder.getContext().getAuthentication() == null) {
+            return () -> Optional.ofNullable("SYSTEM");
+        } else {
             return () -> Optional.ofNullable(SecurityContextHolder.getContext())
                     .map(SecurityContext::getAuthentication)
                     .filter(Authentication::isAuthenticated)

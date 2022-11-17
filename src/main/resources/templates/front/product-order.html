@@ -175,6 +175,7 @@
     </section>
 
     <div class="section" style="font-weight: 300;">
+        <input type="hidden" name="payment" th:value="${productDto.productPrice}-${(principal.userGrade.getDiscount)*0.01*(productDto.productPrice)}">
         <button class="btn btn-info w-100" type="submit" th:text="${#numbers.formatInteger((productDto.productPrice)-(principal.userGrade.getDiscount)*0.01*(productDto.productPrice),3,'COMMA')}+'원 결제하기'">123,456,789원 결제하기</button>
     </div>
     </form>
