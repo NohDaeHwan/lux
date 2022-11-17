@@ -485,13 +485,13 @@
             let existingEntries = JSON.parse(sessionStorage.getItem("allEntries"));
             if(existingEntries == null) existingEntries = [];
             let name = [[${productDto.productName}]];
-            let price= [[${productDto.productPrice}]];
+            let image =[[${productDto.imageDtos}]];
             let date = new Date();
             let state= [[${productDto.productSellType}]];
             let entry = {
+                "image":image[0]["filePath"],
                 "name": name,
-                "price":price,
-                "date": date.toLocaleDateString(),
+                "date": date.toLocaleTimeString(),
                 "state": state
             };
             sessionStorage.setItem("entry", JSON.stringify(entry));
@@ -500,7 +500,7 @@
             sessionStorage.setItem("allEntries", JSON.stringify(existingEntries));
 
             console.log(JSON.parse(sessionStorage.getItem("allEntries")));
-            console.log(state);
+            console.log(entry);
 
 </script>
 
