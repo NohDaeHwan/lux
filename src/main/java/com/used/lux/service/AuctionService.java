@@ -6,7 +6,6 @@ import com.used.lux.dto.AuctionDto;
 import com.used.lux.repository.AuctionRepository;
 import com.used.lux.repository.ProductRepository;
 import com.used.lux.repository.StateRepository;
-import com.used.lux.request.AuctionTimer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -15,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.time.LocalDate;
@@ -43,9 +43,9 @@ public class AuctionService {
     }
 
     @Transactional(readOnly = true)
-    public  List<AuctionDto> searchcate(String brandName,Long mcategoryId, String productColor,String productGender,String productSize, String maxPrice,String minPrice){
+    public  List<AuctionDto> searchcate(Long mcategoryId, String productColor,String brandName,String productGender,String productSize,String productGrade ,String maxPrice,String minPrice,String query){
 
-        return auctionRepository.searchAuctionBy(brandName,mcategoryId,productColor,productGender,productSize,Integer.parseInt(maxPrice),Integer.parseInt(minPrice)).stream().map(AuctionDto::from).collect(Collectors.toList());
+        return auctionRepository.searchAuctionBy(mcategoryId,productColor,brandName,productGender,productSize,productGrade,Integer.parseInt(maxPrice),Integer.parseInt(minPrice),query).stream().map(AuctionDto::from).collect(Collectors.toList());
     }
 
     /*public AuctionDto auctionFind(Long id) {
@@ -130,12 +130,6 @@ public class AuctionService {
     }
 
 
-    @Transactional(readOnly = true)
-    public List<AuctionDto> catesearch(Long mcategoryId, String auctionColor, String auctionBrand, String auctionGender, String auctionSize, String auctionGrade, String maxPrice, String minPrice, String query, Pageable pageable) {
-        return  auctionRepository.findByCategoryQuery(mcategoryId,auctionColor, auctionBrand,
-                        auctionGender, auctionSize, auctionGrade, maxPrice, minPrice, query, pageable).stream()
-                .map(AuctionDto::from).collect(Collectors.toUnmodifiableList());
-    }
 
 
     public  void  presentTimer(Long auctionId, Long stateId){
@@ -151,7 +145,6 @@ public class AuctionService {
         auction.setClosingPrice(auction.getPresentPrice());
         auctionRepository.save(auction);
     }
-
 
 
 

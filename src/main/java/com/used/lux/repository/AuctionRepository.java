@@ -43,10 +43,12 @@ public interface AuctionRepository extends JpaRepository<Auction, Long>, Auction
 
 
 //카테고리 서치
+    //쿼리문 추가
     @Query(value ="select a from Auction a where a.product.appraisal.appraisalRequest.appraisalBrand.brandName Like %:productBrand% AND a.product.categoryM.id =:mcategoryId and " +
             "a.product.appraisal.appraisalRequest.appraisalColor like %:productColor% and a.product.appraisal.appraisalRequest.appraisalGender like %:productGender% " +
-            "and a.product.appraisal.appraisalRequest.appraisalSize like %:productSize% and a.presentPrice between :minPrice and :maxPrice" )
-    List<Auction> searchAuctionBy(@Param("productBrand") String brandName,Long mcategoryId, String productColor,String productGender,String productSize, int maxPrice,int minPrice);
+            "and a.product.appraisal.appraisalRequest.appraisalSize like %:productSize% and a.presentPrice between :minPrice and :maxPrice and" +
+            " a.product.appraisal.appraisalGrade like %:productGrade% and a.product.appraisal.appraisalRequest.appraisalProductName LIKE %:query% ")
+    List<Auction> searchAuctionBy(Long mcategoryId,String productColor,String productBrand,String productGender,String productSize,String productGrade,int maxPrice, int minPrice,String query);
 
 
 
