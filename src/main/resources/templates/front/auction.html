@@ -139,7 +139,6 @@
         <div class="album py-3 bg-light">
             <div class="container-fluid">
                 <div class="row">
-
                     <div class="col-md-2" th:each="auction: ${auctions}">
                         <div class="card mb-4 box-shadow">
                             <div th:if="${auction.stateStep=='경매전'}">
@@ -154,8 +153,8 @@
                                     <p class="card-text font-weight-lighter mb-1 text-black-50" th:text="${auction.productResponse.productBrandName}">브랜드</p>
                                     <p class="card-text font-weight-light mb-1" th:text="${auction.productResponse.productName}">상품명</p>
                                     <p class="card-text font-weight-light" th:text="${auction.presentPrice}">40.000P</p>
-                                    <p class="card-text font-weight-light" th:value="${auction.auctionStartDate()}" th:text="${auction.auctionStartDate()}"></p>
-                                    <p class="card-text font-weight-light" th:text="${auction.auctionClosingDate()}"></p>
+                                    <p class="card-text font-weight-light" th:text="${#temporals.format(auction.auctionStartDate(),'yyyy-MM-dd HH:mm:ss')}"></p>
+                                    <p class="card-text font-weight-light" th:text="${#temporals.format(auction.auctionClosingDate(),'yyyy-MM-dd HH:mm:ss')}"></p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="sec7-text-box">
                                             <p class="time-title" th:id="'title'+${auctionStat.count}"></p>
