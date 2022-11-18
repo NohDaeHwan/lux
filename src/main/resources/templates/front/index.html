@@ -192,72 +192,22 @@
         </div>
       </div>
       <div class="container-fluid brand_item-container">
-        <div class="brand_item-box">
+        <div class="brand_item-box" th:each="auction  : ${auctions}">
           <div class="brand_img-box  item-1">
-            <a href="">
-              마감 04시 20분 10초 전<br>
+            <a th:href="@{|/auction/${auction.id()}|}" >
+              마감 <p th:text="${auction.auctionClosingDate()}"> 04시 20분 10초 전</p><br>
               상세보기 >
             </a>
           </div>
           <div class="brand_detail-box">
-            <h6 class="font-weight-light">
+            <h6 class="font-weight-light" th:text="${auction.productResponse().productName()}">
               고야드 클러치백
             </h6>
-            <h6 class="font-weight-normal">
-              💸 마지막 입찰가: 40,000P
+            <h6 class="font-weight-normal" >
+              💸 마지막 입찰가: <p th:text="${auction.presentPrice()}">40,000P</p>
             </h6>
           </div>
         </div>
-        <div class="brand_item-box">
-          <div class="brand_img-box  item-2">
-            <a href="">
-              마감 04시 20분 10초 전<br>
-              상세보기 >
-            </a>
-          </div>
-          <div class="brand_detail-box">
-            <h6 class="font-weight-light">
-              고야드 클러치백
-            </h6>
-            <h6 class="font-weight-normal">
-              💸 마지막 입찰가: 40,000P
-            </h6>
-          </div>
-        </div>
-        <div class="brand_item-box">
-          <div class="brand_img-box  item-3">
-             <a href="">
-              마감 04시 20분 10초 전<br>
-              상세보기 >
-            </a>
-          </div>
-          <div class="brand_detail-box">
-            <h6 class="font-weight-light">
-              고야드 클러치백
-            </h6>
-            <h6 class="font-weight-normal">
-              💸 마지막 입찰가: 40,000P
-            </h6>
-          </div>
-        </div>
-        <div class="brand_item-box">
-          <div class="brand_img-box  item-5">
-            <a href="">
-              마감 04시 20분 10초 전<br>
-              상세보기 >
-            </a>
-          </div>
-          <div class="brand_detail-box">
-            <h6 class="font-weight-light">
-              고야드 클러치백
-            </h6>
-            <h6 class="font-weight-normal">
-              💸 마지막 입찰가: 40,000P
-            </h6>
-          </div>
-        </div>
-      </div>
-
     </section>
 
 

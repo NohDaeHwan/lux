@@ -57,4 +57,12 @@ public class UserAccountService {
     public void addUser(UserAccount userAccount) {
         userAccountRepository.save(userAccount);
     }
+
+    public boolean exsistByUserName(String name) {
+        return userAccountRepository.existsByUserName(name);
+    }
+
+    public boolean exsistByPhoneNumber(String phoneNumber) {
+        return userAccountRepository.existsByPhoneNumber(phoneNumber);
+    }
 }

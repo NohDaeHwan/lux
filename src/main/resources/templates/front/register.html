@@ -61,10 +61,12 @@
                                                 <i class="input-icon uil uil-lock-alt"></i>
                                             </div>
                                             <div class="form-group mt-2">
-                                                <input type="text" class="form-control" th:value="${joinMemberDto.getName()} == null ? null : ${joinMemberDto.getName()}" placeholder="이름을 입력해 주세요" id ="name" name ="name">
+                                                <input type="text" class="form-control" th:value="${joinMemberDto.getName()} == null ? null : ${joinMemberDto.getName()}" placeholder="사용할 닉네임을 입력해 주세요" id ="name" name ="name">
                                                 <th:block th:if="${name != null}">
                                                     <a th:if="${name == 'nullTypeName'}"
                                                        class="text-danger">이름을 입력해 주세요.</a>
+                                                    <a th:if="${name == 'duplicationUserName'}"
+                                                       class="text-danger">사용되는 닉네임이 있습니다. 다른 닉네임을 입력해 주세요.</a>
                                                 </th:block>
                                             </div>
                                             <div class="form-group mt-2">
@@ -73,6 +75,7 @@
                                                     <a th:if="${phoneNumber == 'nullTypePhoneNumber'}"
                                                        class="text-danger">휴대폰 번호를 입력해 주세요.</a>
                                                     <a th:if="${phoneNumber == 'phoneRegexpError'}" class="text-danger">휴대폰 번호를 '-'를 입력하지 않고 다시 입력해 주세요.</a>
+                                                    <a th:if="${phoneNumber == 'duplicationPhoneNumber'}" class="text-danger">중복된 휴대폰 번호로 회원가입된 계정이 있습니다. 해당 계정으로 로그인 하시거나 다른 휴대폰 번호를 이용하여 회원가입 하십시오.</a>
                                                 </th:block>
                                             </div>
                                             <div class="form-group mt-2">

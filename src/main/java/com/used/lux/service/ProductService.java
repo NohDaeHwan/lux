@@ -1,5 +1,6 @@
 package com.used.lux.service;
 
+import com.used.lux.domain.Product;
 import com.used.lux.dto.ProductDto;
 import com.used.lux.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -44,4 +45,7 @@ public class ProductService {
                 .map(ProductDto::from).collect(Collectors.toUnmodifiableList());
     }
 
+    public List<ProductDto> findByState6AndRecent4List() {
+        return productRepository.findByState6AndRecent4List().stream().map(ProductDto::from).collect(Collectors.toUnmodifiableList());
+    }
 }

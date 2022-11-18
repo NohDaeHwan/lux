@@ -44,4 +44,6 @@ public interface ProductRepository extends JpaRepository<Product, Long>, Product
                                         String productSize, String productGrade, String productState,
                                         LocalDateTime productDate, String query, Pageable pageable);
 
+    @Query(nativeQuery = true,value = "select * from product where state_id = 6 and created_at < now() order by created_at desc limit 4")
+    List<Product> findByState6AndRecent4List();
 }

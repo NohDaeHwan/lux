@@ -36,4 +36,8 @@ public interface UserAccountRepository extends
     }
 
     boolean existsByUserEmail(String userName);
+
+    boolean existsByUserName(String name);
+
+    boolean existsByPhoneNumber(String phoneNumber);
 }

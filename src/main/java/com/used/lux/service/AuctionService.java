@@ -133,6 +133,8 @@ public class AuctionService {
     }
 
 
-
-
+    public List<AuctionDto> findByState10AndRecent4List() {
+        return auctionRepository.findByState10AndRecent4List().stream()
+                .map(AuctionDto::from).collect(Collectors.toUnmodifiableList());
+    }
 }

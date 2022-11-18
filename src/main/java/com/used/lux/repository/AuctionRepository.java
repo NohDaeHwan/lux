@@ -1,6 +1,7 @@
 package com.used.lux.repository;
 
 import com.used.lux.domain.Auction;
+import com.used.lux.dto.AuctionDto;
 import com.used.lux.repository.querydsl.AuctionRepositoryCustom;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -67,4 +68,7 @@ public interface AuctionRepository extends JpaRepository<Auction, Long>, Auction
                     "AND a.product.appraisal.appraisalRequest.appraisalProductName LIKE %:query% " +
                     "AND a.auctionStartDate >= :auctionDate")
     Page<Auction> findByBackAuctionListDate(String auctionState, LocalDateTime auctionDate, String query, Pageable pageable);
+
+    @Query(nativeQuery = true, value = "select * from auction where state_id = 10 and auction_start_date < now() order by auction_start_date desc limit 4")
+    List<Auction> findByState10AndRecent4List();
 }
