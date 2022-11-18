@@ -18,6 +18,8 @@ public record ProductDto(
         String productGender,
         String productColor,
         String productSize,
+        int appraisalPrice,
+        String appraisalComment,
         String productGrade,
         Long categoryBId,
         String categoryBName,
@@ -35,11 +37,12 @@ public record ProductDto(
         String modifiedBy
 ) {
 
-    public static ProductDto of(Long id, Long appraisalId, String productName, Long productBrandId, String brandName, String gender, String color, String size, String grade,
+    public static ProductDto of(Long id, Long appraisalId, String productName, Long productBrandId, String brandName, String gender, String color, String size,         int appraisalPrice,
+                                String appraisalComment,String grade,
                                 Long categoryBId, String categoryBName, Long categoryMId, String categoryMName, State productState, int productPrice,
                                 String productSellType, String productContent, int productViewCount, Set<ImageDto> imageDtos,
                                 LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
-        return new ProductDto(id, appraisalId, productName, productBrandId, brandName, gender, color, size, grade, categoryBId, categoryBName,
+        return new ProductDto(id, appraisalId, productName, productBrandId, brandName, gender, color, size, appraisalPrice,appraisalComment,grade, categoryBId, categoryBName,
                 categoryMId, categoryMName, productState, productPrice, productSellType, productContent, productViewCount,
                 imageDtos, createdAt, createdBy, modifiedAt, modifiedBy);
     }
@@ -54,6 +57,8 @@ public record ProductDto(
                 entity.getAppraisal().getAppraisalRequest().getAppraisalGender(),
                 entity.getAppraisal().getAppraisalRequest().getAppraisalColor(),
                 entity.getAppraisal().getAppraisalRequest().getAppraisalSize(),
+                entity.getAppraisal().getAppraisalPrice(),
+                entity.getAppraisal().getAppraisalComment(),
                 entity.getAppraisal().getAppraisalGrade(),
                 entity.getCategoryB().getId(),
                 entity.getCategoryB().getCategoryBName(),
