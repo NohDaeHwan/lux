@@ -3,6 +3,8 @@ package com.used.lux.repository.auction;
 import com.used.lux.domain.auction.Auction;
 import com.used.lux.domain.order.ProductOrder;
 import com.used.lux.dto.user.auction.AuctionLogDto;
+import com.used.lux.domain.Auction;
+import com.used.lux.dto.AuctionDto;
 import com.used.lux.repository.querydsl.AuctionRepositoryCustom;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -56,8 +58,6 @@ public interface AuctionRepository extends JpaRepository<Auction, Long>, Auction
     List<Auction> searchAuctionBy(Long mcategoryId,String productColor,String productBrand,String productGender,String productSize,String productGrade,int maxPrice, int minPrice,String query);
 
 
-
-
     void deleteByProductId(Long id);
 
     Auction findByProductId(Long id);
@@ -78,4 +78,8 @@ public interface AuctionRepository extends JpaRepository<Auction, Long>, Auction
 
     @Query(nativeQuery = true, value = "SELECT * FROM auction WHERE auction_start_date is not null")
     Page<Auction> findByAuctionStartDate(Pageable pageable);
+
+    @Query(nativeQuery = true, value = "select * from auction where state_id = 10 and auction_start_date < now() order by auction_start_date desc limit 4")
+    List<Auction> findByState10AndRecent4List();
+    
 }
