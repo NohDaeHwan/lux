@@ -20,6 +20,7 @@
 									<div class="section text-center">
 										<form action="/join_request" method="post">
 											<h4 class="mb-4 pb-3">회원가입</h4>
+											<div id="alertMessage"></div>
 											<div class="form-group">
 												<input type="email" name="userName" th:value="${joinMemberDto.getUserName()} == null ? null : ${joinMemberDto.getUserName()}" class="form-control"
 													   placeholder="이메일을 입력해주세요." id="username" autocomplete="off">

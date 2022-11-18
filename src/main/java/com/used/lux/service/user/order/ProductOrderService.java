@@ -53,6 +53,7 @@ public class ProductOrderService {
         UserAccount userAccount = userAccountRepository.findById(principal.id()).get();
         int payment = userAccount.getPoint()-product.getProductPrice();
 
+
         State stateOrder = stateRepository.findByStateStep("주문완료");
         State stateProduct = stateRepository.findByStateStep("판매완료");
 

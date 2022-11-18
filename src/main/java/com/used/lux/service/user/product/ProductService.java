@@ -1,5 +1,6 @@
 package com.used.lux.service.user.product;
 
+import com.used.lux.domain.product.Product;
 import com.used.lux.dto.user.product.ProductDto;
 import com.used.lux.repository.product.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -44,4 +45,8 @@ public class ProductService {
                 .map(ProductDto::from).collect(Collectors.toUnmodifiableList());
     }
 
+    public Product recentProduct() {
+        Product product = productRepository.recentProduct();
+        return product;
+    }
 }

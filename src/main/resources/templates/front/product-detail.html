@@ -103,9 +103,10 @@
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label"></label>
                                 <div class="col-sm-10">
-                                    <button class="btn btn-info w-100" th:onclick="|location.href='@{|/product/${productId}/order|}'|">
+                                    <button id="checkCurrentPoint" class="btn btn-info w-100 mb-2">
                                         구매하기
                                     </button>
+                                    <div id="alertMessage"></div>
                                 </div>
                             </div>
                         </div>
@@ -118,7 +119,7 @@
 
             <div class="gy-4 mb-5 bg-light" style="display:flex;justify-content: center">
                 <div>
-                    <div class="mb-3 text-center"><strong>상품설명💁🏻‍️</strong></div>
+                    <div class="mt-3 mb-3 text-center"><strong>상품설명💁🏻‍️</strong></div>
                     <div class="mb-3 text-center" th:text="${productDto.productContent}">상품설명입니다~~</div>
                     <div class="mb-3" th:each="img:${productDto.imageDtos}"><img src="#" th:src="${img.filePath}"></div>
                 </div>
@@ -501,6 +502,24 @@
 
             console.log(JSON.parse(sessionStorage.getItem("allEntries")));
             console.log(entry);
+
+            let checkCurrentPointBtn = document.querySelector("#checkCurrentPoint");
+            let flag = 0;
+            checkCurrentPointBtn.addEventListener("click", function() {
+
+                if(([[${#authentication.principal.point}]]<[[${(productDto.productPrice)-(principal.userGrade.getDiscount)*0.01*(productDto.productPrice)}]]) && (flag===0)) {
+                    flag=1;
+                    let alertMessage = document.querySelector("#alertMessage");
+                    alertMessage.innerHTML += `
+                    <div class="alert alert-danger" role="alert">
+                    포인트 잔액이 부족합니다.
+                    <a href="/mypage/point/new" class="alert-link">충전하기 ></a>
+                    를 이용해 주세요.</div>
+                    `
+                } else {
+                    location.href = '/product/[[${productDto.id}]]/order';
+                }
+            });
 
 </script>
 

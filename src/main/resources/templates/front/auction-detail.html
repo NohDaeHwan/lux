@@ -77,7 +77,7 @@
                                     <div class="col-sm-10" style="font-weight: 300;" th:text="${auction.productResponse.categoryBName} + ' > ' + ${auction.productResponse.categoryMName}">악세서리 > 넥타이</div>
                                 </div>
                             </div>
-                            <div class="bg-light">
+                            <div class="bg-light p-3">
                                 <div class="row mb-3">
                                     <label class="col-sm-2 col-form-label">시작가격</label>
                                     <div class="col-sm-10" style="padding: 7px 12px;">
@@ -129,13 +129,15 @@
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label"></label>
                                 <div class="col-sm-10">
-                                    <button th:if="${auction.stateStep == '경매중'}" class="btn btn-info w-100 button-send">
+                                    <button th:if="${auction.stateStep == '경매중'}" class="btn btn-info w-100 button-send mb-2">
                                         입찰하기
                                     </button>
-                                    <button th:unless="${auction.stateStep == '경매중'}" disabled class="btn btn-info w-100 button-send">
+                                    <button th:unless="${auction.stateStep == '경매중'}" disabled class="btn btn-info w-100 button-send mb-2">
                                         경매 종료
                                     </button>
+                                    <div id="alertMessage"></div>
                                 </div>
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -153,7 +155,7 @@
                         <a class="nav-link" href="#auctionDetail">경매상품정보</a>
                     </li>
                 </ul>
-                <div class="container-fluid brand_item-container">
+                <div class="brand_item-container">
                     <div class="gy-4 mb-5 bg-light" style="display:flex;justify-content: center">
                         <div>
                             <div class="mt-3 mb-3 text-center"><strong>입찰내역💁🏻</strong></div>
@@ -590,13 +592,22 @@
 
             let msg = document.getElementById("bidderPrice");
             console.log(presentPrice);
-
+            let alertMessage = document.querySelector("#alertMessage");
             if (msg.value <= presentPrice) {
-                alert("입찰급액이 낮습니다~!!!");
+                alertMessage.innerHTML = "";
+                alertMessage.innerHTML += `
+                    <div class="alert alert-danger" role="alert">
+                    현재 입찰금액이 낮습니다. 다시 입력하여 주십시오.</div>
+                    `
                 return;
             } else if (msg.value > userPoint) {
-                alert("포인트가 부족합니다~!!! 현재 포인트 : " + userPoint);
-                location.href = "/mypage/point/new";
+                alertMessage.innerHTML = "";
+                alertMessage.innerHTML += `
+                    <div class="alert alert-danger" role="alert">
+                    포인트 잔액이 부족합니다.
+                    <a href="/mypage/point/new" class="alert-link">충전하기 ></a>
+                    를 이용해 주세요. 현재포인트 : ${userPoint}P</div>
+                    `
                 return;
             }
 

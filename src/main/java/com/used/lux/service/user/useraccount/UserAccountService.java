@@ -10,6 +10,7 @@ import com.used.lux.dto.security.Principal;
 import com.used.lux.repository.order.ProductOrderRepository;
 import com.used.lux.repository.useraccount.UserAccountLogRepository;
 import com.used.lux.repository.useraccount.UserAccountRepository;
+import com.used.lux.request.useraccount.UserNameUpdateRequest;
 import com.used.lux.request.useraccount.UserUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,18 +34,19 @@ public class UserAccountService {
 
     private final UserAccountLogRepository userAccountLogRepository;
 
-    public  boolean exsistByUserEmail(String userName) {
+    public boolean exsistByUserEmail(String userName) {
         return userAccountRepository.existsByUserEmail(userName);
     }
 
-    public Page<ProductOrder> orderlistAll(Long id, Pageable pageable){
-        Page<ProductOrder> orders = productOrderRepository.findByUserAccountId(id,pageable);
+    public Page<ProductOrder> orderlistAll(Long id, Pageable pageable) {
+        Page<ProductOrder> orders = productOrderRepository.findByUserAccountId(id, pageable);
         return orders;
     }
 
-    public  Page<ProductOrderDto> orderlistPage(UserAccountDto userAccountDto, Pageable pageable){
-        Page<ProductOrderDto> paging = productOrderRepository.findByUserAccountId(userAccountDto.id(),pageable).map(ProductOrderDto::from);
-        return  paging;
+    public Page<ProductOrderDto> orderlistPage(UserAccountDto userAccountDto, Pageable pageable) {
+        Page<ProductOrderDto> paging = productOrderRepository.findByUserAccountId(userAccountDto.id(), pageable)
+                .map(ProductOrderDto::from);
+        return paging;
     }
 
     @Transactional
@@ -53,24 +55,38 @@ public class UserAccountService {
     }
 
     @Transactional
-    public void userPointUpdate(Principal principal, UserUpdateRequest userUpdateRequest){
+    public void userPointUpdate(Principal principal, UserUpdateRequest userUpdateRequest) {
         UserAccount userAccount = userAccountRepository.getReferenceById(principal.id());
-        userAccount.setPoint(userUpdateRequest.userPoint()+ userAccount.getPoint());
-        userAccountLogRepository.save(UserAccountLog.of(principal.userEmail(), principal.userGrade(),userUpdateRequest.userPoint(),"충전","-"));
+        userAccount.setPoint(userUpdateRequest.userPoint() + userAccount.getPoint());
+        userAccountLogRepository.save(UserAccountLog.of(principal.userEmail(), principal.userGrade(),
+                userUpdateRequest.userPoint(), "충전", "-"));
         // 시큐리티 인증 재설정
         SecurityContextHolder.getContext().setAuthentication(
-                createNewAuthentication(SecurityContextHolder.getContext().getAuthentication(), userAccount.getUserEmail()));
+                createNewAuthentication(SecurityContextHolder.getContext().getAuthentication(),
+                        userAccount.getUserEmail()));
     }
 
     private Authentication createNewAuthentication(Authentication currentAuth, String username) {
-        Principal newPrincipal = Principal.from(UserAccountDto.from(userAccountRepository.findByUserEmail(username).get()));
-        UsernamePasswordAuthenticationToken newAuth = new UsernamePasswordAuthenticationToken(newPrincipal, currentAuth.getCredentials(), newPrincipal.getAuthorities());
+        Principal newPrincipal = Principal
+                .from(UserAccountDto.from(userAccountRepository.findByUserEmail(username).get()));
+        UsernamePasswordAuthenticationToken newAuth = new UsernamePasswordAuthenticationToken(newPrincipal,
+                currentAuth.getCredentials(), newPrincipal.getAuthorities());
         newAuth.setDetails(currentAuth.getDetails());
         return newAuth;
     }
 
-    public void addUser(UserAccount userAccount) {
-        userAccountRepository.save(userAccount);
+    public int addUser(UserAccount userAccount) {
+        if(!userAccountRepository.findByUserEmail(userAccount.getUserEmail()).equals(null)){
+            return -1;
+        } else {
+            userAccountRepository.save(userAccount);
+            return 1;
+        }
     }
 
+    public void userProfileUpdate(Principal principal, UserNameUpdateRequest userNameUpdateRequest) {
+        UserAccount userAccount = userAccountRepository.getReferenceById(principal.id());
+        userAccount.setUserName(userNameUpdateRequest.userName());
+        userAccountRepository.save(userAccount);
+    }
 }

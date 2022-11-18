@@ -1,6 +1,7 @@
 package com.used.lux.repository.product;
 
 import com.used.lux.domain.product.Product;
+import com.used.lux.dto.user.product.ProductDto;
 import com.used.lux.repository.querydsl.ProductRepositoryCustom;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -49,4 +50,9 @@ public interface ProductRepository extends JpaRepository<Product, Long>, Product
             "AND p.appraisal.appraisalGrade LIKE %:productGrade% AND p.productSellType = '중고' AND p.state.stateStep = '판매중' " +
             "AND p.productPrice BETWEEN :minPrice AND :maxPrice and p.categoryM.id =:mcategoryId and p.appraisal.appraisalRequest.appraisalProductName LIKE %:query% ")
     List<Product> searchProductBy(Long mcategoryId,String productColor,String productBrand,String productGender,String productSize,String productGrade, int maxPrice,int minPrice,String query);
+
+    @Query(nativeQuery = true,
+            value="select * from product where id = (select max(id) from product where product_sell_type='중고' and state_id=6)"
+    )
+    Product recentProduct();
 }

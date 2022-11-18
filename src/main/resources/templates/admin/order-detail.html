@@ -140,12 +140,21 @@
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">총 결제금액</label>
                                 <div class="col-sm-10" style="padding: 7px 12px;">
+<!--                                    <div class="col-sm-10" style="font-weight: 300;"-->
+<!--                                         th:text="${#numbers.formatInteger(orderDetail.productDto.productPrice,3,'COMMA') +'원'} +-->
+<!--                                          ' - ' +-->
+<!--                                          (${#numbers.formatInteger((orderDetail.userAccountDto.userGrade.getDiscount)*0.01,3,'COMMA')+'원'}) +-->
+<!--                                          ' = ' +-->
+<!--                                          ${#numbers.formatInteger((orderDetail.productDto.productPrice)-((orderDetail.userAccountDto.userGrade.getDiscount)*0.01),3,'COMMA')}-->
+<!--                                           + '원' ">-->
+<!--                                        190000-->
+<!--                                    </div>-->
                                     <div class="col-sm-10" style="font-weight: 300;"
                                          th:text="${#numbers.formatInteger(orderDetail.productDto.productPrice,3,'COMMA') +'원'} +
                                           ' - ' +
-                                          (${#numbers.formatInteger((orderDetail.userAccountDto.userGrade.getDiscount)*0.01,3,'COMMA')+'원'}) +
+                                          (${#numbers.formatInteger((orderDetail.productDto.productPrice)*(orderDetail.userAccountDto.userGrade.getDiscount)*0.01,3,'COMMA')+'원'}) +
                                           ' = ' +
-                                          ${#numbers.formatInteger((orderDetail.productDto.productPrice)-((orderDetail.userAccountDto.userGrade.getDiscount)*0.01),3,'COMMA')}
+                                          ${#numbers.formatInteger((orderDetail.productDto.productPrice)-((orderDetail.productDto.productPrice)*(orderDetail.userAccountDto.userGrade.getDiscount)*0.01),3,'COMMA')}
                                            + '원' ">
                                         190000
                                     </div>
