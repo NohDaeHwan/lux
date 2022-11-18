@@ -16,12 +16,14 @@ import com.used.lux.repository.appraisal.AppraisalRequestRepository;
 import com.used.lux.request.appraisal.AppraisalCreateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Transactional
@@ -94,6 +96,12 @@ public class AppraiseService {
 
     public void apprisalDelete(Long appraisalRequestId) {
         appraisalRequestRepository.deleteById(appraisalRequestId);
+    }
+
+    @Transactional(readOnly = true)
+    public List<AppraisalDto> productFind(String query) {
+        return appraisalRepository.findByQuery(query).stream()
+                .map(AppraisalDto::from).limit(8).collect(Collectors.toUnmodifiableList());
     }
 
     /*
