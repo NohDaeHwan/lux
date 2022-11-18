@@ -29,7 +29,7 @@ public class ProductService {
     @Transactional(readOnly = true)
     public List<ProductDto> productFind(String query) {
         return productRepository.findByQuery(query, PageRequest.of(0, 10)).stream()
-                .map(ProductDto::from).collect(Collectors.toUnmodifiableList());
+                .map(ProductDto::from).limit(8).collect(Collectors.toUnmodifiableList());
     }
 
 

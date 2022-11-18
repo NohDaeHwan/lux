@@ -44,7 +44,7 @@ public class AuctionService {
     @Transactional(readOnly = true)
     public List<AuctionDto> productFind(String query) {
         return auctionRepository.findByQuery(query, PageRequest.of(0, 10)).stream()
-                .map(AuctionDto::from).collect(Collectors.toUnmodifiableList());
+                .map(AuctionDto::from).limit(8).collect(Collectors.toUnmodifiableList());
     }
 
     @Transactional(readOnly = true)

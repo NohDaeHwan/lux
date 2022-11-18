@@ -167,17 +167,25 @@
                     </h3>
                     <div class="col-md-2" th:each="auction: ${a}">
                         <div class="card mb-4 box-shadow">
-                            <a th:href="@{|/auction/${auction.id}|}">
+                            <a th:href="@{|/auction/detail/${auction.id}|}">
                                 <img class="card-img-top p-1" th:src="${auction.productResponse.imageList[0].filePath}" style="width: 150px;height: 150px;" alt="Card image cap">
                                 <div class="p-2">
                                     <p class="card-text font-weight-lighter mb-1 text-black-50" th:text="${auction.productResponse.productBrandName}">브랜드</p>
                                     <p class="card-text font-weight-light mb-1"><a th:href="@{|/auctions/${auction.id}|}" th:text="${auction.productResponse.productName}">상품명</a></p>
                                     <p class="card-text font-weight-light" th:text="${auction.presentPrice}">40.000P</p>
+                                    <p class="card-text font-weight-light" th:text="${#temporals.format(auction.auctionStartDate(),'yyyy-MM-dd HH:mm:ss')}"></p>
+                                    <p class="card-text font-weight-light" th:text="${#temporals.format(auction.auctionClosingDate(),'yyyy-MM-dd HH:mm:ss')}"></p>
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <!-- <div class="btn-group">
-                                          <button type="button" class="btn btn-sm btn-outline-secondary">상세보기</button>
+                                        <div class="sec7-text-box">
+                                            <p class="time-title" th:id="'title'+${auctionStat.count}"></p>
+                                            <div class="time" >
+                                                <span th:id="'days'+${auctionStat.count}"></span>
+                                                <span th:id="'hours'+${auctionStat.count}"></span>
+                                                <span th:id="'minutes'+${auctionStat.count}"></span>
+                                                <span th:id="'seconds'+${auctionStat.count}"></span>
+
+                                            </div>
                                         </div>
-                                        <small class="text-muted">9 mins</small> -->
                                     </div>
                                 </div>
                             </a>
@@ -206,6 +214,113 @@
   <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
   <script type="text/javascript" src="/static/assets/js/bootstrap.js"></script>
   <script src="/static/assets/js/frontmain.js"></script>
+
+<script th:inline="javascript">
+            function remaindTime() {
+            let auctions=[[${a}]];
+            //현재시간
+            var now = new Date();
+
+            for(i=0; i<auctions.length;i++){
+            var open = new Date([[${a}]][i].auctionStartDate);
+            //종료시간
+            var end = new Date([[${a}]][i].auctionClosingDate);
+
+            var auctionId=[[${a}]][i].id;
+
+            var statestep=[[${a}]][i].stateStep;
+
+            var nt = now.getTime();
+            var ot = open.getTime();
+            var et = end.getTime();
+
+            if(nt<ot){
+            //경매 전
+            // $(".time").fadeIn();
+            document.getElementById("title"+(i+1)).innerHTML="경매 시작까지";
+            sec =parseInt(ot - nt) / 1000;
+            day  = parseInt(sec/60/60/24);
+            sec = (sec - (day * 60 * 60 * 24));
+            hour = parseInt(sec/60/60);
+            sec = (sec - (hour*60*60));
+            min = parseInt(sec/60);
+            sec = parseInt(sec-(min*60));
+            if(hour<10){hour="0"+hour;}
+            if(min<10){min="0"+min;}
+            if(sec<10){sec="0"+sec;}
+
+            document.getElementById("days"+(i+1)).innerHTML = day+"일";
+            document.getElementById("hours"+(i+1)).innerHTML = hour+"시";
+            document.getElementById("minutes"+(i+1)).innerHTML = min+"분";
+            document.getElementById("seconds"+(i+1)).innerHTML = sec+"초";
+
+            } else if(nt>et){
+            //후 경매 종료  최종가격,경매상태
+
+            if (statestep !="경매완료") {
+            $.ajax({
+            type: "POST",
+            url: "/auction/after/" + auctionId + "/11",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"
+            }).done(function (res) {
+            location.href = "/auction";
+            console.log("완료");
+            }).fail(function (error) {
+            console.log("function error : " + error);
+            });
+
+            }
+
+            $(".time").fadeOut();
+            document.getElementById("title"+(i+1)).innerHTML="경매 마감";
+
+            }else {
+            //중  경매 상태를 경매전 -> 경매 중으로 변경
+
+            if (statestep !="경매중") {
+            $.ajax({
+            type: "POST",
+            url: "/auction/present/" + auctionId + "/10",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"
+            }).done(function (res) {
+            location.href = "/auction";
+            console.log("완료");
+            }).fail(function (error) {
+            console.log("function error : " + error);
+            });
+            }
+
+            // $(".time").fadeIn();
+            document.getElementById("title"+(i+1)).innerHTML=" 경매 마감까지";
+            sec =parseInt(et - nt) / 1000;
+            day  = parseInt(sec/60/60/24);
+            sec = (sec - (day * 60 * 60 * 24));
+            hour = parseInt(sec/60/60);
+            sec = (sec - (hour*60*60));
+            min = parseInt(sec/60);
+            sec = parseInt(sec-(min*60));
+            if(hour<10){hour="0"+hour;}
+            if(min<10){min="0"+min;}
+            if(sec<10){sec="0"+sec;}
+
+            document.getElementById("days"+(i+1)).innerHTML = day+"일";
+            document.getElementById("hours"+(i+1)).innerHTML = hour+"시";
+            document.getElementById("minutes"+(i+1)).innerHTML = min+"분";
+            document.getElementById("seconds"+(i+1)).innerHTML = sec+"초";
+
+            }
+            }
+
+            }
+
+
+
+
+
+            setInterval(remaindTime,1000);
+</script>
 
 </body>
 

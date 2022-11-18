@@ -10,6 +10,7 @@ import com.used.lux.dto.CategoryBDto;
 import com.used.lux.dto.CategoryMDto;
 
 import com.used.lux.dto.user.product.ProductDto;
+import com.used.lux.response.appraisal.AppraisalResponse;
 import com.used.lux.response.auction.AuctionResponse;
 
 import com.used.lux.response.product.ProductResponse;
@@ -18,6 +19,7 @@ import com.used.lux.service.BrandService;
 import com.used.lux.service.CategoryBService;
 import com.used.lux.service.CategoryMService;
 import com.used.lux.service.UserGradeService;
+import com.used.lux.service.user.appraisal.AppraiseService;
 import com.used.lux.service.user.product.ProductService;
 import com.used.lux.service.user.auction.AuctionService;
 import com.used.lux.service.user.useraccount.UserAccountService;
@@ -48,6 +50,8 @@ public class MainController {
     private final ProductService productService;
 
     private final AuctionService auctionService;
+
+    private final AppraiseService appraiseService;
 
     private final CategoryBService categoryBService;
     private final CategoryMService categoryMService;
@@ -124,7 +128,7 @@ public class MainController {
                 joinMemberDto.getGender(), 0, userGrade, RoleType.USER, "TEST USER");
 
         int result = userAccountService.addUser(userAccount);
-        if(result == -1) {
+        if (result == -1) {
             mm.addAttribute("errors", result);
             return "/front/register";
         } else {
@@ -138,6 +142,8 @@ public class MainController {
                 .map(ProductResponse::from).collect(Collectors.toUnmodifiableList());
         List<AuctionResponse> auctionList = auctionService.productFind(query).stream()
                 .map(AuctionResponse::from).collect(Collectors.toUnmodifiableList());
+        List<AppraisalResponse> appraisalResponseList = appraiseService.productFind(query).stream()
+                .map(AppraisalResponse::from).collect(Collectors.toUnmodifiableList());
         List<CategoryBDto> categoryList = categoryBService.categoryList();
         List<BrandDto> brandList = brandService.brandList();
 
@@ -145,6 +151,11 @@ public class MainController {
         mm.addAttribute("auctionList", auctionList);
         mm.addAttribute("categoryList", categoryList);
         mm.addAttribute("brandList", brandList);
+        mm.addAttribute("appraisalResponseList", appraisalResponseList);
+
+        System.out.println("중고 검색 기능 작동 :" + productList);
+        System.out.println("경매 검색 기능 작동 :" + auctionList);
+        System.out.println("검수 검색 기능 작동:" + appraisalResponseList);
         return "/front/search"; // 회원가입 페이지를 보여줄 뷰 필요
     }
 
