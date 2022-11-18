@@ -3,8 +3,6 @@ package com.used.lux.repository.auction;
 import com.used.lux.domain.auction.Auction;
 import com.used.lux.domain.order.ProductOrder;
 import com.used.lux.dto.user.auction.AuctionLogDto;
-import com.used.lux.domain.Auction;
-import com.used.lux.dto.AuctionDto;
 import com.used.lux.repository.querydsl.AuctionRepositoryCustom;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

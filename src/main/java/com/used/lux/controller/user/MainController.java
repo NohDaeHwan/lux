@@ -1,14 +1,12 @@
 package com.used.lux.controller.user;
+
 import com.used.lux.domain.UserGrade;
 import com.used.lux.domain.constant.RoleType;
 import com.used.lux.domain.useraccount.UserAccount;
 import com.used.lux.dto.*;
-
 import com.used.lux.response.appraisal.AppraisalResponse;
 import com.used.lux.response.auction.AuctionResponse;
-
 import com.used.lux.response.product.ProductResponse;
-import com.used.lux.response.product.ProductsResponse;
 import com.used.lux.service.BrandService;
 import com.used.lux.service.CategoryBService;
 import com.used.lux.service.CategoryMService;
@@ -17,20 +15,7 @@ import com.used.lux.service.user.appraisal.AppraiseService;
 import com.used.lux.service.user.product.ProductService;
 import com.used.lux.service.user.auction.AuctionService;
 import com.used.lux.service.user.useraccount.UserAccountService;
-import com.used.lux.domain.Auction;
-import com.used.lux.domain.Product;
-import com.used.lux.domain.UserAccount;
-import com.used.lux.domain.UserGrade;
-import com.used.lux.domain.constant.RoleType;
-import com.used.lux.dto.*;
-
-import com.used.lux.repository.response.auction.AuctionResponse;
-import com.used.lux.repository.response.product.ProductResponse;
-
-
-import com.used.lux.service.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -42,14 +27,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import org.springframework.validation.BindingResult;
-
-import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor

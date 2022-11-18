@@ -2,9 +2,6 @@ package com.used.lux.service.user.product;
 
 import com.used.lux.dto.user.product.ProductDto;
 import com.used.lux.repository.product.ProductRepository;
-import com.used.lux.domain.Product;
-import com.used.lux.dto.ProductDto;
-import com.used.lux.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

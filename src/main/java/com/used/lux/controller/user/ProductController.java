@@ -4,11 +4,10 @@ import com.used.lux.dto.user.product.ProductDto;
 import com.used.lux.dto.UserGradeDto;
 import com.used.lux.dto.security.Principal;
 import com.used.lux.request.order.OrderCreateRequest;
-import com.used.lux.request.OrderCreateRequest;
 
 import com.used.lux.dto.BrandDto;
 import com.used.lux.dto.CategoryBDto;
-import com.used.lux.repository.response.product.ProductResponse;
+import com.used.lux.response.product.ProductResponse;
 import com.used.lux.service.*;
 import com.used.lux.service.user.order.ProductOrderService;
 import com.used.lux.service.user.product.ProductService;
