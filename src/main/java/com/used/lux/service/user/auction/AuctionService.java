@@ -3,6 +3,8 @@ package com.used.lux.service.user.auction;
 import com.used.lux.domain.State;
 import com.used.lux.domain.auction.Auction;
 import com.used.lux.dto.user.auction.AuctionDto;
+import com.used.lux.dto.user.auction.AuctionLogDto;
+import com.used.lux.repository.auction.AuctionLogRepository;
 import com.used.lux.repository.auction.AuctionRepository;
 import com.used.lux.repository.product.ProductRepository;
 import com.used.lux.repository.StateRepository;
@@ -29,13 +31,15 @@ public class AuctionService {
 
     private final ProductRepository productRepository;
 
+
+
     private final StateRepository stateRepository;
 
     @Transactional(readOnly = true)
     public Page<AuctionDto> auctionListFind(Pageable pageable) {
         return auctionRepository.findByAuctionStartDate(pageable).map(AuctionDto::from);
     }
- 
+
 
     @Transactional(readOnly = true)
     public List<AuctionDto> productFind(String query) {

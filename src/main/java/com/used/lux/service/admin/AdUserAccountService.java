@@ -74,7 +74,7 @@ public class AdUserAccountService {
         List<AppraisalRequestDto> appraisalDtos = appraisalRequestRepository.findByUserAccountId2(userAccountDto.id())
                 .stream().map(AppraisalRequestDto::from).collect(Collectors.toCollection(ArrayList::new));
         // 경매 내역
-        List<AuctionLogDto> auctionLogDtos = auctionLogRepository.findByBidder(userAccountDto.userName())
+        List<AuctionLogDto> auctionLogDtos = auctionLogRepository.findByBidderList(userAccountDto.userName())
                 .stream().map(AuctionLogDto::from).collect(Collectors.toCollection(ArrayList::new));
         // 포인트 내역
         List<UserAccountLogDto> userAccountLogDtos = userAccountLogRepository.findByUserEmail(userAccountDto.userEmail())

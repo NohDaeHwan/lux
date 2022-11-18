@@ -2,6 +2,8 @@ package com.used.lux.controller.user;
 
 import com.used.lux.dto.UserGradeDto;
 import com.used.lux.dto.security.Principal;
+import com.used.lux.dto.user.auction.AuctionDto;
+import com.used.lux.dto.user.auction.AuctionLogDto;
 import com.used.lux.request.order.OrderCancelRequest;
 import com.used.lux.request.useraccount.UserUpdateRequest;
 import com.used.lux.response.order.ProductOrderResponse;
@@ -10,6 +12,7 @@ import com.used.lux.response.useraccount.UserAccountResponse;
 import com.used.lux.response.appraisal.AppraisalResponse;
 import com.used.lux.service.*;
 import com.used.lux.service.user.appraisal.AppraiseService;
+import com.used.lux.service.user.auction.AuctionLogService;
 import com.used.lux.service.user.auction.AuctionService;
 import com.used.lux.service.user.order.ProductOrderCancelService;
 import com.used.lux.service.user.order.ProductOrderService;
@@ -42,6 +45,7 @@ public class UserAccountController {
     private final ProductOrderCancelService productOrderCancelService;
 
     private final UserAccountLogService userAccountLogService;
+    private final AuctionLogService auctionLogService;
 
     private final UserGradeService userGradeService;
 
@@ -98,19 +102,23 @@ public class UserAccountController {
     @GetMapping("/auction")
     public String mypageAuction(@AuthenticationPrincipal Principal principal,
             ModelMap mm,
-            @PageableDefault(size = 30, sort = "created_at", direction = Sort.Direction.DESC) Pageable pageable) {
+            @PageableDefault(size = 30, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
         UserAccountResponse userAccountResponse = UserAccountResponse.from(userAccountService.getUser(principal.id()));
         UserGradeDto nextGrade = userGradeService.getNextGrade(principal.userGrade().getGradeStep());
         List<UserGradeDto> gradelist = userGradeService.getGradeList();
+        Page<AuctionLogDto> auctionLogDtoPage=auctionLogService.searchAuctionLog(principal.userName(),pageable);
 
 
 
         mm.addAttribute("users", userAccountResponse);
         mm.addAttribute("nextGrade", nextGrade);
         mm.addAttribute("grades", gradelist);
+        mm.addAttribute("auctionlog",auctionLogDtoPage);
         Long totalPoint = userAccountLogService.getTotalPoint(principal.userEmail());
 
         mm.addAttribute("total", totalPoint);
+
+
 
         return "/front/mypage-auction";
     }
