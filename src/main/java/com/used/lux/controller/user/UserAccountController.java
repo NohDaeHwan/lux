@@ -51,8 +51,6 @@ public class UserAccountController {
 
     private final AppraiseService appraiseService;
 
-    private  final AuctionService auctionService;
-
     // 주문내역조회
     @GetMapping
     public String mypage(@AuthenticationPrincipal Principal principal, Pageable pageable, ModelMap mm) {

@@ -3,6 +3,7 @@ package com.used.lux.service.user.useraccount;
 import com.used.lux.domain.order.ProductOrder;
 import com.used.lux.domain.useraccount.UserAccount;
 import com.used.lux.domain.useraccount.UserAccountLog;
+import com.used.lux.dto.LoginMemberDto;
 import com.used.lux.dto.user.order.ProductOrderDto;
 import com.used.lux.dto.user.useraccount.UserAccountDto;
 import com.used.lux.dto.security.Principal;
@@ -31,6 +32,10 @@ public class UserAccountService {
     private final UserAccountRepository userAccountRepository;
 
     private final UserAccountLogRepository userAccountLogRepository;
+
+    public  boolean exsistByUserEmail(String userName) {
+        return userAccountRepository.existsByUserEmail(userName);
+    }
 
     public Page<ProductOrder> orderlistAll(Long id, Pageable pageable){
         Page<ProductOrder> orders = productOrderRepository.findByUserAccountId(id,pageable);
@@ -62,6 +67,10 @@ public class UserAccountService {
         UsernamePasswordAuthenticationToken newAuth = new UsernamePasswordAuthenticationToken(newPrincipal, currentAuth.getCredentials(), newPrincipal.getAuthorities());
         newAuth.setDetails(currentAuth.getDetails());
         return newAuth;
+    }
+
+    public void addUser(UserAccount userAccount) {
+        userAccountRepository.save(userAccount);
     }
 
 }
