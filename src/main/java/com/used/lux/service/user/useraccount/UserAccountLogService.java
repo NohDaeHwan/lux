@@ -21,9 +21,6 @@ public class UserAccountLogService {
 
     public Long getTotalPoint(String userEmail) {
         TotalPointDto totalPointDto = userAccountLogRepository.getTotalPoint(userEmail);
-        if (totalPointDto.point() == null) {
-            return 0L;
-        }
         return totalPointDto.point();
     }
     

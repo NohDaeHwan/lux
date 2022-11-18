@@ -2,8 +2,12 @@ package com.used.lux.service.socket;
 
 import com.used.lux.domain.auction.Auction;
 import com.used.lux.domain.auction.AuctionLog;
+import com.used.lux.domain.useraccount.UserAccount;
+import com.used.lux.domain.useraccount.UserAccountLog;
 import com.used.lux.repository.auction.AuctionLogRepository;
 import com.used.lux.repository.auction.AuctionRepository;
+import com.used.lux.repository.useraccount.UserAccountLogRepository;
+import com.used.lux.repository.useraccount.UserAccountRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +32,18 @@ public class WebSocketService extends TextWebSocketHandler {
 
     private final AuctionLogRepository auctionLogRepository;
 
-    WebSocketService(@Autowired AuctionRepository auctionRepository,@Autowired AuctionLogRepository auctionLogRepository) {
+    private final UserAccountRepository userAccountRepository;
+
+    private final UserAccountLogRepository userAccountLogRepository;
+
+    WebSocketService(@Autowired AuctionRepository auctionRepository,
+                     @Autowired AuctionLogRepository auctionLogRepository,
+                     @Autowired UserAccountRepository userAccountRepository,
+                     @Autowired UserAccountLogRepository userAccountLogRepository) {
         this.auctionRepository = auctionRepository;
         this.auctionLogRepository = auctionLogRepository;
+        this.userAccountRepository = userAccountRepository;
+        this.userAccountLogRepository = userAccountLogRepository;
     }
 
     @Override
@@ -48,6 +61,32 @@ public class WebSocketService extends TextWebSocketHandler {
             }
 
             Auction auction = auctionRepository.findById(Long.parseLong(data[0])).get();
+            UserAccount userAccount;
+
+            if (auction.getBidder() == null) {
+                // 새로 입찰 한 사람
+                userAccount = userAccountRepository.findByUserName(data[1]);
+                userAccount.setPoint(userAccount.getPoint()-Integer.parseInt(data[2]));
+                userAccountRepository.save(userAccount);
+                userAccountLogRepository.save(UserAccountLog.of(null, userAccount.getUserEmail(), userAccount.getUserGrade(),
+                        Integer.parseInt(data[2]), "차감", "경매/"+data[0]));
+            } else {
+                // 새로 입찰 한 사람
+                userAccount = userAccountRepository.findByUserName(data[1]);
+                userAccount.setPoint(userAccount.getPoint()-Integer.parseInt(data[2]));
+                userAccountRepository.save(userAccount);
+                userAccountLogRepository.save(UserAccountLog.of(null, userAccount.getUserEmail(), userAccount.getUserGrade(),
+                        Integer.parseInt(data[2]), "차감", "경매/"+data[0]));
+
+                // 전에 입찰 한 사람
+                UserAccount beforeUserAccount = userAccountRepository.findByUserName(auction.getBidder());
+                beforeUserAccount.setPoint(beforeUserAccount.getPoint()+auction.getPresentPrice());
+                userAccountRepository.save(beforeUserAccount);
+                userAccountLogRepository.save(UserAccountLog.of(null, beforeUserAccount.getUserEmail(), beforeUserAccount.getUserGrade(),
+                        auction.getPresentPrice(), "충전", "경매/"+data[0]));
+            }
+
+
             auction.setBidder(data[1]);
             auction.setPresentPrice(Integer.parseInt(data[2]));
             auction.setBiddingCount(auction.getBiddingCount()+1);

@@ -1,12 +1,9 @@
 package com.used.lux.controller.user;
 
-import com.used.lux.domain.auction.Auction;
 import com.used.lux.dto.UserGradeDto;
 import com.used.lux.dto.security.Principal;
-import com.used.lux.dto.user.auction.AuctionDto;
 import com.used.lux.request.order.OrderCancelRequest;
 import com.used.lux.request.useraccount.UserUpdateRequest;
-import com.used.lux.response.auction.AuctionResponse;
 import com.used.lux.response.order.ProductOrderResponse;
 import com.used.lux.response.useraccount.UserAccountLogResponse;
 import com.used.lux.response.useraccount.UserAccountResponse;
@@ -59,12 +56,11 @@ public class UserAccountController {
         Page<ProductOrderResponse> productOrderResponse = productOrderService.productListAll(principal.id(), pageable)
                 .map(ProductOrderResponse::from);
         UserGradeDto nextGrade = userGradeService.getNextGrade(principal.userGrade().getGradeStep());
-        System.out.println(nextGrade);
+        Long totalPoint = userAccountLogService.getTotalPoint(principal.userEmail());
+
         mm.addAttribute("users", userAccountResponse);
         mm.addAttribute("orders", productOrderResponse);
         mm.addAttribute("nextGrade", nextGrade);
-        System.out.println(nextGrade+"functioncall!!!!!!!!");
-        Long totalPoint = userAccountLogService.getTotalPoint(principal.userEmail());
         mm.addAttribute("total", totalPoint);
         return "/front/mypage-order";
     }
@@ -142,22 +138,24 @@ public class UserAccountController {
         return "/front/mypage-point";
     }
 
-    // 회원포인트 충전
+    // 회원포인트 충전 페이지
     @GetMapping("/point/new")
     public String mypagePointCreate(@AuthenticationPrincipal Principal principal, ModelMap mm) {
         UserAccountResponse userAccountResponse = UserAccountResponse.from(userAccountService.getUser(principal.id()));
         UserGradeDto nextGrade = userGradeService.getNextGrade(principal.userGrade().getGradeStep());
+        Long totalPoint = userAccountLogService.getTotalPoint(principal.userEmail());
+
         mm.addAttribute("users", userAccountResponse);
         mm.addAttribute("nextGrade", nextGrade);
-        Long totalPoint = userAccountLogService.getTotalPoint(principal.userEmail());
         mm.addAttribute("total",totalPoint);
+
         return "/front/mypage-point-create-form";
     }
 
+    // 회원포인트 충전
     @PostMapping("/point/new/loading")
     public String mypagePointCreate(@AuthenticationPrincipal Principal principal,
             UserUpdateRequest userUpdateRequest) {
-        System.out.println(userUpdateRequest);
         userAccountService.userPointUpdate(principal, userUpdateRequest);
         return "redirect:/mypage/point";
     }
@@ -177,6 +175,8 @@ public class UserAccountController {
         mm.addAttribute("total", totalPoint);
         return "/front/mypage-grade";
     }
+
+    // 최근 본 상품
     @GetMapping("/recentview")
     public String recentview(@AuthenticationPrincipal Principal principal, Pageable pageable, ModelMap mm){
 
@@ -186,19 +186,16 @@ public class UserAccountController {
         Page<ProductOrderResponse> productOrderResponse = productOrderService.productListAll(principal.id(), pageable)
                 .map(ProductOrderResponse::from);
 
-
-
         mm.addAttribute("users", userAccountResponse);
         mm.addAttribute("orders", productOrderResponse);
         mm.addAttribute("nextGrade", nextGrade);
         Long totalPoint = userAccountLogService.getTotalPoint(principal.userEmail());
         mm.addAttribute("total", totalPoint);
 
-
-
         return "/front/mypage-recentview";
     }
 
+    // 회원검수
     @GetMapping("/appraise")
     public String appraise(@AuthenticationPrincipal Principal principal, Pageable pageable, ModelMap mm) {
         UserAccountResponse userAccountResponse = UserAccountResponse.from(userAccountService.getUser(principal.id()));
@@ -212,17 +209,5 @@ public class UserAccountController {
         mm.addAttribute("total", totalPoint);
         return "/front/mypage-appraisal";
     }
-    //
-    // @GetMapping
-    // public String Mypage(ModelMap model, @AuthenticationPrincipal Principal
-    // principal, @PageableDefault(size = 2)Pageable pageable){
-    // //아이디를 사용해 로그인된 이용자의 구매 목록 나열
-    // Page<ProductOrderResponse> orders =
-    // userAccountService.orderlistPage(principal.toDto(),
-    // pageable).map(ProductOrderResponse::from);
-    // model.addAttribute("orders", orders);
-    // return "/mypage";
-    // }
-
 
 }

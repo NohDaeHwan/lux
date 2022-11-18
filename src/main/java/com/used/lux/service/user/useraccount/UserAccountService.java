@@ -14,6 +14,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,5 +52,16 @@ public class UserAccountService {
         UserAccount userAccount = userAccountRepository.getReferenceById(principal.id());
         userAccount.setPoint(userUpdateRequest.userPoint()+ userAccount.getPoint());
         userAccountLogRepository.save(UserAccountLog.of(principal.userEmail(), principal.userGrade(),userUpdateRequest.userPoint(),"충전","-"));
+        // 시큐리티 인증 재설정
+        SecurityContextHolder.getContext().setAuthentication(
+                createNewAuthentication(SecurityContextHolder.getContext().getAuthentication(), userAccount.getUserEmail()));
     }
+
+    private Authentication createNewAuthentication(Authentication currentAuth, String username) {
+        Principal newPrincipal = Principal.from(UserAccountDto.from(userAccountRepository.findByUserEmail(username).get()));
+        UsernamePasswordAuthenticationToken newAuth = new UsernamePasswordAuthenticationToken(newPrincipal, currentAuth.getCredentials(), newPrincipal.getAuthorities());
+        newAuth.setDetails(currentAuth.getDetails());
+        return newAuth;
+    }
+
 }

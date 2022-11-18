@@ -33,7 +33,7 @@ public class AuctionService {
 
     @Transactional(readOnly = true)
     public Page<AuctionDto> auctionListFind(Pageable pageable) {
-        return auctionRepository.findAll(pageable).map(AuctionDto::from);
+        return auctionRepository.findByAuctionStartDate(pageable).map(AuctionDto::from);
     }
  
 

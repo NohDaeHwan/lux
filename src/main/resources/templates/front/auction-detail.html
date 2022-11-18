@@ -567,6 +567,7 @@
     $(document).ready(function(){
 
         const username = [[${#authentication.principal.userName}]];
+        const userPoint = [[${#authentication.principal.point}]];
         const auctionId = [[${auction.id}]];
         let presentPrice = [[${auction.presentPrice}]];
 
@@ -592,6 +593,10 @@
 
             if (msg.value <= presentPrice) {
                 alert("입찰급액이 낮습니다~!!!");
+                return;
+            } else if (msg.value > userPoint) {
+                alert("포인트가 부족합니다~!!! 현재 포인트 : " + userPoint);
+                location.href = "/mypage/point/new";
                 return;
             }
 

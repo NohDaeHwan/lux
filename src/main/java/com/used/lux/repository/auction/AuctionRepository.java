@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.DoubleStream;
 
 public interface AuctionRepository extends JpaRepository<Auction, Long>, AuctionRepositoryCustom {
 
@@ -72,4 +73,7 @@ public interface AuctionRepository extends JpaRepository<Auction, Long>, Auction
                     "AND a.product.appraisal.appraisalRequest.appraisalProductName LIKE %:query% " +
                     "AND a.auctionStartDate >= :auctionDate")
     Page<Auction> findByBackAuctionListDate(String auctionState, LocalDateTime auctionDate, String query, Pageable pageable);
+
+    @Query(nativeQuery = true, value = "SELECT * FROM auction WHERE auction_start_date is not null")
+    Page<Auction> findByAuctionStartDate(Pageable pageable);
 }
