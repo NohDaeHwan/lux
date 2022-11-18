@@ -32,7 +32,7 @@
     </div>
 </aside>
 <main id="main" class="main p-5">
-    <form action="/appraisal/new/loading" method="post" enctype="multipart/form-data">
+
     <section class="section mb-5">
         <div class="row align-items-top">
             <div class="col-lg-12">
@@ -104,8 +104,11 @@
                     <div class="card-header">02. 검수이미지등록</div>
                     <div class="card-body">
                         <div class="gy-4" style="font-weight: 300;">
-                            <div class="col-lg-12 flex-column" style="display: flex;height: 500px;" id ="dragArea">
-                                <input type="file" name="images" accept="image/*" multiple id ="uploader">
+                            <div class="col-lg-12 flex-column " style="display: flex; justify-content: flex-end; align-items: center;" id ="dragArea">
+                                <div class="row" id ="a">
+                                </div>
+                                <label for ="uploader" class="btn btn-secondary col-lg-12 " style="position: absolute; opacity: 0.5;">파일을 선택해 주세요.</label>
+                                <input type="file" name="images" accept="image/*" multiple id ="uploader" hidden>
 
                             </div>
                         </div>
@@ -118,7 +121,7 @@
     <div class="section" style="font-weight: 300;">
         <button  class="btn btn-info w-100" onclick="submitPage()">검수 등록하기</button>
     </div>
-    </form>
+
 
 
 </main>
@@ -142,8 +145,10 @@
 <script>
 
     let imageFileList = [];
+
     //드래그해서 파일 받기
     let imageViewer = document.getElementById("dragArea");
+    let a = document.getElementById("a");
     imageViewer.ondragover =(e) =>{e.preventDefault();};
     imageViewer.ondrop =(e) =>{
         e.preventDefault();
@@ -157,13 +162,15 @@
                 img.style.outline = "none";
                 img.style.width = "200px";
                 img.style.height = "200px";
-                imageViewer.appendChild(img);
+                img.style.display = "flex";
+                img.classList += "col-lg-3";
+                a.appendChild(img);
                 imageFileList.push(data[i]);
             } else {
                 console.log("데이터 유형이 이미지파일이 아닙니다.");
             }
         }
-        console.log(imageFileList);
+
     }
     //input을 이용한 이미지 파일 전송
     let imageFiles = document.getElementById("uploader");
@@ -176,10 +183,13 @@
             img.style.outline = "none";
             img.style.width = "200px";
             img.style.height = "200px";
-            imageViewer.appendChild(img);
+            img.style.display = "flex";
+            img.classList += "col-lg-3";
+
+            a.appendChild(img);
             imageFileList.push(imageFiles.files[i]);
         }
-        console.log(imageFileList);
+
     }
 
     function submitPage(){
@@ -191,30 +201,32 @@
         let stateId = document.getElementById("stateId").value;
         let formData = new FormData();
 
-        formData.append("images",imageFileList);
+        //form 데이터 등록
+        imageFileList.forEach(e => formData.append("images",e))
         formData.append("productName",productName);
-        formData.append("brand",brand);
+        formData.append("brandId",brand);
         formData.append("gender",gender);
         formData.append("color",color);
         formData.append("size",size);
         formData.append("stateId",stateId);
 
         let sender = new XMLHttpRequest();
-        /*
-        sender.open('POST','/appraisal/new/loading');
-        sender.setRequestHeader('Content-Type','multipart/form-data');
 
+        sender.open('POST','/appraisal/new/loading');
+        //sender.setRequestHeader('Content-Type','multipart/form-data');
+
+        //전송
         sender.send(formData);
 
         sender.onload =() => {
-            if(sender.status === 2000){
-                console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+            if(sender.status === 200){
+                location.href = "/appraisal";
             }else {
-                console.log("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+                console.log("error");
             }
 
         }
-        */
+
     }
 </script>
 </body>
