@@ -22,7 +22,7 @@
                  th:aria-labelledby="'heading'+${bcategoryStat.count}" data-parent="#accordion">
                 <div class="nav-link collapsed" th:each="mcategory : ${bcategory.categoryMDtos()}">
                     <h6 class="mb-0" style="font-size:15px;">
-                        <a href="#" class="text-black-50" th:text="${mcategory.categoryMName()}">짧은 상의</a>
+                        <a th:href="@{|/searchcate/${mcategory.id}|}" class="text-black-50" th:text="${mcategory.categoryMName()}">짧은 상의</a>
                     </h6>
                 </div>
             </div>
@@ -64,7 +64,7 @@
                 </div>
             </div>
         </div>
-        <div class="container-fluid brand_item-container" style="display: flex; justify-content:flex-start; flex-wrap: wrap;">
+        <div class="container-fluid brand_item-container" style="justify-content:flex-start; flex-wrap: wrap;">
             <!-- 중고 검색 리스트-->
             <div class="album py-3 bg-light">
                 <div class="container-fluid">
@@ -72,10 +72,11 @@
                         <div class="col-md-2" th:each="product: ${productList}">
                             <div class="card mb-4 box-shadow" style="width:150px;">
                                 <a th:href="@{|/product/${product.id}|}">
-                                    <img class="card-img-top p-1" th:src="${product.imageList[0].filePath}" style="width: 150px;height: 150px;" alt="Card image cap">
+                                    <img class="card-img-top p-1" th:src="${product.imageList[0].filePath}" style="height: 150px;" alt="Card image cap">
                                     <div class="p-2">
                                         <p class="card-text font-weight-lighter mb-1 text-black-50" th:text="${product.productBrandName}">브랜드</p>
-                                        <p class="card-text font-weight-light mb-1"><a th:href="@{|/product/${product.id}|}" th:text="${product.productName}">상품명</a></p>
+                                        <p class="card-text font-weight-light mb-1"><a th:if="${product.productName().length()} > 10" th:href="@{|/product/${product.id}|}" th:text="${#strings.replace(product.productName,#strings.substring(product.productName,10,product.productName.length()),'...')}">상품명</a></p>
+                                        <p class="card-text font-weight-light mb-1"><a th:if="${product.productName().length()} <= 10" th:href="@{|/product/${product.id}|}" th:text="${product.productName}">상품명</a></p>
                                         <p class="card-text font-weight-light" th:text="${#numbers.formatInteger(product.productPrice,3,'COMMA')}">40.000P</p>
                                         <div class="d-flex justify-content-between align-items-center"></div>
                                     </div>
@@ -116,12 +117,14 @@
                             </div>
                             <div th:unless="${auction.stateStep=='경매전'}">
                                 <a th:href="@{|/auction/detail/${auction.id}|}">
-                                    <img class="card-img-top p-1" th:src="${auction.productResponse.imageList[0].filePath}" style="width: 150px;height: 150px;" alt="Card image cap">
+                                    <img class="card-img-top p-1" th:src="${auction.productResponse.imageList[0].filePath}" style="height: 150px;" alt="Card image cap">
                                 </a>
                             </div>
                             <div class="p-2">
                                 <p class="card-text font-weight-lighter mb-1 text-black-50" th:text="${auction.productResponse.productBrandName}">브랜드</p>
-                                <p class="card-text font-weight-light mb-1" th:text="${auction.productResponse.productName}">상품명</p>
+                                <p class="card-text font-weight-light mb-1"><a th:if="${auction.productResponse.productName.length()} > 10" th:href="@{|/auction/detail/${auction.id}|}" th:text="${#strings.replace(auction.productResponse.productName,#strings.substring(auction.productResponse.productName,10,auction.productResponse.productName.length()),'...')}">상품명</a></p>
+                                <p class="card-text font-weight-light mb-1"><a th:if="${auction.productResponse.productName.length()} <= 10" th:href="@{|/auction/detail/${auction.id}|}" th:text="${auction.productResponse().productName()}">상품명</a></p>
+
                                 <p class="card-text font-weight-light" th:text="${auction.presentPrice}">40.000P</p>
                                 <p class="card-text font-weight-light" th:text="${#temporals.format(auction.auctionStartDate(),'yyyy-MM-dd HH:mm:ss')}"></p>
                                 <p class="card-text font-weight-light" th:text="${#temporals.format(auction.auctionClosingDate(),'yyyy-MM-dd HH:mm:ss')}"></p>
@@ -168,11 +171,14 @@
                         <div class="card mb-4 box-shadow">
                             <div class="p-2">
                                 <a th:href="@{|/appraisal/${app.id}|}">
-                                    <img class="card-img-top p-1" th:src="${app.appraisalRequest().imageList[0].filePath}" style="width: 150px;height: 150px;" alt="Card image cap">
+                                    <img class="card-img-top p-1" th:src="${app.appraisalRequest().imageList[0].filePath}" style="width:height: 150px;" alt="Card image cap">
                                 </a>
                             <div class="p-2">
                                 <p class="card-text font-weight-lighter mb-1 text-black-50" th:text="${app.appraisalRequest.appraisalBrandName()}">브랜드</p>
-                                <p class="card-text font-weight-light mb-1" th:text="${app.appraisalRequest.appraisalProductName()}">상품명</p>
+                                <p class="card-text font-weight-light mb-1"><a th:if="${app.appraisalRequest.appraisalProductName().length()} > 10" th:href="@{|/appraisal/${app.id}|}" th:text="${#strings.replace(app.appraisalRequest.appraisalProductName(),#strings.substring(app.appraisalRequest.appraisalProductName(),10,app.appraisalRequest.appraisalProductName().length()),'...')}">상품명</a></p>
+                                <p class="card-text font-weight-light mb-1"><a th:if="${app.appraisalRequest.appraisalProductName().length()} <= 10" th:href="@{|/appraisal/${app.id}|}" th:text="${app.appraisalRequest.appraisalProductName()}">상품명</a></p>
+
+
                             </div>
                         </div>
                     </div>
