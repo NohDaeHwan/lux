@@ -20,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -59,7 +60,13 @@ public class ProductController {
         List<CategoryBDto> categoryList = categoryBService.categoryList();
         List<BrandDto> brandList = brandService.brandList();
 
-
+        System.out.println("=============================================================================");
+        System.out.println(barNumbers);
+        System.out.println(Arrays.toString(products.stream().toList().toArray()));
+        System.out.println(products.getTotalPages());
+        System.out.println(categoryList);
+        System.out.println(brandList);
+        System.out.println("=============================================================================");
         mm.addAttribute("paginationBarNumbers", barNumbers);
         mm.addAttribute("products", products);
         mm.addAttribute("categoryList", categoryList);

@@ -1,5 +1,6 @@
 package com.used.lux.service.user.product;
 
+import com.used.lux.domain.product.Product;
 import com.used.lux.dto.user.product.ProductDto;
 import com.used.lux.repository.product.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -47,4 +50,6 @@ public class ProductService {
     public List<ProductDto> findByState6AndRecent4List() {
         return productRepository.findByState6AndRecent4List().stream().map(ProductDto::from).collect(Collectors.toUnmodifiableList());
     }
+
+
 }

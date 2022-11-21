@@ -2,8 +2,11 @@ package com.used.lux.controller.user;
 
 import com.used.lux.domain.UserGrade;
 import com.used.lux.domain.constant.RoleType;
+import com.used.lux.domain.product.Image;
+import com.used.lux.domain.product.Product;
 import com.used.lux.domain.useraccount.UserAccount;
 import com.used.lux.dto.*;
+import com.used.lux.dto.user.product.ImageDto;
 import com.used.lux.response.appraisal.AppraisalResponse;
 import com.used.lux.response.auction.AuctionResponse;
 import com.used.lux.response.product.ProductResponse;
@@ -12,6 +15,7 @@ import com.used.lux.service.CategoryBService;
 import com.used.lux.service.CategoryMService;
 import com.used.lux.service.UserGradeService;
 import com.used.lux.service.user.appraisal.AppraiseService;
+import com.used.lux.service.user.product.ImageService;
 import com.used.lux.service.user.product.ProductService;
 import com.used.lux.service.user.auction.AuctionService;
 import com.used.lux.service.user.useraccount.UserAccountService;
@@ -50,6 +54,7 @@ public class MainController {
 
     private final UserGradeService userGradeService;
 
+    private final ImageService imageService;
     private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/")
@@ -62,6 +67,11 @@ public class MainController {
         System.out.println(products);
         mm.addAttribute("auctions",auctions);
         mm.addAttribute("products",products);
+
+
+
+
+
         return "/front/index";
         // 루트 페이지를 보여줄 뷰 필요
     }
