@@ -188,6 +188,7 @@ public class MainController {
 //        mm.addAttribute("auctions",auctions);
         mm.addAttribute("a",auction);
 
+
         System.out.println("function"+categoryMDto);
 
 

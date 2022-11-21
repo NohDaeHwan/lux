@@ -4,6 +4,7 @@ import com.used.lux.dto.UserGradeDto;
 import com.used.lux.dto.security.Principal;
 import com.used.lux.dto.user.auction.AuctionLogDto;
 import com.used.lux.request.order.OrderCancelRequest;
+import com.used.lux.request.useraccount.UserNameUpdateRequest;
 import com.used.lux.request.useraccount.UserUpdateRequest;
 import com.used.lux.response.order.ProductOrderResponse;
 import com.used.lux.response.useraccount.UserAccountLogResponse;
@@ -214,4 +215,25 @@ public class UserAccountController {
         return "/front/mypage-appraisal";
     }
 
+
+    //회원 수정
+    @PostMapping("/updateform")
+    public  String updateform(@AuthenticationPrincipal Principal principal, UserNameUpdateRequest userNameUpdateRequest){
+
+        userAccountService.userNameUpdate(principal,userNameUpdateRequest);
+        System.out.println("수정");
+
+
+        return "redirect:/mypage";
+    }
+
+
+    //회원 삭제
+    @PostMapping("/deleteform")
+    public  String deleteform(@AuthenticationPrincipal Principal principal){
+        userAccountService.deleteUser(principal);
+
+
+        return  "redirect:/";
+    }
 }

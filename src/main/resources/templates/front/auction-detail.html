@@ -546,11 +546,13 @@
     let existingEntries = JSON.parse(sessionStorage.getItem("allEntries"));
     if(existingEntries == null) existingEntries = [];
     let image =[[${auction.productResponse.imageList}]];
+    let id=[[${auction.productResponse.id}]];
     let name = [[${auction.productResponse.productBrandName}]];
     let date = new Date();
     let state= [[${auction.productResponse.productSellType}]];
     let entry = {
         "image":image[0]["filePath"],
+        "id":id,
         "name": name,
         "date": date.toLocaleTimeString(),
         "state": state

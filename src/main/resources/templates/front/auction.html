@@ -186,8 +186,8 @@
                 </a>
             </li>
             <li class="page-item" th:each="pageNumber : ${paginationBarNumbers}">
-                <a th:text="${pageNumber + 1}"
-                   th:href="@{/auction(page=${pageNumber},
+                <a th:text="${pageNumber}"
+                   th:href="@{/auction(page=${pageNumber+1},
                           sort=(${param.sort} != null ? ${param.sort} : '') + (${auctions.sort.getOrderFor('param.sort')} != null ? (${auctions.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
                           query=${param.query}
                       )}"
