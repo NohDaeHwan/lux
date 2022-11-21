@@ -2,7 +2,6 @@ package com.used.lux.controller.user;
 
 import com.used.lux.dto.UserGradeDto;
 import com.used.lux.dto.security.Principal;
-import com.used.lux.dto.user.auction.AuctionDto;
 import com.used.lux.dto.user.auction.AuctionLogDto;
 import com.used.lux.request.order.OrderCancelRequest;
 import com.used.lux.request.useraccount.UserNameUpdateRequest;
@@ -14,7 +13,6 @@ import com.used.lux.response.appraisal.AppraisalResponse;
 import com.used.lux.service.*;
 import com.used.lux.service.user.appraisal.AppraiseService;
 import com.used.lux.service.user.auction.AuctionLogService;
-import com.used.lux.service.user.auction.AuctionService;
 import com.used.lux.service.user.order.ProductOrderCancelService;
 import com.used.lux.service.user.order.ProductOrderService;
 import com.used.lux.service.user.useraccount.UserAccountLogService;

@@ -26,6 +26,7 @@ public interface ProductRepository extends JpaRepository<Product, Long>, Product
                     "AND p.appraisal.appraisalRequest.appraisalSize LIKE %:productSize% AND p.appraisal.appraisalRequest.appraisalProductName LIKE %:query% " +
                     "AND p.productSellType = '중고' AND p.state.stateStep = '판매중' AND p.productPrice BETWEEN :minPrice AND :maxPrice")
     Page<Product> findByFrontProductList(String productBrand,String productColor, String productGender,
+                
                                          String productSize, String productGrade, int maxPrice, int minPrice,
                                          String query, Pageable pageable);
 
@@ -49,4 +50,8 @@ public interface ProductRepository extends JpaRepository<Product, Long>, Product
             "AND p.appraisal.appraisalGrade LIKE %:productGrade% AND p.productSellType = '중고' AND p.state.stateStep = '판매중' " +
             "AND p.productPrice BETWEEN :minPrice AND :maxPrice and p.categoryM.id =:mcategoryId and p.appraisal.appraisalRequest.appraisalProductName LIKE %:query% ")
     List<Product> searchProductBy(Long mcategoryId,String productColor,String productBrand,String productGender,String productSize,String productGrade, int maxPrice,int minPrice,String query);
+
+    @Query(nativeQuery = true,value = "select * from product where state_id = 6 and created_at < now() order by created_at desc limit 4")
+    List<Product> findByState6AndRecent4List();
+    
 }

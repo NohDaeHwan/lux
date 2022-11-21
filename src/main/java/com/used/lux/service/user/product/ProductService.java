@@ -44,4 +44,7 @@ public class ProductService {
                 .map(ProductDto::from).collect(Collectors.toUnmodifiableList());
     }
 
+    public List<ProductDto> findByState6AndRecent4List() {
+        return productRepository.findByState6AndRecent4List().stream().map(ProductDto::from).collect(Collectors.toUnmodifiableList());
+    }
 }

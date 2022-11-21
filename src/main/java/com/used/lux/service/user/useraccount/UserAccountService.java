@@ -74,6 +74,7 @@ public class UserAccountService {
         userAccountRepository.save(userAccount);
     }
 
+
     @Transactional
     public  void deleteUser(Principal principal){
        userAccountRepository.deleteById(principal.id());
@@ -81,22 +82,20 @@ public class UserAccountService {
 
     }
 
-
     public void userNameUpdate(Principal principal,UserNameUpdateRequest userNameUpdateRequest) {
 
-
         UserAccount userAccount =userAccountRepository.findByUserName(principal.userName());
-
-
         userAccount.setUserName(userNameUpdateRequest.userName());
-
-
         userAccountRepository.save(userAccount);
-
-
-
 
     }
 
+    public boolean exsistByUserName(String name) {
+        return userAccountRepository.existsByUserName(name);
+    }
+
+    public boolean exsistByPhoneNumber(String phoneNumber) {
+        return userAccountRepository.existsByPhoneNumber(phoneNumber);
+    }
 
 }
