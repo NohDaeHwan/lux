@@ -45,10 +45,11 @@
    // let a = document.getElementsByClassName("a");
     let str ="";
     for(let i = 0; i < recnet.length; i++) {
-        str +="  <tr></tr><td><img class=\"card-text font-weight-lighter mb-1 text-black-50\" id=\"image\" style=\"width:100px;height: 100px;\" src =' "+recnet[i].image+"' ></td>" +
-            "                        <td><p class=\"card-text font-weight-lighter mb-1 text-black-50\" id=\"name\">"+recnet[i].name+"</p></td>" +
-            "                        <td><p class=\"card-text font-weight-lighter mb-1 text-black-50\" id=\"date\">"+recnet[i].date+"</p></td>" +
-            "                        <td><p class=\"card-text font-weight-lighter mb-1 text-black-50\" id=\"state\">"+recnet[i].state+"</p></td></tr>  "
+        str +=" <tr><td><img class=\"card-text font-weight-lighter mb-1 text-black-50\" id=\"image\" style=\"width:100px;height: 100px;\" src =' "+recnet[i].image+"'></td>" +
+            "        <td><a href='/auction/detail/"+ recnet[i].id+" '><p class=\"card-text font-weight-lighter mb-1 text-black-50\" id=\"name\">"+recnet[i].name+"</p></a></td>" +
+            "       <td><p class=\"card-text font-weight-lighter mb-1 text-black-50\" id=\"date\">"+recnet[i].date+"</p></td>" +
+            "       <td><p class=\"card-text font-weight-lighter mb-1 text-black-50\" id=\"state\">"+recnet[i].state+"</p></td>" +
+            "</tr> "
 
 
         /*
@@ -58,7 +59,9 @@
         document.getElementById("state").innerHTML =recnet[i].state+'<br>';
            */
     }
+
     a.innerHTML = str;
+    console.log(a.innerHTML);
     console.log(name);
 
 

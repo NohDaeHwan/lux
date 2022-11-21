@@ -52,11 +52,15 @@
             <div class="brand_heading">
                 <h3 class="custom_heading">
                     중고 >
+                    <div style="text-align: right">
+                        <a th:href="@{|/product|}" >더보기</a>
+                    </div>
                 </h3>
+
                 <div style="display: flex; justify-content: space-between;">
-<!--                    <p th:text="'전체결과: ' + ${points.getTotalElements} + ' 건'">-->
-<!--                        중고탭 검색결과: n 건-->
-<!--                    </p>-->
+                    <p th:text="'전체결과: ' + ${#lists.size(productList)} + ' 건'">
+                        중고탭 검색결과: n 건
+                    </p>
                 </div>
             </div>
         </div>
@@ -83,18 +87,22 @@
                 </div>
             </div>
         </div>
-
     </section>
+    <hr>
     <section class="layout_padding2">
         <div class="container-fluid">
             <div class="brand_heading">
                 <h3 class="custom_heading">
                     경매 >
+                    <div style="text-align: right">
+                        <a th:href="@{|/auction|}" >더보기</a>
+                    </div>
                 </h3>
+
                 <div style="display: flex; justify-content: space-between;">
-<!--                    <p th:text="'전체결과: ' + ${points.getTotalElements} + ' 건'">-->
-<!--                        경매탭 전체결과: n 건-->
-<!--                    </p>-->
+                      <p th:text="'전체결과: ' + ${#lists.size(auctionList)} + ' 건'">
+                        중고탭 검색결과: n 건
+                    </p>
                 </div>
             </div>
         </div>
@@ -135,18 +143,21 @@
                 </div>
             </div>
         </div>
-
+<hr>
     </section>
     <section class="layout_padding2">
         <div class="container-fluid">
             <div class="brand_heading">
                 <h3 class="custom_heading">
                     검수 >
+                    <div style="text-align: right">
+                        <a th:href="@{|/appraisal|}" >더보기</a>
+                     </div>
                 </h3>
                 <div style="display: flex; justify-content: space-between;">
-<!--                    <p th:text="'전체결과: ' + ${points.getTotalElements} + ' 건'">-->
-<!--                        검수탭 전체결과: n 건-->
-<!--                    </p>-->
+                    <p th:text="'전체결과: ' + ${#lists.size(appraisalResponseList)} + ' 건'">
+                        중고탭 검색결과: n 건
+                    </p>
                 </div>
             </div>
         </div>
