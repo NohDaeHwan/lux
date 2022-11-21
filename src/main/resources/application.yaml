@@ -1,8 +1,5 @@
 server.port: ${port:8484}
 
-debug: false
-management.endpoints.web.exposure.include:  "*"
-
 logging:
   level:
     com.example.lux: debug
