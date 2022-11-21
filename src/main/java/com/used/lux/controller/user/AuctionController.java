@@ -49,13 +49,12 @@ public class AuctionController {
         List<BrandDto> brandList = brandService.brandList();
         List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(),
                 auctions.getTotalPages());
+        System.out.println(barNumbers);
 
         mm.addAttribute("paginationBarNumbers", barNumbers);
         mm.addAttribute("auctions", auctions);
         mm.addAttribute("categoryList", categoryList);
         mm.addAttribute("brandList", brandList);
-
-        System.out.println("기능:" + auctions.stream().toList());
 
         return "/front/auction";
     }

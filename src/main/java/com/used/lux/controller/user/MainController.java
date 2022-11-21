@@ -123,7 +123,7 @@ public class MainController {
 
             System.out.println("회원가입완료 ");
             userAccountService.addUser(userAccount);
-            return "/front/login";
+            return "redirect:/login";
 
     }
 

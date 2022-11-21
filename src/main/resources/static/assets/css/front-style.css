@@ -10,6 +10,9 @@ body {
   color: #000000;
   background-color: #ffffff;
 }
+.disabled-link {
+  pointer-events: none;
+}
 /*header*/
 /*--------------------------------------------------------------
 # Header Nav

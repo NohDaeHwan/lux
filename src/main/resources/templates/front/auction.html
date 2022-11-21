@@ -181,7 +181,9 @@
         <ul class="pagination">
             <li class="page-item">
                 <a class="page-link" th:href="@{/auction(page=${auctions.number - 1}, sort=(${param.sort} != null ? ${param.sort} : '') + (${auctions.sort.getOrderFor('param.sort')} != null ? (${auctions.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
-                      query=${param.query})}" aria-label="Previous" th:class="'page-link' + (${auctions.number} <= 0 ? ' disabled' : '')">
+                      query=${param.query}, auctionColor=${param.auctionColor}, auctionBrand=${param.auctionBrand}, auctionGender=${param.auctionGender},
+                          auctionSize=${param.auctionSize}, auctionGrade=${param.auctionGrade}, maxPrice=${param.maxPrice}, minPrice=${param.minPrice})}"
+                   aria-label="Previous" th:class="'page-link' + (${auctions.number} <= 0 ? ' disabled-link' : '')">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
@@ -189,14 +191,17 @@
                 <a th:text="${pageNumber}"
                    th:href="@{/auction(page=${pageNumber+1},
                           sort=(${param.sort} != null ? ${param.sort} : '') + (${auctions.sort.getOrderFor('param.sort')} != null ? (${auctions.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
-                          query=${param.query}
+                          query=${param.query}, auctionColor=${param.auctionColor}, auctionBrand=${param.auctionBrand}, auctionGender=${param.auctionGender},
+                          auctionSize=${param.auctionSize}, auctionGrade=${param.auctionGrade}, maxPrice=${param.maxPrice}, minPrice=${param.minPrice}
                       )}"
-                   th:class="'page-link' + (${pageNumber} == ${auctions.number} <= 0 ? ' disabled' : '')">
+                   th:class="'page-link' + (${pageNumber} == ${auctions.number} <= 0 ? ' disabled-link' : '')">
                 </a>
             </li>
             <li class="page-item">
                 <a class="page-link" th:href="@{/auction(page=${auctions.number + 1}, sort=(${param.sort} != null ? ${param.sort} : '') + (${auctions.sort.getOrderFor('param.sort')} != null ? (${auctions.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
-                      query=${param.query})}" aria-label="Next" th:class="'page-link' + (${auctions.number} >= ${auctions.totalPages - 1} ? ' disabled' : '')">
+                      query=${param.query}, auctionColor=${param.auctionColor}, auctionBrand=${param.auctionBrand}, auctionGender=${param.auctionGender},
+                          auctionSize=${param.auctionSize}, auctionGrade=${param.auctionGrade}, maxPrice=${param.maxPrice}, minPrice=${param.minPrice})}"
+                   aria-label="Next" th:class="'page-link' + (${auctions.number} >= ${auctions.totalPages - 1} ? ' disabled-link' : '')">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>

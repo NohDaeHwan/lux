@@ -59,7 +59,7 @@ public class ProductController {
         List<CategoryBDto> categoryList = categoryBService.categoryList();
         List<BrandDto> brandList = brandService.brandList();
 
-
+        System.out.println(barNumbers);
         mm.addAttribute("paginationBarNumbers", barNumbers);
         mm.addAttribute("products", products);
         mm.addAttribute("categoryList", categoryList);
