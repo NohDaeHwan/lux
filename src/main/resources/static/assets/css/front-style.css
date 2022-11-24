@@ -10,6 +10,9 @@ body {
   color: #000000;
   background-color: #ffffff;
 }
+.disabled-link {
+  pointer-events: none;
+}
 /*header*/
 /*--------------------------------------------------------------
 # Header Nav
@@ -504,7 +507,7 @@ header {
 }
 
 .hero_area {
-  height: 98vh;
+  /*height: 98vh;*/
   background-color: #b50;
 }
 

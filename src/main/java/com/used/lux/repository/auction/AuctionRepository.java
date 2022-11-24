@@ -56,8 +56,6 @@ public interface AuctionRepository extends JpaRepository<Auction, Long>, Auction
     List<Auction> searchAuctionBy(Long mcategoryId,String productColor,String productBrand,String productGender,String productSize,String productGrade,int maxPrice, int minPrice,String query);
 
 
-
-
     void deleteByProductId(Long id);
 
     Auction findByProductId(Long id);
@@ -78,4 +76,8 @@ public interface AuctionRepository extends JpaRepository<Auction, Long>, Auction
 
     @Query(nativeQuery = true, value = "SELECT * FROM auction WHERE auction_start_date is not null")
     Page<Auction> findByAuctionStartDate(Pageable pageable);
+
+    @Query(nativeQuery = true, value = "select * from auction where state_id = 10 and auction_start_date < now() order by auction_start_date desc limit 4")
+    List<Auction> findByState10AndRecent4List();
+    
 }

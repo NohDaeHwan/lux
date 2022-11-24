@@ -45,8 +45,9 @@
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">검수요약정보</label>
                                 <div class="col-sm-10">
-                                    <textarea class="form-control" style="height: 100px" disabled></textarea>
+                                    <textarea class="form-control" style="height: 100px" disabled th:placeholder="'색상:'+${productDetail.productDto().productColor()}+', '+'성별:'+${productDetail.productDto().productGender()}+', '+'사이즈:'+${productDetail.productDto().productSize()}+', '+'브랜드:'+${productDetail.productDto().productBrandName()}+', '+'검수등급:'+${productDetail.productDto().productGrade()}+', '+'매입가격:'+${productDetail.productDto().appraisalPrice()}+', '+'검수코멘트:'+${productDetail.productDto().appraisalComment()}"></textarea>
                                 </div>
+
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">상품명</label>

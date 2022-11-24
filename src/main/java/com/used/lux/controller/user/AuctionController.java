@@ -9,6 +9,9 @@ import com.used.lux.response.auction.AuctionResponse;
 import com.used.lux.service.*;
 import com.used.lux.service.user.auction.AuctionLogService;
 import com.used.lux.service.user.auction.AuctionService;
+import com.used.lux.service.BrandService;
+import com.used.lux.service.CategoryBService;
+import com.used.lux.service.PaginationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -46,13 +49,12 @@ public class AuctionController {
         List<BrandDto> brandList = brandService.brandList();
         List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(),
                 auctions.getTotalPages());
+        System.out.println(barNumbers);
 
         mm.addAttribute("paginationBarNumbers", barNumbers);
         mm.addAttribute("auctions", auctions);
         mm.addAttribute("categoryList", categoryList);
         mm.addAttribute("brandList", brandList);
-
-        System.out.println("기능:" + auctions.stream().toList());
 
         return "/front/auction";
     }

@@ -3,7 +3,6 @@ package com.used.lux.service.user.useraccount;
 import com.used.lux.domain.order.ProductOrder;
 import com.used.lux.domain.useraccount.UserAccount;
 import com.used.lux.domain.useraccount.UserAccountLog;
-import com.used.lux.dto.LoginMemberDto;
 import com.used.lux.dto.user.order.ProductOrderDto;
 import com.used.lux.dto.user.useraccount.UserAccountDto;
 import com.used.lux.dto.security.Principal;
@@ -12,6 +11,7 @@ import com.used.lux.repository.useraccount.UserAccountLogRepository;
 import com.used.lux.repository.useraccount.UserAccountRepository;
 import com.used.lux.request.useraccount.UserNameUpdateRequest;
 import com.used.lux.request.useraccount.UserUpdateRequest;
+import com.used.lux.response.useraccount.UserAccountResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -76,7 +76,7 @@ public class UserAccountService {
     }
 
     public int addUser(UserAccount userAccount) {
-        if(!userAccountRepository.findByUserEmail(userAccount.getUserEmail()).equals(null)){
+        if (!userAccountRepository.findByUserEmail(userAccount.getUserEmail()).equals(null)) {
             return -1;
         } else {
             userAccountRepository.save(userAccount);
@@ -89,4 +89,28 @@ public class UserAccountService {
         userAccount.setUserName(userNameUpdateRequest.userName());
         userAccountRepository.save(userAccount);
     }
+
+    @Transactional
+    public void deleteUser(Principal principal) {
+        userAccountRepository.deleteById(principal.id());
+        SecurityContextHolder.clearContext();
+
+    }
+
+    public void userNameUpdate(Principal principal, UserNameUpdateRequest userNameUpdateRequest) {
+
+        UserAccount userAccount = userAccountRepository.findByUserName(principal.userName());
+        userAccount.setUserName(userNameUpdateRequest.userName());
+        userAccountRepository.save(userAccount);
+
+    }
+
+    public boolean exsistByUserName(String name) {
+        return userAccountRepository.existsByUserName(name);
+    }
+
+    public boolean exsistByPhoneNumber(String phoneNumber) {
+        return userAccountRepository.existsByPhoneNumber(phoneNumber);
+    }
+
 }
