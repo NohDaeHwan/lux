@@ -37,11 +37,11 @@
                     <tbody>
                     <tr th:each="orderlist : ${orders}">
                         <th scope="row">
-                                <div style="display:flex;">
+                                <div style="display:flex; align-items: center;">
                                     <div>
-                                        <img src="/static/assets/img/watch.png" style="width: 100px; height:100px;" alt="" class="" />
+                                        <img th:src="${orderlist.imageDtoList[0].filePath}" style="width: 100px; height:100px;" alt="" class="" />
                                     </div>
-                                    <div style="display: flex; flex-direction: column">
+                                    <div class="ml-3" style="display: flex; flex-direction: column">
                                         <h6 th:text="${orderlist.productBrandName}">브랜드</h6>
                                         <h6>
                                             <a href="#" th:text="${orderlist.productName}">

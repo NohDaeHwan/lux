@@ -5,8 +5,8 @@ import com.used.lux.domain.appraisal.Appraisal;
 import com.used.lux.domain.product.Product;
 
 import java.time.LocalDateTime;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public record ProductDto(
@@ -30,7 +30,7 @@ public record ProductDto(
         String productSellType,
         String productContent,
         int productViewCount,
-        Set<ImageDto> imageDtos,
+        List<ImageDto> imageDtos,
         LocalDateTime createdAt,
         String createdBy,
         LocalDateTime modifiedAt,
@@ -40,7 +40,7 @@ public record ProductDto(
     public static ProductDto of(Long id, Long appraisalId, String productName, Long productBrandId, String brandName, String gender, String color, String size,         int appraisalPrice,
                                 String appraisalComment,String grade,
                                 Long categoryBId, String categoryBName, Long categoryMId, String categoryMName, State productState, int productPrice,
-                                String productSellType, String productContent, int productViewCount, Set<ImageDto> imageDtos,
+                                String productSellType, String productContent, int productViewCount, List<ImageDto> imageDtos,
                                 LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
         return new ProductDto(id, appraisalId, productName, productBrandId, brandName, gender, color, size, appraisalPrice,appraisalComment,grade, categoryBId, categoryBName,
                 categoryMId, categoryMName, productState, productPrice, productSellType, productContent, productViewCount,
@@ -71,7 +71,7 @@ public record ProductDto(
                 entity.getProductViewCount(),
                 entity.getImages().stream()
                         .map(ImageDto::from)
-                        .collect(Collectors.toCollection(LinkedHashSet::new)),
+                        .collect(Collectors.toCollection(ArrayList::new)),
                 entity.getCreatedAt(),
                 entity.getCreatedBy(),
                 entity.getModifiedAt(),

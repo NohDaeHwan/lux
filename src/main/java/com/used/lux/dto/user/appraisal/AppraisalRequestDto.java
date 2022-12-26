@@ -7,7 +7,7 @@ import com.used.lux.dto.StateDto;
 import com.used.lux.dto.user.useraccount.UserAccountDto;
 
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public record AppraisalRequestDto(
@@ -19,7 +19,7 @@ public record AppraisalRequestDto(
         String appraisalSize,
         StateDto appraisalState,
         UserAccountDto userAccount,
-        Set<AppraisalImageDto> imageList,
+        List<AppraisalImageDto> imageList,
         LocalDateTime createdAt,
         String createdBy,
         LocalDateTime modifiedAt,
@@ -27,7 +27,7 @@ public record AppraisalRequestDto(
 )  {
     public static AppraisalRequestDto of(Long id, String appraisalProductName, BrandDto appraisalBrand, String appraisalGender,
                                String appraisalColor, String appraisalSize, StateDto appraisalState, UserAccountDto userAccount,
-                                         Set<AppraisalImageDto> imageList, LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
+                                         List<AppraisalImageDto> imageList, LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
         return new AppraisalRequestDto(id, appraisalProductName, appraisalBrand, appraisalGender, appraisalColor, appraisalSize,
                 appraisalState, userAccount, imageList, createdAt, createdBy, modifiedAt, modifiedBy);
     }
@@ -50,7 +50,7 @@ public record AppraisalRequestDto(
                 UserAccountDto.from(entity.getUserAccount()),
                 entity.getImages().stream()
                         .map(AppraisalImageDto::from)
-                        .collect(Collectors.toUnmodifiableSet()),
+                        .collect(Collectors.toList()),
                 entity.getCreatedAt(),
                 entity.getCreatedBy(),
                 entity.getModifiedAt(),

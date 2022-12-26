@@ -7,8 +7,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @ToString(callSuper = true)
@@ -53,7 +53,7 @@ public class AppraisalRequest extends AuditingFields {
 
 	@ToString.Exclude
 	@OneToMany(mappedBy = "appraisalRequest", cascade = CascadeType.ALL)
-	private final Set<AppraisalImage> images = new LinkedHashSet<>();
+	private final List<AppraisalImage> images = new ArrayList<>();
 
 	protected AppraisalRequest() {}
 

@@ -2,8 +2,10 @@ package com.used.lux.response.order;
 
 import com.used.lux.domain.State;
 import com.used.lux.dto.user.order.ProductOrderDto;
+import com.used.lux.dto.user.product.ImageDto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public record ProductOrderResponse(
         Long id,
@@ -20,6 +22,7 @@ public record ProductOrderResponse(
         State productState,
         int productPrice,
         String productSellType,
+        List<ImageDto> imageDtoList,
         String userEmail,
         String userName,
         LocalDateTime createdAt,
@@ -31,10 +34,10 @@ public record ProductOrderResponse(
     public static ProductOrderResponse of(Long id, String orderName, String orderPhoneNumber, String orderAddress,
                                 String orderEmail, int payment, String requestedTerm, String stateName, String stateStep,
                                           String productName,String productBrandName, State productState,
-                                int productPrice, String productSellType, String userEmail, String userName,
+                                int productPrice, String productSellType, List<ImageDto> imageDtoList, String userEmail, String userName,
                                 LocalDateTime createdAt, String createdBy,LocalDateTime modifiedAt, String modifiedBy) {
         return new ProductOrderResponse(id, orderName, orderPhoneNumber, orderAddress, orderEmail, payment, requestedTerm,
-                stateName, stateStep, productName,productBrandName, productState, productPrice, productSellType, userEmail,
+                stateName, stateStep, productName,productBrandName, productState, productPrice, productSellType, imageDtoList, userEmail,
                 userName, createdAt, createdBy, modifiedAt, modifiedBy);
     }
 
@@ -54,6 +57,7 @@ public record ProductOrderResponse(
                 dto.productDto().productState(),
                 dto.productDto().productPrice(),
                 dto.productDto().productSellType(),
+                dto.productDto().imageDtos().stream().toList(),
                 dto.userAccountDto().userEmail(),
                 dto.userAccountDto().userName(),
                 dto.createdAt(),

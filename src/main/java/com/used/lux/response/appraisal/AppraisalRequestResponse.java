@@ -4,7 +4,7 @@ import com.used.lux.dto.user.appraisal.AppraisalRequestDto;
 import com.used.lux.response.useraccount.UserAccountResponse;
 
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public record AppraisalRequestResponse(
@@ -17,7 +17,7 @@ public record AppraisalRequestResponse(
         String appraisalStateName,
         String appraisalStateStep,
         UserAccountResponse userAccount,
-        Set<AppraisalImageResponse> imageList,
+        List<AppraisalImageResponse> imageList,
         LocalDateTime createdAt,
         String createdBy,
         LocalDateTime modifiedAt,
@@ -26,7 +26,7 @@ public record AppraisalRequestResponse(
 
     public static AppraisalRequestResponse of(Long id, String appraisalProductName, String appraisalBrandName, String appraisalGender, String appraisalColor,
                                     String appraisalSize, String appraisalStateName, String appraisalStateStep, UserAccountResponse userAccount,
-                                    Set<AppraisalImageResponse> imageList, LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
+                                              List<AppraisalImageResponse> imageList, LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
         return new AppraisalRequestResponse(id, appraisalProductName, appraisalBrandName, appraisalGender, appraisalColor, appraisalSize,
                 appraisalStateName, appraisalStateStep, userAccount, imageList, createdAt, createdBy, modifiedAt, modifiedBy);
     }
@@ -45,7 +45,7 @@ public record AppraisalRequestResponse(
                 UserAccountResponse.from(dto.userAccount()),
                 dto.imageList().stream()
                         .map(AppraisalImageResponse::from)
-                        .collect(Collectors.toUnmodifiableSet()),
+                        .collect(Collectors.toList()),
                 dto.createdAt(),
                 dto.createdBy(),
                 dto.modifiedAt(),

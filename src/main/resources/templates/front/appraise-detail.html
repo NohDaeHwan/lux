@@ -106,13 +106,10 @@
                         </div>
                     </td>
                     <td colspan="5">
-                        <div class="col-sm-10" th:if="(${appraisalDto.appraisalRequest.userAccount.id} == ${users.id}) and (${appraisalDto.appraisalPrice} >= 1000)" th:text="${#numbers.formatInteger(appraisalDto.appraisalPrice,3,'COMMA')}">
+                        <div class="col-sm-10" th:if="(${appraisalDto.appraisalRequest.userAccount.id} == ${loginId}) and (${appraisalDto.appraisalPrice} >= 1000)" th:text="${#numbers.formatInteger(appraisalDto.appraisalPrice,3,'COMMA')}">
                         </div>
-                        <div class="col-sm-10" th:if="(${appraisalDto.appraisalRequest.userAccount.id} == ${users.id}) and (${appraisalDto.appraisalPrice} < 1000)" th:text="${appraisalDto.appraisalPrice}">
-                            게시자만 볼 수 있게 처리
-                        </div>
-                        <div class="col-sm-10" th:if="${appraisalDto.appraisalRequest.userAccount.id} != ${users.id}">
-                            게시자만 볼 수 있게 처리
+                        <div class="col-sm-10" th:if="${appraisalDto.appraisalRequest.userAccount.id} != ${loginId}">
+                            게시자만 볼 수 있습니다.
                         </div>
                     </td>
                 </tr>
@@ -123,11 +120,11 @@
                         </div>
                     </td>
                     <td colspan="5">
-                        <div class="col-sm-10" th:if="${appraisalDto.appraisalRequest.userAccount.id} == ${users.id}" th:text="${appraisalDto.appraisalGrade}">
+                        <div class="col-sm-10" th:if="${appraisalDto.appraisalRequest.userAccount.id} == ${loginId}" th:text="${appraisalDto.appraisalGrade}">
                             게시자만 볼 수 있게 처리
                         </div>
-                        <div class="col-sm-10" th:if="${appraisalDto.appraisalRequest.userAccount.id} != ${users.id}">
-                            게시자만 볼 수 있게 처리
+                        <div class="col-sm-10" th:if="${appraisalDto.appraisalRequest.userAccount.id} != ${loginId}">
+                            게시자만 볼 수 있습니다.
                         </div>
                     </td>
                 </tr>
@@ -138,11 +135,11 @@
                         </div>
                     </td>
                     <td colspan="5">
-                        <div class="col-sm-10" th:if="${appraisalDto.appraisalRequest.userAccount.id} == ${users.id}" th:text="${appraisalDto.appraisalComment}">
+                        <div class="col-sm-10" th:if="${appraisalDto.appraisalRequest.userAccount.id} == ${loginId}" th:text="${appraisalDto.appraisalComment}">
                             게시자만 볼 수 있게 처리
                         </div>
-                        <div class="col-sm-10" th:if="${appraisalDto.appraisalRequest.userAccount.id} != ${users.id}">
-                            게시자만 볼 수 있게 처리
+                        <div class="col-sm-10" th:if="${appraisalDto.appraisalRequest.userAccount.id} != ${loginId}">
+                            게시자만 볼 수 있습니다.
                         </div>
                     </td>
                 </tr>
@@ -153,11 +150,11 @@
                         </div>
                     </td>
                     <td colspan="5">
-                        <div class="col-sm-10" th:if="${appraisalDto.appraisalRequest.userAccount.id} == ${users.id}" th:text="${#temporals.format(appraisalDto.modifiedAt, 'yyyy-MM-dd HH:mm:ss')}">
+                        <div class="col-sm-10" th:if="${appraisalDto.appraisalRequest.userAccount.id} == ${loginId}" th:text="${#temporals.format(appraisalDto.modifiedAt, 'yyyy-MM-dd HH:mm:ss')}">
                             게시자만 볼 수 있게 처리
                         </div>
-                        <div class="col-sm-10" th:if="${appraisalDto.appraisalRequest.userAccount.id} != ${users.id}">
-                            게시자만 볼 수 있게 처리
+                        <div class="col-sm-10" th:if="${appraisalDto.appraisalRequest.userAccount.id} != ${loginId}">
+                            게시자만 볼 수 있습니다.
                         </div>
                     </td>
                 </tr>

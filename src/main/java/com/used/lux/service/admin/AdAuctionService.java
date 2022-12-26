@@ -60,7 +60,7 @@ public class AdAuctionService {
     public void auctionUpdate(Long auctionId, AuctionUpdateRequest auctionUpdateRequest){
         //업데이트에 필요한 entity 가져오기
         auctionRepository.findByStartPrice(auctionUpdateRequest.startPrice());
-        State state=stateRepository.findByStateStep("경매중");
+        State state=stateRepository.findByStateStep("경매대기");
 
         //시작시간 포맷
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -72,8 +72,6 @@ public class AdAuctionService {
         String closingDate = auctionUpdateRequest.auctionClosingDate();
         closingDate = closingDate.replaceAll("T", " ");
         LocalDateTime closeDateTime = LocalDateTime.parse(closingDate, formatter);
-
-
 
         Auction auction =auctionRepository.getReferenceById(auctionId);
         

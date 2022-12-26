@@ -79,12 +79,10 @@ public class AdAuctionController {
     @PostMapping("/{auctionId}/update")
     public String auctionUpdate(@PathVariable Long auctionId,
                                 @AuthenticationPrincipal Principal principal,
-                                ModelMap mm , AuctionUpdateRequest auctionUpdateRequest){
+                                AuctionUpdateRequest auctionUpdateRequest){
         if (principal.role().getName() != "ROLE_ADMIN") {
             return "redirect:/";
         }
-        System.out.println(auctionUpdateRequest);
-
         adAuctionService.auctionUpdate(auctionId,auctionUpdateRequest);
 
         return "redirect:/admin/auction/{auctionId}";

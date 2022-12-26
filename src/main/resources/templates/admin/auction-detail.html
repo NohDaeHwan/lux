@@ -97,17 +97,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- <div class="row mb-3">
-                                <legend class="col-form-label col-sm-2 pt-0">경매상태</legend>
-                                <div class="col-sm-10">
-                                  <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="gridCheck2" checked>
-                                    <label class="form-check-label" for="gridCheck2">
-                                      경매노출중
-                                    </label>
-                                  </div>
-                                </div>
-                              </div> -->
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label"></label>
                                 <div class="col-sm-10">
@@ -116,7 +105,7 @@
                                             뒤로가기
                                         </a>
                                     </button>
-                                    <button type="submit" class="btn btn-primary" style="float: right; margin-right: 8px;">등록하기</button>
+                                    <button th:if="${auctionDetail.auctionDto().stateDto().stateStep() == '경매전'}" type="submit" class="btn btn-primary" style="float: right; margin-right: 8px;">등록하기</button>
                                 </div>
                             </div>
                     </div>
@@ -152,10 +141,6 @@
                                         <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
                                     </li>
                                     <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item active" aria-current="page">
-                                        <a class="page-link" href="#">2</a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
                                     <li class="page-item">
                                         <a class="page-link" href="#">Next</a>
                                     </li>

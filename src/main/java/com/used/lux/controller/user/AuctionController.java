@@ -49,7 +49,6 @@ public class AuctionController {
         List<BrandDto> brandList = brandService.brandList();
         List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(),
                 auctions.getTotalPages());
-        System.out.println(barNumbers);
 
         mm.addAttribute("paginationBarNumbers", barNumbers);
         mm.addAttribute("auctions", auctions);
@@ -84,15 +83,11 @@ public class AuctionController {
         AuctionResponse auction = AuctionResponse.from(auctionService.auctionFind(auctionId));
         List<AuctionLogDto> auctionLogList = auctionLogService.auctionLogList(auctionId);
 
-
         mm.addAttribute("principal",principal);
         mm.addAttribute("categoryList", categoryList);
         mm.addAttribute("gradeList", gradeList);
         mm.addAttribute("auction",auction);
         mm.addAttribute("auctionLogList", auctionLogList);
-
-
-
 
         return "/front/auction-detail";
     }

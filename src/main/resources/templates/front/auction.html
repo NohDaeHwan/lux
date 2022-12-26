@@ -141,18 +141,19 @@
                 <div class="row">
                     <div class="col-md-2" th:each="auction: ${auctions}">
                         <div class="card mb-4 box-shadow">
-                            <div th:if="${auction.stateStep=='경매전'}">
-                                    <img class="card-img-top p-1" th:src="${auction.productResponse.imageList[0].filePath}" style="width: 150px;height: 150px;" alt="Card image cap">
+                            <div th:if="${auction.stateStep=='경매전' or auction.stateStep=='경매대기'}">
+                                    <img class="card-img-top p-1" th:src="${auction.productResponse.imageList[0].filePath}" alt="Card image cap">
                             </div>
-                            <div th:unless="${auction.stateStep=='경매전'}">
+                            <div th:unless="${auction.stateStep=='경매전' or auction.stateStep=='경매대기'}">
                                 <a th:href="@{|/auction/detail/${auction.id}|}">
-                                    <img class="card-img-top p-1" th:src="${auction.productResponse.imageList[0].filePath}" style="width: 150px;height: 150px;" alt="Card image cap">
+                                    <img class="card-img-top p-1" th:src="${auction.productResponse.imageList[0].filePath}" alt="Card image cap">
                                 </a>
                             </div>
                                 <div class="p-2">
                                     <p class="card-text font-weight-lighter mb-1 text-black-50" th:text="${auction.productResponse.productBrandName}">브랜드</p>
-                                    <p class="card-text font-weight-light mb-1" th:text="${auction.productResponse.productName}">상품명</p>
-                                    <p class="card-text font-weight-light" th:text="${auction.presentPrice}">40.000P</p>
+                                    <p class="card-text font-weight-light mb-1" th:if="${auction.productResponse.productName.length() >= 15}" th:text="${#strings.append(#strings.substring(auction.productResponse.productName, 0, 15), '...')}">상품명</p>
+                                    <p class="card-text font-weight-light mb-1" th:unless="${auction.productResponse.productName.length() >= 15}" th:text="${auction.productResponse.productName}">상품명</p>
+                                    <p class="card-text font-weight-light" th:text="${#numbers.formatInteger(auction.presentPrice(),3,'COMMA')}">40.000P</p>
                                     <p class="card-text font-weight-light" th:text="${#temporals.format(auction.auctionStartDate(),'yyyy-MM-dd HH:mm:ss')}"></p>
                                     <p class="card-text font-weight-light" th:text="${#temporals.format(auction.auctionClosingDate(),'yyyy-MM-dd HH:mm:ss')}"></p>
                                     <div class="d-flex justify-content-between align-items-center">
@@ -229,18 +230,6 @@
 <script src="/static/assets/js/frontmain.js"></script>
 
 <script th:inline="javascript">
-   function  date(){
-       let auctions=[[${auctions.content}]];
-
-       for(i=0; i<auctions.length;i++){
-           var open = new Date([[${auctions.content}]][i].auctionStartDate);
-           //종료시간
-           var end = new Date([[${auctions.content}]][i].auctionClosingDate);
-
-           console.log([[${auctions.content}]][i].auctionStartDate);
-           console.log([[${auctions.content}]][i].auctionClosingDate);
-       }
-   }
 
     function remaindTime() {
         let auctions=[[${auctions.content}]];
@@ -262,7 +251,7 @@
 
             if(nt<ot){
                 //경매 전
-                // $(".time").fadeIn();
+                $(".time").fadeIn();
                 document.getElementById("title"+(i+1)).innerHTML="경매 시작까지";
                 sec =parseInt(ot - nt) / 1000;
                 day  = parseInt(sec/60/60/24);
@@ -299,9 +288,9 @@
                 }
 
                 $(".time").fadeOut();
-                document.getElementById("title"+(i+1)).innerHTML="경매 마감";
+                document.getElementById("title"+(i+1)).innerHTML="경매 마감<br/><br/>";
 
-            }else {
+            } else {
                 //중  경매 상태를 경매전 -> 경매 중으로 변경
 
                 if (statestep !="경매중") {
@@ -318,7 +307,6 @@
                     });
                 }
 
-                // $(".time").fadeIn();
                 document.getElementById("title"+(i+1)).innerHTML=" 경매 마감까지";
                 sec =parseInt(et - nt) / 1000;
                 day  = parseInt(sec/60/60/24);
@@ -340,15 +328,7 @@
         }
 
     }
-
-
-
-
-
     setInterval(remaindTime,1000);
-
-
-
 </script>
 </body>
 
