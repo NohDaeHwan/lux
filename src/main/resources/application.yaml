@@ -1,0 +1,37 @@
+server.port: ${port:8484}
+
+logging:
+  level:
+    com.example.lux: debug
+    org.springframework.web.servlet: debug
+    org.hibernate.type.descriptor.sql.BasicBinder: trace
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/lux
+    username: root
+    password: eoghks5953!
+  jpa:
+    defer-datasource-initialization: true
+    open-in-view: true
+    hibernate.ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
+      hibernate.default_batch_fetch_size: 100
+  mvc:
+    static-path-pattern: /static/**
+    view.suffix: .html
+    view.prefix: /thymeleaf/
+  devtools.add-properties: true
+
+---
+
+spring:
+  config.activate.on-profile: heroku
+  datasource:
+    url: ${JAWSDB_URL}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa.hibernate.ddl-auto: create
+  sql.init.mode: always
