@@ -16,9 +16,9 @@
                 <h3 class="custom_heading">
                     경매 내역 조회
                 </h3>
-                <p>
-                    <p th:text="${auctionlog.getTotalElements} + ' 건'">
-                </p>
+                    <p th:text="'전체결과: '+${auctionLog.size()}+' 건'">
+                        전체결과: n 건
+                    </p>
                 </div>
             </div>
             <div class="container-fluid brand_item-container">
@@ -28,160 +28,26 @@
                         <th scope="col">경매상품정보</th>
                         <th scope="col">입찰일자</th>
                         <th scope="col">경매번호</th>
+                        <th scope="col">입찰상태</th>
                         <th scope="col">입찰가격(원)</th>
-
                     </tr>
                     </thead>
                     <tbody>
                         <tbody>
-                        <tr th:each="auction : ${auctionlog}">
+                        <tr th:each="auction : ${auctionLog}">
                             <td th:text="${auction.productName}"></td>
-                            <td th:text="${auction.createdAt()}"></td>
-                            <td th:text="${auction.id()}"></td>
+                            <td th:text="${#temporals.format(auction.createdAt,'yyyy-MM-dd HH:mm:ss')}"></td>
+                            <td th:text="${auction.auctionId}"></td>
+                            <td th:if="${(auction.bidder == auction.presentBidder) and (auction.closingPrice == 0)}"><div class="badge badge-primary">입찰</div></td>
+                            <td th:if="${(auction.bidder != auction.presentBidder) and (auction.closingPrice == 0)}"><div class="badge badge-danger">유찰</div></td>
+                            <td th:if="${(auction.bidder == auction.presentBidder) and (auction.presentPrice == auction.closingPrice) and (auction.closingPrice != 0)}"><div class="badge badge-success">낙찰</div></td>
+                            <td th:if="${(auction.bidder != auction.presentBidder) and (auction.presentPrice != auction.closingPrice) and (auction.closingPrice != 0)}"><div class="badge badge-danger">패찰</div></td>
                             <td th:text="${auction.presentPrice}"></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-        
         </section>
-    
-        <!-- <div class="bg">
-            <section class="brand_section layout_padding2">
-                <div class="container">
-                    <div class="brand_heading">
-                    <h3 class="custom_heading">
-                        Our watch brands
-                    </h3>
-                    <p class="font-weight-bold">
-                        It is a long established fact that a reader will be distracted by the readable content of a page
-                    </p>
-                    </div>
-                </div>
-                <div class="container-fluid brand_item-container">
-                    <div class="brand_item-box">
-                    <div class="brand_img-box  item-1">
-                        <a href="">
-                        View More
-                        </a>
-                    </div>
-                    <div class="brand_detail-box">
-                        <h5>
-                        $<span> 40 </span>
-                        </h5>
-                        <h6 class="">
-                        best watch
-                        </h6>
-                    </div>
-                    </div>
-                    <div class="brand_item-box">
-                    <div class="brand_img-box  item-2">
-                        <a href="">
-                        View More
-                        </a>
-                    </div>
-                    <div class="brand_detail-box">
-                        <h5>
-                        $<span> 50 </span>
-                        </h5>
-                        <h6 class="">
-                        best watch
-                        </h6>
-                    </div>
-                    </div>
-                    <div class="brand_item-box">
-                    <div class="brand_img-box  item-3">
-                        <a href="">
-                        View More
-                        </a>
-                    </div>
-                    <div class="brand_detail-box">
-                        <h5>
-                        $<span> 60 </span>
-                        </h5>
-                        <h6 class="">
-                        best watch
-                        </h6>
-                    </div>
-                    </div>
-                    <div class="brand_item-box">
-                    <div class="brand_img-box  item-4">
-                        <a href="">
-                        View More
-                        </a>
-                    </div>
-                    <div class="brand_detail-box">
-                        <h5>
-                        $<span> 70 </span>
-                        </h5>
-                        <h6 class="">
-                        best watch
-                        </h6>
-                    </div>
-                    </div>
-                    <div class="brand_item-box">
-                    <div class="brand_img-box  item-5">
-                        <a href="">
-                        View More
-                        </a>
-                    </div>
-                    <div class="brand_detail-box">
-                        <h5>
-                        $<span> 80 </span>
-                        </h5>
-                        <h6 class="">
-                        best watch
-                        </h6>
-                    </div>
-                    </div>
-                </div>
-            
-            </section>
-        </div>
-        
-        <section class="info_section layout_padding">
-            <div class="container">
-            <div class="info_items">
-                <a href="">
-                <div class="item ">
-                    <div class="img-box box-1">
-                    <img src="" alt="">
-                    </div>
-                    <div class="detail-box">
-                    <p>
-                        Lorem Ipsum is simply dummy text
-                    </p>
-                    </div>
-                </div>
-                </a>
-                <a href="">
-                <div class="item ">
-                    <div class="img-box box-2">
-                    <img src="" alt="">
-                    </div>
-                    <div class="detail-box">
-                    <p>
-                        +02 1234567890
-                    </p>
-                    </div>
-                </div>
-                </a>
-                <a href="">
-                <div class="item ">
-                    <div class="img-box box-3">
-                    <img src="" alt="">
-                    </div>
-                    <div class="detail-box">
-                    <p>
-                        demo@gmail.com
-                    </p>
-                    </div>
-                </div>
-                </a>
-            </div>
-            </div>
-        </section> -->
-
     </main>
 <footer th:replace="layout/front-footer :: .footer"></footer>
 </body>

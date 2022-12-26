@@ -14,7 +14,7 @@
             <div class="container-fluid">
                 <div class="brand_heading">
                 <h3 class="custom_heading">
-                    검수 요청 결과
+                    검수 요청 조회
                 </h3>
                 <p th:text="'전체결과: '+${appraisals.totalElements}+' 건'">
                     전체결과: n 건
@@ -47,7 +47,7 @@
                                 </div>
                         </th>
                         <td style="vertical-align: middle;" th:if="${appraisal.appraisalRequest.id == null}"><h6>-</h6></td>
-                        <td style="vertical-align: middle;" th:unless="${appraisal.appraisalRequest.id == null}"><h6 th:text="${appraisal.createdAt}">-</h6></td>
+                        <td style="vertical-align: middle;" th:unless="${appraisal.appraisalRequest.id == null}"><h6 th:text="${#temporals.format(appraisal.createdAt,'yyyy-MM-dd HH:mm:ss')}">-</h6></td>
                         <td style="vertical-align: middle;" th:text="${appraisal.appraisalRequest.id}"><h6>12345678</h6></td>
                         <td style="vertical-align: middle;" th:if="${appraisal.appraisalRequest.id == null}"><h6>-</h6></td>
                         <td style="vertical-align: middle;" th:unless="${appraisal.appraisalRequest.id == null}"><h6>4,500,000원</h6></td>
@@ -69,8 +69,32 @@
                     </tbody>
                 </table>
             </div>
-        
         </section>
+
+        <!-- Pagination with icons -->
+        <nav id="pagination" aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link" th:href="@{/mypage/appraise(page=${appraisals.number - 1})}"
+                       aria-label="Previous" th:class="'page-link' + (${appraisals.number} <= 0 ? ' disabled-link' : '')">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item" th:each="pageNumber : ${paginationBarNumbers}">
+                    <a th:text="${pageNumber + 1}"
+                       th:href="@{/mypage/appraise(page=${pageNumber})}"
+                       th:class="'page-link' + (${pageNumber} == ${appraisals.number} <= 0 ? ' disabled-link' : '')">
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" th:href="@{/mypage/appraise(page=${appraisals.number + 1})}"
+                       aria-label="Next" th:class="'page-link' + (${appraisals.number} >= ${appraisals.totalPages - 1} ? ' disabled-link' : '')">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <!-- End Pagination with icons -->
     </main>
 
 <footer th:replace="layout/front-footer :: .footer"></footer>

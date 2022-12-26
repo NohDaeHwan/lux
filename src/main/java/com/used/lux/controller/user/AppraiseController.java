@@ -8,6 +8,7 @@ import com.used.lux.response.useraccount.UserAccountResponse;
 import com.used.lux.response.appraisal.AppraisalResponse;
 import com.used.lux.service.BrandService;
 import com.used.lux.service.CategoryBService;
+import com.used.lux.service.PaginationService;
 import com.used.lux.service.user.useraccount.UserAccountService;
 import com.used.lux.service.user.appraisal.AppraiseService;
 import lombok.RequiredArgsConstructor;
@@ -32,17 +33,23 @@ public class AppraiseController {
 
     private final BrandService brandService;
 
+    private final PaginationService paginationService;
+
     // 감정 신청 리스트
     @GetMapping
     public String appraisalList(
-            @PageableDefault(size = 30, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
+            @PageableDefault(size = 10, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
             ModelMap mm
     ) {
         Page<AppraisalResponse> appraisalList = appraiseService.findAllList(pageable).map(AppraisalResponse::from);
         List<CategoryBDto> categoryList = categoryBService.categoryList();
+        List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(),
+                appraisalList.getTotalPages());
 
         mm.addAttribute("categoryList", categoryList);
         mm.addAttribute("appraisalList",appraisalList);
+        mm.addAttribute("paginationBarNumbers", barNumbers);
+
         return "front/appraise";
     }
 

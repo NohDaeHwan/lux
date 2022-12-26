@@ -18,9 +18,9 @@
                 <h3 class="custom_heading">
                     주문 내역 조회
                 </h3>
-                <p th:text="${orders.getTotalElements} + ' 건'">
-                    전체결과:
-                </p>
+                    <p th:text="'전체결과: '+${orders.getTotalElements}+' 건'">
+                        전체결과:
+                    </p>
                 </div>
             </div>
             <div class="container-fluid brand_item-container">
@@ -70,6 +70,30 @@
                 </table>
             </div>
         </section>
+        <!-- Pagination with icons -->
+        <nav id="pagination" aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link" th:href="@{/mypage(page=${orders.number - 1})}"
+                       aria-label="Previous" th:class="'page-link' + (${orders.number} <= 0 ? ' disabled-link' : '')">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item" th:each="pageNumber : ${paginationBarNumbers}">
+                    <a th:text="${pageNumber + 1}"
+                       th:href="@{/mypage(page=${pageNumber})}"
+                       th:class="'page-link' + (${pageNumber} == ${orders.number} <= 0 ? ' disabled-link' : '')">
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" th:href="@{/mypage(page=${orders.number + 1})}"
+                       aria-label="Next" th:class="'page-link' + (${orders.number} >= ${orders.totalPages - 1} ? ' disabled-link' : '')">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <!-- End Pagination with icons -->
     </main>
 
 

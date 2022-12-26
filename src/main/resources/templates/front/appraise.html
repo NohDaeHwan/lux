@@ -74,9 +74,31 @@
                 </tbody>
             </table>
         </div>
-
     </section>
-
+    <!-- Pagination with icons -->
+    <nav id="pagination" aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" th:href="@{/appraisal(page=${appraisalList.number - 1})}"
+                   aria-label="Previous" th:class="'page-link' + (${appraisalList.number} <= 0 ? ' disabled-link' : '')">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item" th:each="pageNumber : ${paginationBarNumbers}">
+                <a th:text="${pageNumber + 1}"
+                   th:href="@{/appraisal(page=${pageNumber})}"
+                   th:class="'page-link' + (${pageNumber} == ${appraisalList.number} <= 0 ? ' disabled-link' : '')">
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" th:href="@{/appraisal(page=${appraisalList.number + 1})}"
+                   aria-label="Next" th:class="'page-link' + (${appraisalList.number} >= ${appraisalList.totalPages - 1} ? ' disabled-link' : '')">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <!-- End Pagination with icons -->
 </main>
 <footer id="footer" class="footer">
     <!-- footer section -->

@@ -2,7 +2,7 @@ package com.used.lux.controller.user;
 
 import com.used.lux.dto.UserGradeDto;
 import com.used.lux.dto.security.Principal;
-import com.used.lux.dto.user.auction.AuctionLogDto;
+import com.used.lux.dto.user.auction.AuctionMypageLogDto;
 import com.used.lux.request.order.OrderCancelRequest;
 import com.used.lux.request.useraccount.UserNameUpdateRequest;
 import com.used.lux.request.useraccount.UserUpdateRequest;
@@ -50,6 +50,8 @@ public class UserAccountController {
 
     private final AppraiseService appraiseService;
 
+    private final PaginationService paginationService;
+
     // 주문내역조회
     @GetMapping
     public String mypage(@AuthenticationPrincipal Principal principal, Pageable pageable, ModelMap mm) {
@@ -57,12 +59,16 @@ public class UserAccountController {
         Page<ProductOrderResponse> productOrderResponse = productOrderService.productListAll(principal.id(), pageable)
                 .map(ProductOrderResponse::from);
         UserGradeDto nextGrade = userGradeService.getNextGrade(principal.userGrade().getGradeStep());
+        List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(),
+                productOrderResponse.getTotalPages());
         Long totalPoint = userAccountLogService.getTotalPoint(principal.userEmail());
 
         mm.addAttribute("users", userAccountResponse);
         mm.addAttribute("orders", productOrderResponse);
         mm.addAttribute("nextGrade", nextGrade);
+        mm.addAttribute("paginationBarNumbers", barNumbers);
         mm.addAttribute("total", totalPoint);
+
         return "/front/mypage-order";
     }
 
@@ -72,6 +78,7 @@ public class UserAccountController {
             @AuthenticationPrincipal Principal principal,
             OrderCancelRequest orderCancelRequest) {
         productOrderCancelService.orderCancel(principal, orderId, orderCancelRequest);
+
         return "redirect:/mypage/";
     }
 
@@ -79,7 +86,9 @@ public class UserAccountController {
     @GetMapping("/profile-update")
     public String mypageProfileUpdate(@AuthenticationPrincipal Principal principal, ModelMap mm) {
         UserAccountResponse userAccountResponse = UserAccountResponse.from(userAccountService.getUser(principal.id()));
+
         mm.addAttribute("users", userAccountResponse);
+
         return "/front/profile-update";
     }
 
@@ -88,10 +97,12 @@ public class UserAccountController {
     public String mypageWithdrawal(@AuthenticationPrincipal Principal principal, ModelMap mm) {
         UserAccountResponse userAccountResponse = UserAccountResponse.from(userAccountService.getUser(principal.id()));
         UserGradeDto nextGrade = userGradeService.getNextGrade(principal.userGrade().getGradeStep());
+        Long totalPoint = userAccountLogService.getTotalPoint(principal.userEmail());
+
         mm.addAttribute("users", userAccountResponse);
         mm.addAttribute("nextGrade", nextGrade);
-        Long totalPoint = userAccountLogService.getTotalPoint(principal.userEmail());
         mm.addAttribute("total", totalPoint);
+
         return "/front/mypage-withdrawal";
     }
 
@@ -102,20 +113,15 @@ public class UserAccountController {
             @PageableDefault(size = 30, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
         UserAccountResponse userAccountResponse = UserAccountResponse.from(userAccountService.getUser(principal.id()));
         UserGradeDto nextGrade = userGradeService.getNextGrade(principal.userGrade().getGradeStep());
-        List<UserGradeDto> gradelist = userGradeService.getGradeList();
-        Page<AuctionLogDto> auctionLogDtoPage=auctionLogService.searchAuctionLog(principal.userName(),pageable);
-
-
+        List<UserGradeDto> gradeList = userGradeService.getGradeList();
+        List<AuctionMypageLogDto> auctionLogDtoPage = auctionLogService.searchAuctionLog(principal.userName(),pageable);
+        Long totalPoint = userAccountLogService.getTotalPoint(principal.userEmail());
 
         mm.addAttribute("users", userAccountResponse);
         mm.addAttribute("nextGrade", nextGrade);
-        mm.addAttribute("grades", gradelist);
-        mm.addAttribute("auctionlog",auctionLogDtoPage);
-        Long totalPoint = userAccountLogService.getTotalPoint(principal.userEmail());
-
+        mm.addAttribute("grades", gradeList);
+        mm.addAttribute("auctionLog",auctionLogDtoPage);
         mm.addAttribute("total", totalPoint);
-
-
 
         return "/front/mypage-auction";
     }
@@ -124,21 +130,20 @@ public class UserAccountController {
     @GetMapping("/point")
     public String mypagePoint(@AuthenticationPrincipal Principal principal,
             ModelMap mm,
-            @PageableDefault(size = 30, sort = "created_at", direction = Sort.Direction.DESC) Pageable pageable) {
+            @PageableDefault(size = 10, sort = "created_at", direction = Sort.Direction.DESC) Pageable pageable) {
         UserAccountResponse userAccountResponse = UserAccountResponse.from(userAccountService.getUser(principal.id()));
         UserGradeDto nextGrade = userGradeService.getNextGrade(principal.userGrade().getGradeStep());
-        Page<UserAccountLogResponse> pointlist = userAccountLogService.getPointList(principal.userEmail(), pageable)
+        Page<UserAccountLogResponse> pointList = userAccountLogService.getPointList(principal.userEmail(), pageable)
                 .map(UserAccountLogResponse::from);
+        List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(),
+                pointList.getTotalPages());
+        Long totalPoint = userAccountLogService.getTotalPoint(principal.userEmail());
 
         mm.addAttribute("users", userAccountResponse);
         mm.addAttribute("nextGrade", nextGrade);
-        mm.addAttribute("points", pointlist);
-
-        Long totalPoint = userAccountLogService.getTotalPoint(principal.userEmail());
-
+        mm.addAttribute("pointList", pointList);
+        mm.addAttribute("paginationBarNumbers", barNumbers);
         mm.addAttribute("total", totalPoint);
-
-        System.out.println("악몽"+pointlist);
 
         return "/front/mypage-point";
     }
@@ -172,12 +177,14 @@ public class UserAccountController {
             @PageableDefault(size = 30, sort = "created_at", direction = Sort.Direction.DESC) Pageable pageable) {
         UserAccountResponse userAccountResponse = UserAccountResponse.from(userAccountService.getUser(principal.id()));
         UserGradeDto nextGrade = userGradeService.getNextGrade(principal.userGrade().getGradeStep());
-        List<UserGradeDto> gradelist = userGradeService.getGradeList();
+        List<UserGradeDto> gradeList = userGradeService.getGradeList();
+        Long totalPoint = userAccountLogService.getTotalPoint(principal.userEmail());
+
         mm.addAttribute("users", userAccountResponse);
         mm.addAttribute("nextGrade", nextGrade);
-        mm.addAttribute("grades", gradelist);
-        Long totalPoint = userAccountLogService.getTotalPoint(principal.userEmail());
+        mm.addAttribute("grades", gradeList);
         mm.addAttribute("total", totalPoint);
+
         return "/front/mypage-grade";
     }
 
@@ -187,14 +194,14 @@ public class UserAccountController {
 
         UserAccountResponse userAccountResponse = UserAccountResponse.from(userAccountService.getUser(principal.id()));
         UserGradeDto nextGrade = userGradeService.getNextGrade(principal.userGrade().getGradeStep());
-        List<UserGradeDto> gradelist = userGradeService.getGradeList();
+        List<UserGradeDto> gradeList = userGradeService.getGradeList();
         Page<ProductOrderResponse> productOrderResponse = productOrderService.productListAll(principal.id(), pageable)
                 .map(ProductOrderResponse::from);
+        Long totalPoint = userAccountLogService.getTotalPoint(principal.userEmail());
 
         mm.addAttribute("users", userAccountResponse);
         mm.addAttribute("orders", productOrderResponse);
         mm.addAttribute("nextGrade", nextGrade);
-        Long totalPoint = userAccountLogService.getTotalPoint(principal.userEmail());
         mm.addAttribute("total", totalPoint);
 
         return "/front/mypage-recentview";
@@ -202,38 +209,39 @@ public class UserAccountController {
 
     // 회원검수
     @GetMapping("/appraise")
-    public String appraise(@AuthenticationPrincipal Principal principal, Pageable pageable, ModelMap mm) {
+    public String appraise(@AuthenticationPrincipal Principal principal,
+                           @PageableDefault(size = 5, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
+                           ModelMap mm) {
         UserAccountResponse userAccountResponse = UserAccountResponse.from(userAccountService.getUser(principal.id()));
         Page<AppraisalResponse> appraisalList = appraiseService.getMypageAppraisal(principal.id(), pageable).map(AppraisalResponse::from);
         UserGradeDto nextGrade = userGradeService.getNextGrade(principal.userGrade().getGradeStep());
+        List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(),
+                appraisalList.getTotalPages());
+        Long totalPoint = userAccountLogService.getTotalPoint(principal.userEmail());
 
         mm.addAttribute("users", userAccountResponse);
         mm.addAttribute("appraisals", appraisalList);
         mm.addAttribute("nextGrade", nextGrade);
-        Long totalPoint = userAccountLogService.getTotalPoint(principal.userEmail());
+        mm.addAttribute("paginationBarNumbers", barNumbers);
         mm.addAttribute("total", totalPoint);
+
         return "/front/mypage-appraisal";
     }
-
 
     //회원 수정
     @PostMapping("/updateform")
     public  String updateform(@AuthenticationPrincipal Principal principal, UserNameUpdateRequest userNameUpdateRequest){
-
         userAccountService.userNameUpdate(principal,userNameUpdateRequest);
-        System.out.println("수정");
-
 
         return "redirect:/mypage";
     }
-
 
     //회원 삭제
     @PostMapping("/deleteform")
     public  String deleteform(@AuthenticationPrincipal Principal principal){
         userAccountService.deleteUser(principal);
 
-
         return  "redirect:/";
     }
+
 }

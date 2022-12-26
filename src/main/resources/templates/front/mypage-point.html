@@ -17,7 +17,7 @@
                     포인트 내역/충전
                 </h3>
                 <div style="display: flex; justify-content: space-between;">
-                    <p th:text="'전체결과: ' + ${points.getTotalElements} + ' 건'">
+                    <p th:text="'전체결과: ' + ${pointList.getTotalElements} + ' 건'">
                         전체결과: n 건
                     </p>
                     <button type="submit" class="btn btn-info mb-2"><a href="/mypage/point/new" style="color:white">충전하기</a></button>
@@ -36,7 +36,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="point : ${points}">
+                    <tr th:each="point : ${pointList}">
                         <th scope="row">
                             <h6 th:if="${point.usageDetail} == '충전'" style="vertical-align: middle; color:blue; font-weight: 300;">충전</h6>
                             <h6 th:if="${point.usageDetail} != '충전'" style="vertical-align: middle; color:red; font-weight: 300;">차감</h6>
@@ -52,6 +52,31 @@
             </div>
         
         </section>
+
+        <!-- Pagination with icons -->
+        <nav id="pagination" aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link" th:href="@{/mypage/point(page=${pointList.number - 1})}"
+                       aria-label="Previous" th:class="'page-link' + (${pointList.number} <= 0 ? ' disabled-link' : '')">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item" th:each="pageNumber : ${paginationBarNumbers}">
+                    <a th:text="${pageNumber + 1}"
+                       th:href="@{/mypage/point(page=${pageNumber})}"
+                       th:class="'page-link' + (${pageNumber} == ${pointList.number} <= 0 ? ' disabled-link' : '')">
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" th:href="@{/mypage/point(page=${pointList.number + 1})}"
+                       aria-label="Next" th:class="'page-link' + (${pointList.number} >= ${pointList.totalPages - 1} ? ' disabled-link' : '')">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <!-- End Pagination with icons -->
 
     </main>
 <footer th:replace="layout/front-footer :: .footer"></footer>
