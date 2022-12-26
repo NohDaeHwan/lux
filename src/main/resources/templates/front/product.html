@@ -135,9 +135,9 @@
                   <div class="row">
 
                     <div class="col-md-2" th:each="product: ${products}">
-                      <div class="card mb-4 box-shadow" style="width:150px;">
+                      <div class="card mb-4 box-shadow">
                         <a th:href="@{|/product/${product.id}|}">
-                        <img class="card-img-top p-1" th:src="${product.imageList[0].filePath}" style="width: 150px;height: 150px;" alt="Card image cap">
+                        <img class="card-img-top p-1" th:src="${product.imageList[0].filePath}" alt="Card image cap">
                         <div class="p-2">
                           <p class="card-text font-weight-lighter mb-1 text-black-50" th:text="${product.productBrandName}">브랜드</p>
                           <p class="card-text font-weight-light mb-1"><a th:href="@{|/product/${product.id}|}" th:text="${product.productName}">상품명</a></p>

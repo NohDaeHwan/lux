@@ -4,14 +4,14 @@ import com.used.lux.dto.user.auction.AuctionDto;
 import com.used.lux.dto.user.product.ImageDto;
 
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.List;
 
 public record AuctionsResponse(
         Long id,
         String productName,
         String brandName,
         String productColor,
-        Set<ImageDto> imageDtos,
+        List<ImageDto> imageDtos,
         int startPrice,
         int presentPrice,
         int closingPrice,
@@ -21,7 +21,7 @@ public record AuctionsResponse(
         String bidder
 ) {
 
-    public static AuctionsResponse of(Long id, String productName, String brandName, String productColor, Set<ImageDto> imageDtos,
+    public static AuctionsResponse of(Long id, String productName, String brandName, String productColor, List<ImageDto> imageDtos,
                                       int startPrice, int presentPrice, int closingPrice,
                                       LocalDateTime auctionStartDate, LocalDateTime auctionClosingDate,
                                      int biddingCount, String bidder) {

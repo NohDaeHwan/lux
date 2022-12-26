@@ -63,9 +63,11 @@ public class AdOrderService {
     public void updateCancel(Long orderId, OrderUpdateRequest orderUpdateRequest) {
         State stateCancel = stateRepository.findByStateStep("주문취소");
         State stateWait = stateRepository.findByStateStep("판매대기");
+
         Product product = productRepository.getReferenceById(orderUpdateRequest.productId());
         UserAccount userAccount = userAccountRepository.getReferenceById(orderUpdateRequest.userId());
         ProductOrder productOrder = productOrderRepository.getReferenceById(orderId);
+
         productOrder.setState(stateCancel);
         productOrderRepository.save(productOrder);
         productOrderLogRepository.save(ProductOrderLog.of(
@@ -80,14 +82,6 @@ public class AdOrderService {
         productLogRepository.save(ProductLog.of(
                 null,
                 product.getId(), product.getAppraisal().getAppraisalRequest().getAppraisalProductName(),
-                stateCancel,
-                product.getCategoryB(),
-                product.getCategoryM(),
-                product.getProductPrice(),
-                product.getProductSellType()));
-        productLogRepository.save(ProductLog.of(
-                null,
-                product.getId(), product.getAppraisal().getAppraisalRequest().getAppraisalProductName(),
                 stateWait,
                 product.getCategoryB(),
                 product.getCategoryM(),
@@ -95,7 +89,7 @@ public class AdOrderService {
                 product.getProductSellType()));
         product.setState(stateWait);
         productRepository.save(product);
-        userAccount.setPoint(userAccount.getPoint() + product.getProductPrice());
+        userAccount.setPoint(userAccount.getPoint() + productOrder.getPayment());
         userAccountRepository.save(userAccount);
         userAccountLogRepository.save(UserAccountLog.of(null, userAccount.getUserEmail(), userAccount.getUserGrade(),
                 userAccount.getPoint() + product.getProductPrice(), "충전", "주문번호" + orderId + "/상품환불"));

@@ -51,7 +51,7 @@ public interface ProductRepository extends JpaRepository<Product, Long>, Product
             "AND p.productPrice BETWEEN :minPrice AND :maxPrice and p.categoryM.id =:mcategoryId and p.appraisal.appraisalRequest.appraisalProductName LIKE %:query% ")
     List<Product> searchProductBy(Long mcategoryId,String productColor,String productBrand,String productGender,String productSize,String productGrade, int maxPrice,int minPrice,String query);
 
-    @Query(nativeQuery = true,value = "select * from product where state_id = 6 and created_at < now() order by created_at desc limit 4")
+    @Query(nativeQuery = true,value = "select * from product where state_id = 6 and product_sell_type = '중고' and created_at < now() order by created_at desc limit 4")
     List<Product> findByState6AndRecent4List();
     
 }

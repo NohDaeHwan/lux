@@ -105,7 +105,6 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">포인트 사용내역(productlog)</h5>
-
                     <!-- Default Table -->
                     <table class="table">
                         <thead>
@@ -142,10 +141,6 @@
                                     <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
                                 </li>
                                 <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item active" aria-current="page">
-                                    <a class="page-link" href="#">2</a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
                                 <li class="page-item">
                                     <a class="page-link" href="#">Next</a>
                                 </li>
@@ -190,10 +185,6 @@
                                     <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
                                 </li>
                                 <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item active" aria-current="page">
-                                    <a class="page-link" href="#">2</a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
                                 <li class="page-item">
                                     <a class="page-link" href="#">Next</a>
                                 </li>
@@ -213,6 +204,7 @@
                             <th scope="col">상품명</th>
                             <th scope="col">상품가격</th>
                             <th scope="col">판매그룹 </th>
+                            <th scope="col">주문상태 </th>
                             <th scope="col">주문날짜 </th>
                         </tr>
                         </thead>
@@ -222,6 +214,7 @@
                             <td th:text="${userorder.productName}"></td>
                             <td th:text="${#numbers.formatInteger(userorder.productPrice,3,'COMMA')} + '원'"></td>
                             <td th:text="${userorder.productSellType}"></td>
+                            <td th:text="${userorder.productState.stateStep}"></td>
                             <td th:text="${#temporals.format(userorder.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
                         </tr>
                         </tbody>
@@ -234,10 +227,6 @@
                                     <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
                                 </li>
                                 <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item active" aria-current="page">
-                                    <a class="page-link" href="#">2</a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
                                 <li class="page-item">
                                     <a class="page-link" href="#">Next</a>
                                 </li>
@@ -278,10 +267,6 @@
                                     <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
                                 </li>
                                 <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item active" aria-current="page">
-                                    <a class="page-link" href="#">2</a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
                                 <li class="page-item">
                                     <a class="page-link" href="#">Next</a>
                                 </li>
@@ -321,10 +306,6 @@
                                     <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
                                 </li>
                                 <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item active" aria-current="page">
-                                    <a class="page-link" href="#">2</a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
                                 <li class="page-item">
                                     <a class="page-link" href="#">Next</a>
                                 </li>

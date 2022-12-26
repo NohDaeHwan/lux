@@ -30,6 +30,7 @@
     <main id="main" class="main p-5">
         <section class="session mb-5">
             <div class="row align-items-top">
+
                 <div class="col-lg-5">
                     <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
                         <div class="carousel-indicators">
@@ -38,7 +39,7 @@
                             <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
                         </div>
                         <div class="carousel-inner">
-                            <div class="carousel-item active" data-bs-interval="10000" th:each="img : ${auction.productResponse.imageList}" >
+                            <div data-bs-interval="2000" th:each="img : ${auction.productResponse.imageList}" th:class="${'carousel-item' + (imgStat.count == 1 ? ' active' : '')}">
                                 <img th:src="${img.filePath()}" class="d-block w-100" alt="...">
                                 <div class="carousel-caption d-none d-md-block">
                                 </div>
@@ -53,7 +54,6 @@
                             <span class="visually-hidden">Next</span>
                         </button>
                     </div>
-
                 </div><!-- col-lg-5 종료-->
                 <div class="col-lg-7">
                     <div class="card-body pt-3">
@@ -137,9 +137,11 @@
                                     </button>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
+
             </div>
         </section>
 
@@ -205,7 +207,7 @@
                         <div>
                             <div class="mt-3 mb-3 text-center"><strong>상품설명💁🏻‍️</strong></div>
                             <div class="mb-3 text-center" th:text="${auction.productResponse.productContent}">상품설명입니다~~</div>
-                            <div class="mb-3" th:each="img:${auction.productResponse.imageList}"> <img src="#" th:src="${img.filePath}"></div>
+                            <div class="mb-3" th:each="img:${auction.productResponse.imageList}" style="display:flex;justify-content: center"> <img src="#" th:src="${img.filePath}"></div>
                         </div>
                     </div>
                     <!--문의사항 -->
@@ -670,7 +672,6 @@
                 if(nt<ot){
                     //경매 전
                     // $(".time").fadeIn();
-                    document.querySelector(".auction-title").innerHTML="경매 시작까지";
                     document.getElementById("auction-title").innerHTML="경매 시작까지";
                     sec =parseInt(ot - nt) / 1000;
                     day  = parseInt(sec/60/60/24);
@@ -688,11 +689,6 @@
                     document.getElementById("hours").innerHTML = hour+"시";
                     document.getElementById("minutes").innerHTML = min+"분";
                     document.getElementById("seconds").innerHTML = sec+"초";
-
-                    document.querySelector(".days").innerHTML = day+"일";
-                    document.querySelector(".hours").innerHTML = hour+"시";
-                    document.querySelector(".minutes").innerHTML = min+"분";
-                    document.querySelector(".seconds").innerHTML = sec+"초";
 
                 } else if(nt>et){
                     //후 경매 종료  최종가격,경매상태
@@ -735,7 +731,6 @@
                     }
 
                     // $(".time").fadeIn();
-                    document.querySelector(".auction-title").innerHTML="경매 종료까지";
                     document.getElementById("auction-title").innerHTML="경매 종료까지";
                     sec =parseInt(et - nt) / 1000;
                     day  = parseInt(sec/60/60/24);
@@ -753,11 +748,6 @@
                     document.getElementById("hours").innerHTML = hour+"시";
                     document.getElementById("minutes").innerHTML = min+"분";
                     document.getElementById("seconds").innerHTML = sec+"초";
-
-                    document.querySelector(".days").innerHTML = day+"일";
-                    document.querySelector(".hours").innerHTML = hour+"시";
-                    document.querySelector(".minutes").innerHTML = min+"분";
-                    document.querySelector(".seconds").innerHTML = sec+"초";
 
             }
 

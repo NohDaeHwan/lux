@@ -58,8 +58,7 @@ public class MainController {
                 .map(AuctionResponse::from).collect(Collectors.toUnmodifiableList());
         List<ProductResponse> products = productService.findByState6AndRecent4List().stream()
                 .map(ProductResponse::from).collect(Collectors.toUnmodifiableList());;
-        System.out.println(auctions);
-        System.out.println(products);
+
         mm.addAttribute("auctions",auctions);
         mm.addAttribute("products",products);
         return "/front/index";
@@ -74,6 +73,7 @@ public class MainController {
     @GetMapping("/register")
     public String register(ModelMap mm) {
         JoinMemberDto joinMemberDto = new JoinMemberDto();
+
         mm.addAttribute("joinMemberDto",joinMemberDto);
         return "/front/register"; // 회원가입 페이지를 보여줄 뷰 필요
     }
@@ -95,6 +95,7 @@ public class MainController {
             if(errors.hasFieldErrors("age"))
             {mm.addAttribute("age",errors.getFieldError("age").getDefaultMessage());}
         }
+
         //비밀번호 중복체크
         if(!joinMemberDto.getPassword().equals(joinMemberDto.getPasswordRepeat()))
         {mm.addAttribute("passwordRepeat","notMatchPassword");}
@@ -115,15 +116,13 @@ public class MainController {
             return "/front/register";
         }
 
-            UserGrade userGrade = userGradeService.getGradeName(1);
-            UserAccount userAccount = UserAccount.of(null, joinMemberDto.getUserName(), 
-            passwordEncoder.encode(joinMemberDto.getPassword()), 
-            joinMemberDto.getName(), joinMemberDto.getPhoneNumber(), Integer.parseInt(joinMemberDto.getAge()), 
-            joinMemberDto.getGender(),0,userGrade, RoleType.USER,"TEST USER" );
-
-            System.out.println("회원가입완료 ");
-            userAccountService.addUser(userAccount);
-            return "redirect:/login";
+        UserGrade userGrade = userGradeService.getGradeName(1);
+        UserAccount userAccount = UserAccount.of(null, joinMemberDto.getUserName(),
+                passwordEncoder.encode(joinMemberDto.getPassword()),
+                joinMemberDto.getName(), joinMemberDto.getPhoneNumber(), Integer.parseInt(joinMemberDto.getAge()),
+                joinMemberDto.getGender(),0,userGrade, RoleType.USER,"TEST USER" );
+        userAccountService.addUser(userAccount);
+        return "redirect:/login";
 
     }
 
@@ -144,9 +143,6 @@ public class MainController {
         mm.addAttribute("brandList", brandList);
         mm.addAttribute("appraisalResponseList",appraisalResponseList);
 
-        System.out.println("중고 검색 기능 작동 :"+productList);
-        System.out.println("경매 검색 기능 작동 :"+auctionList);
-        System.out.println("검수 검색 기능 작동:"+appraisalResponseList);
         return "/front/search"; // 회원가입 페이지를 보여줄 뷰 필요
     }
 
@@ -162,11 +158,6 @@ public class MainController {
                               @RequestParam(defaultValue = "") String query,
                               @PageableDefault(size = 30) Pageable pageable,
                               ModelMap mm) {
-        if(productBrand == null)
-        {
-            System.out.println("======================================================");
-        }
-
         List<CategoryBDto> categoryList = categoryBService.categoryList();
 
         List<BrandDto> brandList = brandService.brandList();
@@ -175,9 +166,6 @@ public class MainController {
         List<ProductResponse> products = productService.catesearch(mcategoryId,productColor,productBrand,productGender,productSize,productGrade,maxPrice,minPrice,query
               ).stream().map(ProductResponse::from).collect(Collectors.toUnmodifiableList());
 
-//        List<AuctionResponse> auctions= auctionService.catesearch(mcategoryId ,productColor,productBrand,productGender,
-//                productSize,productGrade,maxPrice,minPrice,query,pageable).stream().map(AuctionResponse::from).collect(Collectors.toUnmodifiableList());
-
         List<AuctionResponse> auction= auctionService.searchcate(mcategoryId,productBrand,productColor,productGender,productSize,productGrade,maxPrice,minPrice,query)
                 .stream().map(AuctionResponse::from).collect(Collectors.toList());
 
@@ -185,18 +173,7 @@ public class MainController {
         mm.addAttribute("categoryList", categoryList);
         mm.addAttribute("products", products);
         mm.addAttribute("cateM",categoryMDto );
-//        mm.addAttribute("auctions",auctions);
         mm.addAttribute("a",auction);
-
-
-        System.out.println("function"+categoryMDto);
-
-
-
-
-        System.out.println("중고 검색:"+products.stream().toList());
-//        System.out.println("경매 검색:"+auctions.stream().toList());
-        System.out.println("실험 :"+ auction.stream().toList());
 
         return "front/searchcate";
     }

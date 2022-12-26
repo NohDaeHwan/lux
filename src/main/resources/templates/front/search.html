@@ -39,9 +39,6 @@
                     <strong style="color: #b50;" th:text="${param.query}"></strong>에 대한 검색결과 >
                 </h3>
                 <div style="display: flex; justify-content: space-between;">
-<!--                    <p th:text="'전체결과: ' + ${points.getTotalElements} + ' 건'">-->
-<!--                        전체 검색결과: n 건-->
-<!--                    </p>-->
                 </div>
             </div>
         </div>
@@ -56,7 +53,6 @@
                         <a th:href="@{|/product|}" >더보기</a>
                     </div>
                 </h3>
-
                 <div style="display: flex; justify-content: space-between;">
                     <p th:text="'전체결과: ' + ${#lists.size(productList)} + ' 건'">
                         중고탭 검색결과: n 건
@@ -64,26 +60,23 @@
                 </div>
             </div>
         </div>
-        <div class="container-fluid brand_item-container" style="justify-content:flex-start; flex-wrap: wrap;">
-            <!-- 중고 검색 리스트-->
-            <div class="album py-3 bg-light">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-2" th:each="product: ${productList}">
-                            <div class="card mb-4 box-shadow" style="width:150px;">
-                                <a th:href="@{|/product/${product.id}|}">
-                                    <img class="card-img-top p-1" th:src="${product.imageList[0].filePath}" style="height: 150px;" alt="Card image cap">
-                                    <div class="p-2">
-                                        <p class="card-text font-weight-lighter mb-1 text-black-50" th:text="${product.productBrandName}">브랜드</p>
-                                        <p class="card-text font-weight-light mb-1"><a th:if="${product.productName().length()} > 10" th:href="@{|/product/${product.id}|}" th:text="${#strings.replace(product.productName,#strings.substring(product.productName,10,product.productName.length()),'...')}">상품명</a></p>
-                                        <p class="card-text font-weight-light mb-1"><a th:if="${product.productName().length()} <= 10" th:href="@{|/product/${product.id}|}" th:text="${product.productName}">상품명</a></p>
-                                        <p class="card-text font-weight-light" th:text="${#numbers.formatInteger(product.productPrice,3,'COMMA')}">40.000P</p>
-                                        <div class="d-flex justify-content-between align-items-center"></div>
-                                    </div>
-                                </a>
-                            </div>
+        <!-- 중고 검색 리스트-->
+        <div class="album py-3 bg-light">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-2" th:each="product: ${productList}">
+                        <div class="card mb-4 box-shadow">
+                            <a th:href="@{|/product/${product.id}|}">
+                                <img class="card-img-top p-1" th:src="${product.imageList[0].filePath}" alt="Card image cap">
+                                <div class="p-2">
+                                    <p class="card-text font-weight-lighter mb-1 text-black-50" th:text="${product.productBrandName}">브랜드</p>
+                                    <p class="card-text font-weight-light mb-1"><a th:if="${product.productName().length()} > 10" th:href="@{|/product/${product.id}|}" th:text="${#strings.replace(product.productName,#strings.substring(product.productName,10,product.productName.length()),'...')}">상품명</a></p>
+                                    <p class="card-text font-weight-light mb-1"><a th:if="${product.productName().length()} <= 10" th:href="@{|/product/${product.id}|}" th:text="${product.productName}">상품명</a></p>
+                                    <p class="card-text font-weight-light" th:text="${#numbers.formatInteger(product.productPrice,3,'COMMA')}">40.000P</p>
+                                    <div class="d-flex justify-content-between align-items-center"></div>
+                                </div>
+                            </a>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -99,10 +92,9 @@
                         <a th:href="@{|/auction|}" >더보기</a>
                     </div>
                 </h3>
-
                 <div style="display: flex; justify-content: space-between;">
                       <p th:text="'전체결과: ' + ${#lists.size(auctionList)} + ' 건'">
-                        중고탭 검색결과: n 건
+                        경매탭 검색결과: n 건
                     </p>
                 </div>
             </div>
@@ -113,19 +105,18 @@
                     <div class="col-md-2" th:each="auction: ${auctionList}">
                         <div class="card mb-4 box-shadow">
                             <div th:if="${auction.stateStep=='경매전'}">
-                                <img class="card-img-top p-1" th:src="${auction.productResponse.imageList[0].filePath}" style="width: 150px;height: 150px;" alt="Card image cap">
+                                <img class="card-img-top p-1" th:src="${auction.productResponse.imageList[0].filePath}" alt="Card image cap">
                             </div>
                             <div th:unless="${auction.stateStep=='경매전'}">
                                 <a th:href="@{|/auction/detail/${auction.id}|}">
-                                    <img class="card-img-top p-1" th:src="${auction.productResponse.imageList[0].filePath}" style="height: 150px;" alt="Card image cap">
+                                    <img class="card-img-top p-1" th:src="${auction.productResponse.imageList[0].filePath}" alt="Card image cap">
                                 </a>
                             </div>
                             <div class="p-2">
                                 <p class="card-text font-weight-lighter mb-1 text-black-50" th:text="${auction.productResponse.productBrandName}">브랜드</p>
                                 <p class="card-text font-weight-light mb-1"><a th:if="${auction.productResponse.productName.length()} > 10" th:href="@{|/auction/detail/${auction.id}|}" th:text="${#strings.replace(auction.productResponse.productName,#strings.substring(auction.productResponse.productName,10,auction.productResponse.productName.length()),'...')}">상품명</a></p>
                                 <p class="card-text font-weight-light mb-1"><a th:if="${auction.productResponse.productName.length()} <= 10" th:href="@{|/auction/detail/${auction.id}|}" th:text="${auction.productResponse().productName()}">상품명</a></p>
-
-                                <p class="card-text font-weight-light" th:text="${auction.presentPrice}">40.000P</p>
+                                <p class="card-text font-weight-light" th:text="${#numbers.formatInteger(auction.presentPrice(),3,'COMMA')}">40.000P</p>
                                 <p class="card-text font-weight-light" th:text="${#temporals.format(auction.auctionStartDate(),'yyyy-MM-dd HH:mm:ss')}"></p>
                                 <p class="card-text font-weight-light" th:text="${#temporals.format(auction.auctionClosingDate(),'yyyy-MM-dd HH:mm:ss')}"></p>
                                 <div class="d-flex justify-content-between align-items-center">
@@ -159,7 +150,7 @@
                 </h3>
                 <div style="display: flex; justify-content: space-between;">
                     <p th:text="'전체결과: ' + ${#lists.size(appraisalResponseList)} + ' 건'">
-                        중고탭 검색결과: n 건
+                        검수탭 검색결과: n 건
                     </p>
                 </div>
             </div>
@@ -171,14 +162,12 @@
                         <div class="card mb-4 box-shadow">
                             <div class="p-2">
                                 <a th:href="@{|/appraisal/${app.id}|}">
-                                    <img class="card-img-top p-1" th:src="${app.appraisalRequest().imageList[0].filePath}" style="width:height: 150px;" alt="Card image cap">
+                                    <img class="card-img-top p-1" th:src="${app.appraisalRequest().imageList[0].filePath}" alt="Card image cap">
                                 </a>
                             <div class="p-2">
                                 <p class="card-text font-weight-lighter mb-1 text-black-50" th:text="${app.appraisalRequest.appraisalBrandName()}">브랜드</p>
                                 <p class="card-text font-weight-light mb-1"><a th:if="${app.appraisalRequest.appraisalProductName().length()} > 10" th:href="@{|/appraisal/${app.id}|}" th:text="${#strings.replace(app.appraisalRequest.appraisalProductName(),#strings.substring(app.appraisalRequest.appraisalProductName(),10,app.appraisalRequest.appraisalProductName().length()),'...')}">상품명</a></p>
                                 <p class="card-text font-weight-light mb-1"><a th:if="${app.appraisalRequest.appraisalProductName().length()} <= 10" th:href="@{|/appraisal/${app.id}|}" th:text="${app.appraisalRequest.appraisalProductName()}">상품명</a></p>
-
-
                             </div>
                         </div>
                     </div>
@@ -199,13 +188,114 @@
     </section>
     <!-- footer section -->
 </footer>
-
-
 <!-- end info_section -->
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="/static/assets/js/bootstrap.js"></script>
 <script src="/static/assets/js/frontmain.js"></script>
+
+<script th:inline="javascript">
+    function remaindTime() {
+        let auctions=[[${auctionList}]];
+        //현재시간
+        var now = new Date();
+
+        for(i=0; i<auctions.length;i++){
+            var open = new Date([[${auctionList}]][i].auctionStartDate);
+            //종료시간
+            var end = new Date([[${auctionList}]][i].auctionClosingDate);
+
+            var auctionId=[[${auctionList}]][i].id;
+
+            var statestep=[[${auctionList}]][i].stateStep;
+
+            var nt = now.getTime();
+            var ot = open.getTime();
+            var et = end.getTime();
+
+            if(nt<ot){
+                //경매 전
+                $(".time").fadeIn();
+                document.getElementById("title"+(i+1)).innerHTML="경매 시작까지";
+                sec =parseInt(ot - nt) / 1000;
+                day  = parseInt(sec/60/60/24);
+                sec = (sec - (day * 60 * 60 * 24));
+                hour = parseInt(sec/60/60);
+                sec = (sec - (hour*60*60));
+                min = parseInt(sec/60);
+                sec = parseInt(sec-(min*60));
+                if(hour<10){hour="0"+hour;}
+                if(min<10){min="0"+min;}
+                if(sec<10){sec="0"+sec;}
+
+                document.getElementById("days"+(i+1)).innerHTML = day+"일";
+                document.getElementById("hours"+(i+1)).innerHTML = hour+"시";
+                document.getElementById("minutes"+(i+1)).innerHTML = min+"분";
+                document.getElementById("seconds"+(i+1)).innerHTML = sec+"초";
+
+            } else if(nt>et){
+                //후 경매 종료  최종가격,경매상태
+
+                if (statestep !="경매완료") {
+                    $.ajax({
+                        type: "POST",
+                        url: "/auction/after/" + auctionId + "/11",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json"
+                    }).done(function (res) {
+                        location.href = "/auction";
+                        console.log("완료");
+                    }).fail(function (error) {
+                        console.log("function error : " + error);
+                    });
+
+                }
+
+                $(".time").fadeOut();
+                document.getElementById("title"+(i+1)).innerHTML="경매 마감<br/><br/>";
+
+            }else {
+                //중  경매 상태를 경매전 -> 경매 중으로 변경
+
+                if (statestep !="경매중") {
+                    $.ajax({
+                        type: "POST",
+                        url: "/auction/present/" + auctionId + "/10",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json"
+                    }).done(function (res) {
+                        location.href = "/auction";
+                        console.log("완료");
+                    }).fail(function (error) {
+                        console.log("function error : " + error);
+                    });
+                }
+
+                $(".time").fadeIn();
+                document.getElementById("title"+(i+1)).innerHTML=" 경매 마감까지";
+                sec =parseInt(et - nt) / 1000;
+                day  = parseInt(sec/60/60/24);
+                sec = (sec - (day * 60 * 60 * 24));
+                hour = parseInt(sec/60/60);
+                sec = (sec - (hour*60*60));
+                min = parseInt(sec/60);
+                sec = parseInt(sec-(min*60));
+                if(hour<10){hour="0"+hour;}
+                if(min<10){min="0"+min;}
+                if(sec<10){sec="0"+sec;}
+
+                document.getElementById("days"+(i+1)).innerHTML = day+"일";
+                document.getElementById("hours"+(i+1)).innerHTML = hour+"시";
+                document.getElementById("minutes"+(i+1)).innerHTML = min+"분";
+                document.getElementById("seconds"+(i+1)).innerHTML = sec+"초";
+
+            }
+        }
+
+    }
+    setInterval(remaindTime,1000);
+</script>
+
 </body>
 
 </html>

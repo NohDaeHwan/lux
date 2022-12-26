@@ -8,9 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.LinkedHashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Getter
 @ToString(callSuper = true)
@@ -60,7 +58,7 @@ public class Product extends AuditingFields {
 
 	@ToString.Exclude
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-	private final Set<Image> images = new LinkedHashSet<>();
+	private final List<Image> images = new ArrayList<>();
 
 	protected Product() {}
 

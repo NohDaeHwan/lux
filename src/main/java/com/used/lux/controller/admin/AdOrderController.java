@@ -76,7 +76,7 @@ public class AdOrderController {
         return "/admin/order-detail";
     }
 
-    // 주문 취소수리
+    // 주문 취소 처리
     @PostMapping("/{orderId}/cancel")
     public String orderCancel(@PathVariable Long orderId,
             @AuthenticationPrincipal Principal principal,

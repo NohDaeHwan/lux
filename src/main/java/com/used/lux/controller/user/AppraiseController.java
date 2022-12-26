@@ -32,8 +32,6 @@ public class AppraiseController {
 
     private final BrandService brandService;
 
-    private final UserAccountService userAccountService;
-
     // 감정 신청 리스트
     @GetMapping
     public String appraisalList(
@@ -77,12 +75,10 @@ public class AppraiseController {
             loginId = principal.id();
        }
 
-        UserAccountResponse userAccountResponse = UserAccountResponse.from(userAccountService.getUser(loginId));
-
         AppraisalResponse appraisalDto = AppraisalResponse.from(appraiseService.appraisalDetail(appraiseId));
         List<CategoryBDto> categoryList = categoryBService.categoryList();
 
-        mm.addAttribute("users", userAccountResponse);
+        mm.addAttribute("loginId", loginId);
         mm.addAttribute("categoryList", categoryList);
         mm.addAttribute("appraisalDto",appraisalDto);
         return "front/appraise-detail";
