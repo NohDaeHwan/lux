@@ -32,7 +32,7 @@ public class ProductOrderCancel extends AuditingFields {
 
     @Setter
     @Column(name = "product_price", nullable = false)
-    private int productPrice;
+    private Long productPrice;
 
     @Setter
     @Column(name="cancel_term", length = 500)
@@ -40,7 +40,7 @@ public class ProductOrderCancel extends AuditingFields {
 
     protected  ProductOrderCancel() {}
 
-    private ProductOrderCancel(Long id, Long orderId, String userName, String productName, int productPrice, String cancelTerm) {
+    private ProductOrderCancel(Long id, Long orderId, String userName, String productName, Long productPrice, String cancelTerm) {
         this.id = id;
         this.orderId = orderId;
         this.userName = userName;
@@ -50,12 +50,12 @@ public class ProductOrderCancel extends AuditingFields {
     }
 
     public static ProductOrderCancel of(Long id, Long orderId, String userName, String productName,
-                                        int productPrice, String cancelTerm) {
+                                        Long productPrice, String cancelTerm) {
         return new ProductOrderCancel(id, orderId, userName, productName, productPrice, cancelTerm);
     }
 
     public static ProductOrderCancel of(Long orderId, String userName, String productName,
-                                        int productPrice, String cancelTerm) {
+                                        Long productPrice, String cancelTerm) {
         return new ProductOrderCancel(null, orderId, userName, productName, productPrice, cancelTerm);
     }
 

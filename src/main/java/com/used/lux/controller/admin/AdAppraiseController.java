@@ -2,9 +2,9 @@ package com.used.lux.controller.admin;
 
 import com.used.lux.dto.BrandDto;
 import com.used.lux.dto.security.Principal;
+import com.used.lux.dto.user.appraisal.AppraisalDto;
 import com.used.lux.request.appraisal.AppraisalCommentRequest;
 import com.used.lux.response.SearchResponse;
-import com.used.lux.response.appraisal.AppraisalResponse;
 import com.used.lux.service.PaginationService;
 import com.used.lux.service.SearchService;
 import com.used.lux.service.admin.AdAppraiseService;
@@ -51,15 +51,15 @@ public class AdAppraiseController {
             return "redirect:/";
         }
 
-        Page<AppraisalResponse> appraisalResponse = adAppraiseService.getAppraiseList(appraisalState,
+        Page<AppraisalDto> appraisal= adAppraiseService.getAppraiseList(appraisalState,
                 appraisalBrand, appraisalGender, appraisalSize, appraisalGrade, appraisalDate,
-                query, pageable).map(AppraisalResponse::from);
+                query, pageable);
         List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(),
-                appraisalResponse.getTotalPages());
+                appraisal.getTotalPages());
         SearchResponse searchResponse = searchService.getSearchList();
 
         mm.addAttribute("paginationBarNumbers", barNumbers);
-        mm.addAttribute("appraisalResponse", appraisalResponse);
+        mm.addAttribute("appraisalResponse", appraisal);
         mm.addAttribute("appraisalSearchResponse", searchResponse);
         return "/admin/appraise";
     }
@@ -73,8 +73,7 @@ public class AdAppraiseController {
             return "redirect:/";
         }
 
-        AppraisalResponse appraisalResponse = AppraisalResponse
-                .from(adAppraiseService.appraiseCommentPage(appraisalId));
+        AppraisalDto appraisalResponse = adAppraiseService.appraiseCommentPage(appraisalId);
         mm.addAttribute("appraisalResponse", appraisalResponse);
         return "/admin/appraisal-detail";
     }
@@ -88,8 +87,7 @@ public class AdAppraiseController {
             return "redirect:/";
         }
 
-        AppraisalResponse appraisalResponse = AppraisalResponse
-                .from(adAppraiseService.appraiseCommentPage(appraisalId));
+        AppraisalDto appraisalResponse = adAppraiseService.appraiseCommentPage(appraisalId);
 
         List<BrandDto> brandList = adProductService.getBrandList();
         mm.addAttribute("appraisalResponse", appraisalResponse);

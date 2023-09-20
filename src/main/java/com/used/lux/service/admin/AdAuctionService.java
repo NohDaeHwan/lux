@@ -2,9 +2,11 @@ package com.used.lux.service.admin;
 
 import com.used.lux.domain.State;
 import com.used.lux.domain.auction.Auction;
+import com.used.lux.domain.constant.AuctionState;
 import com.used.lux.dto.user.auction.AuctionDto;
 import com.used.lux.dto.user.auction.AuctionLogDto;
 import com.used.lux.dto.admin.AdAuctionDto;
+import com.used.lux.mapper.AuctionMapper;
 import com.used.lux.repository.*;
 import com.used.lux.repository.auction.AuctionLogRepository;
 import com.used.lux.repository.auction.AuctionRepository;
@@ -26,6 +28,7 @@ import java.util.stream.Collectors;
 public class AdAuctionService {
 
     private final AuctionRepository auctionRepository;
+    private final AuctionMapper auctionMapper;
 
     private final AuctionLogRepository auctionLogRepository;
 
@@ -35,21 +38,21 @@ public class AdAuctionService {
     @Transactional(readOnly = true)
     public Page<AuctionDto> getAuctionList(String auctionState, String auctionDate, String query, Pageable pageable) {
         if (auctionDate.equals("") && auctionState.equals("") && query.equals("")) {
-            return auctionRepository.findAll(pageable).map(AuctionDto::from);
+            return auctionRepository.findAll(pageable).map(auctionMapper::toDto);
         } else if (auctionDate.equals("")) {
-            return auctionRepository.findByBackAuctionList(auctionState, query, pageable).map(AuctionDto::from);
+            return auctionRepository.findByBackAuctionList(auctionState, query, pageable).map(auctionMapper::toDto);
         }
         String[] dateResult = auctionDate.split("-");
         LocalDateTime date = LocalDateTime.of(Integer.parseInt(dateResult[0]),
                 Integer.parseInt(dateResult[1]), Integer.parseInt(dateResult[2]), 00, 00);
-        return auctionRepository.findByBackAuctionListDate(auctionState, date, query, pageable).map(AuctionDto::from);
+        return auctionRepository.findByBackAuctionListDate(auctionState, date, query, pageable).map(auctionMapper::toDto);
     }
 
     // Admin 경매 상세 조회(+경매로그)
     @Transactional(readOnly = true)
     public AdAuctionDto getAuctionDetail(Long auctionId) {
         // 경매 상세
-        AuctionDto auctionDto = AuctionDto.from(auctionRepository.findById(auctionId).get());
+        AuctionDto auctionDto = auctionMapper.toDto(auctionRepository.findById(auctionId).get());
         // 경매 로그
         List<AuctionLogDto> auctionLogDtos = auctionLogRepository.findByAuctionId(auctionId)
                 .stream().map(AuctionLogDto::from).collect(Collectors.toCollection(ArrayList::new));
@@ -60,7 +63,6 @@ public class AdAuctionService {
     public void auctionUpdate(Long auctionId, AuctionUpdateRequest auctionUpdateRequest){
         //업데이트에 필요한 entity 가져오기
         auctionRepository.findByStartPrice(auctionUpdateRequest.startPrice());
-        State state=stateRepository.findByStateStep("경매대기");
 
         //시작시간 포맷
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -77,9 +79,9 @@ public class AdAuctionService {
         
         //수정사항 업데이트
         auction.setStartPrice(auctionUpdateRequest.startPrice());
-        auction.setAuctionStartDate(startDateTime);
-        auction.setAuctionClosingDate(closeDateTime);
-        auction.setState(state);
+        auction.setAucStartDate(startDateTime);
+        auction.setAucEndDate(closeDateTime);
+        auction.setAucState(AuctionState.WAITING);
         
         //레포지토리 저장
         auctionRepository.save(auction);

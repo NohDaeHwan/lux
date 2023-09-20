@@ -1,8 +1,10 @@
 package com.used.lux.repository.querydsl;
 
 import com.querydsl.jpa.JPQLQuery;
+import com.used.lux.domain.constant.OrderState;
 import com.used.lux.domain.order.ProductOrder;
 import com.used.lux.domain.order.QProductOrder;
+import com.used.lux.domain.product.QProduct;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -21,14 +23,16 @@ public class ProductOrderRepositoryCustomImpl extends QuerydslRepositorySupport 
     public Page<ProductOrder> searchProductOrder(String orderState, String orderSellType,
                                                  String orderDate, String query, Pageable pageable) {
         QProductOrder productOrder = QProductOrder.productOrder;
+        QProduct product = QProduct.product;
 
         String[] dateResult = orderDate.split("-");
 
-        JPQLQuery<ProductOrder> queryResult = from(productOrder)
+        JPQLQuery<ProductOrder> queryResult = from(productOrder, product)
                 .select(productOrder)
-                .where(productOrder.state.stateStep.like("%"+orderState+"%"),
-                        productOrder.product.productSellType.like("%"+orderSellType+"%"),
-                        productOrder.product.appraisal.appraisalRequest.appraisalProductName.like("%"+query+"%"),
+                .where(productOrder.productId.eq(product.id),
+                        productOrder.orderState.eq(OrderState.valueOf(orderState)),
+                        productOrder.prodSellType.like("%"+orderSellType+"%"),
+                        product.prodNm.like("%"+query+"%"),
                         productOrder.modifiedAt.after(LocalDateTime.of(Integer.parseInt(dateResult[0]),
                                 Integer.parseInt(dateResult[1]), Integer.parseInt(dateResult[2]), 00, 00)));
         long totalCount = queryResult.fetchCount();

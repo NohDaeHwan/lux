@@ -2,51 +2,53 @@ package com.used.lux.service;
 
 import com.used.lux.domain.UserGrade;
 import com.used.lux.dto.UserGradeDto;
+import com.used.lux.mapper.UserGradeMapper;
 import com.used.lux.repository.UserGradeRepository;
 import com.used.lux.request.GradeCreateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
 public class UserGradeService {
-    //UserGrade DB의 서비스 클래스입니다. 해당 DB에 연결하려면 repository와 service 영역에 추가적인 작성이 필요합니다.
-    private final UserGradeRepository userGradeRepository;
+    private final UserGradeRepository userGradeRepo;
+
+    private final UserGradeMapper userGradeMapper;
 
     public UserGradeDto createGrade(GradeCreateRequest gradeCreateRequest) {
-        return UserGradeDto.from(userGradeRepository.save(UserGrade.of(gradeCreateRequest.gradeStep(), gradeCreateRequest.gradeName(),
-                gradeCreateRequest.discount(), gradeCreateRequest.rankUp())));
+        return userGradeMapper.toDto(userGradeRepo.save(UserGrade.builder()
+                .gradeStep(gradeCreateRequest.gradeStep())
+                .gradeName(gradeCreateRequest.gradeName())
+                .discount(gradeCreateRequest.discount())
+                .rankUp(gradeCreateRequest.rankUp())
+                .build()
+        ));
     }
 
     public void deleteGrade(Long gradeId) {
-        userGradeRepository.deleteById(gradeId);
+        userGradeRepo.deleteById(gradeId);
     }
 
     public List<UserGradeDto> getGradeList() {
-        return userGradeRepository.findAll().stream()
-                .map(UserGradeDto::from).collect(Collectors.toCollection(ArrayList::new));
+        return userGradeMapper.toDtoList(userGradeRepo.findAll());
     }
 
-    @Transactional
     public UserGradeDto getNextGrade(int gradeStep) {
-        int lastGrade = userGradeRepository.findByLastStep().getGradeStep();
+        int lastGrade = userGradeRepo.findByLastStep().getGradeStep();
         if (lastGrade == gradeStep) {
             return null;
         }
-        return UserGradeDto.from(userGradeRepository.findByGradeStep(gradeStep+1));
+        return userGradeMapper.toDto(userGradeRepo.findByGradeStep(gradeStep+1));
     }
 
     public Long countAll() {
-        return userGradeRepository.count();
+        return userGradeRepo.count();
     }
 
     public UserGrade getGradeName(int bronze) {
-        return userGradeRepository.findByGradeStep(bronze);
+        return userGradeRepo.findByGradeStep(bronze);
     }
-
 }

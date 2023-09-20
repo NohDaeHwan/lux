@@ -1,13 +1,19 @@
 package com.used.lux.domain.appraisal;
 
-import javax.persistence.*;
+import com.used.lux.domain.*;
+import com.used.lux.domain.constant.AppraisalState;
+import com.used.lux.domain.constant.GenterType;
+import com.used.lux.domain.useraccount.UserAccount;
+import lombok.*;
 
-import com.used.lux.domain.AuditingFields;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @ToString(callSuper = true)
 @Table(name = "appraisal")
 @Entity
@@ -17,40 +23,43 @@ public class Appraisal extends AuditingFields {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	// 관리자 컬럼
 	@Setter
-	@Column(name="appraisal_grade", length = 100)
-	private String appraisalGrade; // A, B, C, F
-
-	@Setter
-	@Column(name="appraisal_comment", length = 100)
-	private String appraisalComment;
+	@Column(name="app_prod_nm", nullable = false, length = 100)
+	private String appProdNm;
 
 	@Setter
-	@Column(name="appraisal_price")
-	private int appraisalPrice;
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "app_brand_id")
+	private Brand appBrand;
 
 	@Setter
-	@OneToOne(optional = false)
-	@JoinColumn(name = "appraisal_request_id")
-	private AppraisalRequest appraisalRequest;
+	@Column(name = "app_gender")
+	@Enumerated(EnumType.STRING)
+	private GenterType appGender;
 
+	@Setter
+	@Column(name="app_color", nullable = false, length = 100)
+	private String appColor;
 
-	protected Appraisal() {}
+	@Setter
+	@Column(name="app_size", nullable = false, length = 100)
+	private String appSize;
 
-	private Appraisal(String appraisalGrade, String appraisalComment, int appraisalPrice, AppraisalRequest appraisalRequest) {
-		this.appraisalGrade = appraisalGrade;
-		this.appraisalComment = appraisalComment;
-		this.appraisalPrice = appraisalPrice;
-		this.appraisalRequest = appraisalRequest;
-	}
+	@Setter
+	@Column(name = "app_state")
+	@Enumerated(EnumType.STRING)
+	private AppraisalState appState;
 
-	public static Appraisal of(String appraisalGrade, String appraisalComment, int appraisalPrice,AppraisalRequest appraisalRequest) {
-		return new Appraisal(appraisalGrade, appraisalComment, appraisalPrice, appraisalRequest);
-	}
+	@Setter
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "user_account_id")
+	private UserAccount userAccount;
 
-	public static Appraisal of(AppraisalRequest appraisalRequest) {
-		return new Appraisal("", "", 0, appraisalRequest);
-	}
+	@Setter
+	@JoinColumn(name = "app_request_id")
+	private Long appResultId;
 
+	@ToString.Exclude
+	@OneToMany(mappedBy = "appraisal", cascade = CascadeType.ALL)
+	private final List<AppraisalImage> images = new ArrayList<>();
 }

@@ -4,13 +4,15 @@ import javax.persistence.*;
 
 import com.used.lux.domain.AuditingFields;
 import com.used.lux.domain.State;
+import com.used.lux.domain.constant.OrderState;
 import com.used.lux.domain.product.Product;
 import com.used.lux.domain.useraccount.UserAccount;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @ToString(callSuper = true)
 @Table(name = "product_order")
 @Entity
@@ -37,45 +39,26 @@ public class ProductOrder extends AuditingFields {
 	private String email;
 
 	@Setter
-	private int payment;
+	private Long payment;
 
 	@Setter
 	@Column(name="requested_term", length = 100)
 	private String requestedTerm; // 요청사항
 
 	@Setter
-	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "state_id")
-	private State state;
+	@Column(name = "order_state")
+	@Enumerated(EnumType.STRING)
+	private OrderState orderState;
 
 	@Setter
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "product_id")
-	private Product product;
+	@Column(name="prod_sell_type", length = 50)
+	private String prodSellType; // 중고, 경매
+
+	@Setter
+	private Long productId;
 
 	@Setter
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "user_account_id")
 	private UserAccount userAccount;
-
-	protected ProductOrder() {}
-
-	private ProductOrder(String name, String phoneNumber, String address, String email, int payment, String requestedTerm,
-						 State state, Product product, UserAccount userAccount) {
-		this.name = name;
-		this.phoneNumber = phoneNumber;
-		this.address = address;
-		this.email = email;
-		this.requestedTerm = requestedTerm;
-		this.payment = payment;
-		this.state = state;
-		this.product = product;
-		this.userAccount = userAccount;
-	}
-
-	public static ProductOrder of(String name, String phoneNumber, String address, String email, int payment,
-								  String requestedTerm, State state, Product product, UserAccount userAccount) {
-		return new ProductOrder(name, phoneNumber, address, email, payment, requestedTerm, state, product, userAccount);
-	}
-
 }

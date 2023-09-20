@@ -1,11 +1,13 @@
 package com.used.lux.domain;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "brand")
 @Entity
 public class Brand {
@@ -17,20 +19,4 @@ public class Brand {
     @Setter
     @Column(name="brand_name", nullable = false, length = 100)
     private String brandName;
-
-    public Brand() {}
-
-    private Brand(Long id, String brandName) {
-        this.id = id;
-        this.brandName = brandName;
-
-    }
-
-    public static Brand of(Long id, String brandName) {
-        return new Brand(id, brandName);
-    }
-
-    public static Brand of(String brandName) {
-        return new Brand(null, brandName);
-    }
 }

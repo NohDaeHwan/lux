@@ -20,7 +20,7 @@ public interface AuctionLogRepository extends JpaRepository<AuctionLog, Long> {
 
     //마이페이지 경매 내역 조회
     @Query(value="SELECT new com.used.lux.dto.user.auction.AuctionMypageLogDto(al.id, al.bidder, a.bidder, al.auctionId, al.productId, al.productName, al.presentPrice, " +
-            "a.closingPrice, al.createdAt, al.createdBy, al.modifiedAt, al.modifiedBy) " +
+            "a.endPrice, al.createdAt, al.createdBy, al.modifiedAt, al.modifiedBy) " +
             "FROM AuctionLog al INNER JOIN Auction a ON al.auctionId = a.id " +
             "WHERE al.bidder = :bidder")
     List<AuctionMypageLogDto> findByBidder(String bidder, Pageable pageable);

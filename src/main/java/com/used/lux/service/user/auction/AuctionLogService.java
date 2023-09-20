@@ -23,7 +23,7 @@ public class AuctionLogService {
                 .map(AuctionLogDto::from).collect(Collectors.toUnmodifiableList());
     }
 
-    public List<AuctionMypageLogDto> searchAuctionLog(String bidder,Pageable pageable){
+    public List<AuctionMypageLogDto> searchAuctionLog(String bidder, Pageable pageable){
         return auctionLogRepository.findByBidder(bidder,pageable);
     }
 }

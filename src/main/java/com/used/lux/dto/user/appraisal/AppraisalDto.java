@@ -1,48 +1,29 @@
 package com.used.lux.dto.user.appraisal;
 
-import com.used.lux.domain.appraisal.Appraisal;
-import com.used.lux.domain.useraccount.UserAccount;
+import com.used.lux.dto.BrandDto;
+import com.used.lux.dto.user.useraccount.UserAccountDto;
+import lombok.Builder;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+@Builder
 public record AppraisalDto(
         Long id,
-        String appraisalGrade,
-        String appraisalComment,
-        int appraisalPrice,
-        AppraisalRequestDto appraisalRequest,
+        String appProdNm,
+        String appBrand,
+        String appGender,
+        String appColor,
+        String appSize,
+        String appState,
+        Long userId,
+        String userEmail,
+        String userNm,
+        Long appResultId,
+        List<AppraisalImageDto> imageList,
         LocalDateTime createdAt,
         String createdBy,
         LocalDateTime modifiedAt,
         String modifiedBy
 )  {
-
-    public static AppraisalDto of(Long id, String appraisalGrade, String appraisalComment, int appraisalPrice,
-                                  AppraisalRequestDto appraisalRequest, LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
-        return new AppraisalDto(id, appraisalGrade, appraisalComment, appraisalPrice, appraisalRequest, createdAt, createdBy, modifiedAt, modifiedBy);
-    }
-
-    public static AppraisalDto from(Appraisal entity) {
-        return new AppraisalDto(
-                entity.getId(),
-                entity.getAppraisalGrade(),
-                entity.getAppraisalComment(),
-                entity.getAppraisalPrice(),
-                AppraisalRequestDto.from(entity.getAppraisalRequest()),
-                entity.getCreatedAt(),
-                entity.getCreatedBy(),
-                entity.getModifiedAt(),
-                entity.getModifiedBy()
-        );
-    }
-
-    public Appraisal toEntity(UserAccount userAccount) {
-        return Appraisal.of(
-                appraisalGrade,
-                appraisalComment,
-                appraisalPrice,
-                appraisalRequest.toEntity(userAccount)
-        );
-    }
-
 }

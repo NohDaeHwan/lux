@@ -2,15 +2,14 @@ package com.used.lux.domain.appraisal;
 
 import com.used.lux.domain.AuditingFields;
 import com.used.lux.domain.State;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.concurrent.atomic.LongAccumulator;
 
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @ToString(callSuper = true)
 @Table(name = "appraisal_request_log")
 @Entity
@@ -40,32 +39,10 @@ public class AppraisalRequestLog extends AuditingFields {
 
     @Setter
     @Column(name="user_id")
-    private Long userId ; // 검수 진행 상태
+    private Long userId ; // 검수 신청 유저 ID
 
     @Setter
     @Column(name="appraisal_id")
-    private Long appraisalId ; // 검수 진행 상태
-
-    protected AppraisalRequestLog() {}
-
-    public AppraisalRequestLog(Long id, String appraisalProductName, String appraisalGrade, int appraisalPrice, State appraisalState, Long userId, Long appraisalId) {
-        this.id = id;
-        this.appraisalProductName = appraisalProductName;
-        this.appraisalGrade = appraisalGrade;
-        this.appraisalPrice = appraisalPrice;
-        this.appraisalState = appraisalState;
-        this.userId = userId;
-        this.appraisalId = appraisalId;
-    }
-
-
-    public static AppraisalRequestLog of(Long id, String appraisalProductName, String appraisalGrade, int appraisalPrice, State appraisalState, Long userId, Long appraisalId) {
-        return new AppraisalRequestLog(id, appraisalProductName, appraisalGrade, appraisalPrice,appraisalState,userId, appraisalId);
-    }
-    public static AppraisalRequestLog of( String appraisalProductName, String appraisalGrade, int appraisalPrice, State appraisalState, Long userId, Long appraisalId) {
-        return new AppraisalRequestLog(null, appraisalProductName, appraisalGrade, appraisalPrice,appraisalState, userId, appraisalId);
-    }
-
-
+    private Long appraisalId ; // 검수 ID
 }
 

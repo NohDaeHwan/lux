@@ -1,46 +1,42 @@
 package com.used.lux.response.auction;
 
 import com.used.lux.dto.user.auction.AuctionDto;
-import com.used.lux.dto.user.product.ImageDto;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 public record AuctionsResponse(
         Long id,
         String productName,
         String brandName,
         String productColor,
-        List<ImageDto> imageDtos,
-        int startPrice,
-        int presentPrice,
-        int closingPrice,
+        Long startPrice,
+        Long presentPrice,
+        Long closingPrice,
         LocalDateTime auctionStartDate,
         LocalDateTime auctionClosingDate,
         int biddingCount,
         String bidder
 ) {
 
-    public static AuctionsResponse of(Long id, String productName, String brandName, String productColor, List<ImageDto> imageDtos,
-                                      int startPrice, int presentPrice, int closingPrice,
+    public static AuctionsResponse of(Long id, String productName, String brandName, String productColor,
+                                      Long startPrice, Long presentPrice, Long closingPrice,
                                       LocalDateTime auctionStartDate, LocalDateTime auctionClosingDate,
                                      int biddingCount, String bidder) {
-        return new AuctionsResponse(id, productName, brandName, productColor, imageDtos, startPrice, presentPrice, closingPrice, auctionStartDate,
+        return new AuctionsResponse(id, productName, brandName, productColor, startPrice, presentPrice, closingPrice, auctionStartDate,
                 auctionClosingDate, biddingCount, bidder);
     }
 
     public static AuctionsResponse from(AuctionDto auctionDto) {
         return new AuctionsResponse(
                 auctionDto.id(),
-                auctionDto.productDto().productName(),
-                auctionDto.productDto().productBrandName(),
-                auctionDto.productDto().productColor(),
-                auctionDto.productDto().imageDtos(),
+                auctionDto.aucNm(),
+                auctionDto.aucBrand(),
+                auctionDto.aucColor(),
                 auctionDto.startPrice(),
                 auctionDto.presentPrice(),
-                auctionDto.closingPrice(),
-                auctionDto.auctionStartDate(),
-                auctionDto.auctionClosingDate(),
+                auctionDto.endPrice(),
+                auctionDto.aucStartDate(),
+                auctionDto.aucEndDate(),
                 auctionDto.biddingCount(),
                 auctionDto.bidder()
         );

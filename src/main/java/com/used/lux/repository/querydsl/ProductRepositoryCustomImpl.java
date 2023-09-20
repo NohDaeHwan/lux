@@ -1,6 +1,8 @@
 package com.used.lux.repository.querydsl;
 
 import com.querydsl.jpa.JPQLQuery;
+import com.used.lux.domain.constant.GenterType;
+import com.used.lux.domain.constant.ProductState;
 import com.used.lux.domain.product.Product;
 import com.used.lux.domain.product.QProduct;
 import org.springframework.data.domain.Page;
@@ -27,12 +29,11 @@ public class ProductRepositoryCustomImpl extends QuerydslRepositorySupport imple
 
         JPQLQuery<Product> queryResult = from(product)
                 .select(product)
-                .where(product.productSellType.like("%"+productSellType+"%"),
-                        product.appraisal.appraisalRequest.appraisalBrand.brandName.like("%"+productBrand+"%"),
-                        product.appraisal.appraisalRequest.appraisalGender.like("%"+productGender+"%"),
-                        product.appraisal.appraisalRequest.appraisalSize.like("%"+productSize+"%"),
-                        product.state.stateStep.like("%"+productState+"%"),
-                        product.appraisal.appraisalRequest.appraisalProductName.like("%"+query+"%"),
+                .where(product.prodBrand.brandName.like("%"+productBrand+"%"),
+                        product.prodGender.eq(GenterType.valueOf(productGender)),
+                        product.prodSize.like("%"+productSize+"%"),
+                        product.prodState.eq(ProductState.valueOf(productState)),
+                        product.prodNm.like("%"+query+"%"),
                         product.createdAt.after(LocalDateTime.of(Integer.parseInt(dateResult[0]),
                                 Integer.parseInt(dateResult[1]), Integer.parseInt(dateResult[2]), 00, 00)));
         long totalCount = queryResult.fetchCount();
@@ -47,15 +48,14 @@ public class ProductRepositoryCustomImpl extends QuerydslRepositorySupport imple
 
         JPQLQuery<Product> queryResult = from(product)
                 .select(product)
-                .where(product.appraisal.appraisalRequest.appraisalColor.like("%"+productColor+"%"),
-//                        product.appraisal.appraisalRequest.appraisalBrand.brandName.like("%"+productBrand+"%"),
-                        product.appraisal.appraisalRequest.appraisalGender.like("%"+productGender+"%"),
-                        product.appraisal.appraisalRequest.appraisalSize.like("%"+productSize+"%"),
-                        product.appraisal.appraisalRequest.appraisalProductName.like("%"+query+"%"),
-                        product.productPrice.gt(Integer.parseInt(minPrice)),
-                        product.productPrice.lt(Integer.parseInt(maxPrice)),
-                        product.productSellType.eq("중고"),
-                        product.state.stateStep.eq("판매중"))
+                .where(product.prodColor.like("%"+productColor+"%"),
+                        product.prodBrand.brandName.like("%"+productBrand+"%"),
+                        product.prodGender.eq(GenterType.valueOf(productGender)),
+                        product.prodSize.like("%"+productSize+"%"),
+                        product.prodNm.like("%"+query+"%"),
+                        product.prodPrice.gt(Integer.parseInt(minPrice)),
+                        product.prodPrice.lt(Integer.parseInt(maxPrice)),
+                        product.prodState.eq(ProductState.SELL))
                 .orderBy(product.createdAt.desc());
         long totalCount = queryResult.fetchCount();
         List<Product> results = getQuerydsl().applyPagination(pageable, queryResult).fetch();
@@ -71,16 +71,15 @@ public class ProductRepositoryCustomImpl extends QuerydslRepositorySupport imple
 
         JPQLQuery<Product> queryResult = from(product)
                 .select(product)
-                .where(product.appraisal.appraisalRequest.appraisalColor.like("%"+productColor+"%"),
-                        product.appraisal.appraisalRequest.appraisalBrand.brandName.like("%"+productBrand+"%"),
-                        product.appraisal.appraisalRequest.appraisalGender.like("%"+productGender+"%"),
-                        product.appraisal.appraisalRequest.appraisalSize.like("%"+productSize+"%"),
-                        product.appraisal.appraisalRequest.appraisalProductName.like("%"+query+"%"),
-                        product.categoryM.id.eq(mcategoryId),
-                        product.productPrice.gt(Integer.parseInt(minPrice)),
-                        product.productPrice.lt(Integer.parseInt(maxPrice)),
-                        product.productSellType.eq("중고"),
-                        product.state.stateStep.eq("판매중")).limit(10)
+                .where(product.prodColor.like("%"+productColor+"%"),
+                        product.prodBrand.brandName.like("%"+productBrand+"%"),
+                        product.prodGender.eq(GenterType.valueOf(productGender)),
+                        product.prodSize.like("%"+productSize+"%"),
+                        product.prodNm.like("%"+query+"%"),
+                        product.cateM.id.eq(mcategoryId),
+                        product.prodPrice.gt(Integer.parseInt(minPrice)),
+                        product.prodPrice.lt(Integer.parseInt(maxPrice)),
+                        product.prodState.eq(ProductState.SELL)).limit(10)
                 .orderBy(product.createdAt.desc());
         return queryResult.fetch();
     }

@@ -1,5 +1,6 @@
 package com.used.lux.controller.admin;
 
+import com.used.lux.domain.constant.OrderState;
 import com.used.lux.dto.user.order.ProductOrderCancelDto;
 import com.used.lux.dto.user.order.ProductOrderDto;
 import com.used.lux.dto.StateDto;
@@ -44,8 +45,8 @@ public class AdOrderController {
             return "redirect:/";
         }
 
-        Page<ProductOrderResponse> orderList = adOrderService.getOrderList(orderState, orderSellType,
-                orderDate, query, pageable).map(ProductOrderResponse::from);
+        Page<ProductOrderDto> orderList = adOrderService.getOrderList(orderState, orderSellType,
+                orderDate, query, pageable);
         List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(),
                 orderList.getTotalPages());
         List<StateDto> stateList = stateService.getStateList();
@@ -67,7 +68,7 @@ public class AdOrderController {
 
         ProductOrderDto orderDetail = adOrderService.getOrderDetail(orderId);
 
-        if (!orderDetail.stateDto().stateStep().equals("주문완료")) {
+        if (!orderDetail.orderState().equals(OrderState.CANCELED.name())) {
             ProductOrderCancelDto productOrderCancelDto = adOrderService.getOrderCancel(orderId);
             mm.addAttribute("orderCancelDetail", productOrderCancelDto);
         }

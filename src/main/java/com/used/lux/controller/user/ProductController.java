@@ -1,8 +1,8 @@
 package com.used.lux.controller.user;
 
-import com.used.lux.dto.user.product.ProductDto;
 import com.used.lux.dto.UserGradeDto;
 import com.used.lux.dto.security.Principal;
+import com.used.lux.dto.user.product.ProductDto;
 import com.used.lux.request.order.OrderCreateRequest;
 
 import com.used.lux.dto.BrandDto;
@@ -52,8 +52,8 @@ public class ProductController {
                               @PageableDefault(size = 30) Pageable pageable,
                               ModelMap mm) {
 
-        Page<ProductResponse> products = productService.frontProductFind(productColor, productBrand, productGender,
-                productSize, productGrade, maxPrice, minPrice, query, pageable).map(ProductResponse::from);
+        Page<ProductDto> products = productService.frontProductFind(productColor, productBrand, productGender,
+                productSize, productGrade, maxPrice, minPrice, query, pageable);
         List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), products.getTotalPages());
 
         List<CategoryBDto> categoryList = categoryBService.categoryList();

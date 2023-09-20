@@ -7,13 +7,13 @@ public record AppraisalCommentRequest(
                 String appraisalColor,
                 String appraisalSize,
                 String appraisalGrade,
-                int appraisalPrice,
+                Long appraisalPrice,
                 String appraisalComment,
-                Long appraisalStateId) {
+                String appraisalState) {
         public static AppraisalCommentRequest of(String appraisalName, Long appraisalBrand,
                         String appraisalGender, String appraisalColor, String appraisalSize, String appraisalGrade,
-                        int appraisalPrice, String appraisalComment, Long stateId) {
+                                                 Long appraisalPrice, String appraisalComment, String appraisalState) {
                 return new AppraisalCommentRequest(appraisalName, appraisalBrand, appraisalGender, appraisalColor,
-                                appraisalSize, appraisalGrade, appraisalPrice, appraisalComment, stateId);
+                                appraisalSize, appraisalGrade, appraisalPrice, appraisalComment, appraisalState);
         }
 }

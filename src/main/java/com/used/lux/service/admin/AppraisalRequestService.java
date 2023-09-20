@@ -1,7 +1,7 @@
 package com.used.lux.service.admin;
 
-import com.used.lux.domain.appraisal.AppraisalRequest;
-import com.used.lux.repository.appraisal.AppraisalRequestRepository;
+import com.used.lux.domain.appraisal.Appraisal;
+import com.used.lux.repository.appraisal.AppraisalRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,10 +11,10 @@ import java.util.Optional;
 @Service
 public class AppraisalRequestService {
 
-    private final AppraisalRequestRepository appraisalRequestRepository;
+    private final AppraisalRepository appraisalRepository;
 
-    public AppraisalRequest findById(Long id) {
-        Optional<AppraisalRequest> appraisal = appraisalRequestRepository.findById(id);
+    public Appraisal findById(Long id) {
+        Optional<Appraisal> appraisal = appraisalRepository.findById(id);
         return appraisal.orElse(null);
     }
 

@@ -212,7 +212,7 @@
 
         let sender = new XMLHttpRequest();
 
-        sender.open('POST','/appraisal/new/loading');
+        sender.open('POST','/appraisalResult/new/loading');
         //sender.setRequestHeader('Content-Type','multipart/form-data');
 
         //전송
@@ -220,7 +220,7 @@
 
         sender.onload =() => {
             if(sender.status === 200){
-                location.href = "/appraisal";
+                location.href = "/appraisalResult";
             }else {
                 console.log("error");
             }

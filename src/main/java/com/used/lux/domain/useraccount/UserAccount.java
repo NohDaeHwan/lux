@@ -7,9 +7,10 @@ import com.used.lux.domain.UserGrade;
 import com.used.lux.domain.constant.RoleType;
 import lombok.*;
 
-import java.util.Objects;
-
 @Getter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @ToString(callSuper = true)
 @Table(name = "user_account")
 @Entity
@@ -48,7 +49,7 @@ public class UserAccount extends AuditingFields {
 	private UserGrade userGrade;
 
 	@Setter
-	private int point;
+	private Long point;
 
 	@Setter
 	@Enumerated(EnumType.STRING)
@@ -57,39 +58,4 @@ public class UserAccount extends AuditingFields {
 	@Setter
 	@Column(length = 500)
 	private String memo;
-
-	protected UserAccount() {}
-
-	private UserAccount(Long id, String userEmail, String userPassword, String userName, String phoneNumber, int age,
-						String gender, int point, UserGrade userGrade, RoleType role, String memo) {
-		this.id = id;
-		this.userEmail = userEmail;
-		this.userPassword = userPassword;
-		this.userName = userName;
-		this.phoneNumber = phoneNumber;
-		this.age = age;
-		this.gender = gender;
-		this.point = point;
-		this.userGrade = userGrade;
-		this.role = role;
-		this.memo = memo;
-	}
-
-	public static UserAccount of(Long id, String userEmail, String userPassword, String userName, String phoneNumber, int age,
-						String gender, int point, UserGrade userGrade, RoleType role, String memo) {
-		return new UserAccount(id, userEmail, userPassword, userName, phoneNumber, age, gender, point, userGrade, role, memo);
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (!(o instanceof UserAccount that)) return false;
-		return id != null && id.equals(that.id);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
-
 }

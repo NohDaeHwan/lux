@@ -145,7 +145,7 @@
                 <h3 class="custom_heading">
                     검수 >
                     <div style="text-align: right">
-                        <a th:href="@{|/appraisal|}" >더보기</a>
+                        <a th:href="@{|/appraisalResult|}" >더보기</a>
                      </div>
                 </h3>
                 <div style="display: flex; justify-content: space-between;">
@@ -161,13 +161,13 @@
                     <div class="col-md-2" th:each="app: ${appraisalResponseList}">
                         <div class="card mb-4 box-shadow">
                             <div class="p-2">
-                                <a th:href="@{|/appraisal/${app.id}|}">
-                                    <img class="card-img-top p-1" th:src="${app.appraisalRequest().imageList[0].filePath}" alt="Card image cap">
+                                <a th:href="@{|/appraisalResult/${app.id}|}">
+                                    <img class="card-img-top p-1" th:src="${app.appraisal().imageList[0].filePath}" alt="Card image cap">
                                 </a>
                             <div class="p-2">
-                                <p class="card-text font-weight-lighter mb-1 text-black-50" th:text="${app.appraisalRequest.appraisalBrandName()}">브랜드</p>
-                                <p class="card-text font-weight-light mb-1"><a th:if="${app.appraisalRequest.appraisalProductName().length()} > 10" th:href="@{|/appraisal/${app.id}|}" th:text="${#strings.replace(app.appraisalRequest.appraisalProductName(),#strings.substring(app.appraisalRequest.appraisalProductName(),10,app.appraisalRequest.appraisalProductName().length()),'...')}">상품명</a></p>
-                                <p class="card-text font-weight-light mb-1"><a th:if="${app.appraisalRequest.appraisalProductName().length()} <= 10" th:href="@{|/appraisal/${app.id}|}" th:text="${app.appraisalRequest.appraisalProductName()}">상품명</a></p>
+                                <p class="card-text font-weight-lighter mb-1 text-black-50" th:text="${app.appraisal.appraisalBrandName()}">브랜드</p>
+                                <p class="card-text font-weight-light mb-1"><a th:if="${app.appraisal.appraisalProductName().length()} > 10" th:href="@{|/appraisalResult/${app.id}|}" th:text="${#strings.replace(app.appraisal.appraisalProductName(),#strings.substring(app.appraisal.appraisalProductName(),10,app.appraisal.appraisalProductName().length()),'...')}">상품명</a></p>
+                                <p class="card-text font-weight-light mb-1"><a th:if="${app.appraisal.appraisalProductName().length()} <= 10" th:href="@{|/appraisalResult/${app.id}|}" th:text="${app.appraisal.appraisalProductName()}">상품명</a></p>
                             </div>
                         </div>
                     </div>

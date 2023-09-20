@@ -2,7 +2,10 @@ package com.used.lux.repository.querydsl;
 
 import com.querydsl.jpa.JPQLQuery;
 import com.used.lux.domain.appraisal.Appraisal;
+import com.used.lux.domain.appraisal.AppraisalResult;
 import com.used.lux.domain.appraisal.QAppraisal;
+import com.used.lux.domain.constant.AppraisalState;
+import com.used.lux.domain.constant.GenterType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -19,20 +22,19 @@ public class AppraisalRepositoryCustomImpl extends QuerydslRepositorySupport imp
 
     @Override
     public Page<Appraisal> searchAppraise(String appraisalState, String appraisalBrand, String appraisalGender,
-                                          String appraisalSize, String appraisalGrade, String appraisalDate,
-                                          String query, Pageable pageable) {
+                                                String appraisalSize, String appraisalGrade, String appraisalDate,
+                                                String query, Pageable pageable) {
         QAppraisal appraisal = QAppraisal.appraisal;
 
         String[] dateResult = appraisalDate.split("-");
 
         JPQLQuery<Appraisal> queryResult = from(appraisal)
                 .select(appraisal)
-                .where(appraisal.appraisalRequest.appraisalState.stateStep.like("%"+appraisalState+"%"),
-                        appraisal.appraisalRequest.appraisalBrand.brandName.like("%"+appraisalBrand+"%"),
-                        appraisal.appraisalRequest.appraisalGender.like("%"+appraisalGender+"%"),
-                        appraisal.appraisalRequest.appraisalSize.like("%"+appraisalSize+"%"),
-                        appraisal.appraisalGrade.like("%"+appraisalGrade+"%"),
-                        appraisal.appraisalRequest.appraisalProductName.like("%"+query+"%"),
+                .where(appraisal.appState.eq(AppraisalState.valueOf(appraisalState)),
+                        appraisal.appBrand.brandName.like("%"+appraisalBrand+"%"),
+                        appraisal.appGender.eq(GenterType.valueOf(appraisalGender)),
+                        appraisal.appSize.like("%"+appraisalSize+"%"),
+                        appraisal.appProdNm.like("%"+query+"%"),
                         appraisal.createdAt.after(LocalDateTime.of(Integer.parseInt(dateResult[0]),
                                 Integer.parseInt(dateResult[1]), Integer.parseInt(dateResult[2]), 00, 00)));
         long totalCount = queryResult.fetchCount();

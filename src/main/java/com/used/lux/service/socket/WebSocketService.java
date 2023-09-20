@@ -8,11 +8,9 @@ import com.used.lux.repository.auction.AuctionLogRepository;
 import com.used.lux.repository.auction.AuctionRepository;
 import com.used.lux.repository.useraccount.UserAccountLogRepository;
 import com.used.lux.repository.useraccount.UserAccountRepository;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -91,8 +89,7 @@ public class WebSocketService extends TextWebSocketHandler {
             auction.setPresentPrice(Integer.parseInt(data[2]));
             auction.setBiddingCount(auction.getBiddingCount()+1);
             auctionRepository.save(auction);
-            auctionLogRepository.save(AuctionLog.of(data[1], auction.getId(), auction.getProduct().getId(),
-                    auction.getProduct().getAppraisal().getAppraisalRequest().getAppraisalProductName(), Integer.parseInt(data[2])));
+//            auctionLogRepository.save(AuctionLog.of(data[1], auction.getId(), auction.getProduct().getId(), "수정해야함", Integer.parseInt(data[2])));
     }
 
     /* Client가 접속 시 호출되는 메서드 */

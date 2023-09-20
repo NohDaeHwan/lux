@@ -2,14 +2,16 @@ package com.used.lux.controller.user;
 
 import com.used.lux.dto.UserGradeDto;
 import com.used.lux.dto.security.Principal;
+import com.used.lux.dto.user.appraisal.AppraisalDto;
 import com.used.lux.dto.user.auction.AuctionMypageLogDto;
+import com.used.lux.dto.user.order.ProductOrderDto;
+import com.used.lux.dto.user.useraccount.UserAccountDto;
 import com.used.lux.request.order.OrderCancelRequest;
 import com.used.lux.request.useraccount.UserNameUpdateRequest;
 import com.used.lux.request.useraccount.UserUpdateRequest;
 import com.used.lux.response.order.ProductOrderResponse;
 import com.used.lux.response.useraccount.UserAccountLogResponse;
 import com.used.lux.response.useraccount.UserAccountResponse;
-import com.used.lux.response.appraisal.AppraisalResponse;
 import com.used.lux.service.*;
 import com.used.lux.service.user.appraisal.AppraiseService;
 import com.used.lux.service.user.auction.AuctionLogService;
@@ -55,15 +57,14 @@ public class UserAccountController {
     // 주문내역조회
     @GetMapping
     public String mypage(@AuthenticationPrincipal Principal principal, Pageable pageable, ModelMap mm) {
-        UserAccountResponse userAccountResponse = UserAccountResponse.from(userAccountService.getUser(principal.id()));
-        Page<ProductOrderResponse> productOrderResponse = productOrderService.productListAll(principal.id(), pageable)
-                .map(ProductOrderResponse::from);
+        UserAccountDto userAccount = userAccountService.getUser(principal.id());
+        Page<ProductOrderDto> productOrderResponse = productOrderService.productListAll(principal.id(), pageable);
         UserGradeDto nextGrade = userGradeService.getNextGrade(principal.userGrade().getGradeStep());
         List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(),
                 productOrderResponse.getTotalPages());
         Long totalPoint = userAccountLogService.getTotalPoint(principal.userEmail());
 
-        mm.addAttribute("users", userAccountResponse);
+        mm.addAttribute("users", userAccount);
         mm.addAttribute("orders", productOrderResponse);
         mm.addAttribute("nextGrade", nextGrade);
         mm.addAttribute("paginationBarNumbers", barNumbers);
@@ -95,11 +96,11 @@ public class UserAccountController {
     // 회원탈퇴
     @GetMapping("/withdrawal")
     public String mypageWithdrawal(@AuthenticationPrincipal Principal principal, ModelMap mm) {
-        UserAccountResponse userAccountResponse = UserAccountResponse.from(userAccountService.getUser(principal.id()));
+        UserAccountDto userAccount = userAccountService.getUser(principal.id());
         UserGradeDto nextGrade = userGradeService.getNextGrade(principal.userGrade().getGradeStep());
         Long totalPoint = userAccountLogService.getTotalPoint(principal.userEmail());
 
-        mm.addAttribute("users", userAccountResponse);
+        mm.addAttribute("users", userAccount);
         mm.addAttribute("nextGrade", nextGrade);
         mm.addAttribute("total", totalPoint);
 
@@ -111,13 +112,13 @@ public class UserAccountController {
     public String mypageAuction(@AuthenticationPrincipal Principal principal,
             ModelMap mm,
             @PageableDefault(size = 30, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
-        UserAccountResponse userAccountResponse = UserAccountResponse.from(userAccountService.getUser(principal.id()));
+        UserAccountDto userAccount = userAccountService.getUser(principal.id());
         UserGradeDto nextGrade = userGradeService.getNextGrade(principal.userGrade().getGradeStep());
         List<UserGradeDto> gradeList = userGradeService.getGradeList();
         List<AuctionMypageLogDto> auctionLogDtoPage = auctionLogService.searchAuctionLog(principal.userName(),pageable);
         Long totalPoint = userAccountLogService.getTotalPoint(principal.userEmail());
 
-        mm.addAttribute("users", userAccountResponse);
+        mm.addAttribute("users", userAccount);
         mm.addAttribute("nextGrade", nextGrade);
         mm.addAttribute("grades", gradeList);
         mm.addAttribute("auctionLog",auctionLogDtoPage);
@@ -151,11 +152,11 @@ public class UserAccountController {
     // 회원포인트 충전 페이지
     @GetMapping("/point/new")
     public String mypagePointCreate(@AuthenticationPrincipal Principal principal, ModelMap mm) {
-        UserAccountResponse userAccountResponse = UserAccountResponse.from(userAccountService.getUser(principal.id()));
+        UserAccountDto userAccount = userAccountService.getUser(principal.id());
         UserGradeDto nextGrade = userGradeService.getNextGrade(principal.userGrade().getGradeStep());
         Long totalPoint = userAccountLogService.getTotalPoint(principal.userEmail());
 
-        mm.addAttribute("users", userAccountResponse);
+        mm.addAttribute("users", userAccount);
         mm.addAttribute("nextGrade", nextGrade);
         mm.addAttribute("total",totalPoint);
 
@@ -175,12 +176,12 @@ public class UserAccountController {
     public String mypageGrade(@AuthenticationPrincipal Principal principal,
             ModelMap mm,
             @PageableDefault(size = 30, sort = "created_at", direction = Sort.Direction.DESC) Pageable pageable) {
-        UserAccountResponse userAccountResponse = UserAccountResponse.from(userAccountService.getUser(principal.id()));
+        UserAccountDto userAccount = userAccountService.getUser(principal.id());
         UserGradeDto nextGrade = userGradeService.getNextGrade(principal.userGrade().getGradeStep());
         List<UserGradeDto> gradeList = userGradeService.getGradeList();
         Long totalPoint = userAccountLogService.getTotalPoint(principal.userEmail());
 
-        mm.addAttribute("users", userAccountResponse);
+        mm.addAttribute("users", userAccount);
         mm.addAttribute("nextGrade", nextGrade);
         mm.addAttribute("grades", gradeList);
         mm.addAttribute("total", totalPoint);
@@ -192,14 +193,13 @@ public class UserAccountController {
     @GetMapping("/recentview")
     public String recentview(@AuthenticationPrincipal Principal principal, Pageable pageable, ModelMap mm){
 
-        UserAccountResponse userAccountResponse = UserAccountResponse.from(userAccountService.getUser(principal.id()));
+        UserAccountDto userAccount = userAccountService.getUser(principal.id());
         UserGradeDto nextGrade = userGradeService.getNextGrade(principal.userGrade().getGradeStep());
         List<UserGradeDto> gradeList = userGradeService.getGradeList();
-        Page<ProductOrderResponse> productOrderResponse = productOrderService.productListAll(principal.id(), pageable)
-                .map(ProductOrderResponse::from);
+        Page<ProductOrderDto> productOrderResponse = productOrderService.productListAll(principal.id(), pageable);
         Long totalPoint = userAccountLogService.getTotalPoint(principal.userEmail());
 
-        mm.addAttribute("users", userAccountResponse);
+        mm.addAttribute("users", userAccount);
         mm.addAttribute("orders", productOrderResponse);
         mm.addAttribute("nextGrade", nextGrade);
         mm.addAttribute("total", totalPoint);
@@ -212,14 +212,14 @@ public class UserAccountController {
     public String appraise(@AuthenticationPrincipal Principal principal,
                            @PageableDefault(size = 5, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
                            ModelMap mm) {
-        UserAccountResponse userAccountResponse = UserAccountResponse.from(userAccountService.getUser(principal.id()));
-        Page<AppraisalResponse> appraisalList = appraiseService.getMypageAppraisal(principal.id(), pageable).map(AppraisalResponse::from);
+        UserAccountDto userAccount = userAccountService.getUser(principal.id());
+        Page<AppraisalDto> appraisalList = appraiseService.getMypageAppraisal(principal.id(), pageable);
         UserGradeDto nextGrade = userGradeService.getNextGrade(principal.userGrade().getGradeStep());
         List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(),
                 appraisalList.getTotalPages());
         Long totalPoint = userAccountLogService.getTotalPoint(principal.userEmail());
 
-        mm.addAttribute("users", userAccountResponse);
+        mm.addAttribute("users", userAccount);
         mm.addAttribute("appraisals", appraisalList);
         mm.addAttribute("nextGrade", nextGrade);
         mm.addAttribute("paginationBarNumbers", barNumbers);

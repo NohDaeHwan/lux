@@ -5,6 +5,7 @@ import com.used.lux.dto.CategoryBDto;
 import com.used.lux.dto.CategoryMDto;
 import com.used.lux.dto.admin.AdProductDto;
 import com.used.lux.dto.security.Principal;
+import com.used.lux.dto.user.product.ProductDto;
 import com.used.lux.request.BrandCreateRequest;
 import com.used.lux.request.CategoryCreateRequest;
 import com.used.lux.request.product.ProductCreateRequest;
@@ -48,7 +49,6 @@ public class AdProductController {
     @GetMapping
     public String productList(@AuthenticationPrincipal Principal principal,
                               @PageableDefault(size = 30) Pageable pageable,
-                              @RequestParam(defaultValue = "") String productSellType,
                               @RequestParam(defaultValue = "") String productBrand,
                               @RequestParam(defaultValue = "") String productGender,
                               @RequestParam(defaultValue = "") String productSize,
@@ -61,9 +61,9 @@ public class AdProductController {
             return "redirect:/";
         }
 
-        Page<ProductResponse> productResponses = adProductService.getProductList(productSellType,
+        Page<ProductDto> productResponses = adProductService.getProductList(
                 productBrand, productGender, productSize, productGrade, productState,
-                productDate, query, pageable).map(ProductResponse::from);
+                productDate, query, pageable);
 
         List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), productResponses.getTotalPages());
         SearchResponse searchResponse = searchService.getSearchList();

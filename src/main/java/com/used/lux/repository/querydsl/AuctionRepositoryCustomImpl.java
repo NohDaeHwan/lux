@@ -3,6 +3,8 @@ package com.used.lux.repository.querydsl;
 import com.querydsl.jpa.JPQLQuery;
 import com.used.lux.domain.auction.Auction;
 import com.used.lux.domain.auction.QAuction;
+import com.used.lux.domain.constant.AuctionState;
+import com.used.lux.domain.constant.GenterType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -25,16 +27,16 @@ public class AuctionRepositoryCustomImpl extends QuerydslRepositorySupport imple
         if (auctionDate.equals("")) {
             queryResult = from(auction)
                     .select(auction)
-                    .where(auction.state.stateStep.like("%"+auctionState+"%"),
-                            auction.product.appraisal.appraisalRequest.appraisalProductName.like("%"+query+"%"));
+                    .where(auction.aucState.eq(AuctionState.valueOf(auctionState)),
+                            auction.aucNm.like("%"+query+"%"));
         } else {
             String[] dateResult = auctionDate.split("-");
 
             queryResult = from(auction)
                     .select(auction)
-                    .where(auction.state.stateStep.like("%"+auctionState+"%"),
-                            auction.product.appraisal.appraisalRequest.appraisalProductName.like("%"+query+"%"),
-                            auction.auctionStartDate.after(LocalDateTime.of(Integer.parseInt(dateResult[0]),
+                    .where(auction.aucState.eq(AuctionState.valueOf(auctionState)),
+                            auction.aucNm.like("%"+query+"%"),
+                            auction.aucStartDate.after(LocalDateTime.of(Integer.parseInt(dateResult[0]),
                                     Integer.parseInt(dateResult[1]), Integer.parseInt(dateResult[2]), 00, 00)));
         }
         
@@ -51,13 +53,13 @@ public class AuctionRepositoryCustomImpl extends QuerydslRepositorySupport imple
 
         JPQLQuery<Auction> queryResult = from(auction)
                 .select(auction)
-                .where(auction.product.appraisal.appraisalRequest.appraisalColor.like("%"+auctionColor+"%"),
-                        auction.product.appraisal.appraisalRequest.appraisalBrand.brandName.eq("%"+auctionBrand+"%"),
-                        auction.product.appraisal.appraisalRequest.appraisalGender.like("%"+auctionGender+"%"),
-                        auction.product.appraisal.appraisalRequest.appraisalSize.like("%"+auctionSize+"%"),
-                        auction.product.appraisal.appraisalRequest.appraisalProductName.like("%"+query+"%"),
-                        auction.product.productPrice.gt(Integer.parseInt(minPrice)),
-                        auction.product.productPrice.lt(Integer.parseInt(maxPrice)))
+                .where(auction.aucColor.like("%"+auctionColor+"%"),
+                        auction.aucBrand.brandName.eq("%"+auctionBrand+"%"),
+                        auction.aucGender.eq(GenterType.valueOf(auctionGender)),
+                        auction.aucSize.like("%"+auctionSize+"%"),
+                        auction.aucNm.like("%"+query+"%"),
+                        auction.presentPrice.gt(Integer.parseInt(minPrice)),
+                        auction.presentPrice.lt(Integer.parseInt(maxPrice)))
                 .orderBy(auction.createdAt.desc());
         long totalCount = queryResult.fetchCount();
         List<Auction> results = getQuerydsl().applyPagination(pageable, queryResult).fetch();
@@ -70,15 +72,14 @@ public class AuctionRepositoryCustomImpl extends QuerydslRepositorySupport imple
 
         JPQLQuery<Auction> queryResult = from(auction)
                 .select(auction)
-                .where( auction.product.categoryM.id.eq(mcategoryId),
-                        auction.product.appraisal.appraisalRequest.appraisalColor.like("%"+auctionColor+"%"),
-                        auction.product.appraisal.appraisalRequest.appraisalGender.like("%"+auctionGender+"%"),
-                        auction.product.appraisal.appraisalRequest.appraisalSize.like("%"+auctionSize+"%"),
-                        auction.product.appraisal.appraisalRequest.appraisalProductName.like("%"+query+"%"),
-                        auction.product.productPrice.gt(Integer.parseInt(minPrice)),
-                        auction.product.productPrice.lt(Integer.parseInt(maxPrice)),
-                        auction.product.productSellType.eq("경매"),
-                        auction.product.state.stateStep.eq("경매중")).limit(10)
+                .where( auction.cateM.id.eq(mcategoryId),
+                        auction.aucColor.like("%"+auctionColor+"%"),
+                        auction.aucGender.eq(GenterType.valueOf(auctionGender)),
+                        auction.aucSize.like("%"+auctionSize+"%"),
+                        auction.aucNm.like("%"+query+"%"),
+                        auction.presentPrice.gt(Integer.parseInt(minPrice)),
+                        auction.presentPrice.lt(Integer.parseInt(maxPrice)),
+                        auction.aucState.eq(AuctionState.SELL)).limit(10)
                 .orderBy(auction.createdAt.desc());
         return queryResult.fetch();
     }

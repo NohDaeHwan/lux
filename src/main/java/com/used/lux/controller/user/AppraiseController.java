@@ -3,13 +3,11 @@ package com.used.lux.controller.user;
 import com.used.lux.dto.BrandDto;
 import com.used.lux.dto.CategoryBDto;
 import com.used.lux.dto.security.Principal;
+import com.used.lux.dto.user.appraisal.AppraisalDto;
 import com.used.lux.request.appraisal.AppraisalCreateRequest;
-import com.used.lux.response.useraccount.UserAccountResponse;
-import com.used.lux.response.appraisal.AppraisalResponse;
 import com.used.lux.service.BrandService;
 import com.used.lux.service.CategoryBService;
 import com.used.lux.service.PaginationService;
-import com.used.lux.service.user.useraccount.UserAccountService;
 import com.used.lux.service.user.appraisal.AppraiseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -41,7 +39,7 @@ public class AppraiseController {
             @PageableDefault(size = 10, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
             ModelMap mm
     ) {
-        Page<AppraisalResponse> appraisalList = appraiseService.findAllList(pageable).map(AppraisalResponse::from);
+        Page<AppraisalDto> appraisalList = appraiseService.findAllList(pageable);
         List<CategoryBDto> categoryList = categoryBService.categoryList();
         List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(),
                 appraisalList.getTotalPages());
@@ -70,7 +68,7 @@ public class AppraiseController {
     public String appraisalCreateRequest(AppraisalCreateRequest request,
                                          @AuthenticationPrincipal Principal principal) throws Exception {
         System.out.println(request);
-        appraiseService.appraisalCreate(request, principal.toDto());
+        appraiseService.appraisalCreate(request, principal.id());
         return "redirect:/appraisal";
     }
 
@@ -82,12 +80,12 @@ public class AppraiseController {
             loginId = principal.id();
        }
 
-        AppraisalResponse appraisalDto = AppraisalResponse.from(appraiseService.appraisalDetail(appraiseId));
+        AppraisalDto appraisal = appraiseService.appraisalDetail(appraiseId);
         List<CategoryBDto> categoryList = categoryBService.categoryList();
 
         mm.addAttribute("loginId", loginId);
         mm.addAttribute("categoryList", categoryList);
-        mm.addAttribute("appraisalDto",appraisalDto);
+        mm.addAttribute("appraisalDto", appraisal);
         return "front/appraise-detail";
     }
 

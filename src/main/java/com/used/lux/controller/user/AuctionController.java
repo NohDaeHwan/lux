@@ -4,8 +4,8 @@ import com.used.lux.dto.BrandDto;
 import com.used.lux.dto.CategoryBDto;
 import com.used.lux.dto.UserGradeDto;
 import com.used.lux.dto.security.Principal;
+import com.used.lux.dto.user.auction.AuctionDto;
 import com.used.lux.dto.user.auction.AuctionLogDto;
-import com.used.lux.response.auction.AuctionResponse;
 import com.used.lux.service.*;
 import com.used.lux.service.user.auction.AuctionLogService;
 import com.used.lux.service.user.auction.AuctionService;
@@ -44,7 +44,7 @@ public class AuctionController {
 
     @GetMapping
     public String auctionList(@PageableDefault(size = 30) Pageable pageable, ModelMap mm) {
-        Page<AuctionResponse> auctions = auctionService.auctionListFind(pageable).map(AuctionResponse::from);
+        Page<AuctionDto> auctions = auctionService.auctionListFind(pageable);
         List<CategoryBDto> categoryList = categoryBService.categoryList();
         List<BrandDto> brandList = brandService.brandList();
         List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(),
@@ -80,7 +80,7 @@ public class AuctionController {
 
         List<CategoryBDto> categoryList = categoryBService.categoryList();
         List<UserGradeDto> gradeList = userGradeService.getGradeList();
-        AuctionResponse auction = AuctionResponse.from(auctionService.auctionFind(auctionId));
+        AuctionDto auction = auctionService.auctionFind(auctionId);
         List<AuctionLogDto> auctionLogList = auctionLogService.auctionLogList(auctionId);
 
         mm.addAttribute("principal",principal);

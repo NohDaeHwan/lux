@@ -3,6 +3,7 @@ package com.used.lux.controller.admin;
 import com.used.lux.dto.StateDto;
 import com.used.lux.dto.admin.AdAuctionDto;
 import com.used.lux.dto.security.Principal;
+import com.used.lux.dto.user.auction.AuctionDto;
 import com.used.lux.request.auction.AuctionUpdateRequest;
 import com.used.lux.response.auction.AuctionResponse;
 import com.used.lux.service.PaginationService;
@@ -46,8 +47,7 @@ public class AdAuctionController {
             return "redirect:/";
         }
 
-        Page<AuctionResponse> auctionList = adAuctionService.getAuctionList(auctionState, auctionDate,
-                query, pageable).map(AuctionResponse::from);
+        Page<AuctionDto> auctionList = adAuctionService.getAuctionList(auctionState, auctionDate, query, pageable);
         List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), auctionList.getTotalPages());
         List<StateDto> stateList = stateService.getStateList();
 
@@ -69,7 +69,7 @@ public class AdAuctionController {
         AdAuctionDto auctionDetail = adAuctionService.getAuctionDetail(auctionId);
         mm.addAttribute("auctionDetail", auctionDetail);
 
-        if (auctionDetail.auctionDto().stateDto().stateStep().equals("경매전")){
+        if (auctionDetail.auctionDto().aucState().equals("WAITING")){
             return  "/admin/auction-create-form";
         }
         return "/admin/auction-detail";

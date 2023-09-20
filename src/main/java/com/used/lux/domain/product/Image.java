@@ -10,11 +10,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.used.lux.domain.AuditingFields;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @ToString(callSuper = true)
 @Table(name = "image")
 @Entity
@@ -39,29 +40,4 @@ public class Image extends AuditingFields {
 	@Setter
 	@Column(name = "file_size", nullable = false)
 	private Long fileSize;
-
-	protected Image() {}
-
-    private Image(Product product, String origFileName,
-                           String filePath, Long fileSize){
-		this.product = product;
-        this.origFileName = origFileName;
-        this.filePath = filePath;
-        this.fileSize = fileSize;
-    }
-
-	public static Image of(Product product, String origFileName,
-                                    String filePath, Long fileSize){
-		return new Image(product, origFileName, filePath, fileSize);
-	}
-
-	public void setProduct(Product product){
-        this.product = product;
-
-	// 감정에 현재 파일이 존재하지 않는다면
-        if(!product.getImages().contains(this))
-            // 파일 추가
-			product.getImages().add(this);
-    }
-
 }

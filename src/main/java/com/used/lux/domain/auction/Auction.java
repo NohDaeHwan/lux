@@ -4,19 +4,19 @@ import java.time.LocalDateTime;
 
 import javax.persistence.*;
 
-import com.used.lux.domain.AuditingFields;
-import com.used.lux.domain.product.Product;
-import com.used.lux.domain.State;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import com.used.lux.domain.*;
+import com.used.lux.domain.constant.AppraisalGrade;
+import com.used.lux.domain.constant.AuctionState;
+import com.used.lux.domain.constant.GenterType;
+import lombok.*;
 
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @ToString(callSuper = true)
 @Table(name = "auction")
 @Entity
-@NoArgsConstructor
 public class Auction extends AuditingFields {
 
 	@Id
@@ -24,14 +24,54 @@ public class Auction extends AuditingFields {
 	private Long id;
 
 	@Setter
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "product_id")
-	private Product product;
+	@Column(name = "auc_nm", length = 100)
+	private String aucNm;
 
 	@Setter
 	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "state_id")
-	private State state;
+	@JoinColumn(name = "cate_b_id")
+	private CategoryB cateB;
+
+	@Setter
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "catey_m_id")
+	private CategoryM cateM;
+
+	@Setter
+	@Column(name = "auc_state")
+	@Enumerated(EnumType.STRING)
+	private AuctionState aucState;
+
+	@Setter
+	@Column(name="auc_grade")
+	@Enumerated(EnumType.STRING)
+	private AppraisalGrade aucGrade; // A, B, C, F
+
+	@Setter
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "auc_brand")
+	private Brand aucBrand;
+
+	@Setter
+	@Column(name = "auc_gender")
+	@Enumerated(EnumType.STRING)
+	private GenterType aucGender;
+
+	@Setter
+	@Column(name = "auc_size", length = 50)
+	private String aucSize;
+
+	@Setter
+	@Column(name = "auc_color", length = 50)
+	private String aucColor;
+
+	@Setter
+	@Column(name = "auc_content", length = 1000)
+	private String aucContent;
+
+	@Setter
+	@Column(name = "auc_view_cnt")
+	private int aucViewCnt; // 조회수
 
 	@Setter
 	@Column(name="start_price", nullable = false)
@@ -42,16 +82,16 @@ public class Auction extends AuditingFields {
 	private int presentPrice; // 현재 가격
 
 	@Setter
-	@Column(name="closing_price")
-	private int closingPrice; // 낙찰 가격
+	@Column(name="end_price")
+	private int endPrice; // 낙찰 가격
 
 	@Setter
-	@Column(name="auction_start_date", nullable = false)
-	private LocalDateTime auctionStartDate; // 경매 시작일
+	@Column(name="auc_start_date", nullable = false)
+	private LocalDateTime aucStartDate; // 경매 시작일
 
 	@Setter
-	@Column(name="auction_closing_date", nullable = false)
-	private LocalDateTime auctionClosingDate; // 경매 종료일
+	@Column(name="auc_end_date", nullable = false)
+	private LocalDateTime aucEndDate; // 경매 종료일
 
 	@Setter
 	@Column(name="bidding_count")
@@ -60,25 +100,4 @@ public class Auction extends AuditingFields {
 	@Setter
 	@Column(length = 100)
 	private String bidder; // 입찰자
-
-
-
-	private Auction(Product product, State state, int startPrice, int presentPrice, int closingPrice, LocalDateTime auctionStartDate,
-					LocalDateTime auctionClosingDate, int biddingCount, String bidder) {
-		this.product = product;
-		this.state = state;
-		this.startPrice = startPrice;
-		this.presentPrice = presentPrice;
-		this.closingPrice = closingPrice;
-		this.auctionStartDate = auctionStartDate;
-		this.auctionClosingDate = auctionClosingDate;
-		this.biddingCount = biddingCount;
-		this.bidder = bidder;
-	}
-
-	public static Auction of(Product product, State state, int startPrice, int presentPrice, int closingPrice, LocalDateTime auctionStartDate,
-							 LocalDateTime auctionClosingDate, int biddingCount, String bidder) {
-		return new Auction(product, state, startPrice, presentPrice, closingPrice, auctionStartDate, auctionClosingDate, biddingCount, bidder);
-	}
-
 }

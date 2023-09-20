@@ -8,10 +8,10 @@ public record ProductUpdateRequest(
         Long categoryMId,
         String productSellType,
         String stateStep,
-        int productPrice
+        Long productPrice
 ) {
     public static ProductUpdateRequest of(String productName, String content, Long brandId,
-                                          Long categoryBId, Long categoryMId,String productSellType, String stateStep, int productPrice) {
+                                          Long categoryBId, Long categoryMId,String productSellType, String stateStep, Long productPrice) {
         return new ProductUpdateRequest(productName, content, brandId, categoryBId, categoryMId,
                 productSellType, stateStep, productPrice);
     }

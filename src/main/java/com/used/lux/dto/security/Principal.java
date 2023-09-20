@@ -2,7 +2,7 @@ package com.used.lux.dto.security;
 
 import com.used.lux.domain.UserGrade;
 import com.used.lux.domain.constant.RoleType;
-import com.used.lux.dto.user.useraccount.UserAccountDto;
+import com.used.lux.domain.useraccount.UserAccount;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,36 +19,35 @@ public record Principal(
         String phoneNumber,
         int age,
         String gender,
-        int point,
         UserGrade userGrade,
+        Long point,
         RoleType role,
         String memo
 ) implements UserDetails {
 
     public static Principal of(Long id, String userEmail, String userPassword, String userName, String phoneNumber,
-                     int age, String gender, int point, UserGrade userGrade, RoleType role, String memo) {
-        return new Principal(id, userEmail, userPassword, userName, phoneNumber, age, gender, point, userGrade, role, memo);
+                     int age, String gender, UserGrade userGrade, Long point, RoleType role, String memo) {
+        return new Principal(id, userEmail, userPassword, userName, phoneNumber, age, gender, userGrade, point, role, memo);
     }
 
-    //dto -> principal
-    public static Principal from(UserAccountDto dto) {
+    public static Principal from(UserAccount entity) {
         return Principal.of(
-                dto.id(),
-                dto.userEmail(),
-                dto.userPassword(),
-                dto.userName(),
-                dto.phoneNumber(),
-                dto.age(),
-                dto.gender(),
-                dto.userPoint(),
-                dto.userGrade(),
-                dto.role(),
-                dto.memo()
+                entity.getId(),
+                entity.getUserEmail(),
+                entity.getUserPassword(),
+                entity.getUserName(),
+                entity.getPhoneNumber(),
+                entity.getAge(),
+                entity.getGender(),
+                entity.getUserGrade(),
+                entity.getPoint(),
+                entity.getRole(),
+                entity.getMemo()
         );
     }
-    //dto를 만들어주는거
-    public UserAccountDto toDto() {
-        return UserAccountDto.of(
+
+    public UserAccount toEntity() {
+        return new UserAccount(
                 id,
                 userEmail,
                 userPassword,
@@ -56,8 +55,8 @@ public record Principal(
                 phoneNumber,
                 age,
                 gender,
-                point,
                 userGrade,
+                point,
                 role,
                 memo
         );

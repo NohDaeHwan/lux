@@ -1,7 +1,7 @@
 package com.used.lux.component;
 
 import com.used.lux.domain.appraisal.AppraisalImage;
-import com.used.lux.domain.appraisal.AppraisalRequest;
+import com.used.lux.domain.appraisal.Appraisal;
 import com.used.lux.domain.product.Image;
 import com.used.lux.domain.product.Product;
 import com.used.lux.request.product.ProductCreateRequest;
@@ -77,12 +77,12 @@ public class FileHandler {
                     String new_file_name = System.nanoTime() + originalFileExtension;
 
                     // AppraisalImage 엔티티 생성
-                    Image image = Image.of(
-                            product,
-                            multipartFile.getOriginalFilename(),
-                            "/static/assets/img/product_img/" + current_date + "/" + new_file_name,
-                            multipartFile.getSize()
-                    );
+                    Image image = Image.builder()
+                            .product(product)
+                            .origFileName(multipartFile.getOriginalFilename())
+                            .filePath("/static/assets/img/product_img/" + current_date + "/" + new_file_name)
+                            .fileSize(multipartFile.getSize())
+                            .build();
 
                     // 생성 후 리스트에 추가
                     imageList.add(image);
@@ -102,7 +102,7 @@ public class FileHandler {
 	}
 
 
-    public List<AppraisalImage> parseAppraisalFileInfo(AppraisalCreateRequest appraisalCreateRequest, AppraisalRequest appraisalRequest) throws Exception {
+    public List<AppraisalImage> parseAppraisalFileInfo(AppraisalCreateRequest appraisalCreateRequest, Appraisal appraisal) throws Exception {
         List<AppraisalImage> imageList =  new ArrayList<>();
 
         // 전달되어 온 파일이 존재할 경우
@@ -159,12 +159,12 @@ public class FileHandler {
                 String new_file_name = System.nanoTime() + originalFileExtension;
 
                 // AppraisalImage 엔티티 생성
-                AppraisalImage image = AppraisalImage.of(
-                        appraisalRequest,
-                        multipartFile.getOriginalFilename(),
-                        "/static/assets/img/appraisal_img/" + current_date + "/" + new_file_name,
-                        multipartFile.getSize()
-                );
+                AppraisalImage image = AppraisalImage.builder()
+                        .appraisal(appraisal)
+                        .origFileName(multipartFile.getOriginalFilename())
+                        .filePath("/static/assets/img/appraisal_img/" + current_date + "/" + new_file_name)
+                        .fileSize(multipartFile.getSize())
+                        .build();
 
                 // 생성 후 리스트에 추가
                 imageList.add(image);

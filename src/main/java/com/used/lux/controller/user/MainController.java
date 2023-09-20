@@ -1,10 +1,11 @@
 package com.used.lux.controller.user;
 
-import com.used.lux.domain.UserGrade;
 import com.used.lux.domain.constant.RoleType;
 import com.used.lux.domain.useraccount.UserAccount;
 import com.used.lux.dto.*;
-import com.used.lux.response.appraisal.AppraisalResponse;
+import com.used.lux.dto.user.appraisal.AppraisalDto;
+import com.used.lux.dto.user.auction.AuctionDto;
+import com.used.lux.dto.user.product.ProductDto;
 import com.used.lux.response.auction.AuctionResponse;
 import com.used.lux.response.product.ProductResponse;
 import com.used.lux.service.BrandService;
@@ -54,10 +55,8 @@ public class MainController {
 
     @GetMapping("/")
     public String index(ModelMap mm) {
-        List<AuctionResponse> auctions = auctionService.findByState10AndRecent4List().stream()
-                .map(AuctionResponse::from).collect(Collectors.toUnmodifiableList());
-        List<ProductResponse> products = productService.findByState6AndRecent4List().stream()
-                .map(ProductResponse::from).collect(Collectors.toUnmodifiableList());;
+        List<AuctionDto> auctions = auctionService.findByState10AndRecent4List();
+        List<ProductDto> products = productService.findByState6AndRecent4List();
 
         mm.addAttribute("auctions",auctions);
         mm.addAttribute("products",products);
@@ -67,7 +66,7 @@ public class MainController {
 
     @GetMapping("/login")
     public String login() {
-        return "/front/login"; // 로그인 페이지를 보여줄 뷰 필요
+        return "/front/login";
     }
 
     @GetMapping("/register")
@@ -75,7 +74,7 @@ public class MainController {
         JoinMemberDto joinMemberDto = new JoinMemberDto();
 
         mm.addAttribute("joinMemberDto",joinMemberDto);
-        return "/front/register"; // 회원가입 페이지를 보여줄 뷰 필요
+        return "/front/register";
     }
 
     @PostMapping("/join_request")
@@ -116,24 +115,26 @@ public class MainController {
             return "/front/register";
         }
 
-        UserGrade userGrade = userGradeService.getGradeName(1);
-        UserAccount userAccount = UserAccount.of(null, joinMemberDto.getUserName(),
-                passwordEncoder.encode(joinMemberDto.getPassword()),
-                joinMemberDto.getName(), joinMemberDto.getPhoneNumber(), Integer.parseInt(joinMemberDto.getAge()),
-                joinMemberDto.getGender(),0,userGrade, RoleType.USER,"TEST USER" );
-        userAccountService.addUser(userAccount);
+        userAccountService.addUser(UserAccount.builder()
+                .userName(joinMemberDto.getUserName())
+                .userPassword(passwordEncoder.encode(joinMemberDto.getPassword()))
+                .userName(joinMemberDto.getName())
+                .phoneNumber(joinMemberDto.getPhoneNumber())
+                .age(Integer.parseInt(joinMemberDto.getAge()))
+                .gender(joinMemberDto.getGender())
+                .userGrade(userGradeService.getGradeName(1))
+                .role(RoleType.USER)
+                .memo("TEST USER")
+                .build());
         return "redirect:/login";
 
     }
 
     @GetMapping("/search")
     public String search(@RequestParam(defaultValue = "") String query, ModelMap mm) {
-        List<ProductResponse> productList = productService.productFind(query).stream()
-                .map(ProductResponse::from).collect(Collectors.toUnmodifiableList());
-        List<AuctionResponse> auctionList = auctionService.productFind(query).stream()
-                .map(AuctionResponse::from).collect(Collectors.toUnmodifiableList());
-        List<AppraisalResponse> appraisalResponseList=appraiseService.productFind(query).
-                stream().map(AppraisalResponse::from).collect(Collectors.toUnmodifiableList());
+        List<ProductDto> productList = productService.productFind(query);
+        List<AuctionDto> auctionList = auctionService.productFind(query);
+        List<AppraisalDto> appraisalResponseList=appraiseService.productFind(query);
         List<CategoryBDto> categoryList = categoryBService.categoryList();
         List<BrandDto> brandList = brandService.brandList();
 
@@ -163,11 +164,11 @@ public class MainController {
         List<BrandDto> brandList = brandService.brandList();
         CategoryMDto categoryMDto =categoryMService.getMcategoryid(mcategoryId);
 
-        List<ProductResponse> products = productService.catesearch(mcategoryId,productColor,productBrand,productGender,productSize,productGrade,maxPrice,minPrice,query
-              ).stream().map(ProductResponse::from).collect(Collectors.toUnmodifiableList());
+        List<ProductDto> products = productService.catesearch(mcategoryId,productColor,productBrand,productGender,
+                productSize,productGrade,maxPrice,minPrice,query);
 
-        List<AuctionResponse> auction= auctionService.searchcate(mcategoryId,productBrand,productColor,productGender,productSize,productGrade,maxPrice,minPrice,query)
-                .stream().map(AuctionResponse::from).collect(Collectors.toList());
+        List<AuctionDto> auction= auctionService.searchcate(mcategoryId,productBrand,productColor,productGender,
+                productSize,productGrade,maxPrice,minPrice,query);
 
         mm.addAttribute("brandList", brandList);
         mm.addAttribute("categoryList", categoryList);

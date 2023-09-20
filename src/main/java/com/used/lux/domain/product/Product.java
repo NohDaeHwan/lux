@@ -3,94 +3,81 @@ package com.used.lux.domain.product;
 import javax.persistence.*;
 
 import com.used.lux.domain.*;
-import com.used.lux.domain.appraisal.Appraisal;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import com.used.lux.domain.constant.AppraisalGrade;
+import com.used.lux.domain.constant.GenterType;
+import com.used.lux.domain.constant.ProductState;
+import lombok.*;
 
 import java.util.*;
 
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @ToString(callSuper = true)
 @Table(name = "product")
 @Entity
 public class Product extends AuditingFields {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@Setter
-	@OneToOne(optional = false)
-	@JoinColumn(name = "appraisal_id")
-	private Appraisal appraisal;
+	@Column(name = "prod_nm", length = 100)
+	private String prodNm;
 
 	@Setter
 	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "category_b_id")
-	private CategoryB categoryB;
+	@JoinColumn(name = "cate_b_id")
+	private CategoryB cateB;
 
 	@Setter
 	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "category_m_id")
-	private CategoryM categoryM;
+	@JoinColumn(name = "catey_m_id")
+	private CategoryM cateM;
+
+	@Setter
+	@Column(name = "prod_state")
+	@Enumerated(EnumType.STRING)
+	private ProductState prodState;
+
+	@Setter
+	@Column(name="prod_grade")
+	@Enumerated(EnumType.STRING)
+	private AppraisalGrade prodGrade; // A, B, C, F
 
 	@Setter
 	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "state_id")
-	private State state;
+	@JoinColumn(name = "prod_brand")
+	private Brand prodBrand;
 
 	@Setter
-	@Column(name = "product_price")
-	private int productPrice;
+	@Column(name = "prod_gender")
+	@Enumerated(EnumType.STRING)
+	private GenterType prodGender;
 
 	@Setter
-	@Column(name = "product_sell_type", length = 100)
-	private String productSellType; // 중고, 경매
+	@Column(name = "prod_size", length = 50)
+	private String prodSize;
 
 	@Setter
-	@Column(name = "product_content", length = 1000)
-	private String productContent;
+	@Column(name = "prod_color", length = 50)
+	private String prodColor;
 
 	@Setter
-	@Column(name="product_view_count")
-	private int productViewCount; // 조회수
+	@Column(name = "prod_price")
+	private Long prodPrice;
+
+	@Setter
+	@Column(name = "prod_content", length = 1000)
+	private String prodContent;
+
+	@Setter
+	@Column(name = "prod_view_cnt")
+	private int prodViewCnt; // 조회수
 
 	@ToString.Exclude
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
 	private final List<Image> images = new ArrayList<>();
-
-	protected Product() {}
-
-	private Product(Appraisal appraisal, CategoryB categoryB, CategoryM categoryM, State state, int productPrice, String productSellType,
-					String productContent, int productViewCount) {
-		this.appraisal = appraisal;
-		this.categoryB = categoryB;
-		this.categoryM = categoryM;
-		this.state = state;
-		this.productPrice = productPrice;
-		this.productSellType = productSellType;
-		this.productContent = productContent;
-		this.productViewCount = productViewCount;
-	}
-
-	//생성자
-	public static Product of(Appraisal appraisal, CategoryB categoryB, CategoryM categoryM, State state, int productPrice, String productSellType,
-							 String productContent, int productViewCount) {
-		return new Product(appraisal, categoryB, categoryM, state, productPrice, productSellType, productContent, productViewCount);
-	}
-
-	//영속성
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (!(o instanceof Product product)) return false;
-		return id != null && id.equals(product.id);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
-
 }

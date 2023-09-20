@@ -46,7 +46,7 @@
                 <tr>
                     <td class="bg-light">상품명</td>
                     <td colspan="5">
-                        <div class="col-sm-10" th:text="${appraisalDto.appraisalRequest.appraisalProductName}">
+                        <div class="col-sm-10" th:text="${appraisalDto.appraisal.appraisalProductName}">
                             샤넬 명품백
                         </div>
                     </td>
@@ -54,13 +54,13 @@
                 <tr>
                     <td  class="bg-light">브랜드</td>
                     <td colspan="3">
-                        <div class="col-sm-10" th:text="${appraisalDto.appraisalRequest.appraisalBrandName}">
+                        <div class="col-sm-10" th:text="${appraisalDto.appraisal.appraisalBrandName}">
                             가니
                         </div>
                     </td>
                     <td class="bg-light">사이즈</td>
                     <td colspan="3">
-                        <div class="col-sm-10" th:text="${appraisalDto.appraisalRequest.appraisalSize}">
+                        <div class="col-sm-10" th:text="${appraisalDto.appraisal.appraisalSize}">
                             s
                         </div>
                     </td>
@@ -68,13 +68,13 @@
                 <tr>
                     <td class="bg-light"><label>성별</label></td>
                     <td colspan="3">
-                        <div class="col-sm-10" th:text="${appraisalDto.appraisalRequest.appraisalGender}">
+                        <div class="col-sm-10" th:text="${appraisalDto.appraisal.appraisalGender}">
                             Female
                         </div>
                     </td>
                     <td class="bg-light">색상</td>
                     <td colspan="">
-                        <div class="col-sm-10" th:text="${appraisalDto.appraisalRequest.appraisalColor}">
+                        <div class="col-sm-10" th:text="${appraisalDto.appraisal.appraisalColor}">
                             Orange
                         </div>
                     </td>
@@ -86,7 +86,7 @@
                         </div>
                     </td>
                     <td colspan="5">
-                        <div class="col-sm-10" th:text="${#temporals.format(appraisalDto.appraisalRequest.createdAt,'yyyy-MM-dd HH:mm:ss')}">
+                        <div class="col-sm-10" th:text="${#temporals.format(appraisalDto.appraisal.createdAt,'yyyy-MM-dd HH:mm:ss')}">
                             2022-11-01 17:09:44
                         </div>
                     </td>
@@ -95,7 +95,7 @@
                     <td class="bg-light">이미지</td>
                     <td colspan="5">
                         <div class="col-sm-10 center flex-column align-items-center" style="display: flex; border: 0;">
-                            <img class="mb-2" th:each="image : ${appraisalDto.appraisalRequest.imageList}" th:src="${image.filePath}">
+                            <img class="mb-2" th:each="image : ${appraisalDto.appraisal.imageList}" th:src="${image.filePath}">
                         </div>
                     </td>
                 </tr>
@@ -106,9 +106,9 @@
                         </div>
                     </td>
                     <td colspan="5">
-                        <div class="col-sm-10" th:if="(${appraisalDto.appraisalRequest.userAccount.id} == ${loginId}) and (${appraisalDto.appraisalPrice} >= 1000)" th:text="${#numbers.formatInteger(appraisalDto.appraisalPrice,3,'COMMA')}">
+                        <div class="col-sm-10" th:if="(${appraisalDto.appraisal.userAccount.id} == ${loginId}) and (${appraisalDto.appraisalPrice} >= 1000)" th:text="${#numbers.formatInteger(appraisalDto.appraisalPrice,3,'COMMA')}">
                         </div>
-                        <div class="col-sm-10" th:if="${appraisalDto.appraisalRequest.userAccount.id} != ${loginId}">
+                        <div class="col-sm-10" th:if="${appraisalDto.appraisal.userAccount.id} != ${loginId}">
                             게시자만 볼 수 있습니다.
                         </div>
                     </td>
@@ -120,10 +120,10 @@
                         </div>
                     </td>
                     <td colspan="5">
-                        <div class="col-sm-10" th:if="${appraisalDto.appraisalRequest.userAccount.id} == ${loginId}" th:text="${appraisalDto.appraisalGrade}">
+                        <div class="col-sm-10" th:if="${appraisalDto.appraisal.userAccount.id} == ${loginId}" th:text="${appraisalDto.appraisalGrade}">
                             게시자만 볼 수 있게 처리
                         </div>
-                        <div class="col-sm-10" th:if="${appraisalDto.appraisalRequest.userAccount.id} != ${loginId}">
+                        <div class="col-sm-10" th:if="${appraisalDto.appraisal.userAccount.id} != ${loginId}">
                             게시자만 볼 수 있습니다.
                         </div>
                     </td>
@@ -135,10 +135,10 @@
                         </div>
                     </td>
                     <td colspan="5">
-                        <div class="col-sm-10" th:if="${appraisalDto.appraisalRequest.userAccount.id} == ${loginId}" th:text="${appraisalDto.appraisalComment}">
+                        <div class="col-sm-10" th:if="${appraisalDto.appraisal.userAccount.id} == ${loginId}" th:text="${appraisalDto.appraisalComment}">
                             게시자만 볼 수 있게 처리
                         </div>
-                        <div class="col-sm-10" th:if="${appraisalDto.appraisalRequest.userAccount.id} != ${loginId}">
+                        <div class="col-sm-10" th:if="${appraisalDto.appraisal.userAccount.id} != ${loginId}">
                             게시자만 볼 수 있습니다.
                         </div>
                     </td>
@@ -150,10 +150,10 @@
                         </div>
                     </td>
                     <td colspan="5">
-                        <div class="col-sm-10" th:if="${appraisalDto.appraisalRequest.userAccount.id} == ${loginId}" th:text="${#temporals.format(appraisalDto.modifiedAt, 'yyyy-MM-dd HH:mm:ss')}">
+                        <div class="col-sm-10" th:if="${appraisalDto.appraisal.userAccount.id} == ${loginId}" th:text="${#temporals.format(appraisalDto.modifiedAt, 'yyyy-MM-dd HH:mm:ss')}">
                             게시자만 볼 수 있게 처리
                         </div>
-                        <div class="col-sm-10" th:if="${appraisalDto.appraisalRequest.userAccount.id} != ${loginId}">
+                        <div class="col-sm-10" th:if="${appraisalDto.appraisal.userAccount.id} != ${loginId}">
                             게시자만 볼 수 있습니다.
                         </div>
                     </td>

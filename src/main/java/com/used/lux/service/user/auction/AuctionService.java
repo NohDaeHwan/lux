@@ -2,9 +2,9 @@ package com.used.lux.service.user.auction;
 
 import com.used.lux.domain.State;
 import com.used.lux.domain.auction.Auction;
+import com.used.lux.domain.constant.AuctionState;
 import com.used.lux.dto.user.auction.AuctionDto;
-import com.used.lux.dto.user.auction.AuctionLogDto;
-import com.used.lux.repository.auction.AuctionLogRepository;
+import com.used.lux.mapper.AuctionMapper;
 import com.used.lux.repository.auction.AuctionRepository;
 import com.used.lux.repository.product.ProductRepository;
 import com.used.lux.repository.StateRepository;
@@ -16,7 +16,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.time.LocalDate;
@@ -28,6 +27,7 @@ import java.time.LocalDate;
 public class AuctionService {
 
     private final AuctionRepository auctionRepository;
+    private final AuctionMapper auctionMapper;
 
     private final ProductRepository productRepository;
 
@@ -37,26 +37,26 @@ public class AuctionService {
 
     @Transactional(readOnly = true)
     public Page<AuctionDto> auctionListFind(Pageable pageable) {
-        return auctionRepository.findByAuctionStartDate(pageable).map(AuctionDto::from);
+        return auctionRepository.findByAuctionStartDate(pageable).map(auctionMapper::toDto);
     }
 
 
     @Transactional(readOnly = true)
     public List<AuctionDto> productFind(String query) {
         return auctionRepository.findByQuery(query, PageRequest.of(0, 10)).stream()
-                .map(AuctionDto::from).limit(8).collect(Collectors.toUnmodifiableList());
+                .map(auctionMapper::toDto).limit(8).toList();
     }
 
     @Transactional(readOnly = true)
     public  List<AuctionDto> searchcate(Long mcategoryId, String productColor,String brandName,String productGender,String productSize,String productGrade ,String maxPrice,String minPrice,String query){
 
-        return auctionRepository.searchAuctionBy(mcategoryId,productColor,brandName,productGender,productSize,productGrade,Integer.parseInt(maxPrice),Integer.parseInt(minPrice),query).stream().map(AuctionDto::from).collect(Collectors.toList());
+        return auctionRepository.searchAuctionBy(mcategoryId,productColor,brandName,productGender,productSize,productGrade,Integer.parseInt(maxPrice),Integer.parseInt(minPrice),query).stream().map(auctionMapper::toDto).collect(Collectors.toList());
     }
 
     public AuctionDto auctionFind(Long id) {
         Auction auction = auctionRepository.getReferenceById(id);
-        auction.getProduct().setProductViewCount(auction.getProduct().getProductViewCount()+1);
-        return AuctionDto.from(auctionRepository.save(auction));
+        auction.setAucViewCnt(auction.getAucViewCnt()+1);
+        return auctionMapper.toDto(auctionRepository.save(auction));
     }
 
     /*public Integer auctionUpdate(Long auctionId, AuctionDto auctionDto, String userEmail) {
@@ -130,22 +130,19 @@ public class AuctionService {
 
     public  void  presentTimer(Long auctionId, Long stateId){
         Auction auction = auctionRepository.getReferenceById(auctionId);
-        State state = stateRepository.findById(stateId).get();
-        auction.setState(state);
+        auction.setAucState(AuctionState.valueOf("stateId"));
         auctionRepository.save(auction);
     }
     public  void  afterTimer(Long auctionId, Long stateId){
         Auction auction = auctionRepository.getReferenceById(auctionId);
-        State state = stateRepository.findById(stateId).get();
-        auction.setState(state);
-        auction.setClosingPrice(auction.getPresentPrice());
+        auction.setAucState(AuctionState.valueOf("stateId"));
+        auction.setEndPrice(auction.getPresentPrice());
         auctionRepository.save(auction);
     }
 
-
     public List<AuctionDto> findByState10AndRecent4List() {
         return auctionRepository.findByState10AndRecent4List().stream()
-                .map(AuctionDto::from).collect(Collectors.toUnmodifiableList());
+                .map(auctionMapper::toDto).toList();
     }
     
 }

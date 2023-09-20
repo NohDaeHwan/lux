@@ -1,11 +1,13 @@
 package com.used.lux.domain;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "user_grade")
 @Entity
 public class UserGrade {
@@ -29,23 +31,4 @@ public class UserGrade {
     @Setter
     @Column(nullable = false)
     private int rankUp;
-
-    protected UserGrade() {}
-
-    private UserGrade(Long id, int gradeStep, String gradeName, int discount, int rankUp) {
-        this.id = id;
-        this.gradeStep = gradeStep;
-        this.gradeName = gradeName;
-        this.discount = discount;
-        this.rankUp = rankUp;
-    }
-
-    public static UserGrade of(Long id, int gradeStep, String gradeName, int discount, int rankUp) {
-        return new UserGrade(id, gradeStep, gradeName, discount, rankUp);
-    }
-
-    public static UserGrade of(int gradeStep, String gradeName, int discount, int rankUp) {
-        return new UserGrade(null, gradeStep, gradeName, discount, rankUp);
-    }
-
 }
