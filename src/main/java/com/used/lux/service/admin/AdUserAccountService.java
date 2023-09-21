@@ -17,6 +17,7 @@ import com.used.lux.mapper.UserGradeMapper;
 import com.used.lux.repository.*;
 import com.used.lux.repository.appraisal.AppraisalRequestLogRepository;
 import com.used.lux.repository.appraisal.AppraisalRepository;
+import com.used.lux.repository.appraisal.AppraisalResultRepository;
 import com.used.lux.repository.auction.AuctionLogRepository;
 import com.used.lux.repository.order.ProductOrderCancelRepository;
 import com.used.lux.repository.order.ProductOrderLogRepository;
@@ -46,8 +47,10 @@ public class AdUserAccountService {
 
     private final ProductOrderCancelRepository productOrderCancelRepository;
 
-    private final AppraisalRepository apprRepo;
-    private final AppraisalMapper apprMapper;
+    private final AppraisalRepository appRepo;
+    private final AppraisalMapper appMapper;
+
+    private final AppraisalResultRepository appResultRepo;
 
     private final AuctionLogRepository auctionLogRepository;
 
@@ -77,8 +80,10 @@ public class AdUserAccountService {
         // 검수내역
         // pageable일땐 stream이어도 map만해줘도된다. 상관없음.
         // list, arraylist, collection 등 다른 리스트 형태들은 파이프(stream) 역할을 해줘야한다.
-        List<AppraisalDto> appraisalDtos = apprRepo.findByUserAccountId2(userAccountDto.id())
-                .stream().map(apprMapper::toDto).collect(Collectors.toCollection(ArrayList::new));
+        List<AppraisalDto> appraisalDtos = appRepo.findByUserAccountId2(userAccountDto.id())
+                .stream().map((item) -> {
+                    return appMapper.toDtoCustom(item, appResultRepo.findById(item.getAppResultId()).orElse(null));
+                }).toList();
         // 경매 내역
         List<AuctionLogDto> auctionLogDtos = auctionLogRepository.findByBidderList(userAccountDto.userName())
                 .stream().map(AuctionLogDto::from).collect(Collectors.toCollection(ArrayList::new));

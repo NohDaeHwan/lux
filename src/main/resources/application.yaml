@@ -29,6 +29,9 @@ spring:
     init:
       mode: always
 
+app:
+  upload-path: file:///C:/TEMP/UPLOAD/
+
 ---
 
 spring:

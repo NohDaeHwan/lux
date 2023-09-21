@@ -1,7 +1,5 @@
 package com.used.lux.dto.user.appraisal;
 
-import com.used.lux.dto.BrandDto;
-import com.used.lux.dto.user.useraccount.UserAccountDto;
 import lombok.Builder;
 
 import java.time.LocalDateTime;
@@ -20,6 +18,9 @@ public record AppraisalDto(
         String userEmail,
         String userNm,
         Long appResultId,
+        Long appPrice,
+        String appGrade,
+        String appComment,
         List<AppraisalImageDto> imageList,
         LocalDateTime createdAt,
         String createdBy,

@@ -5,11 +5,4 @@ public record CategoryCreateRequest(
         String categoryType,
         Long Bid
 ) {
-
-
-    public static CategoryCreateRequest of(String categoryName , String categoryType ,Long Bid) {
-        return new CategoryCreateRequest(categoryName,categoryType,Bid);
-    }
-
-
 }

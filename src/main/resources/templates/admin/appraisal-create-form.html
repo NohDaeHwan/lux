@@ -35,7 +35,7 @@
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label">검수상품명</label>
                             <div class="col-sm-10" style="padding: 7px 12px;">
-                                <div class="col-sm-10" style="font-weight: 300;" th:text="${appraisalResponse.appraisal.appraisalProductName}">
+                                <div class="col-sm-10" style="font-weight: 300;" th:text="${appraisal.appProdNm}">
                                     고객이 작성한 검수 상품명
                                 </div>
                             </div>
@@ -43,7 +43,7 @@
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label">브랜드</label>
                             <div class="col-sm-10" style="padding: 7px 12px;">
-                                <div class="col-sm-10" style="font-weight: 300;" th:text="${appraisalResponse.appraisal.appraisalBrandName}">
+                                <div class="col-sm-10" style="font-weight: 300;" th:text="${appraisal.appBrand}">
                                     고양드
                                 </div>
                             </div>
@@ -51,7 +51,7 @@
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label">성별</label>
                             <div class="col-sm-10" style="padding: 7px 12px;">
-                                <div class="col-sm-10" style="font-weight: 300;" th:text="${appraisalResponse.appraisal.appraisalGender}">
+                                <div class="col-sm-10" style="font-weight: 300;" th:text="${appraisal.appGender}">
                                     여
                                 </div>
                             </div>
@@ -59,7 +59,7 @@
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label">색상</label>
                             <div class="col-sm-10" style="padding: 7px 12px;">
-                                <div class="col-sm-10" style="font-weight: 300;" th:text="${appraisalResponse.appraisal.appraisalColor}">
+                                <div class="col-sm-10" style="font-weight: 300;" th:text="${appraisal.appColor}">
                                     카키브라운
                                 </div>
                             </div>
@@ -67,7 +67,7 @@
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label">사이즈</label>
                             <div class="col-sm-10" style="padding: 7px 12px;">
-                                <div class="col-sm-10" style="font-weight: 300;" th:text="${appraisalResponse.appraisal.appraisalSize}">
+                                <div class="col-sm-10" style="font-weight: 300;" th:text="${appraisal.appSize}">
                                     105
                                 </div>
                             </div>
@@ -75,7 +75,7 @@
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label">요청날짜</label>
                             <div class="col-sm-10" style="padding: 7px 12px;">
-                                <div class="col-sm-10" style="font-weight: 300;" th:text="${#temporals.format(appraisalResponse.appraisal.createdAt,'yyyy-MM-dd HH:mm:ss')}">
+                                <div class="col-sm-10" style="font-weight: 300;" th:text="${#temporals.format(appraisal.createdAt,'yyyy-MM-dd HH:mm:ss')}">
                                     105
                                 </div>
                             </div>
@@ -83,17 +83,17 @@
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label">고객/이메일</label>
                             <div class="col-sm-10" style="padding: 7px 12px;">
-                                <div class="col-sm-10" style="font-weight: 300" th:text="${appraisalResponse.appraisal.userAccount.userName}">
+                                <div class="col-sm-10" style="font-weight: 300" th:text="${appraisal.userNm}">
                                 </div>
                                 <div>
-                                    <a th:href="@{|/admin/user/${appraisalResponse.appraisal.userAccount.id}|}" th:text="${appraisalResponse.appraisal.userAccount.userEmail}">rnskqkd@naver.com</a>
+                                    <a th:href="@{|/admin/user/${appraisal.userId}|}" th:text="${appraisal.userEmail}">rnskqkd@naver.com</a>
                                 </div>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label">이미지</label>
                             <div class="col-sm-10" style="padding: 7px 12px; display: flex; justify-content: flex-start">
-                                <img th:each="image : ${appraisalResponse.appraisal.imageList}"
+                                <img th:each="image : ${appraisal.imageList}"
                                      th:src="${image.filePath}" style="width: 100px; height: 100px;margin-right: 16px;">
                             </div>
                         </div>
@@ -112,71 +112,37 @@
                     <div class="card-body">
                         <h5 class="card-title">검수 기록 페이지</h5>
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label">검수상품명</label>
+                                <label for="appraisalPrice" class="col-sm-2 col-form-label">매입가격(원)</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="appraisalName" id="appraisalName" class="form-control" th:value="${appraisalResponse.appraisal.appraisalProductName}">
+                                    <input type="text" name="appraisalPrice" id="appraisalPrice" class="form-control">
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label">매입가격(원)</label>
+                                <label for="appraisalGrade" class="col-sm-2 col-form-label">검수등급</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="appraisalPrice" id="appraisalPrice" class="form-control" th:value="${appraisalResponse.appraisalPrice}">
+                                    <input type="text" name="appraisalGrade" id="appraisalGrade" class="form-control">
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label">브랜드</label>
-                                <div class="col-sm-10">
-                                    <select class="form-select form-control" id="appraiseBrand" name="appraiseBrand">
-                                        <option th:value="${appraisalResponse.appraisal.appraisalBrandName}" disabled>example</option>
-                                        <option th:each="brand : ${brandList}" th:value="${brand.id}" th:text="${brand.brandName}">example</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label">성별</label>
-                                <div class="col-sm-10">
-                                    <input type="text" name="appraisalGender" id="appraisalGender" class="form-control" th:value="${appraisalResponse.appraisal.appraisalGender}">
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label">색상</label>
-                                <div class="col-sm-10">
-                                    <input type="text" name="appraisalColor" id="appraisalColor" class="form-control" th:value="${appraisalResponse.appraisal.appraisalColor}">
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label">사이즈</label>
-                                <div class="col-sm-10">
-                                    <input type="text" name="appraisalSize" id="appraisalSize" class="form-control" th:value="${appraisalResponse.appraisal.appraisalSize}">
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label">검수등급</label>
-                                <div class="col-sm-10">
-                                    <input type="text" name="appraisalGrade" id="appraisalGrade" class="form-control" th:value="${appraisalResponse.appraisalGrade}">
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label">검수 코멘트</label>
+                                <label for="appraisalComment" class="col-sm-2 col-form-label">검수 코멘트</label>
                                 <div class="col-sm-10">
                                     <div class="form-floating mb-3">
-                                        <textarea name='appraisalComment' id="appraisalComment" class="form-control" placeholder="손상상태/담당자 이름 등 검수 코멘트를 기록해주세요." style="height: 100px;" th:text="${appraisalResponse.appraisalComment}"></textarea>
-                                        <label for="appraisalComment"></label>
+                                        <textarea name='appraisalComment' id="appraisalComment" class="form-control" placeholder="손상상태/담당자 이름 등 검수 코멘트를 기록해주세요." style="height: 100px;"></textarea>
                                     </div>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">검수코드</label>
                                 <div class="col-sm-10" style="padding: 7px 12px;">
-                                    <div id="appraisalId" class="col-sm-10" style="font-weight: 300;" th:text="${appraisalResponse.id}">1</div>
+                                    <div id="appraisalId" class="col-sm-10" style="font-weight: 300;" th:text="${appraisal.id}">1</div>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label"></label>
                                 <div class="col-sm-10">
-                                    <button type="button" class="btn btn-success" onclick="save_btn()" id="modifyingData" style="float: right;">저장하기</button>
-                                    <button type="button" class="btn btn-danger" onclick="complete_btn()" id="lastData" style="float: right; margin-right: 8px;" >검수확정</button>
+                                    <button type="button" class="btn btn-warning" th:if="${appraisal.appState != 'INSPECTION'}" onclick="change_btn()" style="float: right;">검수중</button>
+                                    <button type="button" class="btn btn-danger" th:if="${appraisal.appState != 'REJECT'}" onclick="fail_btn()" style="float: right; margin-right: 8px;" >매입 거부</button>
+                                    <button type="button" class="btn btn-success" onclick="complete_btn()" style="float: right; margin-right: 8px;" >검수확정</button>
                                 </div>
                             </div>
                     </div>
@@ -189,25 +155,33 @@
 <th:block th:replace="layout/footer :: #footer">
 </th:block>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script th:inline="javascript">
-
-    function save_btn() {
+<script>
+    function change_btn() {
         let data = {
-            appraisalName: $('#appraisalName').val(),
-            appraisalPrice: $('#appraisalPrice').val(),
-            appraisalBrand: $("select[name=appraiseBrand]").val(),
-            appraisalGender: $('#appraisalGender').val(),
-            appraisalColor: $('#appraisalColor').val(),
-            appraisalSize: $('#appraisalSize').val(),
-            appraisalGrade: $('#appraisalGrade').val(),
-            appraisalComment: $('#appraisalComment').val(),
-            appraisalId: $('#appraisalId').text(),
-            appraisalStateId: 2
+            appraisalState: 'INSPECTION'
         }
         console.log(data);
         $.ajax({
             type:"POST",
-            url:"/admin/appraise/"+[[${appraisalResponse.id}]]+"/new/loading",
+            url:"/admin/appraise/"+$('#appraisalId').text()+"/change",
+            data:JSON.stringify(data),
+            contentType:"application/json; charset=utf-8",
+            dataType:"json"
+        }).done(function(res){
+            location.href="/admin/appraise";
+        }).fail(function(error){
+            console.log("function error : "+error);
+        });
+    }
+
+    function fail_btn() {
+        let data = {
+            appraisalState: 'REJECT'
+        }
+        console.log(data);
+        $.ajax({
+            type:"POST",
+            url:"/admin/appraise/"+$('#appraisalId').text()+"/change",
             data:JSON.stringify(data),
             contentType:"application/json; charset=utf-8",
             dataType:"json"
@@ -220,21 +194,16 @@
 
     function complete_btn() {
         let data = {
-            appraisalName: $('#appraisalName').val(),
             appraisalPrice: $('#appraisalPrice').val(),
-            appraisalBrand: $("select[name=appraiseBrand]").val(),
-            appraisalGender: $('#appraisalGender').val(),
-            appraisalColor: $('#appraisalColor').val(),
-            appraisalSize: $('#appraisalSize').val(),
             appraisalGrade: $('#appraisalGrade').val(),
             appraisalComment: $('#appraisalComment').val(),
             appraisalId: $('#appraisalId').text(),
-            appraisalStateId: 3
+            appraisalState: 'COMPLETE'
         }
         console.log(data);
         $.ajax({
             type:"POST",
-            url:"/admin/appraise/"+[[${appraisalResponse.id}]]+"/new/loading",
+            url:"/admin/appraise/"+data.appraisalId+"/new/loading",
             data:JSON.stringify(data),
             contentType:"application/json; charset=utf-8",
             dataType:"json"
@@ -244,7 +213,6 @@
             console.log("function error : "+error);
         });
     }
-
 </script>
 
 </body>

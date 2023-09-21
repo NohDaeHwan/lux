@@ -8,21 +8,21 @@
 <aside id="sidebar" class="mysidebar">
     <div id="accordion" class="sidebar-nav">
 
-        <div class="nav-item" th:each="bcategory : ${categoryList}">
+        <div class="nav-item" th:each="bCate : ${cateBList}">
 
-            <div class="nav-link collapsed flex" style="justify-content: space-between;" th:id="'heading'+${bcategoryStat.count}" data-toggle="collapse"
-                 th:data-target="'#collapse'+${bcategoryStat.count}" aria-expanded="true" th:aria-controls="'collapse'+${bcategoryStat.count}">
-                <h6 class="mb-0 font-weight-bold" th:text="${bcategory.categoryBName}">
+            <div class="nav-link collapsed flex" style="justify-content: space-between;" th:id="'heading'+${bCateStat.count}" data-toggle="collapse"
+                 th:data-target="'#collapse'+${bCateStat.count}" aria-expanded="true" th:aria-controls="'collapse'+${bCateStat.count}">
+                <h6 class="mb-0 font-weight-bold" th:text="${bCate.cateBNm}">
                     상의
                 </h6>
                 <h6 class="mb-0 font-weight-bold">+</h6>
             </div>
 
-            <div th:id="'collapse'+${bcategoryStat.count}" class="collapse"
-                 th:aria-labelledby="'heading'+${bcategoryStat.count}" data-parent="#accordion">
-                <div class="nav-link collapsed" th:each="mcategory : ${bcategory.categoryMDtos()}">
+            <div th:id="'collapse'+${bCateStat.count}" class="collapse"
+                 th:aria-labelledby="'heading'+${bCateStat.count}" data-parent="#accordion">
+                <div class="nav-link collapsed" th:each="mCate : ${bCate.cateMList}">
                     <h6 class="mb-0" style="font-size:15px;">
-                        <a th:href="@{|/searchcate/${mcategory.id}|}" class="text-black-50" th:text="${mcategory.categoryMName()}">짧은 상의</a>
+                        <a th:href="@{|/searchcate/${mCate.id}|}" class="text-black-50" th:text="${mCate.cateMNm}">짧은 상의</a>
                     </h6>
                 </div>
             </div>
@@ -43,7 +43,7 @@
                         전체결과: n 건
                     </p>
                     <div>
-                        <a href="/appraisalResult/new" class="btn btn-info mb-2" style="color:white">검수글 등록 ></a>
+                        <a href="/appraisal/new" class="btn btn-info mb-2" style="color:white">검수글 등록 ></a>
                         <a href="/mypage/appraise" class="btn btn-info mb-2" style="color:white">나의 검수 ></a>
                     </div>
                 </div>
@@ -60,16 +60,16 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="appraisalResult : ${appraisalList}">
+                <tr th:each="appraisal : ${appraisalList}">
                     <th scope="row" style="width: 120px;">
-                        <a th:href="@{|/appraisalResult/${appraisalResult.id}|}"><img th:src="${appraisalResult.appraisal.imageList[0].filePath}" style="width: 100px; height:100px;"></a>
+                        <a th:href="@{|/appraisal/${appraisal.id}|}"><img th:src="${appraisal.imageList[0].filePath}" style="width: 100px; height:100px;"></a>
                     </th>
                     <td style="vertical-align: middle;">
-                        <string th:text="${appraisalResult.appraisal.appraisalBrandName}+'-'+${appraisalResult.appraisal.appraisalProductName}">브랜드-카테고리중,브랜드 상품명</string>
-                        <h6 style="font-weight: 300;" th:text="'작성자: '+${#strings.replace(appraisalResult.appraisal.userAccount.userName,#strings.substring(appraisalResult.appraisal.userAccount.userName,0,3),'***')}">유저명</h6>
+                        <strong th:text="${appraisal.appBrand}+'-'+${appraisal.appProdNm}">브랜드-카테고리중,브랜드 상품명</strong>
+                        <h6 style="font-weight: 300;" th:text="'작성자: '+${#strings.replace(appraisal.userNm,#strings.substring(appraisal.userNm,0,3),'***')}">유저명</h6>
                     </td>
-                    <td style="vertical-align: middle; font-weight: 300; width: 150px;"><h6 th:text="${#temporals.format(appraisalResult.appraisal.createdAt,'yyyy-MM-dd HH:mm:ss')}">2022-11-02 18:04:05</h6></td>
-                    <td style="vertical-align: middle; font-weight: 300;" th:text="${appraisalResult.appraisal.appraisalStateStep}">검수완료</td>
+                    <td style="vertical-align: middle; font-weight: 300; width: 150px;"><h6 th:text="${#temporals.format(appraisal.createdAt,'yyyy-MM-dd HH:mm:ss')}">2022-11-02 18:04:05</h6></td>
+                    <td style="vertical-align: middle; font-weight: 300;" th:text="${appraisal.appState}">검수완료</td>
                 </tr>
                 </tbody>
             </table>
@@ -79,19 +79,19 @@
     <nav id="pagination" aria-label="Page navigation example">
         <ul class="pagination">
             <li class="page-item">
-                <a class="page-link" th:href="@{/appraisalResult(page=${appraisalList.number - 1})}"
+                <a class="page-link" th:href="@{/appraisal(page=${appraisalList.number - 1})}"
                    aria-label="Previous" th:class="'page-link' + (${appraisalList.number} <= 0 ? ' disabled-link' : '')">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
             <li class="page-item" th:each="pageNumber : ${paginationBarNumbers}">
                 <a th:text="${pageNumber + 1}"
-                   th:href="@{/appraisalResult(page=${pageNumber})}"
+                   th:href="@{/appraisal(page=${pageNumber})}"
                    th:class="'page-link' + (${pageNumber} == ${appraisalList.number} <= 0 ? ' disabled-link' : '')">
                 </a>
             </li>
             <li class="page-item">
-                <a class="page-link" th:href="@{/appraisalResult(page=${appraisalList.number + 1})}"
+                <a class="page-link" th:href="@{/appraisal(page=${appraisalList.number + 1})}"
                    aria-label="Next" th:class="'page-link' + (${appraisalList.number} >= ${appraisalList.totalPages - 1} ? ' disabled-link' : '')">
                     <span aria-hidden="true">&raquo;</span>
                 </a>

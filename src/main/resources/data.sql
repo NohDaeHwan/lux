@@ -1,9 +1,9 @@
 INSERT INTO user_grade(id, discount, grade_step, grade_name, rank_up) VALUES (1,0,1,'BRONZE',0),(2,5,2,'SLIVER',100000),
                               (3,10,3,'GOLD',500000),(4,15,4,'VIP',1000000),(5,20,5,'SVIP',3000000);
 
-INSERT INTO category_b(id, category_b_name) VALUES (1,'악세서리'),(2,'가방'),(3,'옷'),(4,'안경'),(5,'쥬얼리'),(6,'신발'),(7,'시계'),(8,'지갑');
+INSERT INTO category_b(id, cate_b_nm) VALUES (1,'악세서리'),(2,'가방'),(3,'옷'),(4,'안경'),(5,'쥬얼리'),(6,'신발'),(7,'시계'),(8,'지갑');
 
-INSERT INTO category_m(id, category_b_id, category_m_name)VALUES (1,1,'귀걸이'),(2,1,'넥타이'),(3,1,'라이터'),(4,1,'모자'),(5,1,'머플러'),(6,1,'목걸이'),
+INSERT INTO category_m(id, cate_b_id, cate_m_nm)VALUES (1,1,'귀걸이'),(2,1,'넥타이'),(3,1,'라이터'),(4,1,'모자'),(5,1,'머플러'),(6,1,'목걸이'),
                               (7,1,'반지'),(8,1,'벨트'),(9,1,'볼펜'),(10,1,'브로치'),(11,1,'스카프'),(12,1,'스카프링'),
                               (13,1,'장갑'),(14,1,'장갑'),(15,1,'키링'),(16,1,'팔찌'),(17,1,'헤어밴드'),(18,1,'기타'),
                               (19,2,'백팩'),(20,2,'서류가방'),(21,2,'세컨백'),(22,2,'숄더백'),(23,2,'여행가방'),
@@ -29,3 +29,23 @@ INSERT INTO brand(id, brand_name) VALUES (1,'가니'),(2,'가브리엘 허스트
 INSERT INTO user_account(id, user_email, user_password, user_name, phone_number, age, gender, user_grade, point, role, memo, created_at, created_by, modified_at, modified_by) VALUES
 (1,'qwer1234@naver.com','$2a$10$Cd4xXlpbYzq6zVvxBuFJZ.QNxADDn4u7/Q4.sICp39h42.nj/YUGi','다람쥐','010-1234-5678',25,'Male',4,1099999,'USER','TEST USER','2022-11-18 12:49:47.949772','SYSTEM','2022-11-18 16:43:53.082205','SYSTEM'),
 (2,'asdf1234@naver.com','$2a$10$y28559SHwV0M.zpp9bEWbu.mygAsnr.DVbNPGxeXif//osUNlA5U2','Admin다람쥐쥐','010-2345-6789',26,'남자',1,50000,'ADMIN','TEST USER','2022-11-18 14:14:01.213608','SYSTEM','2022-11-21 17:55:58.143390','SYSTEM');
+
+INSERT INTO lux.appraisal
+(id, created_at, created_by, modified_at, modified_by, app_color, app_gender, app_prod_nm, app_result_id, app_size, app_state, app_brand_id, user_account_id)
+VALUES(1, '2023-09-21 13:32:20.644660', 'SYSTEM', '2023-09-21 13:32:20.644660', 'SYSTEM', '화이트골드', 'FEMALE', '로렉스 69174 18K 화이트골드 블루판 스틸 데이져스트 10P 다이아', NULL, '없음', 'BEFORE', 36, 1);
+
+INSERT INTO lux.appraisal_image
+(id, created_at, created_by, modified_at, modified_by, file_path, file_size, orig_file_name, appraisal_id)
+VALUES(1, '2023-09-21 13:32:20.686633', 'SYSTEM', '2023-09-21 13:32:20.686633', 'SYSTEM', '/filepath/appraisal_img/20230921/672664663996600.jpg', 13002, 'Rorex1.jpg', 1);
+INSERT INTO lux.appraisal_image
+(id, created_at, created_by, modified_at, modified_by, file_path, file_size, orig_file_name, appraisal_id)
+VALUES(2, '2023-09-21 13:32:20.689637', 'SYSTEM', '2023-09-21 13:32:20.689637', 'SYSTEM', '/filepath/appraisal_img/20230921/672664666638400.jpg', 20261, 'Rorex2.jpg', 1);
+INSERT INTO lux.appraisal_image
+(id, created_at, created_by, modified_at, modified_by, file_path, file_size, orig_file_name, appraisal_id)
+VALUES(3, '2023-09-21 13:32:20.691669', 'SYSTEM', '2023-09-21 13:32:20.691669', 'SYSTEM', '/filepath/appraisal_img/20230921/672664667157400.jpg', 18152, 'Rorex3.jpg', 1);
+INSERT INTO lux.appraisal_image
+(id, created_at, created_by, modified_at, modified_by, file_path, file_size, orig_file_name, appraisal_id)
+VALUES(4, '2023-09-21 13:32:20.693635', 'SYSTEM', '2023-09-21 13:32:20.693635', 'SYSTEM', '/filepath/appraisal_img/20230921/672664667924600.jpg', 15824, 'Rorex4.jpg', 1);
+INSERT INTO lux.appraisal_image
+(id, created_at, created_by, modified_at, modified_by, file_path, file_size, orig_file_name, appraisal_id)
+VALUES(5, '2023-09-21 13:32:20.695671', 'SYSTEM', '2023-09-21 13:32:20.695671', 'SYSTEM', '/filepath/appraisal_img/20230921/672664668494900.jpg', 20261, 'Rorex5.jpg', 1);

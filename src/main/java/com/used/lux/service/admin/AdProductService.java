@@ -5,7 +5,6 @@ import com.used.lux.domain.*;
 import com.used.lux.domain.constant.ProductState;
 import com.used.lux.domain.product.Image;
 import com.used.lux.domain.product.Product;
-import com.used.lux.domain.product.ProductLog;
 import com.used.lux.dto.*;
 import com.used.lux.dto.admin.AdProductDto;
 import com.used.lux.dto.user.auction.AuctionLogDto;
@@ -13,6 +12,7 @@ import com.used.lux.dto.user.order.ProductOrderLogDto;
 import com.used.lux.dto.user.product.ProductDto;
 import com.used.lux.dto.user.product.ProductLogDto;
 import com.used.lux.mapper.BrandMapper;
+import com.used.lux.mapper.CategoryBMapper;
 import com.used.lux.mapper.ProductMapper;
 import com.used.lux.repository.*;
 import com.used.lux.repository.appraisal.AppraisalRepository;
@@ -50,7 +50,9 @@ public class AdProductService {
 
     private final AppraisalRepository appraisalRepository;
 
-    private final CategoryBRepository categoryBRepository;
+    private final CategoryBRepository cateBRepo;
+    private final CategoryBMapper cateBMapper;
+
 
     private final CategoryMRepository categoryMRepository;
 
@@ -82,7 +84,7 @@ public class AdProductService {
     @Transactional(readOnly = true)
     public AdProductDto getProductDetail(Long productId) {
         // 상품 상세
-        ProductDto productDto = productMapper.toDto(productRepository.findById(productId).get());
+        ProductDto productDto = productMapper.toDto(productRepository.findById(productId).orElse(null));
         // 수정 로그(수정 전)
         List<ProductLogDto> productLogDtos = productLogRepository.findByProductIdOrderByCreatedAtDesc(productId)
                 .stream().map(ProductLogDto::from).collect(Collectors.toCollection(ArrayList::new));
@@ -98,8 +100,7 @@ public class AdProductService {
     // 카테고리 리스트 조회
     @Transactional(readOnly = true)
     public List<CategoryBDto> getCategoryList() {
-        return categoryBRepository.findAll()
-                .stream().map(CategoryBDto::from).collect(Collectors.toCollection(ArrayList::new));
+        return cateBMapper.toDtoList(cateBRepo.findAll());
     }
 
     // 브랜드 리스트 조회
@@ -113,9 +114,9 @@ public class AdProductService {
     @Transactional
     public void productCreate(ProductCreateRequest request) throws Exception {
         Product product = productRepository.getReferenceById(request.productId());
-        Brand brand = brandRepository.findById(request.brandId()).get();
-        CategoryB categoryB = categoryBRepository.findById(request.categoryBId()).get();
-        CategoryM categoryM = categoryMRepository.findById(request.categoryMId()).get();
+        Brand brand = brandRepository.findById(request.brandId()).orElse(null);
+        CategoryB categoryB = cateBRepo.findById(request.categoryBId()).orElse(null);
+        CategoryM categoryM = categoryMRepository.findById(request.categoryMId()).orElse(null);
 
         product.setProdNm(request.productName());
         product.setProdPrice(request.productPrice());
@@ -140,9 +141,9 @@ public class AdProductService {
     @Transactional
     public void productUpdate(Long productId, ProductUpdateRequest productUpdateRequest){
         // 업데이트에 필요한 entity 가져오기
-        CategoryB categoryB = categoryBRepository.findById(productUpdateRequest.categoryBId()).get();
-        CategoryM categoryM = categoryMRepository.findById(productUpdateRequest.categoryMId()).get();
-        Brand brand = brandRepository.findById(productUpdateRequest.brandId()).get();
+        CategoryB categoryB = cateBRepo.findById(productUpdateRequest.categoryBId()).orElse(null);
+        CategoryM categoryM = categoryMRepository.findById(productUpdateRequest.categoryMId()).orElse(null);
+        Brand brand = brandRepository.findById(productUpdateRequest.brandId()).orElse(null);
         Product product= productRepository.getReferenceById(productId);
 
 //        productLogRepository.save(ProductLog.of(null, productId,productUpdateRequest.productName(),state,categoryB,categoryM,productUpdateRequest.productPrice(), productUpdateRequest.productSellType()));

@@ -98,7 +98,7 @@
         <nav style="--bs-breadcrumb-divider: '|';">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item active">검색결과</li>
-                <li class="breadcrumb-item active" th:text="'('+${appraisalResponse.totalElements}+') 건'">(3) 건</li>
+                <li class="breadcrumb-item active" th:text="'('+${appraisalList.totalElements}+') 건'">(3) 건</li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
@@ -126,27 +126,24 @@
                             </thead>
                             <tbody>
 
-                            <tr th:each="appraisalRes : ${appraisalResponse}">
+                            <tr th:each="appraisal : ${appraisalList}">
                                 <th scope="row">
-                                    <a th:text="${appraisalRes.appraisal().appraisalProductName()}">user1@mail.com</a>
+                                    <a th:text="${appraisal.appProdNm}">user1@mail.com</a>
                                 </th>
-                                <td th:text="${appraisalRes.appraisal.appraisalBrandName}">Brandon Jacob</td>
-                                <td th:text="${appraisalRes.appraisal.appraisalGender}">dfd</td>
-                                <td th:text="${appraisalRes.appraisal.appraisalSize}">Designer</td>
-                                <td th:if="${appraisalRes.appraisal.appraisalStateStep} == '검수완료'" th:text="${#numbers.formatInteger(appraisalRes.appraisalPrice,3,'COMMA')}+'원'">28</td>
-                                <td th:if="${appraisalRes.appraisal.appraisalStateStep} == '검수중'" th:text="${#numbers.formatInteger(appraisalRes.appraisalPrice,3,'COMMA')}+'원'">28</td>
-                                <td th:if="${appraisalRes.appraisal.appraisalStateStep} == '검수중'" th:text="${appraisalRes.appraisalGrade}">28</td>
-                                <td th:if="${appraisalRes.appraisal.appraisalStateStep} == '검수완료'" th:text="${appraisalRes.appraisalGrade}">28</td>
-                                <td th:if="${appraisalRes.appraisal.appraisalStateStep} == '검수전'" th:text="'-'">28</td>
-                                <td th:if="${appraisalRes.appraisal.appraisalStateStep} == '검수전'" th:text="'-'">28</td>
-                                <td th:text="${#temporals.format(appraisalRes.appraisal.createdAt,'yyyy-MM-dd HH:mm:ss')}">2016-05-25</td>
+                                <td th:text="${appraisal.appBrand}">Brandon Jacob</td>
+                                <td th:text="${appraisal.appGender}">dfd</td>
+                                <td th:text="${appraisal.appSize}">Designer</td>
+                                <td th:if="${appraisal.appState} == 'COMPLETE'" th:text="${#numbers.formatInteger(appraisal.appPrice,3,'COMMA')}+'원'">28</td>
+                                <td th:if="${appraisal.appState} != 'COMPLETE'" th:text="'-'">28</td>
+                                <td th:if="${appraisal.appState} == 'COMPLETE'" th:text="${appraisal.appGrade}">28</td>
+                                <td th:if="${appraisal.appState} != 'COMPLETE'" th:text="'-'">28</td>
+                                <td th:text="${#temporals.format(appraisal.createdAt,'yyyy-MM-dd HH:mm:ss')}">2016-05-25</td>
                                 <td>
-                                    <a th:href="@{|/admin/appraise/${appraisalRes.id}/new|}" style="display:flex; flex-direction: column; color:#ffffff;" th:if="${appraisalRes.appraisal.appraisalStateStep} =='검수전'" class="btn btn-success">검수전</a>
-                                    <a th:href="@{|/admin/appraise/${appraisalRes.id}/new|}" style="display:flex; flex-direction: column; color:#ffffff;" th:if="${appraisalRes.appraisal.appraisalStateStep} =='검수중'" class="btn btn-warning">검수중</a>
-                                    <a th:href="@{|/admin/appraise/${appraisalRes.id}|}" style="display:flex; flex-direction: column; color:#ffffff;" th:if="${appraisalRes.appraisal.appraisalStateStep} =='검수완료'" class="btn btn-secondary">검수완료</a>
+                                    <a th:href="@{|/admin/appraise/${appraisal.id}/new|}" style="display:flex; flex-direction: column; color:#ffffff;" th:if="${appraisal.appState} =='BEFORE'" class="btn btn-dark">검수전</a>
+                                    <a th:href="@{|/admin/appraise/${appraisal.id}/new|}" style="display:flex; flex-direction: column; color:#ffffff;" th:if="${appraisal.appState} =='INSPECTION'" class="btn btn-warning">검수중</a>
+                                    <a th:href="@{|/admin/appraise/${appraisal.id}/new|}" style="display:flex; flex-direction: column; color:#ffffff;" th:if="${appraisal.appState} =='REJECT'" class="btn btn-danger">매입거부</a>
+                                    <a th:href="@{|/admin/appraise/${appraisal.id}|}" style="display:flex; flex-direction: column; color:#ffffff;" th:if="${appraisal.appState} =='COMPLETE'" class="btn btn-secondary">검수완료</a>
                                 </td>
-
-
                             </tr>
                             </tbody>
                         </table>
@@ -162,23 +159,23 @@
     <nav id="pagination" aria-label="Page navigation example">
         <ul class="pagination">
             <li class="page-item">
-                <a class="page-link" th:href="@{/admin/appraise(page=${appraisalResponse.number - 1}, sort=(${param.sort} != null ? ${param.sort} : '') + (${appraisalResponse.sort.getOrderFor('param.sort')} != null ? (${appraisalResponse.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
-                      query=${param.query})}" aria-label="Previous" th:class="'page-link' + (${appraisalResponse.number} <= 0 ? ' disabled' : '')">
+                <a class="page-link" th:href="@{/admin/appraise(page=${appraisalList.number - 1}, sort=(${param.sort} != null ? ${param.sort} : '') + (${appraisalList.sort.getOrderFor('param.sort')} != null ? (${appraisalList.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
+                      query=${param.query})}" aria-label="Previous" th:class="'page-link' + (${appraisalList.number} <= 0 ? ' disabled' : '')">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
             <li class="page-item" th:each="pageNumber : ${paginationBarNumbers}">
                 <a th:text="${pageNumber + 1}"
                    th:href="@{/admin/appraise(page=${pageNumber},
-                          sort=(${param.sort} != null ? ${param.sort} : '') + (${appraisalResponse.sort.getOrderFor('param.sort')} != null ? (${appraisalResponse.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
+                          sort=(${param.sort} != null ? ${param.sort} : '') + (${appraisalList.sort.getOrderFor('param.sort')} != null ? (${appraisalList.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
                           query=${param.query}
                       )}"
-                   th:class="'page-link' + (${pageNumber} == ${appraisalResponse.number} <= 0 ? ' disabled' : '')">
+                   th:class="'page-link' + (${pageNumber} == ${appraisalList.number} <= 0 ? ' disabled' : '')">
                 </a>
             </li>
             <li class="page-item">
-                <a class="page-link" th:href="@{/admin/appraise(page=${appraisalResponse.number + 1}, sort=(${param.sort} != null ? ${param.sort} : '') + (${appraisalResponse.sort.getOrderFor('param.sort')} != null ? (${appraisalResponse.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
-                      query=${param.query})}" aria-label="Next" th:class="'page-link' + (${appraisalResponse.number} >= ${appraisalResponse.totalPages - 1} ? ' disabled' : '')">
+                <a class="page-link" th:href="@{/admin/appraise(page=${appraisalList.number + 1}, sort=(${param.sort} != null ? ${param.sort} : '') + (${appraisalList.sort.getOrderFor('param.sort')} != null ? (${appraisalList.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
+                      query=${param.query})}" aria-label="Next" th:class="'page-link' + (${appraisalList.number} >= ${appraisalList.totalPages - 1} ? ' disabled' : '')">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>

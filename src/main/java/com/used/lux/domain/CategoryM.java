@@ -14,14 +14,13 @@ public class CategoryM {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     @Setter
     @ManyToOne(optional = false)
-    @JoinColumn(name = "category_b_id")
-    private CategoryB categoryB;
+    @JoinColumn(name = "cate_b_id")
+    private CategoryB cateB;
 
     @Setter
-    @Column(name="category_m_name", nullable = false, length = 100)
-    private String categoryMName;
+    @Column(name="cate_m_nm", nullable = false, length = 100)
+    private String cateMNm;
 
 }

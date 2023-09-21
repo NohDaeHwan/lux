@@ -15,13 +15,10 @@ import java.util.List;
 @Transactional
 @Service
 public class BrandService {
-    //Brand DB의 서비스 클래스입니다. 해당 DB에 연결하려면 repository와 service 영역에 추가적인 작성이 필요합니다.
     private final BrandRepository brandRepository;
     private final BrandMapper brandMapper;
 
-
     @Transactional
-
     public BrandDto createBrand(BrandCreateRequest brandCreateRequest) {
         return brandMapper.toDto(brandRepository.save(Brand.builder()
                 .brandName(brandCreateRequest.brandName())
@@ -35,7 +32,6 @@ public class BrandService {
 
     @Transactional(readOnly = true)
     public List<BrandDto> brandList() {
-        return brandRepository.findAll().stream()
-                .map(brandMapper::toDto).toList();
+        return brandMapper.toDtoList(brandRepository.findAll());
     }
 }

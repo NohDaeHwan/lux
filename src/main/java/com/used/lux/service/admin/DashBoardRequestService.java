@@ -3,6 +3,8 @@ package com.used.lux.service.admin;
 import com.used.lux.domain.*;
 import com.used.lux.domain.appraisal.Appraisal;
 import com.used.lux.domain.auction.Auction;
+import com.used.lux.dto.CategoryBDto;
+import com.used.lux.dto.CategoryMDto;
 import com.used.lux.service.*;
 
 import com.used.lux.service.user.appraisal.AppraiseService;
@@ -153,22 +155,22 @@ public class DashBoardRequestService {
         String priceRange = productOrderLogService.findByPriceRange(bannerDateType);
         String productName;
 
-        CategoryB categoryB = null;
-        CategoryM categoryM = null;
+        CategoryBDto cateB = null;
+        CategoryMDto cateM = null;
         Appraisal appraisal = null;
 
         //null처리 하면서 값 삽입 :: 이게 맞나?
-        if(Bid != null){categoryB = categoryBService.findById(Long.valueOf(Bid));}
+        if(Bid != null){cateB = categoryBService.findById(Long.valueOf(Bid));}
 
-        if(Mid != null){categoryM = categoryMService.findById(Long.valueOf(Mid));}
+        if(Mid != null){cateM = categoryMService.findById(Long.valueOf(Mid));}
 
         if(Aid != null){
             appraisal = appraisalRequestService.findById(Long.valueOf(Aid));}
 
         if(sellRoute == null){sellRoute = "cannot search sell route because selling log is nowhere";}
-        if(categoryB != null){ categoryBName = categoryB.getCategoryBName();}
+        if(cateB != null){ categoryBName = cateB.cateBNm();}
         else{categoryBName = "cannot search categoryB because selling log is nowhere";}
-        if(categoryM != null){categoryMName = categoryM.getCategoryMName(); }
+        if(cateM != null){categoryMName = cateM.cateMNm(); }
         else {categoryMName = "cannot search categoryM because selling log is nowhere";}
         if(priceRange == null){priceRange = "cannot search price range because selling log is nowhere";}
         if(appraisal != null){productName = appraisal.getAppProdNm();}

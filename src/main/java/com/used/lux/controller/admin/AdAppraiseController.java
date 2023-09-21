@@ -20,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -51,15 +52,15 @@ public class AdAppraiseController {
             return "redirect:/";
         }
 
-        Page<AppraisalDto> appraisal= adAppraiseService.getAppraiseList(appraisalState,
+        Page<AppraisalDto> appraisalList = adAppraiseService.getAppraiseList(appraisalState,
                 appraisalBrand, appraisalGender, appraisalSize, appraisalGrade, appraisalDate,
                 query, pageable);
         List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(),
-                appraisal.getTotalPages());
+                appraisalList.getTotalPages());
         SearchResponse searchResponse = searchService.getSearchList();
 
         mm.addAttribute("paginationBarNumbers", barNumbers);
-        mm.addAttribute("appraisalResponse", appraisal);
+        mm.addAttribute("appraisalList", appraisalList);
         mm.addAttribute("appraisalSearchResponse", searchResponse);
         return "/admin/appraise";
     }
@@ -73,8 +74,8 @@ public class AdAppraiseController {
             return "redirect:/";
         }
 
-        AppraisalDto appraisalResponse = adAppraiseService.appraiseCommentPage(appraisalId);
-        mm.addAttribute("appraisalResponse", appraisalResponse);
+        AppraisalDto appraisal = adAppraiseService.appraiseCommentPage(appraisalId);
+        mm.addAttribute("appraisal", appraisal);
         return "/admin/appraisal-detail";
     }
 
@@ -87,10 +88,10 @@ public class AdAppraiseController {
             return "redirect:/";
         }
 
-        AppraisalDto appraisalResponse = adAppraiseService.appraiseCommentPage(appraisalId);
+        AppraisalDto appraisal = adAppraiseService.appraiseCommentPage(appraisalId);
 
         List<BrandDto> brandList = adProductService.getBrandList();
-        mm.addAttribute("appraisalResponse", appraisalResponse);
+        mm.addAttribute("appraisal", appraisal);
         mm.addAttribute("brandList", brandList);
 
         return "admin/appraisal-create-form";
@@ -108,6 +109,21 @@ public class AdAppraiseController {
         }
 
         adAppraiseService.appraiseComment(appraisalCommentRequest, appraisalId);
+        return ResponseEntity.status(HttpStatus.OK).body(1);
+    }
+
+    // 검수 결과 등록
+    @ResponseBody
+    @PostMapping("/{appraisalId}/change")
+    public ResponseEntity<Integer> appraiseCommentAdd(@PathVariable Long appraisalId,
+                                                      @AuthenticationPrincipal Principal principal,
+                                                      @RequestBody HashMap<String, String> data) {
+
+        if (principal.role().getName() != "ROLE_ADMIN") {
+            return ResponseEntity.status(HttpStatus.OK).body(-1);
+        }
+
+        adAppraiseService.appraiseChange(data, appraisalId);
         return ResponseEntity.status(HttpStatus.OK).body(1);
     }
 

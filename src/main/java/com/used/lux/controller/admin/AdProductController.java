@@ -205,7 +205,7 @@ public class AdProductController {
         if (principal.role().getName() != "ROLE_ADMIN") {
             return "redirect:/";
         }
-        List<CategoryBDto> BCategoryList = categoryBService.getBigCategoryAll();
+        List<CategoryBDto> BCategoryList = categoryBService.categoryList();
         mm.addAttribute("categoryList", BCategoryList);
         return "/admin/category";
     }
@@ -214,7 +214,7 @@ public class AdProductController {
     @GetMapping("/category/new")
     public String productCategoryCreate(@AuthenticationPrincipal Principal principal,ModelMap modelMap)
     {
-        List<CategoryBDto> categoryBDtos = categoryBService.getBigCategoryAll();
+        List<CategoryBDto> categoryBDtos = categoryBService.categoryList();
         modelMap.addAttribute("listDtos",categoryBDtos);
         return "/admin/category-create-form";
     }
@@ -287,7 +287,7 @@ public class AdProductController {
         if(type.equals("{\"check\":\"big\"}"))
         {
             System.out.println("B진입");
-            list = categoryBService.getBigCategoryAll();
+            list = categoryBService.categoryList();
 
         }else if(type.equals("{\"check\":\"middle\"}"))
         {

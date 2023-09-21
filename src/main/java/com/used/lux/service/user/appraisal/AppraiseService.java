@@ -5,13 +5,10 @@ import com.used.lux.domain.*;
 import com.used.lux.domain.appraisal.Appraisal;
 import com.used.lux.domain.appraisal.AppraisalResult;
 import com.used.lux.domain.appraisal.AppraisalImage;
-import com.used.lux.domain.appraisal.AppraisalRequestLog;
 import com.used.lux.domain.constant.AppraisalState;
 import com.used.lux.domain.constant.GenterType;
 import com.used.lux.domain.useraccount.UserAccount;
 import com.used.lux.dto.user.appraisal.AppraisalDto;
-import com.used.lux.dto.user.appraisal.AppraisalResultDto;
-import com.used.lux.dto.user.useraccount.UserAccountDto;
 import com.used.lux.mapper.AppraisalImageMapper;
 import com.used.lux.mapper.AppraisalMapper;
 import com.used.lux.mapper.AppraisalResultMapper;
@@ -30,7 +27,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Transactional
@@ -58,14 +54,16 @@ public class AppraiseService {
     private final FileHandler fileHandler;
 
     @Transactional(readOnly = true)
-    public Page<AppraisalDto> findAllList(Pageable pageable) {
-        return appRepo.findAll(pageable).map(appMapper::toDto);
+    public Page<AppraisalDto> getList(Pageable pageable) {
+        return appRepo.findAll(pageable).map((item) -> {
+            return appMapper.toDtoCustom(item, appResultRepo.findById(item.getAppResultId()).orElse(null));
+        });
     }
 
     @Transactional
     public void appraisalCreate(AppraisalCreateRequest request, Long userId) throws Exception {
-        UserAccount userAccount = userAccountRepo.findById(userId).get();
-        Brand brand = brandRepository.findById(request.brandId()).get();
+        UserAccount userAccount = userAccountRepo.findById(userId).orElse(null);
+        Brand brand = brandRepository.findById(request.brandId()).orElse(null);
 
         Appraisal appraisal = appRepo.save(Appraisal.builder()
                 .appProdNm(request.productName())
@@ -73,7 +71,7 @@ public class AppraiseService {
                 .appGender(GenterType.valueOf(request.gender()))
                 .appColor(request.color())
                 .appSize(request.size())
-                .appState(AppraisalState.valueOf(request.state()))
+                .appState(AppraisalState.BEFORE)
                 .appResultId(null)
                 .userAccount(userAccount)
                 .build()); // 감정신청서 DB에 저장
@@ -81,11 +79,8 @@ public class AppraiseService {
         List<AppraisalImage> imageList = fileHandler.parseAppraisalFileInfo(request, appraisal); // 파일 처리
         // 파일이 존재할 때에만 처리
         if(!imageList.isEmpty()) {
-            for(AppraisalImage image : imageList) {
-                // 파일을 DB에 저장
-                System.out.println(image);
-                appImageRepo.save(image); // 이미지 이름 및 경로 DB에 저장
-            }
+            // 이미지 이름 및 경로 DB에 저장
+            appImageRepo.saveAll(imageList);
         }
         System.out.println("파일 저장 성공");
 //        AppraisalResult appraisalResult = appraisalResultRepository.save(AppraisalResult.of(appraisal));
@@ -93,11 +88,14 @@ public class AppraiseService {
     }
 
     public AppraisalDto appraisalDetail(Long appraisalId) {
-        return appMapper.toDto(appRepo.findById(appraisalId).get());
+        Appraisal appraisal = appRepo.findById(appraisalId).get();
+        return appMapper.toDtoCustom(appraisal, appResultRepo.findById(appraisal.getAppResultId()).orElse(null));
     }
 
     public Page<AppraisalDto> getMypageAppraisal(Long id, Pageable pageable) {
-        return appRepo.findByUserAccountId(id, pageable).map(appMapper::toDto);
+        return appRepo.findByUserAccountId(id, pageable).map((item) -> {
+            return appMapper.toDtoCustom(item, appResultRepo.findById(item.getAppResultId()).orElse(null));
+        });
     }
 
 

@@ -34,7 +34,7 @@ public class Product extends AuditingFields {
 
 	@Setter
 	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "catey_m_id")
+	@JoinColumn(name = "cate_m_id")
 	private CategoryM cateM;
 
 	@Setter

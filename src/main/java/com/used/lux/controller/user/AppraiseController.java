@@ -39,13 +39,14 @@ public class AppraiseController {
             @PageableDefault(size = 10, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
             ModelMap mm
     ) {
-        Page<AppraisalDto> appraisalList = appraiseService.findAllList(pageable);
-        List<CategoryBDto> categoryList = categoryBService.categoryList();
+        Page<AppraisalDto> appraisalList = appraiseService.getList(pageable);
+        List<CategoryBDto> cateBList = categoryBService.categoryList();
         List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(),
                 appraisalList.getTotalPages());
 
-        mm.addAttribute("categoryList", categoryList);
-        mm.addAttribute("appraisalList",appraisalList);
+        System.out.println(appraisalList.getContent());
+        mm.addAttribute("cateBList", cateBList);
+        mm.addAttribute("appraisalList", appraisalList);
         mm.addAttribute("paginationBarNumbers", barNumbers);
 
         return "front/appraise";
@@ -56,10 +57,10 @@ public class AppraiseController {
     @GetMapping("/new")
     public String appraisalCreate(ModelMap mm) {
         List<BrandDto> brandList = brandService.brandList();
-        List<CategoryBDto> categoryList = categoryBService.categoryList();
+        List<CategoryBDto> cateBList = categoryBService.categoryList();
 
         mm.addAttribute("brandList", brandList);
-        mm.addAttribute("categoryList", categoryList);
+        mm.addAttribute("cateBList", cateBList);
         return "front/appraise-create-form";
     }
 
@@ -81,11 +82,11 @@ public class AppraiseController {
        }
 
         AppraisalDto appraisal = appraiseService.appraisalDetail(appraiseId);
-        List<CategoryBDto> categoryList = categoryBService.categoryList();
+        List<CategoryBDto> cateBList = categoryBService.categoryList();
 
         mm.addAttribute("loginId", loginId);
-        mm.addAttribute("categoryList", categoryList);
-        mm.addAttribute("appraisalDto", appraisal);
+        mm.addAttribute("cateBList", cateBList);
+        mm.addAttribute("appraisal", appraisal);
         return "front/appraise-detail";
     }
 

@@ -22,6 +22,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
+
 @RequiredArgsConstructor
 @Service
 public class AdAppraiseService {
@@ -47,32 +49,44 @@ public class AdAppraiseService {
                                                         String appraisalSize, String appraisalGrade, String appraisalDate,
                                                         String query, Pageable pageable) {
         return appRepo.searchAppraise(appraisalState, appraisalBrand, appraisalGender,
-                appraisalSize, appraisalGrade, appraisalDate, query, pageable).map(appMapper::toDto);
+                appraisalSize, appraisalGrade, appraisalDate, query, pageable).map((item) -> {
+                    if (item.getAppResultId() != null)
+                        return appMapper.toDtoCustom(item, appResultRepo.findById(item.getAppResultId()).orElse(null));
+                    else
+                        return appMapper.toDtoCustom(item, null);
+                }
+        );
     }
 
     @Transactional
     public void appraiseComment(AppraisalCommentRequest request, Long appraisalId) {
         Appraisal appraisal = appRepo.getReferenceById(appraisalId);
-        AppraisalResult appraisalResult = appResultRepo.getReferenceById(appraisal.getAppResultId());
-        Brand brand = brandRepository.findById(request.appraisalBrand()).get();
+        Long appraisalResultId = appResultRepo.save(AppraisalResult.builder()
+                .appPrice(request.appraisalPrice())
+                .appGrade(AppraisalGrade.valueOf(request.appraisalGrade()))
+                .appComment(request.appraisalComment())
+                .build()
+        ).getId();
+
         appraisal.setAppState(AppraisalState.valueOf(request.appraisalState()));
-        appraisal.setAppBrand(brand);
-        appraisal.setAppGender(GenterType.valueOf(request.appraisalGender()));
-        appraisal.setAppColor(request.appraisalColor());
-        appraisal.setAppSize(request.appraisalSize());
-        appraisal.setAppProdNm(request.appraisalName());
-
-
-        appraisalResult.setAppGrade(AppraisalGrade.valueOf(request.appraisalGrade()));
-        appraisalResult.setAppComment(request.appraisalComment());
-        appraisalResult.setAppPrice(request.appraisalPrice());
+        appraisal.setAppResultId(appraisalResultId);
 //        appraisalRequestLogRepository.save(AppraisalRequestLog.of(
 //                request.appraisalName(),request.appraisalGrade(), request.appraisalPrice(),
 //                state, appraisalResult.getAppraisal().getUserAccount().getId(),appraisalId
 //        ));
    }
 
+    @Transactional
+    public void appraiseChange(HashMap<String, String> data, Long appraisalId) {
+        Appraisal appraisal = appRepo.getReferenceById(appraisalId);
+        appraisal.setAppState(AppraisalState.valueOf(data.get("appraisalState")));
+    }
+
     public AppraisalDto appraiseCommentPage(Long appraisalId) {
-        return appMapper.toDto(appRepo.findById(appraisalId).get());
+        Appraisal appraisal = appRepo.findById(appraisalId).get();
+        if (appraisal.getAppResultId() != null)
+            return appMapper.toDtoCustom(appraisal, appResultRepo.findById(appraisal.getAppResultId()).orElse(null));
+        else
+            return appMapper.toDtoCustom(appraisal, null);
     }
 }

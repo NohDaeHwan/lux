@@ -1,24 +1,30 @@
 package com.used.lux.component;
 
+import com.used.lux.config.AppConfig;
 import com.used.lux.domain.appraisal.AppraisalImage;
 import com.used.lux.domain.appraisal.Appraisal;
 import com.used.lux.domain.product.Image;
 import com.used.lux.domain.product.Product;
 import com.used.lux.request.product.ProductCreateRequest;
 import com.used.lux.request.appraisal.AppraisalCreateRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@RequiredArgsConstructor
 public class FileHandler {
+
+    private final AppConfig appConfig;
 
 	public List<Image> parseFileInfo(ProductCreateRequest productCreateRequest, Product product) throws Exception {
 		List<Image> imageList =  new ArrayList<>();
@@ -113,14 +119,10 @@ public class FileHandler {
                     DateTimeFormatter.ofPattern("yyyyMMdd");
             String current_date = now.format(dateTimeFormatter);
 
-            // 프로젝트 디렉터리 내의 저장을 위한 절대 경로 설정
-            // 경로 구분자 File.separator 사용
-            String absolutePath = new File("").getAbsolutePath() + File.separator + File.separator;
+            Path filePath = appConfig.getUploadPath();
 
             // 파일을 저장할 세부 경로 지정
-            String path = absolutePath + "src" + File.separator + "main" + File.separator + "resources" + File.separator +
-                    "static" + File.separator + "assets" + File.separator + "img" + File.separator +
-                    "appraisal_img" + File.separator + current_date;
+            String path = filePath + File.separator + "appraisal_img" + File.separator + current_date;
             File file = new File(path);
             System.out.println(path);
             System.out.println(file.exists());
@@ -162,7 +164,7 @@ public class FileHandler {
                 AppraisalImage image = AppraisalImage.builder()
                         .appraisal(appraisal)
                         .origFileName(multipartFile.getOriginalFilename())
-                        .filePath("/static/assets/img/appraisal_img/" + current_date + "/" + new_file_name)
+                        .filePath("/filepath/appraisal_img/" + current_date + "/" + new_file_name)
                         .fileSize(multipartFile.getSize())
                         .build();
 
@@ -170,9 +172,7 @@ public class FileHandler {
                 imageList.add(image);
 
                 // 업로드 한 파일 데이터를 지정한 파일에 저장
-                file = new File(absolutePath + "src" + File.separator + "main" + File.separator + "resources" + File.separator +
-                        "static" + File.separator + "assets" + File.separator + "img" + File.separator +
-                        "appraisal_img" + File.separator + current_date + File.separator + new_file_name);
+                file = new File(path + File.separator + new_file_name);
                 multipartFile.transferTo(file);
 
                 // 파일 권한 설정(쓰기, 읽기)

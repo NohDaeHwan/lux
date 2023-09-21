@@ -30,16 +30,16 @@ public interface ProductOrderLogRepository extends JpaRepository<ProductOrderLog
             "WHERE l.created_at >= :sD and l.created_at <= now() GROUP BY l.product_state_id order by count(*) DESC LIMIT 1;")
     String findBySellTypeOfState(@Param("sD") String sectionStartDate);
 
-    @Query(nativeQuery = true,value = "SELECT p.category_b_id " +
+    @Query(nativeQuery = true,value = "SELECT p.cate_b_id " +
             "FROM product_order_log l JOIN  product p ON l.product_id = p.id  " +
             "WHERE l.created_at <= NOW() AND l.created_at >= :sD " +
-            "GROUP BY p.category_b_id " +
+            "GROUP BY p.cate_b_id " +
             "ORDER BY COUNT(*) DESC LIMIT 1; ")
     String findBySellTypeOfCategoryB(@Param("sD") String sectionStartDate);
 
-    @Query(nativeQuery = true,value = "SELECT p.category_m_id  FROM product_order_log l JOIN  product p ON l.product_id = p.id  " +
+    @Query(nativeQuery = true,value = "SELECT p.cate_m_id  FROM product_order_log l JOIN  product p ON l.product_id = p.id  " +
             "WHERE l.created_at <= NOW() AND l.created_at >= :sD " +
-            "GROUP BY p.category_m_id ORDER BY COUNT(*) DESC LIMIT 1;")
+            "GROUP BY p.cate_m_id ORDER BY COUNT(*) DESC LIMIT 1;")
     String findBySellTypeOfCategoryM(@Param("sD") String sectionStartDate);
 
     @Query(nativeQuery = true,value = "SELECT TRUNCATE(product_price,-5) AS pricegroup " +
@@ -48,11 +48,11 @@ public interface ProductOrderLogRepository extends JpaRepository<ProductOrderLog
             "GROUP BY pricegroup ORDER BY COUNT(*) desc LIMIT 1;")
     String findByPriceRange(@Param("sD") String sectionStartDate);
 
-    @Query (nativeQuery = true,value = "SELECT p.appraisal_id " +
+    @Query (nativeQuery = true,value = "SELECT p.id " +
             "FROM (SELECT * FROM product_order_log il WHERE  il.product_state_id = 9 OR il.product_state_id = 5) as l " +
             "JOIN product p ON l.product_id = p.id " +
             "WHERE l.created_at >= :sD AND l.created_at <= NOW() " +
-            "ORDER BY p.product_view_count DESC LIMIT 1; ")
+            "ORDER BY p.prod_view_cnt DESC LIMIT 1; ")
     String findByMostViewCount(@Param("sD") String sectionStartDate);
 
     @Query(nativeQuery = true,value = "select sum(product_price) " +
