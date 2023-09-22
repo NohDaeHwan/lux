@@ -14,11 +14,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -44,12 +47,11 @@ public class AppraiseController {
         List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(),
                 appraisalList.getTotalPages());
 
-        System.out.println(appraisalList.getContent());
         mm.addAttribute("cateBList", cateBList);
         mm.addAttribute("appraisalList", appraisalList);
         mm.addAttribute("paginationBarNumbers", barNumbers);
 
-        return "front/appraise";
+        return "front/appraisal/appraise";
     }
 
 
@@ -61,7 +63,7 @@ public class AppraiseController {
 
         mm.addAttribute("brandList", brandList);
         mm.addAttribute("cateBList", cateBList);
-        return "front/appraise-create-form";
+        return "front/appraisal/appraise-create-form";
     }
 
     // 감정 신청 페이지
@@ -87,7 +89,7 @@ public class AppraiseController {
         mm.addAttribute("loginId", loginId);
         mm.addAttribute("cateBList", cateBList);
         mm.addAttribute("appraisal", appraisal);
-        return "front/appraise-detail";
+        return "front/appraisal/appraise-detail";
     }
 
     // 검수 삭제
@@ -95,6 +97,14 @@ public class AppraiseController {
     public String appraiseDelete(@PathVariable Long appraisalRequestId) {
         appraiseService.apprisalDelete(appraisalRequestId);
         return "redirect:/admin/appraise";
+    }
+
+    @ResponseBody
+    @PostMapping("/{appraisalId}/change")
+    public ResponseEntity<Integer> appraiseCommentAdd(@PathVariable Long appraisalId,
+                                                      @RequestBody HashMap<String, String> data) {
+        appraiseService.appraiseChange(data, appraisalId);
+        return ResponseEntity.status(HttpStatus.OK).body(1);
     }
 
 }

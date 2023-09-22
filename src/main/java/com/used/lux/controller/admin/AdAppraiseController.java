@@ -1,10 +1,12 @@
 package com.used.lux.controller.admin;
 
 import com.used.lux.dto.BrandDto;
+import com.used.lux.dto.CategoryBDto;
 import com.used.lux.dto.security.Principal;
 import com.used.lux.dto.user.appraisal.AppraisalDto;
 import com.used.lux.request.appraisal.AppraisalCommentRequest;
 import com.used.lux.response.SearchResponse;
+import com.used.lux.service.CategoryBService;
 import com.used.lux.service.PaginationService;
 import com.used.lux.service.SearchService;
 import com.used.lux.service.admin.AdAppraiseService;
@@ -36,6 +38,8 @@ public class AdAppraiseController {
 
     private final SearchService searchService;
 
+    private final CategoryBService categoryBService;
+
     // 검수기록
     @GetMapping
     public String appraise(@AuthenticationPrincipal Principal principal,
@@ -62,7 +66,7 @@ public class AdAppraiseController {
         mm.addAttribute("paginationBarNumbers", barNumbers);
         mm.addAttribute("appraisalList", appraisalList);
         mm.addAttribute("appraisalSearchResponse", searchResponse);
-        return "/admin/appraise";
+        return "/admin/appraisal/appraisal-main";
     }
 
     // 검수 결과 상세조회 페이지
@@ -76,7 +80,7 @@ public class AdAppraiseController {
 
         AppraisalDto appraisal = adAppraiseService.appraiseCommentPage(appraisalId);
         mm.addAttribute("appraisal", appraisal);
-        return "/admin/appraisal-detail";
+        return "/admin/appraisal/appraisal-detail";
     }
 
     // 검수 결과 등록 페이지
@@ -94,7 +98,7 @@ public class AdAppraiseController {
         mm.addAttribute("appraisal", appraisal);
         mm.addAttribute("brandList", brandList);
 
-        return "admin/appraisal-create-form";
+        return "/admin/appraisal/appraisal-create";
     }
 
     // 검수 결과 등록
@@ -125,6 +129,21 @@ public class AdAppraiseController {
 
         adAppraiseService.appraiseChange(data, appraisalId);
         return ResponseEntity.status(HttpStatus.OK).body(1);
+    }
+
+    @GetMapping("/product/new")
+    public String appraiseProductAddPage(@AuthenticationPrincipal Principal principal,
+                                         @PageableDefault(size = 30) Pageable pageable,
+                                         ModelMap mm) {
+        if (principal.role().getName() != "ROLE_ADMIN") {
+            return "redirect:/";
+        }
+        Page<AppraisalDto> appraisalList = adAppraiseService.getAppraiseList(pageable);
+        List<CategoryBDto> cateBList = categoryBService.categoryList();
+
+        mm.addAttribute("appraisalList", appraisalList);
+        mm.addAttribute("cateBList", cateBList);
+        return "/admin/appraisal/product-create";
     }
 
 }

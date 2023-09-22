@@ -35,8 +35,8 @@
     <section class="layout_padding2">
         <div class="container-fluid">
             <div class="brand_heading">
-                <h3 class="custom_heading">
-                    검수 상세페이지
+                <h3 class="custom_heading mb-3" th:text="'검수 상세 - ' + ${appraisal.appState}">
+                    검수 상세
                 </h3>
             </div>
         </div>
@@ -106,7 +106,7 @@
                         </div>
                     </td>
                     <td colspan="5">
-                        <div class="col-sm-10" th:if="(${appraisal.appResultId != null} and ${appraisal.userId} == ${loginId})" th:text="${#numbers.formatInteger(appraisal.appraisalPrice,3,'COMMA')}">
+                        <div class="col-sm-10" th:if="(${appraisal.appResultId != null} and ${appraisal.userId} == ${loginId})" th:text="${#numbers.formatInteger(appraisal.appPrice,3,'COMMA')}">
                         </div>
                         <div class="col-sm-10" th:if="${appraisal.userId} != ${loginId}">
                             게시자만 볼 수 있습니다.
@@ -120,7 +120,7 @@
                         </div>
                     </td>
                     <td colspan="5">
-                        <div class="col-sm-10" th:if="${appraisal.appResultId != null} and ${appraisal.userId} == ${loginId}" th:text="${appraisal.appraisalGrade}">
+                        <div class="col-sm-10" th:if="${appraisal.appResultId != null} and ${appraisal.userId} == ${loginId}" th:text="${appraisal.appGrade}">
                             게시자만 볼 수 있게 처리
                         </div>
                         <div class="col-sm-10" th:if="${appraisal.userId} != ${loginId}">
@@ -135,7 +135,7 @@
                         </div>
                     </td>
                     <td colspan="5">
-                        <div class="col-sm-10" th:if="${appraisal.userId} == ${loginId}" th:text="${appraisal.appraisalComment}">
+                        <div class="col-sm-10" th:if="${appraisal.userId} == ${loginId}" th:text="${appraisal.appComment}">
                             게시자만 볼 수 있게 처리
                         </div>
                         <div class="col-sm-10" th:if="${appraisal.userId} != ${loginId}">
@@ -160,6 +160,13 @@
                 </tr>
                 </tbody>
             </table>
+            <div class="row mb-3" th:if="${appraisal.appState == '검수완료'} and ${appraisal.userId} == ${loginId}" >
+                <input type="hidden" id="appraisalId" th:value="${appraisal.id}">
+                <div class="col-sm-12">
+                    <button type="button" th:if="${appraisal.appState != '판매거절'} and ${appraisal.appState != '판매'}" class="btn btn-success" id="app-sell" style="float: right; margin-right: 8px;" >매입하기</button>
+                    <button type="button" th:if="${appraisal.appState != '판매거절'} and ${appraisal.appState != '판매'}" class="btn btn-danger" id="app-refuse" style="float: right; margin-right: 8px;" >매입거부</button>
+                </div>
+            </div>
         </div>
 
     </section>
@@ -179,9 +186,11 @@
 
 <!-- end info_section -->
 
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<script type="text/javascript" src="/static/assets/js/bootstrap.js"></script>
-<script src="/static/assets/js/frontmain.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript" src="/static/assets/lib/js/bootstrap.js"></script>
+<script type="text/javascript" src="/static/assets/js/frontmain.js"></script>
+<script type="text/javascript" src="/static/assets/js/front/appraisal/app-control.js"></script>
+<script type="text/javascript" src="/static/assets/js/front/service.js"></script>
 </body>
 
 </html>

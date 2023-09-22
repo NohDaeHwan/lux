@@ -32,7 +32,7 @@ INSERT INTO user_account(id, user_email, user_password, user_name, phone_number,
 
 INSERT INTO lux.appraisal
 (id, created_at, created_by, modified_at, modified_by, app_color, app_gender, app_prod_nm, app_result_id, app_size, app_state, app_brand_id, user_account_id)
-VALUES(1, '2023-09-21 13:32:20.644660', 'SYSTEM', '2023-09-21 13:32:20.644660', 'SYSTEM', '화이트골드', 'FEMALE', '로렉스 69174 18K 화이트골드 블루판 스틸 데이져스트 10P 다이아', NULL, '없음', 'BEFORE', 36, 1);
+VALUES(1, '2023-09-21 13:32:20.644660', 'SYSTEM', '2023-09-22 10:29:06.120438', 'SYSTEM', '화이트골드', 'FEMALE', '로렉스 69174 18K 화이트골드 블루판 스틸 데이져스트 10P 다이아', 1, '없음', 'COMPLETE', 36, 1);
 
 INSERT INTO lux.appraisal_image
 (id, created_at, created_by, modified_at, modified_by, file_path, file_size, orig_file_name, appraisal_id)
@@ -49,3 +49,7 @@ VALUES(4, '2023-09-21 13:32:20.693635', 'SYSTEM', '2023-09-21 13:32:20.693635', 
 INSERT INTO lux.appraisal_image
 (id, created_at, created_by, modified_at, modified_by, file_path, file_size, orig_file_name, appraisal_id)
 VALUES(5, '2023-09-21 13:32:20.695671', 'SYSTEM', '2023-09-21 13:32:20.695671', 'SYSTEM', '/filepath/appraisal_img/20230921/672664668494900.jpg', 20261, 'Rorex5.jpg', 1);
+
+INSERT INTO lux.appraisal_result
+(id, created_at, created_by, modified_at, modified_by, app_comment, app_grade, app_price)
+VALUES(1, '2023-09-22 10:29:06.087539', 'SYSTEM', '2023-09-22 10:29:06.087539', 'SYSTEM', '매입', 'A', 500000);

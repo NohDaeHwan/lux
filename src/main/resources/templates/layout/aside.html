@@ -64,11 +64,22 @@
             </li><!-- End Forms Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" th:href="@{/admin/appraise}">
-                    <i class="bi bi-journal-text"></i>
-                    <span>검수목록</span>
+                <a class="nav-link collapsed" data-bs-target="#appraisal-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-bucket"></i><span>검수목록</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
-            </li><!-- End F.A.Q Page Nav -->
+                <ul id="appraisal-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a th:href="@{/admin/appraise}">
+                            <i class="bi bi-circle"></i><span>검수목록</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/admin/appraise/product/new}">
+                            <i class="bi bi-circle"></i><span>매입 상품 등록</span>
+                        </a>
+                    </li>
+                </ul>
+            </li><!-- End Forms Nav -->
 
             <li class="nav-item">
                 <a class="nav-link collapsed" th:href="@{/admin/order}">

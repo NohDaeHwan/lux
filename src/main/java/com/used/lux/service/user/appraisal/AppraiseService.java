@@ -25,6 +25,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,7 +57,10 @@ public class AppraiseService {
     @Transactional(readOnly = true)
     public Page<AppraisalDto> getList(Pageable pageable) {
         return appRepo.findAll(pageable).map((item) -> {
-            return appMapper.toDtoCustom(item, appResultRepo.findById(item.getAppResultId()).orElse(null));
+            if (item.getAppResultId() != null)
+                return appMapper.toDtoCustom(item, appResultRepo.findById(item.getAppResultId()).orElse(null));
+            else
+                return appMapper.toDtoCustom(item, null);
         });
     }
 
@@ -89,7 +93,8 @@ public class AppraiseService {
 
     public AppraisalDto appraisalDetail(Long appraisalId) {
         Appraisal appraisal = appRepo.findById(appraisalId).get();
-        return appMapper.toDtoCustom(appraisal, appResultRepo.findById(appraisal.getAppResultId()).orElse(null));
+        if (appraisal.getAppResultId() != null) return appMapper.toDtoCustom(appraisal, appResultRepo.findById(appraisal.getAppResultId()).orElse(null));
+        else return appMapper.toDtoCustom(appraisal, null);
     }
 
     public Page<AppraisalDto> getMypageAppraisal(Long id, Pageable pageable) {
@@ -121,6 +126,13 @@ public class AppraiseService {
 //        return appResultRepo.findByQuery(query).stream()
 //                .map(appMapper::toDto).limit(8).collect(Collectors.toUnmodifiableList());
         return null;
+    }
+
+    @Transactional
+    public void appraiseChange(HashMap<String, String> data, Long appraisalId) {
+        System.out.println(data.get("appraisalState"));
+        Appraisal appraisal = appRepo.getReferenceById(appraisalId);
+        appraisal.setAppState(AppraisalState.valueOf(data.get("appraisalState")));
     }
 
 }

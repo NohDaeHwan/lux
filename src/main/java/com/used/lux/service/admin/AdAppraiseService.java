@@ -45,6 +45,16 @@ public class AdAppraiseService {
 
     private final CategoryMRepository categoryMRepository;
 
+    public Page<AppraisalDto> getAppraiseList(Pageable pageable) {
+        return appRepo.findByAppState(AppraisalState.SELL, pageable).map((item) -> {
+                    if (item.getAppResultId() != null)
+                        return appMapper.toDtoCustom(item, appResultRepo.findById(item.getAppResultId()).orElse(null));
+                    else
+                        return appMapper.toDtoCustom(item, null);
+                }
+        );
+    }
+
     public Page<AppraisalDto> getAppraiseList(String appraisalState, String appraisalBrand, String appraisalGender,
                                                         String appraisalSize, String appraisalGrade, String appraisalDate,
                                                         String query, Pageable pageable) {

@@ -172,4 +172,6 @@ public class AdProductService {
         System.out.println("모든 로직 정상 수행");
     }
 
+    public void appraiseProductAddPage() {
+    }
 }

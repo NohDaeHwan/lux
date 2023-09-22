@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/head :: .head"></head>
+<body>
+
+<header th:replace="layout/header :: .header">
+    header
+</header>
+
+<th:block th:replace="layout/aside :: .sidebar">
+    aside
+</th:block>
+
+
+<main id="main" class="main">
+
+    <section class="section">
+        <div class="row align-items-top">
+            <div class="col-lg-12">
+
+                <!-- Card with header and footer -->
+                <div class="card">
+                    <div class="card-header">검수목록</div>
+                    <div class="card-body">
+                        <h5 class="card-title">검색 조건</h5>
+                        <form class="search-form" action="/admin/appraise">
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">검수상태</label>
+                                <div class="col-sm-10">
+                                    <select class="form-select" name="appraisalState">
+                                        <option value="" selected>전체</option>
+                                        <option th:each="state : ${appraisalSearchResponse.stateDtos()}" th:if="${state.stateName().contains('검수')}"
+                                                th:value="${state.stateStep()}" th:text="${state.stateStep}">example</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">브랜드</label>
+                                <div class="col-sm-10">
+                                    <select class="form-select" name="appraisalBrand">
+                                        <option value="" selected>전체</option>
+                                        <option th:each="brand : ${appraisalSearchResponse.brandDtos()}" th:value="${brand.brandName()}" th:text="${brand.brandName}">example</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">성별</label>
+                                <div class="col-sm-10">
+                                    <select class="form-select" name="appraisalGender">
+                                        <option value="" selected>전체</option>
+                                        <option value="공용">공용</option>
+                                        <option value="남자">남자</option>
+                                        <option value="여자">여자</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">사이즈</label>
+                                <div class="col-sm-10">
+                                    <select class="form-select" name="appraisalSize">
+                                        <option value="" selected>전체</option>
+                                        <option th:each="num : ${#numbers.sequence(90,290, 5)}" th:value="${num}" th:text="${num}">14</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">상품등급</label>
+                                <div class="col-sm-10">
+                                    <select class="form-select" name="appraisalGrade">
+                                        <option value="" selected>전체</option>
+                                        <option value="S">S</option>
+                                        <option value="A">A</option>
+                                        <option value="B">B</option>
+                                        <option value="C">C</option>
+                                        <option value="F">F</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">등록일기준</label>
+                                <div class="col-sm-10">
+                                    <input type="date" class="form-control" name="appraisalDate">
+                                </div>
+                            </div>
+                            <div class="search-bar mb-3">
+                                <input type="text" name="query" placeholder="검수상품명 혹은 매입가격 입력" title="Enter search keyword">
+                                <button type="submit"><i class="bi bi-search"></i></button>
+                            </div>
+                    </form>
+                    </div>
+                </div><!-- End Card with header and footer -->
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="admin-main">
+                    <div class="join-row">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <span id="search-result" th:text="'검색결과 | ('+${appraisalList.totalElements}+') 건'">검색 결과 : 0개</span>
+                        </div>
+                    </div>
+                    <div class="admin-body">
+
+                        <table class="table table-hover user-table">
+                            <thead>
+                            <tr>
+                                <th>검수상품명</th>
+                                <th>브랜드명</th>
+                                <th>성별</th>
+                                <th>사이즈</th>
+                                <th>매입가격</th>
+                                <th>검수등급</th>
+                                <th>검수등록일</th>
+                                <th>검수상태</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="appraisal : ${appraisalList}">
+                                <td th:text="${appraisal.appProdNm}">user1@mail.com</td>
+                                <td th:text="${appraisal.appBrand}">Brandon Jacob</td>
+                                <td th:text="${appraisal.appGender}">dfd</td>
+                                <td th:text="${appraisal.appSize}">Designer</td>
+                                <td th:if="${appraisal.appState} == '검수완료' or ${appraisal.appState} == '판매거절' or ${appraisal.appState} == '매입완료'"
+                                    th:text="${#numbers.formatInteger(appraisal.appPrice,3,'COMMA')}+'원'">28</td>
+                                <td th:if="${appraisal.appState} != '검수완료' and ${appraisal.appState} != '판매거절' and ${appraisal.appState} != '매입완료'"
+                                    th:text="'-'">28</td>
+                                <td th:if="${appraisal.appState} == '검수완료' or ${appraisal.appState} == '판매거절' or ${appraisal.appState} == '매입완료'"
+                                    th:text="${appraisal.appGrade}">28</td>
+                                <td th:if="${appraisal.appState} != '검수완료' and ${appraisal.appState} != '판매거절' and ${appraisal.appState} != '매입완료'"
+                                    th:text="'-'">28</td>
+                                <td th:text="${#temporals.format(appraisal.createdAt,'yyyy-MM-dd HH:mm:ss')}">2016-05-25</td>
+                                <td>
+                                    <a th:href="@{|/admin/appraise/${appraisal.id}/new|}" style="display:flex; flex-direction: column; color:#ffffff;" th:if="${appraisal.appState} =='검수전'" class="btn btn-dark">검수전</a>
+                                    <a th:href="@{|/admin/appraise/${appraisal.id}/new|}" style="display:flex; flex-direction: column; color:#ffffff;" th:if="${appraisal.appState} =='검수중'" class="btn btn-warning">검수중</a>
+                                    <a th:href="@{|/admin/appraise/${appraisal.id}/new|}" style="display:flex; flex-direction: column; color:#ffffff;" th:if="${appraisal.appState} =='매입거부'" class="btn btn-danger">매입거부</a>
+                                    <a th:href="@{|/admin/appraise/${appraisal.id}|}" style="display:flex; flex-direction: column; color:#ffffff;" th:if="${appraisal.appState} =='검수완료'" class="btn btn-secondary">검수완료</a>
+                                    <a th:href="@{|/admin/appraise/${appraisal.id}|}" style="display:flex; flex-direction: column; color:#ffffff;" th:if="${appraisal.appState} =='판매거절'" class="btn btn-secondary">판매거절</a>
+                                    <a th:href="@{|/admin/appraise/${appraisal.id}|}" style="display:flex; flex-direction: column; color:#ffffff;" th:if="${appraisal.appState} =='매입완료'" class="btn btn-secondary">매입완료</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="table-footer">
+                            <ul class="pagination">
+                                <li class="page-item">
+                                    <a class="page-link" th:href="@{/admin/appraise(page=${appraisalList.number - 1}, sort=(${param.sort} != null ? ${param.sort} : '') + (${appraisalList.sort.getOrderFor('param.sort')} != null ? (${appraisalList.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
+                                        query=${param.query})}" aria-label="Previous" th:class="'page-link' + (${appraisalList.number} <= 0 ? ' disabled' : '')">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                <li class="page-item" th:each="pageNumber : ${paginationBarNumbers}">
+                                    <a th:text="${pageNumber + 1}"
+                                       th:href="@{/admin/appraise(page=${pageNumber},
+                                        sort=(${param.sort} != null ? ${param.sort} : '') + (${appraisalList.sort.getOrderFor('param.sort')} != null ? (${appraisalList.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
+                                        query=${param.query}
+                                        )}"
+                                       th:class="'page-link' + (${pageNumber} == ${appraisalList.number} <= 0 ? ' disabled' : '')">
+                                    </a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" th:href="@{/admin/appraise(page=${appraisalList.number + 1}, sort=(${param.sort} != null ? ${param.sort} : '') + (${appraisalList.sort.getOrderFor('param.sort')} != null ? (${appraisalList.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
+                                        query=${param.query})}" aria-label="Next" th:class="'page-link' + (${appraisalList.number} >= ${appraisalList.totalPages - 1} ? ' disabled' : '')">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Table with hoverable rows -->
+                        <!--<table class="table table-hover ">
+                            <thead>
+                            <tr>
+                                <th scope="col">검수상품명</th>
+                                <th scope="col">브랜드명</th>
+                                <th scope="col">성별</th>
+                                <th scope="col">사이즈</th>
+                                <th scope="col">매입가격</th>
+                                <th scope="col">검수등급</th>
+                                <th scope="col">검수등록일</th>
+                                <th scope="col">검수상태</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <tr th:each="appraisal : ${appraisalList}">
+                                <th scope="row">
+                                    <a th:text="${appraisal.appProdNm}">user1@mail.com</a>
+                                </th>
+                                <td th:text="${appraisal.appBrand}">Brandon Jacob</td>
+                                <td th:text="${appraisal.appGender}">dfd</td>
+                                <td th:text="${appraisal.appSize}">Designer</td>
+                                <td th:if="${appraisal.appState} == '검수완료' or ${appraisal.appState} == '판매거절' or ${appraisal.appState} == '매입완료'"
+                                    th:text="${#numbers.formatInteger(appraisal.appPrice,3,'COMMA')}+'원'">28</td>
+                                <td th:if="${appraisal.appState} != '검수완료' and ${appraisal.appState} != '판매거절' and ${appraisal.appState} != '매입완료'"
+                                    th:text="'-'">28</td>
+                                <td th:if="${appraisal.appState} == '검수완료' or ${appraisal.appState} == '판매거절' or ${appraisal.appState} == '매입완료'"
+                                    th:text="${appraisal.appGrade}">28</td>
+                                <td th:if="${appraisal.appState} != '검수완료' and ${appraisal.appState} != '판매거절' and ${appraisal.appState} != '매입완료'"
+                                    th:text="'-'">28</td>
+                                <td th:text="${#temporals.format(appraisal.createdAt,'yyyy-MM-dd HH:mm:ss')}">2016-05-25</td>
+                                <td>
+                                    <a th:href="@{|/admin/appraise/${appraisal.id}/new|}" style="display:flex; flex-direction: column; color:#ffffff;" th:if="${appraisal.appState} =='검수전'" class="btn btn-dark">검수전</a>
+                                    <a th:href="@{|/admin/appraise/${appraisal.id}/new|}" style="display:flex; flex-direction: column; color:#ffffff;" th:if="${appraisal.appState} =='검수중'" class="btn btn-warning">검수중</a>
+                                    <a th:href="@{|/admin/appraise/${appraisal.id}/new|}" style="display:flex; flex-direction: column; color:#ffffff;" th:if="${appraisal.appState} =='매입거부'" class="btn btn-danger">매입거부</a>
+                                    <a th:href="@{|/admin/appraise/${appraisal.id}|}" style="display:flex; flex-direction: column; color:#ffffff;" th:if="${appraisal.appState} =='검수완료'" class="btn btn-secondary">검수완료</a>
+                                    <a th:href="@{|/admin/appraise/${appraisal.id}|}" style="display:flex; flex-direction: column; color:#ffffff;" th:if="${appraisal.appState} =='판매거절'" class="btn btn-secondary">판매거절</a>
+                                    <a th:href="@{|/admin/appraise/${appraisal.id}|}" style="display:flex; flex-direction: column; color:#ffffff;" th:if="${appraisal.appState} =='매입완료'" class="btn btn-secondary">매입완료</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>-->
+                        <!-- End Table with hoverable rows -->
+                    </div>
+        </div>
+    </section>
+
+    <!-- Pagination with icons -->
+    <!--<nav id="pagination" aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" th:href="@{/admin/appraise(page=${appraisalList.number - 1}, sort=(${param.sort} != null ? ${param.sort} : '') + (${appraisalList.sort.getOrderFor('param.sort')} != null ? (${appraisalList.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
+                      query=${param.query})}" aria-label="Previous" th:class="'page-link' + (${appraisalList.number} <= 0 ? ' disabled' : '')">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item" th:each="pageNumber : ${paginationBarNumbers}">
+                <a th:text="${pageNumber + 1}"
+                   th:href="@{/admin/appraise(page=${pageNumber},
+                          sort=(${param.sort} != null ? ${param.sort} : '') + (${appraisalList.sort.getOrderFor('param.sort')} != null ? (${appraisalList.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
+                          query=${param.query}
+                      )}"
+                   th:class="'page-link' + (${pageNumber} == ${appraisalList.number} <= 0 ? ' disabled' : '')">
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" th:href="@{/admin/appraise(page=${appraisalList.number + 1}, sort=(${param.sort} != null ? ${param.sort} : '') + (${appraisalList.sort.getOrderFor('param.sort')} != null ? (${appraisalList.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
+                      query=${param.query})}" aria-label="Next" th:class="'page-link' + (${appraisalList.number} >= ${appraisalList.totalPages - 1} ? ' disabled' : '')">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>-->
+    <!-- End Pagination with icons -->
+
+</main><!-- End #main -->
+<th:block th:replace="layout/footer :: #footer">
+
+</th:block>
+
+</body>
+
+</html>

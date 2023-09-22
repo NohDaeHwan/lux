@@ -1,6 +1,7 @@
 package com.used.lux.repository.appraisal;
 
 import com.used.lux.domain.appraisal.Appraisal;
+import com.used.lux.domain.constant.AppraisalState;
 import com.used.lux.repository.querydsl.AppraisalRepositoryCustom;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,4 +21,5 @@ public interface AppraisalRepository extends JpaRepository<Appraisal, Long>, App
     @Query(value = "select a from Appraisal a where a.userAccount.id=:id")
     Page<Appraisal> findByUserAccountId(Long id, Pageable pageable);
 
+    Page<Appraisal> findByAppState(AppraisalState sell, Pageable pageable);
 }

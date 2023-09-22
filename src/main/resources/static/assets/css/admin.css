@@ -1,0 +1,158 @@
+* {
+    box-sizing: border-box;
+}
+
+.admin-main .join-row {
+    padding-top:35px;
+}
+
+.admin-main .join-row::after {
+    content:"";
+    display:block;
+    clear:both;
+}
+
+.admin-main .join-row div {
+    float:left;
+}
+
+.admin-main .join-row div span {
+    height:34px;
+    padding-top:1px;
+    font-weight:600;
+    font-size:14px;
+    color:rgba(29,27,28,0.87);
+    display:flex;
+    flex-direction:row;
+    justify-content:flex-start;
+    align-items:center;
+}
+
+.admin-main .join-row input {
+    float:right;
+}
+
+.admin-main .join-row input.btn {
+    height:34px;
+    margin:0 !important;
+    padding:0 15px;
+    border-radius:5px;
+    border:1px solid #26a735;
+    background-color:#2cc13d;
+    font-weight:500;
+    font-size:15px;
+    color:#fff;
+    display:flex;
+    flex-direction:row;
+    justify-content:center;
+    align-items:center;
+}
+
+.admin-main .join-row input.btn:active {
+    border:1px solid #26a735;
+    background-color:#2cc13d;
+}
+
+.admin-main .join-row input.btn:focus {
+    box-shadow:none !important;
+}
+
+.admin-main .admin-body {
+    padding-top:10px;
+    display:flex;
+    flex-flow:column;
+    justify-content:center;
+    align-items:center;
+}
+
+.admin-main .admin-body table {
+    table-layout:auto;
+    width:100%;
+    margin: 0;
+    border-collapse:collapse;
+    border-spacing:0;
+}
+
+.admin-main .admin-body table thead {
+    display:block;
+    width:100%;
+}
+.admin-main .admin-body table th {
+    width:20rem;
+    height:46px;
+    padding:0;
+    border-top:1px solid rgba(36,40,49,0.17);
+    border-bottom:1px solid rgba(36,40,49,0.17);
+    font-weight:600;
+    font-size:15px;
+    color:#0991da;
+    text-align:center;
+    vertical-align: middle !important;
+}
+
+.admin-main .admin-body table tbody {
+    display:block;
+    overflow-y:auto;
+    height:460px;
+}
+
+.admin-main .admin-body table tbody tr:hover {
+    background-color:rgba(8,149,225,0.07);
+    cursor:pointer;
+}
+
+.admin-main .admin-body table td {
+    width:20rem;
+    height:46px;
+    padding:0;
+    border-top:none;
+    border-bottom:1px solid rgba(36,40,49,0.17);
+    font-weight:600;
+    font-size:14px;
+    color:rgba(29,27,28,0.77);
+    text-align:center;
+    vertical-align:middle;
+}
+
+.admin-main .admin-body .table-footer {
+    padding:35px 0 0 0;
+    display:flex;
+    flex-direction:row;
+    justify-content:center;
+    align-items:center;
+}
+
+.admin-main .admin-body .table-footer .pagination {
+    padding:0;
+    border-radius:5px;
+}
+
+.admin-main .admin-body .table-footer .pagination li a {
+    min-width:34px;
+    height:34px;
+    padding:0 10px;
+    border:1px solid rgba(36,40,49,0.17);
+    background-color:#fff; font-weight:500;
+    font-size:14px; color:#0991da;
+    line-height:1.0 !important;
+    cursor:pointer;
+    display:flex;
+    flex-direction:row;
+    justify-content:center;
+    align-items:center;
+}
+
+.admin-main .admin-body .table-footer .pagination li a:focus {
+    box-shadow:none !important;
+}
+
+.admin-main .admin-body .table-footer .pagination li.active a {
+    background-color:#0895e1;
+    color:#fff;
+    cursor:text;
+}
+
+.admin-main .admin-body table tbody#flyRecList tr.selected {
+    background-color:rgba(8,149,225,0.07);
+    cursor:auto;
+}
