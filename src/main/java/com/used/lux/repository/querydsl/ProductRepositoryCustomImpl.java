@@ -1,6 +1,7 @@
 package com.used.lux.repository.querydsl;
 
 import com.querydsl.jpa.JPQLQuery;
+import com.used.lux.domain.constant.AppraisalGrade;
 import com.used.lux.domain.constant.GenterType;
 import com.used.lux.domain.constant.ProductState;
 import com.used.lux.domain.product.Product;
@@ -8,10 +9,12 @@ import com.used.lux.domain.product.QProduct;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 public class ProductRepositoryCustomImpl extends QuerydslRepositorySupport implements ProductRepositoryCustom {
 
@@ -82,6 +85,32 @@ public class ProductRepositoryCustomImpl extends QuerydslRepositorySupport imple
                         product.prodState.eq(ProductState.SELL)).limit(10)
                 .orderBy(product.createdAt.desc());
         return queryResult.fetch();
+    }
+
+    @Override
+    public Page<Product> findByBackProductList(String productBrand, String productGender, String productSize, String productGrade,
+                                               String productState, LocalDateTime productDate, String query, Pageable pageable) {
+        QProduct product = QProduct.product;
+
+        JPQLQuery<Product> queryResult = from(product)
+                .select(product)
+                .where(product.prodBrand.brandName.like("%"+productBrand+"%"),
+                        product.prodSize.like("%"+productSize+"%"),
+                        product.createdAt.after(productDate),
+                        product.prodNm.like("%"+query+"%"));
+        if (!Objects.equals(productGender, "")) {
+            queryResult.where(product.prodGender.eq(GenterType.valueOf(productGender)));
+        }
+        if (!Objects.equals(productGrade, "")) {
+            queryResult.where(product.prodGrade.eq(AppraisalGrade.valueOf(productGrade)));
+        }
+        if (!Objects.equals(productState, "")) {
+            queryResult.where(product.prodState.eq(ProductState.valueOf(productState)));
+        }
+
+        long totalCount = queryResult.fetchCount();
+        List<Product> results = getQuerydsl().applyPagination(pageable, queryResult).fetch();
+        return new PageImpl<Product>(results, pageable, totalCount);
     }
 
 }

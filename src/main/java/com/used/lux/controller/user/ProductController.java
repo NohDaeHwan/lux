@@ -110,13 +110,12 @@ public class ProductController {
 
         return "redirect:/product/success";
     }
+
     @GetMapping("/success")
     public String success(ModelMap mm) {
         List<CategoryBDto> categoryList = categoryBService.categoryList();
         mm.addAttribute("categoryList", categoryList);
         return "front/success";
     }
-
-
 
 }

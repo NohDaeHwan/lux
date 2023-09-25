@@ -10,13 +10,13 @@ public record AuctionLogDto(
         Long auctionId,
         Long productId,
         String productName,
-        int presentPrice,
+        long presentPrice,
         LocalDateTime createdAt,
         String createdBy,
         LocalDateTime modifiedAt,
         String modifiedBy
 ) {
-    public static AuctionLogDto of(Long id, String bidder, Long auctionId, Long productId, String productName, int presentPrice,
+    public static AuctionLogDto of(Long id, String bidder, Long auctionId, Long productId, String productName, long presentPrice,
                          LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
         return new AuctionLogDto(id, bidder, auctionId, productId, productName, presentPrice, createdAt, createdBy, modifiedAt, modifiedBy);
     }

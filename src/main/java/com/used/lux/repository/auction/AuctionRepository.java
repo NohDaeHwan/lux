@@ -15,7 +15,7 @@ public interface AuctionRepository extends JpaRepository<Auction, Long>, Auction
 
     Auction findByStartPrice(int startPrice);
 
-    @Query(value ="SELECT a FROM Auction a WHERE a.aucNm LIKE %:query%")
+    @Query(value ="SELECT a FROM Auction a WHERE a.prod.prodNm LIKE %:query%")
     List<Auction> findByQuery(@Param("query") String query, Pageable pageable);
 
     @Query(nativeQuery = true , value = "select * from auction where auc_end_date >= now() ORDER BY auc_end_date asc limit 1 ;")
@@ -38,23 +38,23 @@ public interface AuctionRepository extends JpaRepository<Auction, Long>, Auction
 
 //카테고리 서치
     //쿼리문 추가
-    @Query(value ="select a from Auction a where a.aucBrand.brandName Like %:productBrand% AND a.cateM.id =:mcategoryId and " +
-            "a.aucColor like %:productColor% and a.aucGender = :productGender " +
-            "and a.aucSize like %:productSize% and a.presentPrice between :minPrice and :maxPrice and" +
-            " a.aucGrade = :productGrade and a.aucNm LIKE %:query% ")
+    @Query(value ="select a from Auction a where a.prod.prodBrand.brandName Like %:productBrand% AND a.prod.cateM.id =:mcategoryId and " +
+            "a.prod.prodColor like %:productColor% and a.prod.prodGender = :productGender " +
+            "and a.prod.prodSize like %:productSize% and a.presentPrice between :minPrice and :maxPrice and" +
+            " a.prod.prodGrade = :productGrade and a.prod.prodNm LIKE %:query% ")
     List<Auction> searchAuctionBy(Long mcategoryId,String productColor,String productBrand,String productGender,String productSize,String productGrade,int maxPrice, int minPrice,String query);
 
     @Query(value ="SELECT a FROM Auction a WHERE a.aucState = :auctionState " +
-            "AND a.aucNm LIKE %:query%",
+            "AND a.prod.prodNm LIKE %:query%",
             countQuery = "SELECT a FROM Auction a WHERE a.aucState = :auctionState " +
-                    "AND a.aucNm LIKE %:query%")
+                    "AND a.prod.prodNm LIKE %:query%")
     Page<Auction> findByBackAuctionList(String auctionState, String query, Pageable pageable);
 
     @Query(value ="SELECT a FROM Auction a WHERE a.aucState = :auctionState " +
-            "AND a.aucNm LIKE %:query% " +
+            "AND a.prod.prodNm LIKE %:query% " +
             "AND a.aucStartDate >= :auctionDate",
             countQuery = "SELECT a FROM Auction a WHERE a.aucState = :auctionState " +
-                    "AND a.aucNm LIKE %:query% " +
+                    "AND a.prod.prodNm LIKE %:query% " +
                     "AND a.aucStartDate >= :auctionDate")
     Page<Auction> findByBackAuctionListDate(String auctionState, LocalDateTime auctionDate, String query, Pageable pageable);
 

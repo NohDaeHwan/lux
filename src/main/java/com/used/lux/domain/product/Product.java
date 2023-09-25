@@ -45,7 +45,7 @@ public class Product extends AuditingFields {
 	@Setter
 	@Column(name="prod_grade")
 	@Enumerated(EnumType.STRING)
-	private AppraisalGrade prodGrade; // A, B, C, F
+	private AppraisalGrade prodGrade; // S, A, B, F
 
 	@Setter
 	@OneToOne(fetch = FetchType.EAGER)

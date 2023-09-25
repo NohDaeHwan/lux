@@ -35,11 +35,11 @@ public class AuctionLog extends AuditingFields {
 
     @Setter
     @Column(name="present_price", nullable = false)
-    private int presentPrice; // 현재 가격
+    private long presentPrice; // 현재 가격
 
     protected AuctionLog() {}
 
-    private AuctionLog(String bidder, Long auctionId, Long productId, String productName, int presentPrice) {
+    private AuctionLog(String bidder, Long auctionId, Long productId, String productName, long presentPrice) {
         this.bidder = bidder;
         this.auctionId = auctionId;
         this.productId = productId;
@@ -47,7 +47,7 @@ public class AuctionLog extends AuditingFields {
         this.presentPrice = presentPrice;
     }
 
-    public static AuctionLog of(String bidder, Long auctionId, Long productId, String productName, int presentPrice) {
+    public static AuctionLog of(String bidder, Long auctionId, Long productId, String productName, long presentPrice) {
         return new AuctionLog(bidder, auctionId, productId, productName, presentPrice);
     }
 }

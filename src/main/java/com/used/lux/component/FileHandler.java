@@ -5,7 +5,7 @@ import com.used.lux.domain.appraisal.AppraisalImage;
 import com.used.lux.domain.appraisal.Appraisal;
 import com.used.lux.domain.product.Image;
 import com.used.lux.domain.product.Product;
-import com.used.lux.request.product.ProductCreateRequest;
+import com.used.lux.request.product.ProductSaveRequest;
 import com.used.lux.request.appraisal.AppraisalCreateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -26,25 +26,21 @@ public class FileHandler {
 
     private final AppConfig appConfig;
 
-	public List<Image> parseFileInfo(ProductCreateRequest productCreateRequest, Product product) throws Exception {
+	public List<Image> parseFileInfo(ProductSaveRequest productSaveRequest, Product product) throws Exception {
 		List<Image> imageList =  new ArrayList<>();
 
 		// 전달되어 온 파일이 존재할 경우
-        if(!CollectionUtils.isEmpty(productCreateRequest.images())) {
+        if(!CollectionUtils.isEmpty(productSaveRequest.images())) {
             // 파일명을 업로드 한 날짜로 변환하여 저장
             LocalDateTime now = LocalDateTime.now();
             DateTimeFormatter dateTimeFormatter =
                     DateTimeFormatter.ofPattern("yyyyMMdd");
             String current_date = now.format(dateTimeFormatter);
 
-            // 프로젝트 디렉터리 내의 저장을 위한 절대 경로 설정
-            // 경로 구분자 File.separator 사용
-            String absolutePath = new File("").getAbsolutePath() + File.separator + File.separator;
+            Path filePath = appConfig.getUploadPath();
 
             // 파일을 저장할 세부 경로 지정
-            String path = absolutePath + "src" + File.separator + "main" + File.separator + "resources" + File.separator +
-            		"static" + File.separator + "assets" + File.separator + "img" + File.separator +
-            		"product_img" + File.separator + current_date;
+            String path = filePath + File.separator + "product_img" + File.separator + current_date;
             File file = new File(path);
             System.out.println(path);
             System.out.println(file.exists());
@@ -60,7 +56,7 @@ public class FileHandler {
             }
 
             // 다중 파일 처리
-            for(MultipartFile multipartFile : productCreateRequest.images()) {
+            for(MultipartFile multipartFile : productSaveRequest.images()) {
 
                     // 파일의 확장자 추출
                     String originalFileExtension;
@@ -86,17 +82,14 @@ public class FileHandler {
                     Image image = Image.builder()
                             .product(product)
                             .origFileName(multipartFile.getOriginalFilename())
-                            .filePath("/static/assets/img/product_img/" + current_date + "/" + new_file_name)
+                            .filePath("/filepath/product_img/" + current_date + "/" + new_file_name)
                             .fileSize(multipartFile.getSize())
                             .build();
 
                     // 생성 후 리스트에 추가
                     imageList.add(image);
 
-                    // 업로드 한 파일 데이터를 지정한 파일에 저장
-                    file = new File(absolutePath + "src" + File.separator + "main" + File.separator + "resources" + File.separator +
-                    		"static" + File.separator + "assets" + File.separator + "img" + File.separator +
-                    		"product_img" + File.separator + current_date + File.separator + new_file_name);
+                    file = new File(path + File.separator + new_file_name);
                     multipartFile.transferTo(file);
 
                     // 파일 권한 설정(쓰기, 읽기)

@@ -66,28 +66,34 @@ public class WebSocketService extends TextWebSocketHandler {
                 userAccount = userAccountRepository.findByUserName(data[1]);
                 userAccount.setPoint(userAccount.getPoint()-Integer.parseInt(data[2]));
                 userAccountRepository.save(userAccount);
-                userAccountLogRepository.save(UserAccountLog.of(null, userAccount.getUserEmail(), userAccount.getUserGrade(),
-                        Integer.parseInt(data[2]), "차감", "경매/"+data[0]));
+                userAccountLogRepository.save(UserAccountLog.builder()
+                                .id(null).userEmail(userAccount.getUserEmail()).userGrade(userAccount.getUserGrade())
+                                .point(Long.parseLong(data[2])).usageDetail("차감").saleNumber("경매/"+data[0])
+                                .build());
             } else {
                 // 새로 입찰 한 사람
                 userAccount = userAccountRepository.findByUserName(data[1]);
                 userAccount.setPoint(userAccount.getPoint()-Integer.parseInt(data[2]));
                 userAccountRepository.save(userAccount);
-                userAccountLogRepository.save(UserAccountLog.of(null, userAccount.getUserEmail(), userAccount.getUserGrade(),
-                        Integer.parseInt(data[2]), "차감", "경매/"+data[0]));
+                userAccountLogRepository.save(UserAccountLog.builder()
+                                .id(null).userEmail(userAccount.getUserEmail()).userGrade(userAccount.getUserGrade())
+                                .point(Long.parseLong(data[2])).usageDetail("차감").saleNumber("경매/"+data[0])
+                                .build());
 
                 // 전에 입찰 한 사람
                 UserAccount beforeUserAccount = userAccountRepository.findByUserName(auction.getBidder());
                 beforeUserAccount.setPoint(beforeUserAccount.getPoint()+auction.getPresentPrice());
                 userAccountRepository.save(beforeUserAccount);
-                userAccountLogRepository.save(UserAccountLog.of(null, beforeUserAccount.getUserEmail(), beforeUserAccount.getUserGrade(),
-                        auction.getPresentPrice(), "충전", "경매/"+data[0]));
+                userAccountLogRepository.save(UserAccountLog.builder()
+                        .id(null).userEmail(userAccount.getUserEmail()).userGrade(userAccount.getUserGrade())
+                        .point(auction.getPresentPrice()).usageDetail("충전").saleNumber("경매/"+data[0])
+                        .build());
             }
 
 
             auction.setBidder(data[1]);
             auction.setPresentPrice(Integer.parseInt(data[2]));
-            auction.setBiddingCount(auction.getBiddingCount()+1);
+            auction.setBiddingCnt(auction.getBiddingCnt()+1);
             auctionRepository.save(auction);
 //            auctionLogRepository.save(AuctionLog.of(data[1], auction.getId(), auction.getProduct().getId(), "수정해야함", Integer.parseInt(data[2])));
     }

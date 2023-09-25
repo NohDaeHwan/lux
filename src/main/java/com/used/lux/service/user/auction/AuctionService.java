@@ -3,6 +3,7 @@ package com.used.lux.service.user.auction;
 import com.used.lux.domain.State;
 import com.used.lux.domain.auction.Auction;
 import com.used.lux.domain.constant.AuctionState;
+import com.used.lux.domain.product.Product;
 import com.used.lux.dto.user.auction.AuctionDto;
 import com.used.lux.mapper.AuctionMapper;
 import com.used.lux.repository.auction.AuctionRepository;
@@ -55,8 +56,9 @@ public class AuctionService {
 
     public AuctionDto auctionFind(Long id) {
         Auction auction = auctionRepository.getReferenceById(id);
-        auction.setAucViewCnt(auction.getAucViewCnt()+1);
-        return auctionMapper.toDto(auctionRepository.save(auction));
+        auction.getProd().setProdViewCnt(auction.getProd().getProdViewCnt()+1);
+        productRepository.save(auction.getProd());
+        return auctionMapper.toDto(auction);
     }
 
     /*public Integer auctionUpdate(Long auctionId, AuctionDto auctionDto, String userEmail) {

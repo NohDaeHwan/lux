@@ -12,6 +12,7 @@ import com.used.lux.dto.user.useraccount.UserAccountLogDto;
 import com.used.lux.dto.UserGradeDto;
 import com.used.lux.dto.user.useraccount.UserWithdrawalDto;
 import com.used.lux.mapper.AppraisalMapper;
+import com.used.lux.mapper.UserAccountLogMapper;
 import com.used.lux.mapper.UserAccountMapper;
 import com.used.lux.mapper.UserGradeMapper;
 import com.used.lux.repository.*;
@@ -41,6 +42,8 @@ public class AdUserAccountService {
 
     private final UserAccountRepository userAccountRepo;
     private final UserAccountMapper userAccountMapper;
+    private final UserAccountLogMapper userAccountLogMapper;
+
     private final AppraisalRequestLogRepository appraisalRequestLogRepository;
 
     private final ProductOrderLogRepository productOrderLogRepository;
@@ -89,7 +92,7 @@ public class AdUserAccountService {
                 .stream().map(AuctionLogDto::from).collect(Collectors.toCollection(ArrayList::new));
         // 포인트 내역
         List<UserAccountLogDto> userAccountLogDtos = userAccountLogRepository.findByUserEmail(userAccountDto.userEmail())
-                .stream().map(UserAccountLogDto::from).collect(Collectors.toCollection(ArrayList::new));
+                .stream().map(userAccountLogMapper::toDto).collect(Collectors.toCollection(ArrayList::new));
 
         List<AppraisalRequestLogDto> userAppraisalLogDtos = appraisalRequestLogRepository.findByUserIdOrderByModifiedAtDesc(userAccountDto.id())
                 .stream().map(AppraisalRequestLogDto::from).collect(Collectors.toCollection(ArrayList::new));

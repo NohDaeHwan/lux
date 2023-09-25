@@ -17,4 +17,6 @@ public interface CategoryMRepository extends JpaRepository<CategoryM, Long> {
 
     @Query(nativeQuery = true, value = "SELECT * FROM category_m LIMIT 1")
     CategoryM findByOneCategory();
+
+    List<CategoryM> findByCateB_Id(Long cateBId);
 }

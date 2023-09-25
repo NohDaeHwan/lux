@@ -23,5 +23,5 @@ public interface AuctionLogRepository extends JpaRepository<AuctionLog, Long> {
             "a.endPrice, al.createdAt, al.createdBy, al.modifiedAt, al.modifiedBy) " +
             "FROM AuctionLog al INNER JOIN Auction a ON al.auctionId = a.id " +
             "WHERE al.bidder = :bidder")
-    List<AuctionMypageLogDto> findByBidder(String bidder, Pageable pageable);
+    Page<AuctionMypageLogDto> findByBidder(String bidder, Pageable pageable);
 }

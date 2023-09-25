@@ -24,9 +24,9 @@
                         <h5 class="card-title">검색 조건</h5>
                         <form class="search-form" action="/admin/product">
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label">판매상태</label>
+                                <label for="productSellType" class="col-sm-2 col-form-label">판매상태</label>
                                 <div class="col-sm-10">
-                                    <select class="form-select" name="productSellType">
+                                    <select class="form-select" name="productSellType" id="productSellType">
                                         <option value="" selected>전체</option>
                                         <option value="중고">중고</option>
                                         <option value="경매">경매</option>
@@ -34,43 +34,40 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label">브랜드</label>
+                                <label for="productBrand" class="col-sm-2 col-form-label">브랜드</label>
                                 <div class="col-sm-10">
-                                    <select class="form-select" name="productBrand">
+                                    <select class="form-select" name="productBrand" id="productBrand">
                                         <option value="" selected>전체</option>
-                                        <option th:each="brand : ${productSearchResponse.brandDtos()}" th:value="${brand.brandName()}" th:text="${brand.brandName}">example</option>
+                                        <option th:each="brand : ${brandList}" th:value="${brand.id}" th:text="${brand.brandName}">example</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label">성별</label>
+                                <label for="productGender" class="col-sm-2 col-form-label">성별</label>
                                 <div class="col-sm-10">
-                                    <select class="form-select" name="productGender">
+                                    <select class="form-select" name="productGender" id="productGender">
                                         <option value="" selected>전체</option>
-                                        <option value="공용">공용</option>
-                                        <option value="남자">남자</option>
-                                        <option value="여자">여자</option>
+                                        <option value="COMMON">공용</option>
+                                        <option value="MALE">남자</option>
+                                        <option value="FEMALE">여자</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label">사이즈</label>
+                                <label for="productSize" class="col-sm-2 col-form-label">사이즈</label>
                                 <div class="col-sm-10">
-                                    <select class="form-select" name="productSize">
+                                    <select class="form-select" name="productSize" id="productSize">
                                         <option value="" selected>전체</option>
                                         <option th:each="num : ${#numbers.sequence(90,290, 5)}" th:value="${num}" th:text="${num}">14</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label">상품등급</label>
+                                <label for="productGrade" class="col-sm-2 col-form-label">상품등급</label>
                                 <div class="col-sm-10">
-                                    <select class="form-select" name="productGrade">
+                                    <select class="form-select" name="productGrade" id="productGrade">
                                         <option value="" selected>전체</option>
-                                        <option value="S">S</option>
-                                        <option value="A">A</option>
-                                        <option value="B">B</option>
-                                        <option value="C">C</option>
+                                        <option th:each="grade : ${gradeList}" th:value="${grade}" th:text="${grade}">example</option>
                                     </select>
                                 </div>
                             </div>
@@ -79,8 +76,7 @@
                                 <div class="col-sm-10">
                                     <select class="form-select" name="productState">
                                         <option value="" selected>전체</option>
-                                        <option th:each="state : ${productSearchResponse.stateDtos()}" th:if="${state.stateName().contains('상품')}"
-                                                th:value="${state.stateStep()}" th:text="${state.stateStep}">example</option>
+                                        <option th:each="state : ${stateList}" th:value="${state}" th:text="${state}">example</option>
                                     </select>
                                 </div>
                             </div>
@@ -106,7 +102,7 @@
         <nav style="--bs-breadcrumb-divider: '|';">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item active">검색결과</li>
-                <li class="breadcrumb-item active" th:text="'('+${productResponses.totalElements}+') 건'">(3) 건</li>
+                <li class="breadcrumb-item active" th:text="'('+${productList.totalElements}+') 건'">(3) 건</li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
@@ -134,16 +130,16 @@
                             </thead>
                             <tbody>
                             <!--테이블 한행 자체에 링크-->
-                            <tr th:each="productResponse : ${productResponses}" th:onclick="|location.href='@{/admin/product/product-detail/{productId}(productId=${productResponse.id})}'|">
+                            <tr th:each="product : ${productList}" th:onclick="|location.href='@{/admin/product/product-detail/{productId}(productId=${product.id})}'|">
                                 <th scope="row">
-                                    <a th:href="@{/admin/product/product-detail/{productId}(productId=${productResponse.id})}" th:text="${productResponse.productName}">user1@mail.com</a>
+                                    <a th:href="@{/admin/product/product-detail/{productId}(productId=${product.id})}" th:text="${product.prodNm}">user1@mail.com</a>
                                 </th>
-                                <td th:text="${productResponse.productBrandName}">Brandon Jacob</td>
-                                <td th:text="${productResponse.productGender}">Designer</td>
-                                <td th:text="${productResponse.productSize}">Designer</td>
-                                <td th:text="${#numbers.formatInteger(productResponse.productPrice,3,'COMMA')}+ '원'">28</td>
-                                <td th:text="${productResponse.productGrade}">28</td>
-                                <td th:text="${productResponse.productState.stateStep}">2016-05-25</td>
+                                <td th:text="${product.prodBrand}">Brandon Jacob</td>
+                                <td th:text="${product.prodGender}">Designer</td>
+                                <td th:text="${product.prodSize}">Designer</td>
+                                <td th:text="${#numbers.formatInteger(product.prodPrice,3,'COMMA')}+ '원'">28</td>
+                                <td th:text="${product.prodGrade}">28</td>
+                                <td th:text="${product.prodState}">2016-05-25</td>
                             </tr>
                             </tbody>
                         </table>
@@ -159,23 +155,23 @@
     <nav id="pagination" aria-label="Page navigation example">
         <ul class="pagination">
             <li class="page-item">
-                <a class="page-link" th:href="@{/admin/product(page=${productResponses.number - 1}, sort=(${param.sort} != null ? ${param.sort} : '') + (${productResponses.sort.getOrderFor('param.sort')} != null ? (${productResponses.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
-                      query=${param.query})}" aria-label="Previous" th:class="'page-link' + (${productResponses.number} <= 0 ? ' disabled' : '')">
+                <a class="page-link" th:href="@{/templates/admin/product(page=${productList.number - 1}, sort=(${param.sort} != null ? ${param.sort} : '') + (${productList.sort.getOrderFor('param.sort')} != null ? (${productList.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
+                      query=${param.query})}" aria-label="Previous" th:class="'page-link' + (${productList.number} <= 0 ? ' disabled' : '')">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
             <li class="page-item" th:each="pageNumber : ${paginationBarNumbers}">
                 <a th:text="${pageNumber + 1}"
-                   th:href="@{/admin/product(page=${pageNumber},
-                          sort=(${param.sort} != null ? ${param.sort} : '') + (${productResponses.sort.getOrderFor('param.sort')} != null ? (${productResponses.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
+                   th:href="@{/templates/admin/product(page=${pageNumber},
+                          sort=(${param.sort} != null ? ${param.sort} : '') + (${productList.sort.getOrderFor('param.sort')} != null ? (${productList.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
                           query=${param.query}
                       )}"
-                   th:class="'page-link' + (${pageNumber} == ${productResponses.number} <= 0 ? ' disabled' : '')">
+                   th:class="'page-link' + (${pageNumber} == ${productList.number} <= 0 ? ' disabled' : '')">
                 </a>
             </li>
             <li class="page-item">
-                <a class="page-link" th:href="@{/admin/product(page=${productResponses.number + 1}, sort=(${param.sort} != null ? ${param.sort} : '') + (${productResponses.sort.getOrderFor('param.sort')} != null ? (${productResponses.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
-                      query=${param.query})}" aria-label="Next" th:class="'page-link' + (${productResponses.number} >= ${productResponses.totalPages - 1} ? ' disabled' : '')">
+                <a class="page-link" th:href="@{/templates/admin/product(page=${productList.number + 1}, sort=(${param.sort} != null ? ${param.sort} : '') + (${productList.sort.getOrderFor('param.sort')} != null ? (${productList.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
+                      query=${param.query})}" aria-label="Next" th:class="'page-link' + (${productList.number} >= ${productList.totalPages - 1} ? ' disabled' : '')">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>
@@ -183,47 +179,7 @@
     </nav><!-- End Pagination with icons -->
 
 </main><!-- End #main -->
-<!--<script th:inline="javascript">
-    &lt;!&ndash; 검색폼 스크립트 (user용) &ndash;&gt;
-
-    /*<![CDATA[*/
-
-    function g_by(column) {
-        columnArr = ["productSellType","productBrandName","productGender","productSize","productGrade"];
-        let num;
-        let fine_index = columnArr.map((item,index)=>{
-            if (item === column) {
-                num = index;
-            }
-        })
-        console.log(num)
-        let productResponses = [[${productResponses.content}]]
-        console.log(productResponses)
-        let newArr = [];
-        let cls = document.querySelectorAll(".form-select")[num];
-        console.log("functioncall",cls);
-        productResponses.map((item,index)=>{
-            newArr.push(item[column]);
-        })
-        let groupby = newArr.filter((item,index)=> {
-            return newArr.indexOf(item) === index
-        });
-        let result = groupby.sort().map((item,index)=>{
-            cls.innerHTML += `<option value="${index}">${item}</option>`;
-            return cls.innerHTML;
-        })
-        return cls.innerHTML
-    }
-    g_by("productSellType");
-    g_by("productBrandName");
-    g_by("productGender")
-    g_by("productSize");
-    g_by("productGrade");
-    /*]]>*/
-
-</script>-->
 <th:block th:replace="layout/footer :: #footer">
-
 </th:block>
 
 </body>

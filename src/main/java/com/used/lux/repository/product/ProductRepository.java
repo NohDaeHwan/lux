@@ -28,7 +28,8 @@ public interface ProductRepository extends JpaRepository<Product, Long>, Product
     Page<Product> findByFrontProductList(String productBrand,String productColor, String productGender,
                                          String productSize, String productGrade, int maxPrice, int minPrice,
                                          String query, Pageable pageable);
-    @Query(value ="SELECT p FROM Product p WHERE p.prodBrand.brandName LIKE %:productBrand% " +
+
+    /*@Query(value ="SELECT p FROM Product p WHERE p.prodBrand.brandName LIKE %:productBrand% " +
             "AND p.prodGender = :productGender AND p.prodNm LIKE %:query% " +
             "AND p.prodSize LIKE %:productSize% AND p.prodState = :productState " +
             "AND p.prodGrade = :productGrade AND p.createdAt >= :productDate",
@@ -38,7 +39,7 @@ public interface ProductRepository extends JpaRepository<Product, Long>, Product
                     "AND p.prodGrade = :productGrade AND p.createdAt >= :productDate")
     Page<Product> findByBackProductList(String productBrand, String productGender,
                                         String productSize, String productGrade, String productState,
-                                        LocalDateTime productDate, String query, Pageable pageable);
+                                        LocalDateTime productDate, String query, Pageable pageable);*/
 
     @Query(value ="SELECT p FROM Product p WHERE p.prodBrand.brandName LIKE %:productBrand% AND " +
             "p.prodColor LIKE %:productColor% AND p.prodGender = :productGender " +

@@ -1,32 +1,24 @@
 package com.used.lux.dto.user.product;
 
-import com.used.lux.domain.*;
+import lombok.Builder;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Builder
 public record ProductDto(
         Long id,
-        Long appraisalId,
-        String productName,
-        Long productBrandId,
-        String productBrandName,
-        String productGender,
-        String productColor,
-        String productSize,
-        int appraisalPrice,
-        String appraisalComment,
-        String productGrade,
-        Long categoryBId,
-        String categoryBName,
-        Long categoryMId,
-        String categoryMName,
-        State productState,
-        int productPrice,
-        String productSellType,
-        String productContent,
-        int productViewCount,
-        List<ImageDto> imageDtos,
+        String prodNm,
+        String prodBrand,
+        String prodGender,
+        String prodColor,
+        String prodSize,
+        String prodGrade,
+        String prodState,
+        Long prodPrice,
+        String prodContent,
+        int prodViewCnt,
+        List<ImageDto> images,
         LocalDateTime createdAt,
         String createdBy,
         LocalDateTime modifiedAt,

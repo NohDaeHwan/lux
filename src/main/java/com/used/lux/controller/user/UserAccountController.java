@@ -115,7 +115,7 @@ public class UserAccountController {
         UserAccountDto userAccount = userAccountService.getUser(principal.id());
         UserGradeDto nextGrade = userGradeService.getNextGrade(principal.userGrade().getGradeStep());
         List<UserGradeDto> gradeList = userGradeService.getGradeList();
-        List<AuctionMypageLogDto> auctionLogDtoPage = auctionLogService.searchAuctionLog(principal.userName(),pageable);
+        Page<AuctionMypageLogDto> auctionLogDtoPage = auctionLogService.searchAuctionLog(principal.userName(),pageable);
         Long totalPoint = userAccountLogService.getTotalPoint(principal.userEmail());
 
         mm.addAttribute("users", userAccount);

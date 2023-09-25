@@ -8,7 +8,8 @@ public enum AppraisalState {
     COMPLETE("검수완료"),
     REJECT("매입거부"),
     REFUSE_TO_SELL("판매거절"),
-    SELL("매입완료");
+    SELL("매입완료"),
+    REGISTER("상품등록");
 
     @Getter
     private final String name;

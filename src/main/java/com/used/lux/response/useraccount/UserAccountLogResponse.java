@@ -9,7 +9,7 @@ public record UserAccountLogResponse(
         String userEmail,
         String gradeName,
         int discount,
-        int point,
+        long point,
         String usageDetail,
         String saleNumber,
         LocalDateTime createdAt,

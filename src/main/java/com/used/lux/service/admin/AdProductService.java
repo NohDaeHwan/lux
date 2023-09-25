@@ -2,6 +2,8 @@ package com.used.lux.service.admin;
 
 import com.used.lux.component.FileHandler;
 import com.used.lux.domain.*;
+import com.used.lux.domain.constant.AppraisalGrade;
+import com.used.lux.domain.constant.GenterType;
 import com.used.lux.domain.constant.ProductState;
 import com.used.lux.domain.product.Image;
 import com.used.lux.domain.product.Product;
@@ -22,7 +24,7 @@ import com.used.lux.repository.order.ProductOrderLogRepository;
 import com.used.lux.repository.product.ImageRepository;
 import com.used.lux.repository.product.ProductLogRepository;
 import com.used.lux.repository.product.ProductRepository;
-import com.used.lux.request.product.ProductCreateRequest;
+import com.used.lux.request.product.ProductSaveRequest;
 import com.used.lux.request.product.ProductUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -77,14 +79,14 @@ public class AdProductService {
         LocalDateTime date = LocalDateTime.of(Integer.parseInt(dateResult[0]),
                 Integer.parseInt(dateResult[1]), Integer.parseInt(dateResult[2]), 00, 00);
         return productRepository.findByBackProductList(productBrand, productGender, productSize,
-                productGrade, productState, date, query, pageable).map(productMapper::toDto);
+                productGrade, productState, date, query, pageable).map(productMapper::toDtoCustom);
     }
 
     // 상품 세부사항
     @Transactional(readOnly = true)
     public AdProductDto getProductDetail(Long productId) {
         // 상품 상세
-        ProductDto productDto = productMapper.toDto(productRepository.findById(productId).orElse(null));
+        ProductDto productDto = productMapper.toDtoCustom(productRepository.findById(productId).orElse(null));
         // 수정 로그(수정 전)
         List<ProductLogDto> productLogDtos = productLogRepository.findByProductIdOrderByCreatedAtDesc(productId)
                 .stream().map(ProductLogDto::from).collect(Collectors.toCollection(ArrayList::new));
@@ -112,19 +114,25 @@ public class AdProductService {
 
     // Admin 상품 등록
     @Transactional
-    public void productCreate(ProductCreateRequest request) throws Exception {
-        Product product = productRepository.getReferenceById(request.productId());
-        Brand brand = brandRepository.findById(request.brandId()).orElse(null);
-        CategoryB categoryB = cateBRepo.findById(request.categoryBId()).orElse(null);
-        CategoryM categoryM = categoryMRepository.findById(request.categoryMId()).orElse(null);
+    public void productCreate(ProductSaveRequest request) throws Exception {
+        Brand brand = brandRepository.findById(request.prodBrandId()).orElse(null);
+        CategoryB categoryB = cateBRepo.findById(request.cateBId()).orElse(null);
+        CategoryM categoryM = categoryMRepository.findById(request.cateMId()).orElse(null);
 
-        product.setProdNm(request.productName());
-        product.setProdPrice(request.productPrice());
-        product.setProdBrand(brand);
-        product.setProdState(ProductState.WAITING);
-        product.setCateB(categoryB);
-        product.setCateM(categoryM);
-        product.setProdContent(request.productContent());
+        Product product = Product.builder()
+                .prodNm(request.prodNm())
+                .cateB(categoryB)
+                .cateM(categoryM)
+                .prodBrand(brand)
+                .prodSize(request.prodSize())
+                .prodColor(request.prodColor())
+                .prodState(ProductState.WAITING)
+                .prodGender(GenterType.valueOf(request.prodGenderId()))
+                .prodGrade(AppraisalGrade.valueOf(request.prodGradeId()))
+                .prodPrice(request.prodPrice())
+                .prodContent(request.prodContent())
+                .build();
+        productRepository.save(product);
 
         List<Image> imageList = fileHandler.parseFileInfo(request, product); // 파일 처리
         // 파일이 존재할 때에만 처리

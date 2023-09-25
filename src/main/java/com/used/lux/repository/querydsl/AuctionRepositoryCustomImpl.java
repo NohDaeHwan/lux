@@ -28,14 +28,14 @@ public class AuctionRepositoryCustomImpl extends QuerydslRepositorySupport imple
             queryResult = from(auction)
                     .select(auction)
                     .where(auction.aucState.eq(AuctionState.valueOf(auctionState)),
-                            auction.aucNm.like("%"+query+"%"));
+                            auction.prod.prodNm.like("%"+query+"%"));
         } else {
             String[] dateResult = auctionDate.split("-");
 
             queryResult = from(auction)
                     .select(auction)
                     .where(auction.aucState.eq(AuctionState.valueOf(auctionState)),
-                            auction.aucNm.like("%"+query+"%"),
+                            auction.prod.prodNm.like("%"+query+"%"),
                             auction.aucStartDate.after(LocalDateTime.of(Integer.parseInt(dateResult[0]),
                                     Integer.parseInt(dateResult[1]), Integer.parseInt(dateResult[2]), 00, 00)));
         }
@@ -53,11 +53,11 @@ public class AuctionRepositoryCustomImpl extends QuerydslRepositorySupport imple
 
         JPQLQuery<Auction> queryResult = from(auction)
                 .select(auction)
-                .where(auction.aucColor.like("%"+auctionColor+"%"),
-                        auction.aucBrand.brandName.eq("%"+auctionBrand+"%"),
-                        auction.aucGender.eq(GenterType.valueOf(auctionGender)),
-                        auction.aucSize.like("%"+auctionSize+"%"),
-                        auction.aucNm.like("%"+query+"%"),
+                .where(auction.prod.prodColor.like("%"+auctionColor+"%"),
+                        auction.prod.prodBrand.brandName.eq("%"+auctionBrand+"%"),
+                        auction.prod.prodGender.eq(GenterType.valueOf(auctionGender)),
+                        auction.prod.prodSize.like("%"+auctionSize+"%"),
+                        auction.prod.prodNm.like("%"+query+"%"),
                         auction.presentPrice.gt(Integer.parseInt(minPrice)),
                         auction.presentPrice.lt(Integer.parseInt(maxPrice)))
                 .orderBy(auction.createdAt.desc());
@@ -72,11 +72,11 @@ public class AuctionRepositoryCustomImpl extends QuerydslRepositorySupport imple
 
         JPQLQuery<Auction> queryResult = from(auction)
                 .select(auction)
-                .where( auction.cateM.id.eq(mcategoryId),
-                        auction.aucColor.like("%"+auctionColor+"%"),
-                        auction.aucGender.eq(GenterType.valueOf(auctionGender)),
-                        auction.aucSize.like("%"+auctionSize+"%"),
-                        auction.aucNm.like("%"+query+"%"),
+                .where( auction.prod.cateM.id.eq(mcategoryId),
+                        auction.prod.prodColor.like("%"+auctionColor+"%"),
+                        auction.prod.prodGender.eq(GenterType.valueOf(auctionGender)),
+                        auction.prod.prodSize.like("%"+auctionSize+"%"),
+                        auction.prod.prodNm.like("%"+query+"%"),
                         auction.presentPrice.gt(Integer.parseInt(minPrice)),
                         auction.presentPrice.lt(Integer.parseInt(maxPrice)),
                         auction.aucState.eq(AuctionState.SELL)).limit(10)

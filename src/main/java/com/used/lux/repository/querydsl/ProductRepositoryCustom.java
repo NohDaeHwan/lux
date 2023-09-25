@@ -4,6 +4,7 @@ import com.used.lux.domain.product.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ProductRepositoryCustom {
@@ -17,4 +18,7 @@ public interface ProductRepositoryCustom {
 
     List<Product> findByCategoryQuery(Long mcategoryId, String productColor, String productBrand, String productGender, String productSize,
                                       String productGrade, String maxPrice, String minPrice, String query, Pageable pageable);
+
+    Page<Product> findByBackProductList(String productBrand, String productGender, String productSize, String productGrade, String productState,
+                                        LocalDateTime productDate, String query, Pageable pageable);
 }

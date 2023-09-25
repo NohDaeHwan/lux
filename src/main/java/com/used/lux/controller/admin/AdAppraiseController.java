@@ -5,12 +5,12 @@ import com.used.lux.dto.CategoryBDto;
 import com.used.lux.dto.security.Principal;
 import com.used.lux.dto.user.appraisal.AppraisalDto;
 import com.used.lux.request.appraisal.AppraisalCommentRequest;
-import com.used.lux.response.SearchResponse;
+import com.used.lux.service.BrandService;
 import com.used.lux.service.CategoryBService;
 import com.used.lux.service.PaginationService;
-import com.used.lux.service.SearchService;
 import com.used.lux.service.admin.AdAppraiseService;
 import com.used.lux.service.admin.AdProductService;
+import com.used.lux.service.user.product.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -36,9 +36,11 @@ public class AdAppraiseController {
 
     private final PaginationService paginationService;
 
-    private final SearchService searchService;
-
     private final CategoryBService categoryBService;
+
+    private final ProductService productService;
+
+    private final BrandService brandService;
 
     // 검수기록
     @GetMapping
@@ -61,11 +63,9 @@ public class AdAppraiseController {
                 query, pageable);
         List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(),
                 appraisalList.getTotalPages());
-        SearchResponse searchResponse = searchService.getSearchList();
 
         mm.addAttribute("paginationBarNumbers", barNumbers);
         mm.addAttribute("appraisalList", appraisalList);
-        mm.addAttribute("appraisalSearchResponse", searchResponse);
         return "/admin/appraisal/appraisal-main";
     }
 
@@ -139,11 +139,25 @@ public class AdAppraiseController {
             return "redirect:/";
         }
         Page<AppraisalDto> appraisalList = adAppraiseService.getAppraiseList(pageable);
+        List<BrandDto> brandList = brandService.brandList();
         List<CategoryBDto> cateBList = categoryBService.categoryList();
+        List<String> gradeList = productService.gradeList();
 
         mm.addAttribute("appraisalList", appraisalList);
         mm.addAttribute("cateBList", cateBList);
+        mm.addAttribute("gradeList", gradeList);
+        mm.addAttribute("brandList", brandList);
         return "/admin/appraisal/product-create";
     }
 
+    @ResponseBody
+    @PostMapping("/product/new")
+    public ResponseEntity<?> appraiseProductAdd(@AuthenticationPrincipal Principal principal,
+                                                @PageableDefault(size = 30) Pageable pageable) {
+        if (principal.role().getName() != "ROLE_ADMIN") {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("권한없음");
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body("성공");
+    }
 }

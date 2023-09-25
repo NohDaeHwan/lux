@@ -1,5 +1,6 @@
 package com.used.lux.controller.admin;
 
+import com.used.lux.domain.constant.ProductState;
 import com.used.lux.dto.BrandDto;
 import com.used.lux.dto.CategoryBDto;
 import com.used.lux.dto.CategoryMDto;
@@ -8,16 +9,17 @@ import com.used.lux.dto.security.Principal;
 import com.used.lux.dto.user.product.ProductDto;
 import com.used.lux.request.BrandCreateRequest;
 import com.used.lux.request.CategoryCreateRequest;
-import com.used.lux.request.product.ProductCreateRequest;
+import com.used.lux.request.product.ProductSaveRequest;
 import com.used.lux.request.product.ProductUpdateRequest;
-import com.used.lux.response.product.ProductResponse;
-import com.used.lux.response.SearchResponse;
 import com.used.lux.service.*;
 import com.used.lux.service.admin.AdProductService;
+import com.used.lux.service.user.product.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -38,11 +40,9 @@ public class AdProductController {
 
     private final CategoryMService categoryMService;
 
-
+    private final ProductService productService;
 
     private final PaginationService paginationService;
-
-    private final SearchService searchService;
 
 
     // 상품 리스트
@@ -61,17 +61,22 @@ public class AdProductController {
             return "redirect:/";
         }
 
-        Page<ProductDto> productResponses = adProductService.getProductList(
+        Page<ProductDto> productList = adProductService.getProductList(
                 productBrand, productGender, productSize, productGrade, productState,
                 productDate, query, pageable);
 
-        List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), productResponses.getTotalPages());
-        SearchResponse searchResponse = searchService.getSearchList();
+        List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), productList.getTotalPages());
+        List<BrandDto> brandList = adProductService.getBrandList();
+        List<String> gradeList = productService.gradeList();
+        List<String> stateList = productService.stateList();
+
 
         mm.addAttribute("paginationBarNumbers", barNumbers);
-        mm.addAttribute("productResponses", productResponses);
-        mm.addAttribute("productSearchResponse", searchResponse);
-        return "/admin/product";
+        mm.addAttribute("productList", productList);
+        mm.addAttribute("brandList", brandList);
+        mm.addAttribute("gradeList", gradeList);
+        mm.addAttribute("stateList", stateList);
+        return "/admin/product/product-main";
     }
 
     // 상품 상세정보
@@ -86,7 +91,7 @@ public class AdProductController {
         AdProductDto productDetail = adProductService.getProductDetail(productId);
         mm.addAttribute("productDetail", productDetail);
 
-        if (productDetail.productDto().productState().getStateStep().equals("신규")) {
+        if (productDetail.productDto().prodState().equals("WAITING")) {
             List<BrandDto> brandDto = adProductService.getBrandList();
             List<CategoryBDto> categoryBDtos = adProductService.getCategoryList();
             List<CategoryMDto> categoryMDtos = categoryMService.getMiddleCategoryList();
@@ -103,14 +108,14 @@ public class AdProductController {
     // 상품 상세정보
     @PostMapping("/product-detail/new")
     public String productDetailNew(@AuthenticationPrincipal Principal principal,
-                                   ProductCreateRequest productCreateRequest,
+                                   ProductSaveRequest productSaveRequest,
                                    ModelMap mm) throws Exception {
         if (principal.role().getName() != "ROLE_ADMIN") {
             return "redirect:/";
         }
 
-        adProductService.productCreate(productCreateRequest);
-        return "redirect:/admin/product/product-detail/"+productCreateRequest.productId();
+        adProductService.productCreate(productSaveRequest);
+        return "redirect:/admin/product/product-detail/";
     }
 
     // 상품 상세정보 수정 페이지
@@ -132,6 +137,19 @@ public class AdProductController {
         mm.addAttribute("categoryBDtos", categoryBDtos);
         mm.addAttribute("categoryMDtos", categoryMDtos);
         return "/admin/product-detail-update";
+    }
+
+    @ResponseBody
+    @PostMapping("/save")
+    public ResponseEntity<?> productDetailUpdate(@AuthenticationPrincipal Principal principal,
+                                              ProductSaveRequest productSaveRequest) throws Exception {
+        if (principal.role().getName() != "ROLE_ADMIN") {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("권한없음");
+        }
+
+        System.out.println(productSaveRequest);
+        adProductService.productCreate(productSaveRequest);
+        return ResponseEntity.status(HttpStatus.OK).body("성공");
     }
 
     // 상품 상세정보 업데이트

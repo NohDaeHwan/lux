@@ -67,43 +67,28 @@
 
                         <!-- General Form Elements -->
                         <div class="row mb-3">
+                            <legend class="col-form-label col-sm-2 pt-0">판매그룹</legend>
+                            <div class="col-sm-10">
+
+                                <div class="form-check" style="display: inline !important;">
+                                    <input class="form-check-input" style="float: none !important;" type="radio" name="productSellType" id="sellTypeUsed" value="중고" checked>
+                                    <label class="form-check-label" for="sellTypeUsed">
+                                        중고
+                                    </label>
+                                </div>
+
+                                <div class="form-check" style="display: inline !important;">
+                                    <input class="form-check-input" style="float: none !important;" type="radio" name="productSellType" id="sellTypeAuction" value="경매">
+                                    <label class="form-check-label" for="sellTypeAuction">
+                                        경매
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
                             <label for="prodNm" class="col-form-label">상품명</label>
                             <div>
                                 <input type="text" name="prodNm" id="prodNm" class="form-control">
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-sm-6">
-                                <label for="prodBrand" class="col-form-label">브랜드</label>
-                                <div>
-                                    <input type="text" name="prodBrand" id="prodBrand" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <label for="prodSize" class="col-form-label">사이즈</label>
-                                <div>
-                                    <input type="text" name="prodSize" id="prodSize" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-sm-4">
-                                <label for="prodGender" class="col-form-label">성별</label>
-                                <div>
-                                    <input type="text" name="prodGender" id="prodGender" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <label for="prodColor" class="col-form-label">색상</label>
-                                <div>
-                                    <input type="text" name="prodColor" id="prodColor" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <label for="prodGrade" class="col-form-label">상품 등급</label>
-                                <div>
-                                    <input type="text" name="prodGrade" id="prodGrade" class="form-control">
-                                </div>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -121,6 +106,70 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="row mb-3">
+                            <div class="col-sm-6">
+                                <label for="prodBrand" class="col-form-label">브랜드</label>
+                                <select class="form-select" name="prodBrand" id="prodBrand" required>
+                                    <option value="">브랜드를 선택해주세요.</option>
+                                    <option th:each="brand : ${brandList}" th:value="${brand.id}" th:text="${brand.brandName}">브랜드를 선택해주세요.</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="prodSize" class="col-form-label">사이즈</label>
+                                <div>
+                                    <input type="text" name="prodSize" id="prodSize" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-sm-6">
+                                <label for="prodGender" class="col-form-label">성별</label>
+                                <select class="form-select" name="prodGender" id="prodGender" required>
+                                    <option value="">성별을 선택해주세요.</option>
+                                    <option value="COMMON">공용</option>
+                                    <option value="MALE">남자</option>
+                                    <option value="FEMALE">여자</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="prodColor" class="col-form-label">색상</label>
+                                <div>
+                                    <input type="text" name="prodColor" id="prodColor" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-sm-6">
+                                <label for="prodGrade" class="col-form-label">상품 등급</label>
+                                <select class="form-select" name="prodGrade" id="prodGrade" required>
+                                    <option value="">등급을 선택해주세요.</option>
+                                    <option th:each="grade : ${gradeList}" th:value="${grade}" th:text="${grade}">등급을 선택해주세요.</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="prodPrice" class="col-form-label">판매가격(원)</label>
+                                <div>
+                                    <input type="text" name="prodPrice" id="prodPrice" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="prodContent" class="col-form-label">상품설명</label>
+                            <div>
+                                <textarea name="prodContent" id="prodContent" class="form-control" cols="10" rows="10"></textarea>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="uploader" class="col-form-label">상품이미지</label>
+                            <div class="flex-column" id ="dragArea"
+                                 style="display: flex; justify-content: flex-end; align-items: center; border-radius: 12px;
+                                 background-color: #fafafa; border: 1px solid #ced4da; position: relative;">
+                                <div class="row" id ="a" style="min-height: 300px;">
+                                </div>
+                                <label for ="uploader" class="btn btn-secondary" style="position: absolute; bottom: 5px; opacity: 0.3; width: 80%;">파일을 선택해 주세요.</label>
+                                <input type="file" name="images" accept="image/*" multiple id ="uploader" hidden>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -128,33 +177,15 @@
         </div>
     </section>
 
-    <section class="section">
+    <section class="section" id="auctionForm" style="display: none;">
         <div class="row">
             <div class="col-lg-12">
 
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">판매정보</h5>
-                            <div class="row mb-3">
-                                <legend class="col-form-label col-sm-2 pt-0">판매그룹</legend>
-                                <div class="col-sm-10">
+                        <h5 class="card-title">경매정보</h5>
 
-                                    <div class="form-check" style="display: inline !important;">
-                                        <input class="form-check-input" style="float: none !important;" type="radio" name="productSellType" value="중고" checked>
-                                        <label class="form-check-label">
-                                            중고
-                                        </label>
-                                    </div>
-
-                                    <div class="form-check" style="display: inline !important;">
-                                        <input class="form-check-input" style="float: none !important;" type="radio" name="productSellType" value="경매">
-                                        <label class="form-check-label">
-                                            경매
-                                        </label>
-                                    </div>
-
-                                </div>
-                            </div>
+                        <div>
                             <div class="row mb-3">
                                 <label for="appraisalPrice" class="col-sm-2 col-form-label">매입가격(원)</label>
                                 <div class="col-sm-10">
@@ -181,22 +212,27 @@
                                     <div id="appraisalId" class="col-sm-10" style="font-weight: 300;">1</div>
                                 </div>
                             </div>
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label"></label>
-                                <div class="col-sm-10">
-                                    <button type="button" class="btn btn-success" style="float: right;">상품 등록</button>
-                                </div>
-                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <div class="row mb-3">
+        <label class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <button type="button" id="prod-register" class="btn btn-success" style="float: right;">상품 등록</button>
+        </div>
+    </div>
 </main>
 
 <th:block th:replace="layout/footer :: #footer">
 </th:block>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/front/appraisal/app-control.js"></script>
+<script type="text/javascript" src="/static/assets/js/front/service.js"></script>
 </body>
 
 </html>

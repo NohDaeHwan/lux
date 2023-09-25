@@ -63,4 +63,8 @@ public class CategoryMService {
     public CategoryMDto findById(Long id) {
         return cateMMapper.toDto(cateMRepo.findById(id).orElse(null));
     }
+
+    public List<CategoryMDto> cateList(Long cateBId) {
+        return cateMMapper.toDtoList(cateMRepo.findByCateB_Id(cateBId));
+    }
 }
