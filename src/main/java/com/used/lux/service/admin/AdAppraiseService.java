@@ -1,13 +1,10 @@
 package com.used.lux.service.admin;
 
-import com.used.lux.domain.*;
 import com.used.lux.domain.appraisal.Appraisal;
 import com.used.lux.domain.appraisal.AppraisalResult;
 import com.used.lux.domain.constant.AppraisalGrade;
 import com.used.lux.domain.constant.AppraisalState;
-import com.used.lux.domain.constant.GenterType;
 import com.used.lux.dto.user.appraisal.AppraisalDto;
-import com.used.lux.dto.user.appraisal.AppraisalResultDto;
 import com.used.lux.mapper.AppraisalMapper;
 import com.used.lux.mapper.AppraisalResultMapper;
 import com.used.lux.repository.*;
@@ -35,7 +32,6 @@ public class AdAppraiseService {
     private final AppraisalResultMapper appResultMapper;
 
     private final AppraisalRequestLogRepository appraisalRequestLogRepository;
-    private final StateRepository stateRepository;
 
     private final BrandRepository brandRepository;
 

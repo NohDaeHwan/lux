@@ -24,12 +24,12 @@ public interface AuctionRepository extends JpaRepository<Auction, Long>, Auction
     @Query(nativeQuery = true , value = "select * from auction where auc_state = 10 and auc_end_date >= :sD and auc_end_date <= now()  order by end_price desc  limit 1 ;")
     Auction findByhighPriceWithState10(@Param("sD") String sectionStartDate);
 
-    @Query(nativeQuery = true ,value = "SELECT * FROM auction WHERE bidding_count > 0  AND auc_state = 10 ORDER BY auc_end_date ASC LIMIT 1;")
+    @Query(nativeQuery = true ,value = "SELECT * FROM auction WHERE bidding_cnt > 0  AND auc_state = 10 ORDER BY auc_end_date ASC LIMIT 1;")
     Auction findByDateWithFailBid();
     @Query(nativeQuery = true , value = "select * from auction where auc_state = 9 order by end_price desc  limit 1 ;")
     Auction findByHighPriceWithState9();
 
-    @Query(nativeQuery = true , value = "select * from auction where auc_state = 9 order by bidding_count desc  limit 1 ;")
+    @Query(nativeQuery = true , value = "select * from auction where auc_state = 9 order by bidding_cnt desc  limit 1 ;")
     Auction findByMostBiddingWithState9();
 
     @Query(nativeQuery = true,value = "select sum(end_price) FROM (SELECT * FROM auction WHERE auc_end_date >= :sD AND auc_end_date <= NOW()) AS au WHERE au.auc_state = 10; ")

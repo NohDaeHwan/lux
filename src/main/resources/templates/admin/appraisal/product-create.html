@@ -42,8 +42,8 @@
                         <th>검수등록일</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr th:each="appraisal : ${appraisalList}">
+                    <tbody id="appraisalList">
+                    <tr th:each="appraisal : ${appraisalList}" th:id="'appraisal-'+${appraisal.id}" th:onclick="|javascript:rowSelected(${appraisal.id})|">
                         <td th:text="${appraisal.appProdNm}">user1@mail.com</td>
                         <td th:text="${appraisal.appBrand}">Brandon Jacob</td>
                         <td th:text="${appraisal.userEmail}">dfd</td>
@@ -57,7 +57,7 @@
         </div>
     </section>
 
-    <section class="section">
+    <section id="prodForm" class="section" style="display: none;">
         <div class="row">
             <div class="col-lg-12">
 
@@ -71,14 +71,14 @@
                             <div class="col-sm-10">
 
                                 <div class="form-check" style="display: inline !important;">
-                                    <input class="form-check-input" style="float: none !important;" type="radio" name="productSellType" id="sellTypeUsed" value="중고" checked>
+                                    <input class="form-check-input" style="float: none !important;" type="radio" name="productSellType" id="sellTypeUsed" value="USED" checked>
                                     <label class="form-check-label" for="sellTypeUsed">
                                         중고
                                     </label>
                                 </div>
 
                                 <div class="form-check" style="display: inline !important;">
-                                    <input class="form-check-input" style="float: none !important;" type="radio" name="productSellType" id="sellTypeAuction" value="경매">
+                                    <input class="form-check-input" style="float: none !important;" type="radio" name="productSellType" id="sellTypeAuction" value="AUCTION">
                                     <label class="form-check-label" for="sellTypeAuction">
                                         경매
                                     </label>
@@ -220,19 +220,12 @@
         </div>
     </section>
 
-    <div class="row mb-3">
-        <label class="col-sm-2 col-form-label"></label>
-        <div class="col-sm-10">
-            <button type="button" id="prod-register" class="btn btn-success" style="float: right;">상품 등록</button>
-        </div>
-    </div>
+    <button type="button" id="prod-register" class="btn btn-success mb-5" style="float: right; display: none;">상품 등록</button>
 </main>
 
-<th:block th:replace="layout/footer :: #footer">
-</th:block>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script type="text/javascript" src="/static/assets/js/front/appraisal/app-control.js"></script>
-<script type="text/javascript" src="/static/assets/js/front/service.js"></script>
+<script type="text/javascript" src="/static/assets/js/back/appraisal/app-control.js"></script>
+<script type="text/javascript" src="/static/assets/js/back/service.js"></script>
 </body>
 
 </html>

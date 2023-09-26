@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ProductLogRepository extends JpaRepository<ProductLog, Long> {
-    List<ProductLog> findByProductIdOrderByCreatedAtDesc(Long productId);
+    List<ProductLog> findByProdIdOrderByCreatedAtDesc(Long productId);
 }

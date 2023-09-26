@@ -28,7 +28,7 @@
     <div class="row">
       <div class="col-xl-4">
         <div class="card d-flex align-items-center">
-          <img th:each="image : ${productDetail.productDto.imageDtos}"
+          <img th:each="image : ${productDetail.prodList.images}"
                th:src="${image.filePath}" style="width: 150px; height: 120px" class="mb-3 mt-3">
         </div>
       </div>
@@ -49,7 +49,7 @@
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">상품명</label>
                 <div class="col-sm-10" style="padding: 7px 12px;">
-                  <div class="col-sm-10" style="font-weight: 300;" th:text="${productDetail.productDto.productName}">
+                  <div class="col-sm-10" style="font-weight: 300;" th:text="${productDetail.prodList.prodNm}">
                     관리자가 작성한 상품명
                   </div>
                 </div>
@@ -57,7 +57,7 @@
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">판매가격</label>
                 <div class="col-sm-10" style="padding: 7px 12px;">
-                  <div class="col-sm-10" style="font-weight: 300;" th:text="${#numbers.formatInteger(productDetail.productDto.productPrice,3,'COMMA')} + '원'">
+                  <div class="col-sm-10" style="font-weight: 300;" th:text="${#numbers.formatInteger(productDetail.prodList.prodPrice,3,'COMMA')} + '원'">
                     가굑
                   </div>
                 </div>
@@ -65,7 +65,7 @@
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">판매그룹</label>
                 <div class="col-sm-10" style="padding: 7px 12px;">
-                  <div class="col-sm-10" style="font-weight: 300;" th:text="${productDetail.productDto().productSellType()}">
+                  <div class="col-sm-10" style="font-weight: 300;" th:text="${productDetail.prodList.prodSellType}">
                     중고
                   </div>
                 </div>
@@ -73,7 +73,7 @@
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">브랜드</label>
                 <div class="col-sm-10" style="padding: 7px 12px;">
-                  <div class="col-sm-10" style="font-weight: 300;" th:text="${productDetail.productDto().productBrandName()}">
+                  <div class="col-sm-10" style="font-weight: 300;" th:text="${productDetail.prodList.prodBrand}">
                     ㅂㄹㄷ
                   </div>
                 </div>
@@ -81,7 +81,7 @@
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">대분류</label>
                 <div class="col-sm-10" style="padding: 7px 12px;">
-                  <div class="col-sm-10" style="font-weight: 300;" th:text="${productDetail.productDto().categoryBName()}">
+                  <div class="col-sm-10" style="font-weight: 300;" th:text="${productDetail.prodList.prodCateB}">
                     ㅇㄹ
                   </div>
                 </div>
@@ -89,7 +89,7 @@
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">중분류</label>
                 <div class="col-sm-10" style="padding: 7px 12px;">
-                  <div class="col-sm-10" style="font-weight: 300;" th:text="${productDetail.productDto().categoryMName()}">
+                  <div class="col-sm-10" style="font-weight: 300;" th:text="${productDetail.prodList.prodCateM}">
                     ㅇㄹ
                   </div>
                 </div>
@@ -98,7 +98,7 @@
                 <label class="col-sm-2 col-form-label">상품설명</label>
                 <div class="col-sm-10" style="padding: 7px 12px;">
                   <div style="font-weight: 300;">
-                    <textarea name="about" class="form-control" id="about" style="height: 100px" th:text="${productDetail.productDto.productContent}" readonly="readonly"></textarea>
+                    <textarea name="about" class="form-control" id="about" style="height: 100px" th:text="${productDetail.prodList.prodContent}" readonly="readonly"></textarea>
                   </div>
                 </div>
               </div>
@@ -106,8 +106,8 @@
                 <legend class="col-form-label col-sm-2 pt-0">상품상태</legend>
                 <div class="col-sm-10">
                   <div class="form-check">
-                    <input th:if="${productDetail.productDto.productState.stateStep == '판매중'}" class="form-check-input" type="checkbox" checked disabled>
-                    <input th:unless="${productDetail.productDto.productState.stateStep == '판매중'}" class="form-check-input" type="checkbox" disabled>
+                    <input th:if="${productDetail.prodList.prodState == 'SELL'}" class="form-check-input" type="checkbox" checked disabled>
+                    <input th:unless="${productDetail.prodList.prodState == 'SELL'}" class="form-check-input" type="checkbox" disabled>
                     <label class="form-check-label">
                       상품노출중
                     </label>
@@ -118,12 +118,12 @@
                 <label class="col-sm-2 col-form-label"></label>
                 <div class="col-sm-10">
                   <button type="submit" class="btn btn-success" style="float: right;">
-                    <a stlye="color:#ffffff !important" th:href="@{/templates/admin/product}">
+                    <a stlye="color:#ffffff !important" th:href="@{/admin/product}">
                       뒤로가기
                     </a>
                   </button>
                   <button type="submit" class="btn btn-primary" style="float: right; margin-right: 8px;">
-                    <a th:href="@{|/admin/product/product-detail-update/${productDetail.productDto.id}|}">수정하기</a>
+                    <a th:href="@{|/admin/product/product-detail-update/${productDetail.prodList.id}|}">수정하기</a>
                   </button>
                 </div>
               </div>
@@ -153,14 +153,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="pdupdate: ${productDetail.productLogDtos}">
-                  <td th:text="${pdupdate.productName}"></td>
-                  <td th:text="${#numbers.formatInteger(pdupdate.productPrice,3,'COMMA')}"></td>
-                  <td th:text="${pdupdate.productSellType}"></td>
-                  <td th:text="${productDetail.productDto.productBrandName}"></td> <!--브랜드-->
-                  <td th:text="${pdupdate.categoryBName}"></td>
-                  <td th:text="${pdupdate.categoryMName}"></td>
-                  <td th:text="${pdupdate.productState.stateStep}"></td>
+                <tr th:each="pdupdate: ${productDetail.prodLogList}">
+                  <td th:text="${pdupdate.prodNm}"></td>
+                  <td th:text="${#numbers.formatInteger(pdupdate.prodPrice,3,'COMMA')}"></td>
+                  <td th:text="${pdupdate.prodSellType}"></td>
+                  <td th:text="${pdupdate.prodBrand}"></td> <!--브랜드-->
+                  <td th:text="${pdupdate.cateBNm}"></td>
+                  <td th:text="${pdupdate.cateMNm}"></td>
+                  <td th:text="${pdupdate.prodState}"></td>
                   <td th:text="${#temporals.format(pdupdate.createdAt,'yyyy-MM-dd HH:mm:ss')}"></td>
                 </tr>
                 </tbody>
@@ -188,7 +188,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="productorder : ${productDetail.ProductOrderLogDtos()}">
+                <tr th:each="productorder : ${productDetail.prodOrderLogList}">
                   <td th:text="${productorder.productName}"></td> <!-- 주문번호 a link -->
                   <td><a th:href="@{|/admin/user/${productorder.userId}|}" th:text="${productorder.userEmail}"></a></td>
                   <td th:text="${productorder.productState.stateStep}"></td>
@@ -218,7 +218,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="auction : ${productDetail.AuctionLogDtos()}">
+                <tr th:each="auction : ${productDetail.aucLogList}">
                   <td th:text="${auction.bidder}"></td> <!-- 경매번호 a link -->
                   <td th:text="${auction.bidder}"></td>
                   <td th:text="${#numbers.formatInteger(auction.presentPrice,3,'COMMA')}"></td>
@@ -233,17 +233,9 @@
       </section>
 
     </div>
-    </div>
-
-    </div>
-    </div>
   </section>
 
 </main><!-- End #main -->
-
-<th:block th:replace="layout/footer :: #footer">
-
-</th:block>
 
 </body>
 

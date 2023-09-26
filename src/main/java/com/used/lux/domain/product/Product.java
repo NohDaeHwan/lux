@@ -6,6 +6,7 @@ import com.used.lux.domain.*;
 import com.used.lux.domain.constant.AppraisalGrade;
 import com.used.lux.domain.constant.GenterType;
 import com.used.lux.domain.constant.ProductState;
+import com.used.lux.domain.constant.SellType;
 import lombok.*;
 
 import java.util.*;
@@ -76,6 +77,11 @@ public class Product extends AuditingFields {
 	@Setter
 	@Column(name = "prod_view_cnt")
 	private int prodViewCnt; // 조회수
+
+	@Setter
+	@Column(name = "prod_sell_type")
+	@Enumerated(EnumType.STRING)
+	private SellType prodSellType; // 판매 타입
 
 	@ToString.Exclude
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)

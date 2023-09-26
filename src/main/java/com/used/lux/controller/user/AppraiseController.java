@@ -83,7 +83,7 @@ public class AppraiseController {
             loginId = principal.id();
        }
 
-        AppraisalDto appraisal = appraiseService.appraisalDetail(appraiseId);
+        AppraisalDto appraisal = appraiseService.getAppraisal(appraiseId);
         List<CategoryBDto> cateBList = categoryBService.categoryList();
 
         mm.addAttribute("loginId", loginId);

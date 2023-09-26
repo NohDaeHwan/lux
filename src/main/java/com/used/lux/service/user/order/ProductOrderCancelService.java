@@ -7,7 +7,6 @@ import com.used.lux.dto.security.Principal;
 import com.used.lux.repository.order.ProductOrderCancelRepository;
 import com.used.lux.repository.order.ProductOrderLogRepository;
 import com.used.lux.repository.order.ProductOrderRepository;
-import com.used.lux.repository.StateRepository;
 import com.used.lux.request.order.OrderCancelRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,6 @@ public class ProductOrderCancelService {
     private final ProductOrderRepository productOrderRepository;
     private final ProductOrderCancelRepository productOrderCancelRepository;
     private final ProductOrderLogRepository productOrderLogRepository;
-    private final StateRepository stateRepository;
 
     public void orderCancel(Principal principal, Long orderId, OrderCancelRequest orderCancelRequest) {
         ProductOrder order = productOrderRepository.getReferenceById(orderId);

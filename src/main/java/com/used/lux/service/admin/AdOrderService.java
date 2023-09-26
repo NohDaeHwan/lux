@@ -1,18 +1,13 @@
 package com.used.lux.service.admin;
 
-import com.used.lux.domain.*;
 import com.used.lux.domain.constant.OrderState;
 import com.used.lux.domain.constant.ProductState;
 import com.used.lux.domain.order.ProductOrder;
-import com.used.lux.domain.order.ProductOrderLog;
 import com.used.lux.domain.product.Product;
-import com.used.lux.domain.product.ProductLog;
 import com.used.lux.domain.useraccount.UserAccount;
-import com.used.lux.domain.useraccount.UserAccountLog;
 import com.used.lux.dto.user.order.ProductOrderCancelDto;
 import com.used.lux.dto.user.order.ProductOrderDto;
 import com.used.lux.mapper.ProductOrderMapper;
-import com.used.lux.repository.*;
 import com.used.lux.repository.order.ProductOrderCancelRepository;
 import com.used.lux.repository.order.ProductOrderLogRepository;
 import com.used.lux.repository.order.ProductOrderRepository;
@@ -42,7 +37,6 @@ public class AdOrderService {
     private final UserAccountRepository userAccountRepository;
     private final UserAccountLogRepository userAccountLogRepository;
 
-    private final StateRepository stateRepository;
 
     public Page<ProductOrderDto> getOrderList(String orderState, String orderSellType, String orderDate, String query,
                                               Pageable pageable) {
@@ -65,8 +59,8 @@ public class AdOrderService {
     }
 
     public void updateCancel(Long orderId, OrderUpdateRequest orderUpdateRequest) {
-        State stateCancel = stateRepository.findByStateStep("주문취소");
-        State stateWait = stateRepository.findByStateStep("판매대기");
+//        State stateCancel = stateRepository.findByStateStep("주문취소");
+//        State stateWait = stateRepository.findByStateStep("판매대기");
 
         Product product = productRepository.getReferenceById(orderUpdateRequest.productId());
         UserAccount userAccount = userAccountRepository.getReferenceById(orderUpdateRequest.userId());

@@ -1,14 +1,11 @@
 package com.used.lux.service.user.auction;
 
-import com.used.lux.domain.State;
 import com.used.lux.domain.auction.Auction;
 import com.used.lux.domain.constant.AuctionState;
-import com.used.lux.domain.product.Product;
 import com.used.lux.dto.user.auction.AuctionDto;
 import com.used.lux.mapper.AuctionMapper;
 import com.used.lux.repository.auction.AuctionRepository;
 import com.used.lux.repository.product.ProductRepository;
-import com.used.lux.repository.StateRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -31,10 +28,6 @@ public class AuctionService {
     private final AuctionMapper auctionMapper;
 
     private final ProductRepository productRepository;
-
-
-
-    private final StateRepository stateRepository;
 
     @Transactional(readOnly = true)
     public Page<AuctionDto> auctionListFind(Pageable pageable) {

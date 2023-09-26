@@ -2,6 +2,7 @@ package com.used.lux.controller.admin;
 
 import com.used.lux.dto.BrandDto;
 import com.used.lux.dto.CategoryBDto;
+import com.used.lux.dto.StateDto;
 import com.used.lux.dto.security.Principal;
 import com.used.lux.dto.user.appraisal.AppraisalDto;
 import com.used.lux.request.appraisal.AppraisalCommentRequest;
@@ -10,6 +11,7 @@ import com.used.lux.service.CategoryBService;
 import com.used.lux.service.PaginationService;
 import com.used.lux.service.admin.AdAppraiseService;
 import com.used.lux.service.admin.AdProductService;
+import com.used.lux.service.user.appraisal.AppraiseService;
 import com.used.lux.service.user.product.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -40,6 +42,8 @@ public class AdAppraiseController {
 
     private final ProductService productService;
 
+    private final AppraiseService appraiseService;
+
     private final BrandService brandService;
 
     // 검수기록
@@ -63,9 +67,13 @@ public class AdAppraiseController {
                 query, pageable);
         List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(),
                 appraisalList.getTotalPages());
+        List<BrandDto> brandList = brandService.brandList();
+        List<StateDto> stateList = appraiseService.stateList();
 
         mm.addAttribute("paginationBarNumbers", barNumbers);
         mm.addAttribute("appraisalList", appraisalList);
+        mm.addAttribute("brandList", brandList);
+        mm.addAttribute("stateList", stateList);
         return "/admin/appraisal/appraisal-main";
     }
 

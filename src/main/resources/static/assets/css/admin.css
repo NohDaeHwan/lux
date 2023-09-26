@@ -152,7 +152,7 @@
     cursor:text;
 }
 
-.admin-main .admin-body table tbody#flyRecList tr.selected {
+.admin-main .admin-body table tbody tr.selected {
     background-color:rgba(8,149,225,0.07);
     cursor:auto;
 }

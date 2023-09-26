@@ -8,6 +8,7 @@ import com.used.lux.domain.appraisal.AppraisalImage;
 import com.used.lux.domain.constant.AppraisalState;
 import com.used.lux.domain.constant.GenterType;
 import com.used.lux.domain.useraccount.UserAccount;
+import com.used.lux.dto.StateDto;
 import com.used.lux.dto.user.appraisal.AppraisalDto;
 import com.used.lux.mapper.AppraisalImageMapper;
 import com.used.lux.mapper.AppraisalMapper;
@@ -25,6 +26,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -47,8 +49,6 @@ public class AppraiseService {
     private final AppraisalRequestLogRepository appraisalRequestLogRepository;
 
     private final BrandRepository brandRepository;
-
-    private final StateRepository stateRepository;
 
     private final UserAccountRepository userAccountRepo;
 
@@ -91,7 +91,7 @@ public class AppraiseService {
 //        appraisalRequestLogRepository.save(AppraisalRequestLog.of(request.productName(),null,0,state, user.id(), appraisalResult.getId()));
     }
 
-    public AppraisalDto appraisalDetail(Long appraisalId) {
+    public AppraisalDto getAppraisal(Long appraisalId) {
         Appraisal appraisal = appRepo.findById(appraisalId).get();
         if (appraisal.getAppResultId() != null) return appMapper.toDtoCustom(appraisal, appResultRepo.findById(appraisal.getAppResultId()).orElse(null));
         else return appMapper.toDtoCustom(appraisal, null);
@@ -135,4 +135,16 @@ public class AppraiseService {
         appraisal.setAppState(AppraisalState.valueOf(data.get("appraisalState")));
     }
 
+    public List<StateDto> stateList() {
+        List<StateDto> result = new ArrayList<>();
+        result.add(StateDto.builder().stateId(AppraisalState.BEFORE.name()).stateName(AppraisalState.BEFORE.getName()).build());
+        result.add(StateDto.builder().stateId(AppraisalState.INSPECTION.name()).stateName(AppraisalState.INSPECTION.getName()).build());
+        result.add(StateDto.builder().stateId(AppraisalState.COMPLETE.name()).stateName(AppraisalState.COMPLETE.getName()).build());
+        result.add(StateDto.builder().stateId(AppraisalState.REJECT.name()).stateName(AppraisalState.REJECT.getName()).build());
+        result.add(StateDto.builder().stateId(AppraisalState.REFUSE_TO_SELL.name()).stateName(AppraisalState.REFUSE_TO_SELL.getName()).build());
+        result.add(StateDto.builder().stateId(AppraisalState.SELL.name()).stateName(AppraisalState.SELL.getName()).build());
+        result.add(StateDto.builder().stateId(AppraisalState.REGISTER.name()).stateName(AppraisalState.REGISTER.getName()).build());
+
+        return result;
+    }
 }

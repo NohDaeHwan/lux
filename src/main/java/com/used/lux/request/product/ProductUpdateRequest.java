@@ -1,18 +1,13 @@
 package com.used.lux.request.product;
 
 public record ProductUpdateRequest(
-        String productName,
-        String content,
+        String prodNm,
+        String prodContent,
         Long brandId,
-        Long categoryBId,
-        Long categoryMId,
-        String productSellType,
-        String stateStep,
-        Long productPrice
+        Long cateBId,
+        Long cateMId,
+        String prodSellType,
+        String prodState,
+        Long prodPrice
 ) {
-    public static ProductUpdateRequest of(String productName, String content, Long brandId,
-                                          Long categoryBId, Long categoryMId,String productSellType, String stateStep, Long productPrice) {
-        return new ProductUpdateRequest(productName, content, brandId, categoryBId, categoryMId,
-                productSellType, stateStep, productPrice);
-    }
 }

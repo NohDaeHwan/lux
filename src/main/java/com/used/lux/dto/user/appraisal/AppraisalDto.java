@@ -9,6 +9,7 @@ import java.util.List;
 public record AppraisalDto(
         Long id,
         String appProdNm,
+        Long appBrandId,
         String appBrand,
         String appGender,
         String appColor,

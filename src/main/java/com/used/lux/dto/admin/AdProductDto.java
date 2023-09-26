@@ -8,14 +8,14 @@ import com.used.lux.dto.user.product.ProductLogDto;
 import java.util.List;
 
 public record AdProductDto(
-        ProductDto productDto,
-        List<ProductLogDto> productLogDtos,
-        List<ProductOrderLogDto> ProductOrderLogDtos,
-        List<AuctionLogDto> AuctionLogDtos
+        ProductDto prodList,
+        List<ProductLogDto> prodLogList,
+        List<ProductOrderLogDto> prodOrderLogList,
+        List<AuctionLogDto> aucLogList
 ) {
-    public static AdProductDto of(ProductDto productDto, List<ProductLogDto> productLogDtos,
-                                  List<ProductOrderLogDto> ProductOrderLogDtos, List<AuctionLogDto> AuctionLogDtos) {
-        return new AdProductDto(productDto, productLogDtos, ProductOrderLogDtos, AuctionLogDtos);
+    public static AdProductDto of(ProductDto prodList, List<ProductLogDto> prodLogList,
+                                  List<ProductOrderLogDto> prodOrderLogList, List<AuctionLogDto> aucLogList) {
+        return new AdProductDto(prodList, prodLogList, prodOrderLogList, aucLogList);
     }
 
 }

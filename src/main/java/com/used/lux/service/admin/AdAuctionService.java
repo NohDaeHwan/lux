@@ -1,13 +1,11 @@
 package com.used.lux.service.admin;
 
-import com.used.lux.domain.State;
 import com.used.lux.domain.auction.Auction;
 import com.used.lux.domain.constant.AuctionState;
 import com.used.lux.dto.user.auction.AuctionDto;
 import com.used.lux.dto.user.auction.AuctionLogDto;
 import com.used.lux.dto.admin.AdAuctionDto;
 import com.used.lux.mapper.AuctionMapper;
-import com.used.lux.repository.*;
 import com.used.lux.repository.auction.AuctionLogRepository;
 import com.used.lux.repository.auction.AuctionRepository;
 import com.used.lux.request.auction.AuctionUpdateRequest;
@@ -31,8 +29,6 @@ public class AdAuctionService {
     private final AuctionMapper auctionMapper;
 
     private final AuctionLogRepository auctionLogRepository;
-
-    private final StateRepository stateRepository;
 
     // Admin 경매 리스트 조회(+검색)
     @Transactional(readOnly = true)

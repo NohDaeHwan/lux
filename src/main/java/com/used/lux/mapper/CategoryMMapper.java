@@ -10,6 +10,10 @@ import java.util.List;
 public interface CategoryMMapper {
     CategoryM toEntity(CategoryMDto categoryMDto);
 
+
+    @Mappings({
+            @Mapping(target = "cateBId", source = "cateB.id"),
+            @Mapping(target = "cateBNm", source = "cateB.cateBNm")})
     CategoryMDto toDto(CategoryM categoryM);
 
     List<CategoryMDto> toDtoList(List<CategoryM> categoryMList);

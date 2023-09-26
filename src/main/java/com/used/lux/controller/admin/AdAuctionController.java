@@ -1,13 +1,10 @@
 package com.used.lux.controller.admin;
 
-import com.used.lux.dto.StateDto;
 import com.used.lux.dto.admin.AdAuctionDto;
 import com.used.lux.dto.security.Principal;
 import com.used.lux.dto.user.auction.AuctionDto;
 import com.used.lux.request.auction.AuctionUpdateRequest;
-import com.used.lux.response.auction.AuctionResponse;
 import com.used.lux.service.PaginationService;
-import com.used.lux.service.StateService;
 import com.used.lux.service.admin.AdAuctionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -31,8 +28,6 @@ public class AdAuctionController {
 
     private final AdAuctionService adAuctionService;
 
-    private final StateService stateService;
-
     private final PaginationService paginationService;
 
     // 경매 리스트
@@ -49,11 +44,9 @@ public class AdAuctionController {
 
         Page<AuctionDto> auctionList = adAuctionService.getAuctionList(auctionState, auctionDate, query, pageable);
         List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), auctionList.getTotalPages());
-        List<StateDto> stateList = stateService.getStateList();
 
         mm.addAttribute("paginationBarNumbers", barNumbers);
         mm.addAttribute("auctionList", auctionList);
-        mm.addAttribute("stateList",stateList);
         return "/admin/auction";
     }
 

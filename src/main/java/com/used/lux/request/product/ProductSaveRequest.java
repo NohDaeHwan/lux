@@ -6,6 +6,8 @@ import java.util.List;
 
 public record ProductSaveRequest(
         Long prodId,
+        Long appraisalId,
+        String prodSellType,
         String prodNm,
         Long cateBId,
         Long cateMId,

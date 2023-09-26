@@ -3,14 +3,16 @@ package com.used.lux.domain.product;
 import com.used.lux.domain.AuditingFields;
 import com.used.lux.domain.CategoryB;
 import com.used.lux.domain.CategoryM;
-import com.used.lux.domain.State;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import com.used.lux.domain.constant.ProductState;
+import com.used.lux.domain.constant.SellType;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @ToString(callSuper = true)
 @Table(name = "product_log")
 @Entity
@@ -21,55 +23,36 @@ public class ProductLog extends AuditingFields {
     private Long id;
 
     @Setter
-    @Column(name="product_Id", nullable = false)
-    private Long productId;
+    @Column(name="prod_Id", nullable = false)
+    private Long prodId;
 
     @Setter
-    @Column(name="product_name", nullable = false, length = 100)
-    private String productName;
+    @Column(name="prod_nm", nullable = false, length = 100)
+    private String prodNm;
 
     @Setter
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "product_state_id")
-    private State productState;
+    @Column(name = "prod_state_id")
+    @Enumerated(EnumType.STRING)
+    private ProductState prodState;
 
     @Setter
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "category_b_id")
-    private CategoryB categoryB;
+    @Column(name = "prod_brand")
+    private String prodBrand;
 
     @Setter
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "category_m_id")
-    private CategoryM categoryM;
+    @Column(name = "cate_b_nm")
+    private String cateBNm;
 
     @Setter
-    @Column(name = "product_price", nullable = false)
-    private int productPrice;
+    @Column(name = "cate_m_nm")
+    private String cateMNm;
 
     @Setter
-    @Column(name = "product_sell_type", nullable = false, length = 100)
-    private String productSellType;
+    @Column(name = "prod_price", nullable = false)
+    private long prodPrice;
 
-    protected ProductLog() {}
-
-    public ProductLog(Long id, Long productId, String productName, State productState, CategoryB categoryB, CategoryM categoryM, int productPrice, String productSellType) {
-        this.id = id;
-        this.productId = productId;
-        this.productName = productName;
-        this.productState = productState;
-        this.categoryB = categoryB;
-        this.categoryM = categoryM;
-        this.productPrice = productPrice;
-        this.productSellType = productSellType;
-    }
-
-    public static ProductLog of(Long id, Long productId, String productName, State productState, CategoryB categoryB, CategoryM categoryM, int productPrice, String productSellType) {
-        return new ProductLog(id, productId, productName,productState, categoryB, categoryM, productPrice, productSellType);
-    }
-
-    public static ProductLog of(Long productId, String productName, State productState, CategoryB categoryB, CategoryM categoryM, int productPrice, String productSellType) {
-        return new ProductLog(null, productId, productName,productState,categoryB,categoryM,productPrice, productSellType);
-    }
-
+    @Setter
+    @Column(name = "prodsell_type")
+    @Enumerated(EnumType.STRING)
+    private SellType prodSellType;
 }

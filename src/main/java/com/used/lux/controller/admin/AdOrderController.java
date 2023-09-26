@@ -3,12 +3,9 @@ package com.used.lux.controller.admin;
 import com.used.lux.domain.constant.OrderState;
 import com.used.lux.dto.user.order.ProductOrderCancelDto;
 import com.used.lux.dto.user.order.ProductOrderDto;
-import com.used.lux.dto.StateDto;
 import com.used.lux.dto.security.Principal;
 import com.used.lux.request.OrderUpdateRequest;
-import com.used.lux.response.order.ProductOrderResponse;
 import com.used.lux.service.PaginationService;
-import com.used.lux.service.StateService;
 import com.used.lux.service.admin.AdOrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -27,8 +24,6 @@ import java.util.List;
 public class AdOrderController {
 
     private final AdOrderService adOrderService;
-
-    private final StateService stateService;
 
     private final PaginationService paginationService;
 
@@ -49,11 +44,9 @@ public class AdOrderController {
                 orderDate, query, pageable);
         List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(),
                 orderList.getTotalPages());
-        List<StateDto> stateList = stateService.getStateList();
 
         mm.addAttribute("paginationBarNumbers", barNumbers);
         mm.addAttribute("orderList", orderList);
-        mm.addAttribute("stateList", stateList);
         return "/admin/order";
     }
 

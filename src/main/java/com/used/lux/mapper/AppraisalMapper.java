@@ -27,7 +27,7 @@ public interface AppraisalMapper {
                 }).toList();
         AppraisalDto appraisalDto;
         if (appResult != null) {
-            appraisalDto = AppraisalDto.builder().id(app.getId()).appProdNm(app.getAppProdNm()).appBrand(app.getAppBrand().getBrandName())
+            appraisalDto = AppraisalDto.builder().id(app.getId()).appProdNm(app.getAppProdNm()).appBrandId(app.getAppBrand().getId()).appBrand(app.getAppBrand().getBrandName())
                     .appGender(app.getAppGender().name()).appColor(app.getAppColor()).appSize(app.getAppSize()).appState(app.getAppState().getName())
                     .userId(app.getUserAccount().getId()).userEmail(app.getUserAccount().getUserEmail()).userNm(app.getUserAccount().getUserName())
                     .appResultId(app.getAppResultId()).appPrice(appResult.getAppPrice()).appGrade(appResult.getAppGrade().name()).appComment(appResult.getAppComment())

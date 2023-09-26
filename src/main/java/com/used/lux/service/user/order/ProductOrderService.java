@@ -1,18 +1,13 @@
 package com.used.lux.service.user.order;
 
-
-import com.used.lux.domain.*;
 import com.used.lux.domain.constant.OrderState;
 import com.used.lux.domain.constant.ProductState;
 import com.used.lux.domain.order.ProductOrder;
-import com.used.lux.domain.order.ProductOrderLog;
 import com.used.lux.domain.product.Product;
 import com.used.lux.domain.useraccount.UserAccount;
-import com.used.lux.domain.useraccount.UserAccountLog;
 import com.used.lux.dto.user.order.ProductOrderDto;
 import com.used.lux.dto.security.Principal;
 import com.used.lux.mapper.ProductOrderMapper;
-import com.used.lux.repository.*;
 import com.used.lux.repository.order.ProductOrderLogRepository;
 import com.used.lux.repository.order.ProductOrderRepository;
 import com.used.lux.repository.product.ProductRepository;
@@ -40,8 +35,6 @@ public class ProductOrderService {
     private final ProductOrderLogRepository productOrderLogRepository;
     private final UserAccountRepository userAccountRepository;
     private final UserAccountLogRepository userAccountLogRepository;
-    private final StateRepository stateRepository;
-
 
     public Page<ProductOrderDto> productListAll(Long id, Pageable pageable){
         return productOrderRepository.findByUserAccountId(id, pageable).map(productOrderMapper::toDto);
@@ -58,8 +51,8 @@ public class ProductOrderService {
         UserAccount userAccount = userAccountRepository.findById(principal.id()).get();
         Long payment = userAccount.getPoint()-product.getProdPrice();
 
-        State stateOrder = stateRepository.findByStateStep("주문완료");
-        State stateProduct = stateRepository.findByStateStep("판매완료");
+//        State stateOrder = stateRepository.findByStateStep("주문완료");
+//        State stateProduct = stateRepository.findByStateStep("판매완료");
 
         product.setProdState(ProductState.COMPLETE);
         userAccount.setPoint(payment);

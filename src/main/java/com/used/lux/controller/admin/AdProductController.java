@@ -82,8 +82,8 @@ public class AdProductController {
     // 상품 상세정보
     @GetMapping("/product-detail/{productId}")
     public String productDetail(@PathVariable Long productId,
-                             @AuthenticationPrincipal Principal principal,
-                             ModelMap mm){
+                                @AuthenticationPrincipal Principal principal,
+                                ModelMap mm) {
         if (principal.role().getName() != "ROLE_ADMIN") {
             return "redirect:/";
         }
@@ -91,31 +91,7 @@ public class AdProductController {
         AdProductDto productDetail = adProductService.getProductDetail(productId);
         mm.addAttribute("productDetail", productDetail);
 
-        if (productDetail.productDto().prodState().equals("WAITING")) {
-            List<BrandDto> brandDto = adProductService.getBrandList();
-            List<CategoryBDto> categoryBDtos = adProductService.getCategoryList();
-            List<CategoryMDto> categoryMDtos = categoryMService.getMiddleCategoryList();
-
-            mm.addAttribute("brandDto", brandDto);
-            mm.addAttribute("categoryBDtos", categoryBDtos);
-            mm.addAttribute("categoryMDtos", categoryMDtos);
-            return "/admin/product-create-form";
-        } else {
-            return "/admin/product-detail";
-        }
-    }
-
-    // 상품 상세정보
-    @PostMapping("/product-detail/new")
-    public String productDetailNew(@AuthenticationPrincipal Principal principal,
-                                   ProductSaveRequest productSaveRequest,
-                                   ModelMap mm) throws Exception {
-        if (principal.role().getName() != "ROLE_ADMIN") {
-            return "redirect:/";
-        }
-
-        adProductService.productCreate(productSaveRequest);
-        return "redirect:/admin/product/product-detail/";
+        return "/admin/product/product-detail";
     }
 
     // 상품 상세정보 수정 페이지
@@ -128,15 +104,15 @@ public class AdProductController {
         }
 
         AdProductDto productDetail = adProductService.getProductDetail(productId);
-        List<BrandDto> brandDto = adProductService.getBrandList();
-        List<CategoryBDto> categoryBDtos = adProductService.getCategoryList();
-        List<CategoryMDto> categoryMDtos = categoryMService.getMiddleCategoryList();
+        List<BrandDto> brandList = adProductService.getBrandList();
+        List<CategoryBDto> cateBList= adProductService.getCategoryList();
+        List<CategoryMDto> cateMList = categoryMService.getMiddleCategoryList();
 
         mm.addAttribute("productDetail", productDetail);
-        mm.addAttribute("brandDto", brandDto);
-        mm.addAttribute("categoryBDtos", categoryBDtos);
-        mm.addAttribute("categoryMDtos", categoryMDtos);
-        return "/admin/product-detail-update";
+        mm.addAttribute("brandList", brandList);
+        mm.addAttribute("cateBList", cateBList);
+        mm.addAttribute("cateMList", cateMList);
+        return "/admin/product/product-detail-update";
     }
 
     @ResponseBody
@@ -162,7 +138,7 @@ public class AdProductController {
         }
 
         System.out.println(productUpdateRequest);
-        adProductService.productUpdate(productId,productUpdateRequest);
+        adProductService.productUpdate(productId, productUpdateRequest);
         return "redirect:/admin/product/product-detail/"+productId;
     }
 
@@ -176,7 +152,7 @@ public class AdProductController {
 
         List<BrandDto> brandList = adProductService.getBrandList();
         mm.addAttribute("brandList", brandList);
-        return "/admin/brand";
+        return "/admin/product/brand";
     }
 
     // 상품 브랜드 추가 페이지
@@ -187,7 +163,7 @@ public class AdProductController {
             return "redirect:/";
         }
 
-        return "/admin/brand-create-form";
+        return "/admin/product/brand-create-form";
     }
 
     // 상품 브랜드 추가
@@ -223,27 +199,24 @@ public class AdProductController {
         if (principal.role().getName() != "ROLE_ADMIN") {
             return "redirect:/";
         }
-        List<CategoryBDto> BCategoryList = categoryBService.categoryList();
-        mm.addAttribute("categoryList", BCategoryList);
-        return "/admin/category";
+        List<CategoryBDto> cateList = categoryBService.categoryList();
+        mm.addAttribute("cateList", cateList);
+        return "/admin/product/category";
     }
 
     // 상품 카테고리 추가 페이지
     @GetMapping("/category/new")
     public String productCategoryCreate(@AuthenticationPrincipal Principal principal,ModelMap modelMap)
     {
-        List<CategoryBDto> categoryBDtos = categoryBService.categoryList();
-        modelMap.addAttribute("listDtos",categoryBDtos);
-        return "/admin/category-create-form";
+        List<CategoryBDto> cateBList = categoryBService.categoryList();
+        modelMap.addAttribute("cateBList", cateBList);
+        return "/admin/product/category-create-form";
     }
 
     // 상품 카테고리 추가
     @PostMapping("/category/new/create")
     public String productCategoryCreate(@AuthenticationPrincipal Principal principal,
                                              CategoryCreateRequest categoryCreateRequest,ModelMap mm){
-        System.out.println(categoryCreateRequest.categoryType());
-        System.out.println(categoryCreateRequest.categoryName());
-        System.out.println(categoryCreateRequest.Bid());
         if(categoryCreateRequest.categoryType().equals("big")) {
             if (!categoryBService.bigCategoryExist(categoryCreateRequest.categoryName())) {
                 categoryBService.createCategory(categoryCreateRequest);
@@ -262,29 +235,17 @@ public class AdProductController {
         }
         return "redirect:/admin/product/category";
     }
+
     //상품 카테고리 삭제
     @GetMapping("/category/{categoryId}/deleteB")
     public String productCategoryDeleteB(@PathVariable Long categoryId,
                                      @AuthenticationPrincipal Principal principal){
-        //bigcategory 삭제 메소드 1차 ::하위카테고리 삭제여부
-        List<String> list = categoryMService.middlecategoryExsistByBCategory(categoryId);
-
-        /*
-            메세지 Dto를 만들어서 넣어야함 ::삭제하려는 카테고리와 관계된 카테고리가 있습니다.
-                                            해당 카테고리를 삭제하면 다른 카테고리들도 삭제가 됩니다.
-                                            그래도 삭제하시겠습니까?
-         */
-
-        //bigcategory 삭제 메소드 2차 :: 하위카테고리가 없거나 확인하고 이를 요청한 경우 실행한다
-        //B카테고리에 종속된 M카테고리 먼저 제거한다
         categoryMService.middelCategoryDeleteByBCategoryId(categoryId);
-
-        //B카테고리 제거
         categoryBService.bigCategoryDelete(categoryId);
-
 
         return "redirect:/admin/product/category";
     }
+
     //M카테고리 삭제
     @GetMapping("/category/{categoryId}/deleteM")
     public String productCategoryDeleteM(@PathVariable Long categoryId,
@@ -316,6 +277,5 @@ public class AdProductController {
 
         return list;
     }
-
 
 }

@@ -9,6 +9,8 @@ import java.util.List;
 public record ProductDto(
         Long id,
         String prodNm,
+        String prodCateB,
+        String prodCateM,
         String prodBrand,
         String prodGender,
         String prodColor,
@@ -18,6 +20,7 @@ public record ProductDto(
         Long prodPrice,
         String prodContent,
         int prodViewCnt,
+        String prodSellType,
         List<ImageDto> images,
         LocalDateTime createdAt,
         String createdBy,

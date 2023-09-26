@@ -7,6 +7,7 @@ import com.used.lux.repository.CategoryBRepository;
 import com.used.lux.repository.CategoryMRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class CategoryMService {
     private final CategoryBRepository cateBRepo;
 
     public List<CategoryMDto> getMiddleCategoryList() {
-        return cateMMapper.toDtoList(cateMRepo.findAll());
+        return cateMRepo.findAll().stream().map(cateMMapper::toDto).toList();
     }
 
     public  CategoryMDto getMcategoryid(Long id){
@@ -38,12 +39,9 @@ public class CategoryMService {
             cateMRepo.save(categoryM);
         }
     }
+
     public void middleCategoryDelete(String st){
         cateMRepo.deleteByCateMNm(st);
-    }
-    public void middelCategoryDeleteByBCategoryId(Long categoryId) {
-        cateMRepo.deleteAllByCateB_Id(categoryId);
-
     }
 
     public boolean middleCategoryExsist(String st){
@@ -52,8 +50,9 @@ public class CategoryMService {
 
     }
 
-    public List<String> middlecategoryExsistByBCategory(Long categoryId) {
-        return cateMRepo.findAllByCateB_Id(categoryId);
+    @Transactional
+    public void middelCategoryDeleteByBCategoryId(Long categoryId) {
+        cateMRepo.deleteByCateB_Id(categoryId);
     }
 
     public void middleCategoryDeleteById(Long categoryId) {

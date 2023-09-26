@@ -135,10 +135,10 @@
                             </tr>
                             </thead>
                             <tbody id ="list">
-                            <tr th:each="BCategoryList : ${categoryList}">
-                                <th scope="row" style="vertical-align: middle;" th:text="${BCategoryList.id}">user1@mail.com</th>
-                                <td th:text="${BCategoryList.categoryBName}" style="vertical-align: middle;">Brandon Jacob</td>
-                                <td><a class="btn btn-danger" th:href="|javascript:deleteBcategory(${BCategoryList.categoryMDtos().size()} ,${BCategoryList.id})|">삭제</a></td>
+                            <tr th:each="cate : ${cateList}">
+                                <th scope="row" style="vertical-align: middle;" th:text="${cate.id}">user1@mail.com</th>
+                                <td th:text="${cate.cateBNm}" style="vertical-align: middle;">Brandon Jacob</td>
+                                <td><a class="btn btn-danger" th:href="|javascript:deleteBcategory(${cate.cateMList.size} ,${cate.id})|">삭제</a></td>
                                 <!-- @{/admin/product/category/{categoryId}/delete(categoryId=${BCategoryList.id})}-->
                             </tr>
                             </tbody>
@@ -218,8 +218,8 @@
                     {
 
                         id = data[key].id;
-                        name = data[key].categoryBName;
-                        let countSubo = data[key].categoryMDtos.length;
+                        name = data[key].cateBNm;
+                        let countSubo = data[key].cateMList.length;
 
                         textHTMLForm =
                             "<tr> " +
@@ -241,13 +241,13 @@
                     {
 
                         id = data[key].id;
-                        name = data[key].categoryMName;
-                        Bid = data[key].categoryBId;
+                        name = data[key].cateMNm;
+                        BNm = data[key].cateBNm;
                         textHTMLForm =
                             "<tr> " +
                             "<th scope='row' style='vertical-align: middle;'  >"+id+"</th>"+
                             "<td  style='vertical-align: middle;' >"+name+"</td>" +
-                            "<td  style='vertical-align: middle;' >"+Bid +"</td> " +
+                            "<td  style='vertical-align: middle;' >"+BNm +"</td> " +
                             "<td id = 'deleteButton'><a class='btn btn-danger' href='category/" + id + "/deleteM'>삭제</a></td>"+
                             "</tr>";
                         textHTML += textHTMLForm;
