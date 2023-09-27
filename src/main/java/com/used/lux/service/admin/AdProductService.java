@@ -13,10 +13,7 @@ import com.used.lux.dto.user.auction.AuctionLogDto;
 import com.used.lux.dto.user.order.ProductOrderLogDto;
 import com.used.lux.dto.user.product.ProductDto;
 import com.used.lux.dto.user.product.ProductLogDto;
-import com.used.lux.mapper.BrandMapper;
-import com.used.lux.mapper.CategoryBMapper;
-import com.used.lux.mapper.ProductLogMapper;
-import com.used.lux.mapper.ProductMapper;
+import com.used.lux.mapper.*;
 import com.used.lux.repository.*;
 import com.used.lux.repository.appraisal.AppraisalRepository;
 import com.used.lux.repository.auction.AuctionLogRepository;
@@ -49,6 +46,7 @@ public class AdProductService {
     private final ProductLogMapper prodLogMapper;
 
     private final ProductOrderLogRepository productOrderLogRepository;
+    private final ProductOrderLogMapper prodOrderLogMapper;
 
     private final AuctionLogRepository auctionLogRepository;
 
@@ -91,8 +89,8 @@ public class AdProductService {
         List<ProductLogDto> productLogDtos = productLogRepository.findByProdIdOrderByCreatedAtDesc(productId)
                 .stream().map(prodLogMapper::toDto).toList();
         // 주문내역
-        List<ProductOrderLogDto> productOrderLogDtos = productOrderLogRepository.findByProductId(productId)
-                .stream().map(ProductOrderLogDto::from).toList();
+        List<ProductOrderLogDto> productOrderLogDtos = productOrderLogRepository.findByProdId(productId)
+                .stream().map(prodOrderLogMapper::toDto).toList();
         // 경매내역
         List<AuctionLogDto> auctionLogDtos = auctionLogRepository.findByProductId(productId)
                 .stream().map(AuctionLogDto::from).toList();

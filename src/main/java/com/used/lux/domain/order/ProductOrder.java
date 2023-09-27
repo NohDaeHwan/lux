@@ -5,6 +5,7 @@ import javax.persistence.*;
 import com.used.lux.domain.AuditingFields;
 import com.used.lux.domain.State;
 import com.used.lux.domain.constant.OrderState;
+import com.used.lux.domain.constant.SellType;
 import com.used.lux.domain.product.Product;
 import com.used.lux.domain.useraccount.UserAccount;
 import lombok.*;
@@ -27,16 +28,12 @@ public class ProductOrder extends AuditingFields {
 	private String name;
 
 	@Setter
-	@Column(name="phone_number", nullable = false, length = 11)
+	@Column(name="phone_number", nullable = false, length = 13)
 	private String phoneNumber;
 
 	@Setter
 	@Column(nullable = false, length = 100)
 	private String address;
-
-	@Setter
-	@Column(length = 100)
-	private String email;
 
 	@Setter
 	private Long payment;
@@ -52,7 +49,8 @@ public class ProductOrder extends AuditingFields {
 
 	@Setter
 	@Column(name="prod_sell_type", length = 50)
-	private String prodSellType; // 중고, 경매
+	@Enumerated(EnumType.STRING)
+	private SellType prodSellType; // 중고, 경매
 
 	@Setter
 	private Long productId;

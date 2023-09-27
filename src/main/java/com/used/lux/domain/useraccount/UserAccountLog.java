@@ -20,8 +20,12 @@ public class UserAccountLog extends AuditingFields {
     private Long id;
 
     @Setter
-    @Column(name="user_email", nullable = false, length = 100, unique = true)
-    private String userEmail;
+    @Column(name="user_id")
+    private Long userId;
+
+    @Setter
+    @Column(name="order_id")
+    private Long orderId; // 중고, 경매
 
     @Setter
     @OneToOne(fetch = FetchType.EAGER)

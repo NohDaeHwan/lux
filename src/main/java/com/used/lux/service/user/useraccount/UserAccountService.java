@@ -61,7 +61,8 @@ public class UserAccountService {
         UserAccount userAccount = userAccountRepo.getReferenceById(principal.id());
         userAccount.setPoint(userUpdateRequest.userPoint()+ userAccount.getPoint());
         userAccountLogRepository.save(UserAccountLog.builder()
-                        .userEmail(userAccount.getUserEmail()).userGrade(userAccount.getUserGrade())
+                        .id(null).orderId(null)
+                        .userId(userAccount.getId()).userGrade(userAccount.getUserGrade())
                         .point(userUpdateRequest.userPoint()).usageDetail("충전").saleNumber("-")
                         .build());
         // 시큐리티 인증 재설정

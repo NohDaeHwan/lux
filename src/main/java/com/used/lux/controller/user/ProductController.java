@@ -7,7 +7,6 @@ import com.used.lux.request.order.OrderCreateRequest;
 
 import com.used.lux.dto.BrandDto;
 import com.used.lux.dto.CategoryBDto;
-import com.used.lux.response.product.ProductResponse;
 import com.used.lux.service.*;
 import com.used.lux.service.user.order.ProductOrderService;
 import com.used.lux.service.user.product.ProductService;
@@ -52,22 +51,18 @@ public class ProductController {
                               @PageableDefault(size = 30) Pageable pageable,
                               ModelMap mm) {
 
-        Page<ProductDto> products = productService.frontProductFind(productColor, productBrand, productGender,
+        Page<ProductDto> prodList = productService.frontProductFind(productColor, productBrand, productGender,
                 productSize, productGrade, maxPrice, minPrice, query, pageable);
-        List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), products.getTotalPages());
-
-        List<CategoryBDto> categoryList = categoryBService.categoryList();
+        List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), prodList.getTotalPages());
+        List<CategoryBDto> cateList = categoryBService.categoryList();
         List<BrandDto> brandList = brandService.brandList();
 
-        System.out.println(barNumbers);
         mm.addAttribute("paginationBarNumbers", barNumbers);
-        mm.addAttribute("products", products);
-        mm.addAttribute("categoryList", categoryList);
+        mm.addAttribute("prodList", prodList);
+        mm.addAttribute("cateList", cateList);
         mm.addAttribute("brandList", brandList);
 
-
-        System.out.println("function"+products);
-        return "/front/product"; // 중고 명품 리스트 페이지
+        return "/front/product/product-main";
     }
 
     @GetMapping("/{productId}")
@@ -75,31 +70,33 @@ public class ProductController {
         if (principal != null) {
             mm.addAttribute("principal",principal);
         }
-        List<CategoryBDto> categoryList = categoryBService.categoryList();
+        List<CategoryBDto> cateList = categoryBService.categoryList();
         List<UserGradeDto> gradeList = userGradeService.getGradeList();
-        ProductDto productDto = productService.productDetail(productId);
+        ProductDto prod = productService.productDetail(productId);
 
-        mm.addAttribute("categoryList", categoryList);
+        mm.addAttribute("cateList", cateList);
         mm.addAttribute("gradeList", gradeList);
-        mm.addAttribute("productDto", productDto);
+        mm.addAttribute("prod", prod);
 
 
-        return "/front/product-detail"; // 중고 명품 리스트 페이지
+        return "/front/product/product-detail";
     }
     @GetMapping("/{productId}/order")
-    public  String productOrder(@PathVariable Long productId, ModelMap mm, @AuthenticationPrincipal  Principal principal){
+    public  String productOrder(@PathVariable Long productId,
+                                ModelMap mm,
+                                @AuthenticationPrincipal  Principal principal) {
         if (principal != null) {
-            mm.addAttribute("principal",principal);
+            mm.addAttribute("principal", principal);
         }
-        List<CategoryBDto> categoryList = categoryBService.categoryList();
+        List<CategoryBDto> cateList = categoryBService.categoryList();
         List<UserGradeDto> gradeList = userGradeService.getGradeList();
-        ProductDto productDto = productService.productDetail(productId);
+        ProductDto prod = productService.productDetail(productId);
 
-        mm.addAttribute("categoryList", categoryList);
+        mm.addAttribute("cateList", cateList);
         mm.addAttribute("gradeList", gradeList);
-        mm.addAttribute("productDto", productDto);
+        mm.addAttribute("prod", prod);
 
-        return "front/product-order";
+        return "front/product/product-order";
     }
 
     @PostMapping("/{productId}/order/loading")
@@ -113,8 +110,8 @@ public class ProductController {
 
     @GetMapping("/success")
     public String success(ModelMap mm) {
-        List<CategoryBDto> categoryList = categoryBService.categoryList();
-        mm.addAttribute("categoryList", categoryList);
+        List<CategoryBDto> cateList = categoryBService.categoryList();
+        mm.addAttribute("cateList", cateList);
         return "front/success";
     }
 

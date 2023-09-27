@@ -11,10 +11,7 @@ import com.used.lux.dto.user.useraccount.UserAccountDto;
 import com.used.lux.dto.user.useraccount.UserAccountLogDto;
 import com.used.lux.dto.UserGradeDto;
 import com.used.lux.dto.user.useraccount.UserWithdrawalDto;
-import com.used.lux.mapper.AppraisalMapper;
-import com.used.lux.mapper.UserAccountLogMapper;
-import com.used.lux.mapper.UserAccountMapper;
-import com.used.lux.mapper.UserGradeMapper;
+import com.used.lux.mapper.*;
 import com.used.lux.repository.*;
 import com.used.lux.repository.appraisal.AppraisalRequestLogRepository;
 import com.used.lux.repository.appraisal.AppraisalRepository;
@@ -47,6 +44,7 @@ public class AdUserAccountService {
     private final AppraisalRequestLogRepository appraisalRequestLogRepository;
 
     private final ProductOrderLogRepository productOrderLogRepository;
+    private final ProductOrderLogMapper prodOrderLogMapper;
 
     private final ProductOrderCancelRepository productOrderCancelRepository;
 
@@ -75,8 +73,8 @@ public class AdUserAccountService {
         // 회원 상세
         UserAccountDto userAccountDto = userAccountMapper.toDto(userAccountRepo.findById(userId).get());
         // 주문내역
-        List<ProductOrderLogDto> productOrderLogDtos = productOrderLogRepository.findByUserEmail(userAccountDto.userEmail())
-                .stream().map(ProductOrderLogDto::from).collect(Collectors.toCollection(ArrayList::new));
+        List<ProductOrderLogDto> productOrderLogDtos = productOrderLogRepository.findById(userAccountDto.id())
+                .stream().map(prodOrderLogMapper::toDto).collect(Collectors.toCollection(ArrayList::new));
         // 취소내역
         List<ProductOrderCancelDto> productOrderCancelDtos = productOrderCancelRepository.findByUserName(userAccountDto.userName())
                 .stream().map(ProductOrderCancelDto::from).collect(Collectors.toCollection(ArrayList::new));
@@ -91,7 +89,7 @@ public class AdUserAccountService {
         List<AuctionLogDto> auctionLogDtos = auctionLogRepository.findByBidderList(userAccountDto.userName())
                 .stream().map(AuctionLogDto::from).collect(Collectors.toCollection(ArrayList::new));
         // 포인트 내역
-        List<UserAccountLogDto> userAccountLogDtos = userAccountLogRepository.findByUserEmail(userAccountDto.userEmail())
+        List<UserAccountLogDto> userAccountLogDtos = userAccountLogRepository.findById(userAccountDto.id())
                 .stream().map(userAccountLogMapper::toDto).collect(Collectors.toCollection(ArrayList::new));
 
         List<AppraisalRequestLogDto> userAppraisalLogDtos = appraisalRequestLogRepository.findByUserIdOrderByModifiedAtDesc(userAccountDto.id())

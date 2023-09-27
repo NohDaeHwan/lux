@@ -10,19 +10,19 @@
 
 <aside id="sidebar" class="mysidebar">
     <div id="accordion" class="sidebar-nav">
-        <div class="nav-item" th:each="bcategory : ${categoryList}">
-            <div class="nav-link collapsed flex" style="justify-content: space-between;" th:id="'heading'+${bcategoryStat.count}" data-toggle="collapse"
-                 th:data-target="'#collapse'+${bcategoryStat.count}" aria-expanded="true" th:aria-controls="'collapse'+${bcategoryStat.count}">
-            <h6 class="mb-0 font-weight-bold" th:text="${bcategory.categoryBName}">
+        <div class="nav-item" th:each="bCate : ${cateList}">
+            <div class="nav-link collapsed flex" style="justify-content: space-between;" th:id="'heading'+${bCateStat.count}" data-toggle="collapse"
+                 th:data-target="'#collapse'+${bCateStat.count}" aria-expanded="true" th:aria-controls="'collapse'+${bCateStat.count}">
+            <h6 class="mb-0 font-weight-bold" th:text="${bCate.cateBNm}">
                 상의
             </h6>
             <h6 class="mb-0 font-weight-bold">+</h6>
           </div>
-          <div th:id="'collapse'+${bcategoryStat.count}" class="collapse"
-               th:aria-labelledby="'heading'+${bcategoryStat.count}" data-parent="#accordion">
-            <div class="nav-link collapsed" th:each="mcategory : ${bcategory.categoryMDtos()}">
+          <div th:id="'collapse'+${bCateStat.count}" class="collapse"
+               th:aria-labelledby="'heading'+${bCateStat.count}" data-parent="#accordion">
+            <div class="nav-link collapsed" th:each="mCate : ${bCate.cateMList}">
                 <h6 class="mb-0" style="font-size:15px;">
-                    <a th:href="@{|/searchcate/${mcategory.id}|}" class="text-black-50" th:text="${mcategory.categoryMName()}">짧은 상의</a>
+                    <a th:href="@{|/searchcate/${mCate.id}|}" class="text-black-50" th:text="${mCate.cateMNm()}">짧은 상의</a>
                 </h6>
             </div>
           </div>
@@ -36,12 +36,11 @@
                 <div class="col-lg-5">
                     <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
                         <div class="carousel-indicators">
-                            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                            <button th:each="img : ${prod.images}" type="button" data-bs-target="#carouselExampleDark" th:data-bs-slide-to="${imgStat.index}" th:class="${imgStat.count == 1 ? 'active' : ''}"
+                                    th:aria-current="${imgStat.count == 1 ? 'true' : ''}" th:aria-label="'Slide '+${imgStat.count}"></button>
                         </div>
                         <div class="carousel-inner">
-                            <div data-bs-interval="2000" th:each="img : ${productDto.imageDtos}" th:class="${'carousel-item' + (imgStat.count == 1 ? ' active' : '')}" >
+                            <div data-bs-interval="2000" th:each="img : ${prod.images}" th:class="${'carousel-item' + (imgStat.count == 1 ? ' active' : '')}" >
                                 <img th:src="${img.filePath}" class="d-block w-100" alt="...">
                                 <div class="carousel-caption d-none d-md-block">
                                 </div>
@@ -65,25 +64,25 @@
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">상품명</label>
                                 <div class="col-sm-10" style="padding: 7px 12px;">
-                                    <div class="col-sm-10" style="font-weight: 300;" th:text="${productDto.productName}" th:value="${productDto.productName}" id="FUN" value="a">Fresh Blueberry Antibacterial Foaming Hand Wash</div>
+                                    <div class="col-sm-10" style="font-weight: 300;" th:text="${prod.prodNm}" th:value="${prod.prodNm}" id="FUN" value="a">Fresh Blueberry Antibacterial Foaming Hand Wash</div>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">판매가격</label>
                                 <div class="col-sm-10" style="padding: 7px 12px;">
-                                    <div class="col-sm-10" style="font-weight: 300;" th:text="${#numbers.formatInteger(productDto.productPrice,3,'COMMA')} +'원'">1,996,460원</div>
+                                    <div class="col-sm-10" style="font-weight: 300;" th:text="${#numbers.formatInteger(prod.prodPrice,3,'COMMA')} +'원'">1,996,460원</div>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">브랜드</label>
                                 <div class="col-sm-10" style="padding: 7px 12px;">
-                                    <div class="col-sm-10" style="font-weight: 300;" th:text="${productDto.productBrandName}" id="LOVE">끌로엦</div>
+                                    <div class="col-sm-10" style="font-weight: 300;" th:text="${prod.prodBrand}" id="LOVE">끌로엦</div>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">카테고리</label>
                                 <div class="col-sm-10" style="padding: 7px 12px;">
-                                    <div class="col-sm-10" style="font-weight: 300;" th:text="${productDto.categoryBName} + ' > ' + ${productDto.categoryMName}">악세서리 > 넥타이</div>
+                                    <div class="col-sm-10" style="font-weight: 300;" th:text="${prod.prodCateB} + ' > ' + ${prod.prodCateM}">악세서리 > 넥타이</div>
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -96,7 +95,7 @@
                             <div class="row mb-3" sec:authorize="isAuthenticated">
                                 <label class="col-sm-2 col-form-label">현등급<br>혜택</label>
                                 <div class="col-sm-10" >
-                                    <div class="w-100 bg-light p-1 m-2" th:text="${principal.userGrade.gradeName} + '👑('+ ${principal.userGrade.discount} + '%할인): ' +${#numbers.formatInteger((productDto.productPrice)-(principal.userGrade.getDiscount)*0.01*(productDto.productPrice),3,'COMMA')}+'원'">
+                                    <div class="w-100 bg-light p-1 m-2" th:text="${principal.userGrade.gradeName} + '👑('+ ${principal.userGrade.discount} + '%할인): ' +${#numbers.formatInteger((prod.prodPrice)-(principal.userGrade.getDiscount)*0.01*(prod.prodPrice),3,'COMMA')}+'원'">
                                         어떻게 저렇게 해서 얼마얼마</div>
                                 </div>
                             </div>
@@ -119,8 +118,8 @@
             <div class="gy-4 mb-5 bg-light" style="display:flex;justify-content: center">
                 <div>
                     <div class="mb-3 text-center"><strong>상품설명💁🏻‍️</strong></div>
-                    <div class="mb-3 text-center" th:text="${productDto.productContent}">상품설명입니다~~</div>
-                    <div class="mb-3" th:each="img:${productDto.imageDtos}"><img src="#" th:src="${img.filePath}"></div>
+                    <div class="mb-3 text-center" th:text="${prod.prodContent}">상품설명입니다~~</div>
+                    <div class="mb-3" th:each="img:${prod.images}"><img src="#" th:src="${img.filePath}"></div>
                 </div>
             </div>
             <!--문의사항 -->
@@ -453,7 +452,7 @@
 
   <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
   <script type="text/javascript" src="/assets/lib/js/bootstrap.js"></script>
-  <script src="/static/assets/js/frontmain.js"></script>
+  <script src="/assets/js/frontmain.js"></script>
 <script th:inline="javascript">
 
         // if(sessionStorage.getItem("recent") == null)

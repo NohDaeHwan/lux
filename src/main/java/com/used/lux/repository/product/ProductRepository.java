@@ -16,7 +16,7 @@ public interface ProductRepository extends JpaRepository<Product, Long>, Product
     @Query(value ="SELECT p FROM Product p WHERE p.prodNm LIKE %:query%")
     List<Product> findByQuery(@Param("query") String query, Pageable pageable);
 
-    @Query(value ="SELECT p FROM Product p WHERE p.prodBrand.brandName LIKE %:productBrand% AND " +
+    /*@Query(value ="SELECT p FROM Product p WHERE p.prodBrand.brandName LIKE %:productBrand% AND " +
             "p.prodColor LIKE %:productColor% AND p.prodGender = :productGender " +
             "AND p.prodSize LIKE %:productSize% AND p.prodNm LIKE %:query% " +
             "AND p.prodGrade = :productGrade AND p.prodState = 'SELL'" +
@@ -27,19 +27,7 @@ public interface ProductRepository extends JpaRepository<Product, Long>, Product
                     "AND p.prodGrade = :productGrade AND p.prodState = 'SELL' AND p.prodPrice BETWEEN :minPrice AND :maxPrice")
     Page<Product> findByFrontProductList(String productBrand,String productColor, String productGender,
                                          String productSize, String productGrade, int maxPrice, int minPrice,
-                                         String query, Pageable pageable);
-
-    /*@Query(value ="SELECT p FROM Product p WHERE p.prodBrand.brandName LIKE %:productBrand% " +
-            "AND p.prodGender = :productGender AND p.prodNm LIKE %:query% " +
-            "AND p.prodSize LIKE %:productSize% AND p.prodState = :productState " +
-            "AND p.prodGrade = :productGrade AND p.createdAt >= :productDate",
-            countQuery = "SELECT count(p) FROM Product p WHERE p.prodBrand.brandName LIKE %:productBrand% " +
-                    "AND p.prodGender = :productGender AND p.prodNm LIKE %:query% " +
-                    "AND p.prodSize LIKE %:productSize% AND p.prodState = :productState " +
-                    "AND p.prodGrade = :productGrade AND p.createdAt >= :productDate")
-    Page<Product> findByBackProductList(String productBrand, String productGender,
-                                        String productSize, String productGrade, String productState,
-                                        LocalDateTime productDate, String query, Pageable pageable);*/
+                                         String query, Pageable pageable);*/
 
     @Query(value ="SELECT p FROM Product p WHERE p.prodBrand.brandName LIKE %:productBrand% AND " +
             "p.prodColor LIKE %:productColor% AND p.prodGender = :productGender " +

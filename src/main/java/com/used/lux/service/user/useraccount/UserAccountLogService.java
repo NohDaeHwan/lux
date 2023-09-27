@@ -18,12 +18,12 @@ public class UserAccountLogService {
     private final UserAccountLogMapper userAccountLogMapper;
 
     private final UserAccountLogRepository userAccountLogRepository;
-    public Page<UserAccountLogDto> getPointList(String userEmail, Pageable pageable) {
-        return userAccountLogRepository.findByUserEmailFront(userEmail,pageable).map(userAccountLogMapper::toDto);
+    public Page<UserAccountLogDto> getPointList(Long userId, Pageable pageable) {
+        return userAccountLogRepository.findByUserIdFront(userId,pageable).map(userAccountLogMapper::toDto);
     }
 
-    public Long getTotalPoint(String userEmail) {
-        TotalPointDto totalPointDto = userAccountLogRepository.getTotalPoint(userEmail);
+    public Long getTotalPoint(Long userId) {
+        TotalPointDto totalPointDto = userAccountLogRepository.getTotalPoint(userId);
         if (totalPointDto.point() == null) {
             return 0L;
         }

@@ -5,19 +5,19 @@
 <body class="sub_page">
 <aside id="sidebar" class="mysidebar">
     <div id="accordion" class="sidebar-nav">
-        <div class="nav-item" th:each="bcategory : ${categoryList}">
-            <div class="nav-link collapsed flex" style="justify-content: space-between;" th:id="'heading'+${bcategoryStat.count}" data-toggle="collapse"
-                 th:data-target="'#collapse'+${bcategoryStat.count}" aria-expanded="true" th:aria-controls="'collapse'+${bcategoryStat.count}">
-                <h6 class="mb-0 font-weight-bold" th:text="${bcategory.categoryBName}">
+        <div class="nav-item" th:each="bCate : ${cateList}">
+            <div class="nav-link collapsed flex" style="justify-content: space-between;" th:id="'heading'+${bCateStat.count}" data-toggle="collapse"
+                 th:data-target="'#collapse'+${bCateStat.count}" aria-expanded="true" th:aria-controls="'collapse'+${bCateStat.count}">
+                <h6 class="mb-0 font-weight-bold" th:text="${bCate.cateBNm}">
                     상의
                 </h6>
                 <h6 class="mb-0 font-weight-bold">+</h6>
             </div>
-            <div th:id="'collapse'+${bcategoryStat.count}" class="collapse"
-                 th:aria-labelledby="'heading'+${bcategoryStat.count}" data-parent="#accordion">
-                <div class="nav-link collapsed" th:each="mcategory : ${bcategory.categoryMDtos()}">
+            <div th:id="'collapse'+${bCateStat.count}" class="collapse"
+                 th:aria-labelledby="'heading'+${bCateStat.count}" data-parent="#accordion">
+                <div class="nav-link collapsed" th:each="mCate : ${bCate.cateMList}">
                     <h6 class="mb-0" style="font-size:15px;">
-                        <a th:href="@{|/searchcate/${mcategory.id}|}" class="text-black-50" th:text="${mcategory.categoryMName()}">짧은 상의</a>
+                        <a th:href="@{|/searchcate/${mCate.id}|}" class="text-black-50" th:text="${mCate.cateMNm}">짧은 상의</a>
                     </h6>
                 </div>
             </div>
@@ -26,7 +26,7 @@
 </aside>
 <!-- brand section -->
 <main id="main" class="main p-5">
-    <form th:action="@{|/product/${productDto.id}/order/loading|}" method="post" onsubmit="return check()">
+    <form th:action="@{|/product/${prod.id}/order/loading|}" method="post" onsubmit="return check()">
     <section class="section mb-5">
         <div class="row align-items-top">
             <div class="col-lg-12">
@@ -70,7 +70,7 @@
                                                 <input class="form-control" id="requestedTerm" name="requestTerm" type="text"/>
                                             </td>
                                         </tr>
-                                            <input class="form-control" name="price" type="hidden" th:value="${#numbers.formatInteger((productDto.productPrice)-(principal.userGrade.getDiscount)*0.01*(productDto.productPrice),3)}"/>
+                                            <input class="form-control" name="price" type="hidden" th:value="${#numbers.formatInteger((prod.prodPrice)-(principal.userGrade.getDiscount)*0.01*(prod.prodPrice),3)}"/>
                                         <tr>
                                             <td>당일배송 안내</td>
                                             <td colspan="3">
@@ -129,25 +129,25 @@
                                         <th scope="row">
                                             <div style="display:flex;" >
                                                 <div class="mr-1">
-                                                    <img th:src="${productDto.imageDtos[0].filePath}" style="width: 100px; height:100px;" alt="" class="" />
+                                                    <img th:src="${prod.images[0].filePath}" style="width: 100px; height:100px;" alt="" class="" />
                                                 </div>
                                                 <div style="display: flex; flex-direction: column">
-                                                    <h6 th:text="${productDto.productBrandName}">브랜드</h6>
+                                                    <h6 th:text="${prod.prodBrand}">브랜드</h6>
                                                     <h6>
-                                                        <a href="#" th:text="${productDto.productName}">
+                                                        <a href="#" th:text="${prod.prodNm}">
                                                             상품명
                                                         </a>
                                                     </h6>
-                                                    <h6 th:text="'옵션:'+${productDto.productSize} + ', ' + ${productDto.productColor}">옵션:사이즈,색상</h6>
-                                                    <h6 th:text="'성별:' + ${productDto.productGender}">성별:여자</h6>
-                                                    <h6 th:text="'상품등급:'+${productDto.productGrade}">상품등급:A</h6>
+                                                    <h6 th:text="'옵션:'+${prod.prodSize} + ', ' + ${prod.prodColor}">옵션:사이즈,색상</h6>
+                                                    <h6 th:text="'성별:' + ${prod.prodGender}">성별:여자</h6>
+                                                    <h6 th:text="'상품등급:'+${prod.prodGrade}">상품등급:A</h6>
                                                 </div>
                                             </div>
                                         </th>
-                                        <td style="vertical-align: middle;" th:text="${#numbers.formatInteger(productDto.productPrice,3,'COMMA')}+'원'"><h6>- 36,000원</h6></td>
-                                        <td style="vertical-align: middle;" th:text="'- '+ ${#numbers.formatInteger((principal.userGrade.discount)*0.01*(productDto.productPrice),3,'COMMA')}+'원'"><h6>- 36,000원</h6></td>
-                                        <td style="vertical-align: middle;" th:text="${productDto.productSellType}"><h6>중고</h6></td>
-                                        <td style="vertical-align: middle;" th:text="${#numbers.formatInteger((productDto.productPrice)-(principal.userGrade.getDiscount)*0.01*(productDto.productPrice),3,'COMMA')}+'원'"><h6>123,456,789원</h6></td>
+                                        <td style="vertical-align: middle;" th:text="${#numbers.formatInteger(prod.prodPrice,3,'COMMA')}+'원'"><h6>- 36,000원</h6></td>
+                                        <td style="vertical-align: middle;" th:text="'- '+ ${#numbers.formatInteger((principal.userGrade.discount)*0.01*(prod.prodPrice),3,'COMMA')}+'원'"><h6>- 36,000원</h6></td>
+                                        <td style="vertical-align: middle;" th:text="${prod.prodSellType}"><h6>중고</h6></td>
+                                        <td style="vertical-align: middle;" th:text="${#numbers.formatInteger((prod.prodPrice)-(principal.userGrade.getDiscount)*0.01*(prod.prodPrice),3,'COMMA')}+'원'"><h6>123,456,789원</h6></td>
                                     </tbody>
                                 </table>
                             </div>
@@ -159,8 +159,8 @@
     </section>
 
     <div class="section" style="font-weight: 300;">
-        <input type="hidden" name="payment" th:value="${productDto.productPrice}-${(principal.userGrade.getDiscount)*0.01*(productDto.productPrice)}">
-        <button class="btn btn-info w-100" type="submit" th:text="${#numbers.formatInteger((productDto.productPrice)-(principal.userGrade.getDiscount)*0.01*(productDto.productPrice),3,'COMMA')}+'원 결제하기'">123,456,789원 결제하기</button>
+        <input type="hidden" name="payment" th:value="${prod.prodPrice}-${(principal.userGrade.getDiscount)*0.01*(prod.prodPrice)}">
+        <button class="btn btn-info w-100" type="submit" th:text="${#numbers.formatInteger((prod.prodPrice)-(principal.userGrade.getDiscount)*0.01*(prod.prodPrice),3,'COMMA')}+'원 결제하기'">123,456,789원 결제하기</button>
     </div>
     </form>
 </main>
@@ -181,7 +181,7 @@
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="/assets/lib/js/bootstrap.js"></script>
-<script src="/static/assets/js/frontmain.js"></script>
+<script src="/assets/js/frontmain.js"></script>
 <script>
     function check() {
         let point=[[${principal.point}]];

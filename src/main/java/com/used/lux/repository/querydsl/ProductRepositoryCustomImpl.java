@@ -113,4 +113,30 @@ public class ProductRepositoryCustomImpl extends QuerydslRepositorySupport imple
         return new PageImpl<Product>(results, pageable, totalCount);
     }
 
+    @Override
+    public Page<Product> findByFrontProductList(String productBrand, String productColor, String productGender, String productSize,
+                                                String productGrade, int maxPrice, int minPrice, String query, Pageable pageable) {
+        QProduct product = QProduct.product;
+
+        JPQLQuery<Product> queryResult = from(product)
+                .select(product)
+                .where(product.prodBrand.id.like("%"+productBrand+"%"),
+                        product.prodColor.like("%"+productColor+"%"),
+                        product.prodSize.like("%"+productSize+"%"),
+                        product.prodPrice.gt(minPrice),
+                        product.prodPrice.lt(maxPrice),
+                        product.prodNm.like("%"+query+"%"));
+
+        if (!Objects.equals(productGender, "")) {
+            queryResult.where(product.prodGender.eq(GenterType.valueOf(productGender)));
+        }
+        if (!Objects.equals(productGrade, "")) {
+            queryResult.where(product.prodGrade.eq(AppraisalGrade.valueOf(productGrade)));
+        }
+
+        long totalCount = queryResult.fetchCount();
+        List<Product> results = getQuerydsl().applyPagination(pageable, queryResult).fetch();
+        return new PageImpl<Product>(results, pageable, totalCount);
+    }
+
 }

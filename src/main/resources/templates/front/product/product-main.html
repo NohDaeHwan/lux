@@ -7,19 +7,19 @@
 
 <aside id="sidebar" class="mysidebar">
     <div id="accordion" class="sidebar-nav">
-        <div class="nav-item" th:each="bcategory : ${categoryList}">
-            <div class="nav-link collapsed flex" style="justify-content: space-between;" th:id="'heading'+${bcategoryStat.count}" data-toggle="collapse"
-                 th:data-target="'#collapse'+${bcategoryStat.count}" aria-expanded="true" th:aria-controls="'collapse'+${bcategoryStat.count}">
-                <h6 class="mb-0 font-weight-bold" th:text="${bcategory.categoryBName}">
+        <div class="nav-item" th:each="bCate : ${cateList}">
+            <div class="nav-link collapsed flex" style="justify-content: space-between;" th:id="'heading'+${bCateStat.count}" data-toggle="collapse"
+                 th:data-target="'#collapse'+${bCateStat.count}" aria-expanded="true" th:aria-controls="'collapse'+${bCateStat.count}">
+                <h6 class="mb-0 font-weight-bold" th:text="${bCate.cateBNm}">
                     상의
                 </h6>
                 <h6 class="mb-0 font-weight-bold">+ </h6>
             </div>
-            <div th:id="'collapse'+${bcategoryStat.count}" class="collapse"
-                 th:aria-labelledby="'heading'+${bcategoryStat.count}" data-parent="#accordion">
-                <div class="nav-link collapsed" th:each="mcategory : ${bcategory.categoryMDtos()}">
+            <div th:id="'collapse'+${bCateStat.count}" class="collapse"
+                 th:aria-labelledby="'heading'+${bCateStat.count}" data-parent="#accordion">
+                <div class="nav-link collapsed" th:each="mCate : ${bCate.cateMList}">
                     <h6 class="mb-0" style="font-size:15px;">
-                        <a th:href="@{|/searchcate/${mcategory.id}|}" class="text-black-50" th:text="${mcategory.categoryMName()}">짧은 상의</a>
+                        <a th:href="@{|/searchcate/${mCate.id}|}" class="text-black-50" th:text="${mCate.cateMNm}">짧은 상의</a>
                     </h6>
                 </div>
             </div>
@@ -44,7 +44,7 @@
                                     <div class="col-sm-10">
                                         <select class="form-select form-control" name="productColor">
                                              <option value="" selected>전체</option>
-                                            <option th:each="product : ${products}" th:value="${product.productColor}" th:text="${product.productColor}">example</option>
+                                            <option th:each="prod : ${prodList}" th:value="${prod.prodColor}" th:text="${prod.prodColor}">example</option>
                                         </select>
                                     </div>
                                 </div>
@@ -53,7 +53,7 @@
                                     <div class="col-sm-10">
                                         <select class="form-select form-control" name="productBrand">
                                             <option value="" selected>전체</option>
-                                            <option th:each="brand : ${brandList}" th:value="${brand.brandName}" th:text="${brand.brandName}">example</option>
+                                            <option th:each="brand : ${brandList}" th:value="${brand.id}" th:text="${brand.brandName}">example</option>
                                         </select>
                                     </div>
                                 </div>
@@ -62,9 +62,9 @@
                                     <div class="col-sm-10">
                                         <select class="form-select form-control" name="productGender">
                                             <option value="" selected>전체</option>
-                                            <option value="공용">공용</option>
-                                            <option value="남자">남자</option>
-                                            <option value="여자">여자</option>
+                                            <option value="COMMON">공용</option>
+                                            <option value="MALE">남자</option>
+                                            <option value="FEMALE">여자</option>
                                         </select>
                                     </div>
                                 </div>
@@ -85,7 +85,6 @@
                                             <option value="S">S</option>
                                             <option value="A">A</option>
                                             <option value="B">B</option>
-                                            <option value="C">C</option>
                                         </select>
                                     </div>
                                 </div>
@@ -125,7 +124,7 @@
                 <h3 class="custom_heading font-weight-light">
                     중고 탭 검색결과 >
                 </h3>
-                <p th:text="'전체결과: ' +${products.totalElements}+' 건'">
+                <p th:text="'전체결과: ' +${prodList.totalElements}+' 건'">
                     전체결과: n 건
                 </p>
                 </div>
@@ -134,14 +133,14 @@
                 <div class="container-fluid">
                   <div class="row">
 
-                    <div class="col-md-2" th:each="product: ${products}">
+                    <div class="col-md-2" th:each="prod: ${prodList}">
                       <div class="card mb-4 box-shadow">
-                        <a th:href="@{|/product/${product.id}|}">
-                        <img class="card-img-top p-1" th:src="${product.imageList[0].filePath}" alt="Card image cap">
+                        <a th:href="@{|/product/${prod.id}|}">
+                        <img class="card-img-top p-1" th:src="${prod.images[0].filePath}" alt="Card image cap">
                         <div class="p-2">
-                          <p class="card-text font-weight-lighter mb-1 text-black-50" th:text="${product.productBrandName}">브랜드</p>
-                          <p class="card-text font-weight-light mb-1"><a th:href="@{|/product/${product.id}|}" th:text="${product.productName}">상품명</a></p>
-                          <p class="card-text font-weight-light" th:text="${#numbers.formatInteger(product.productPrice,3,'COMMA')}">40.000P</p>
+                          <p class="card-text font-weight-lighter mb-1 text-black-50" th:text="${prod.prodBrand}">브랜드</p>
+                          <p class="card-text font-weight-light mb-1"><a th:href="@{|/product/${prod.id}|}" th:text="${prod.prodNm}">상품명</a></p>
+                          <p class="card-text font-weight-light" th:text="${#numbers.formatInteger(prod.prodPrice,3,'COMMA')}">40.000P</p>
                           <div class="d-flex justify-content-between align-items-center"></div>
                         </div>
                         </a>
@@ -159,28 +158,28 @@
         <nav id="pagination" aria-label="Page navigation example">
             <ul class="pagination">
                 <li class="page-item">
-                    <a class="page-link" th:href="@{/product(page=${products.number - 1}, sort=(${param.sort} != null ? ${param.sort} : '') + (${products.sort.getOrderFor('param.sort')} != null ? (${products.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
+                    <a class="page-link" th:href="@{/templates/front/product(page=${prodList.number - 1}, sort=(${param.sort} != null ? ${param.sort} : '') + (${prodList.sort.getOrderFor('param.sort')} != null ? (${prodList.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
                       query=${param.query}, productColor=${param.productColor}, productBrand=${param.productBrand}, productGender=${param.productGender},
                           productSize=${param.productSize}, productGrade=${param.productGrade}, maxPrice=${param.maxPrice}, minPrice=${param.minPrice})}"
-                       aria-label="Previous" th:class="'page-link' + (${products.number} <= 0 ? ' disabled-link' : '')">
+                       aria-label="Previous" th:class="'page-link' + (${prodList.number} <= 0 ? ' disabled-link' : '')">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
                 <li class="page-item" th:each="pageNumber : ${paginationBarNumbers}">
                     <a th:text="${pageNumber + 1}"
-                       th:href="@{/product(page=${pageNumber},
-                          sort=(${param.sort} != null ? ${param.sort} : '') + (${products.sort.getOrderFor('param.sort')} != null ? (${products.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
+                       th:href="@{/templates/front/product(page=${pageNumber},
+                          sort=(${param.sort} != null ? ${param.sort} : '') + (${prodList.sort.getOrderFor('param.sort')} != null ? (${prodList.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
                           query=${param.query}, productColor=${param.productColor}, productBrand=${param.productBrand}, productGender=${param.productGender},
                           productSize=${param.productSize}, productGrade=${param.productGrade}, maxPrice=${param.maxPrice}, minPrice=${param.minPrice}
                       )}"
-                       th:class="'page-link' + (${pageNumber} == ${products.number} <= 0 ? ' disabled-link' : '')">
+                       th:class="'page-link' + (${pageNumber} == ${prodList.number} <= 0 ? ' disabled-link' : '')">
                     </a>
                 </li>
                 <li class="page-item">
-                    <a class="page-link" th:href="@{/product(page=${products.number + 1}, sort=(${param.sort} != null ? ${param.sort} : '') + (${products.sort.getOrderFor('param.sort')} != null ? (${products.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
+                    <a class="page-link" th:href="@{/templates/front/product(page=${prodList.number + 1}, sort=(${param.sort} != null ? ${param.sort} : '') + (${prodList.sort.getOrderFor('param.sort')} != null ? (${prodList.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
                       query=${param.query}, productColor=${param.productColor}, productBrand=${param.productBrand}, productGender=${param.productGender},
                           productSize=${param.productSize}, productGrade=${param.productGrade}, maxPrice=${param.maxPrice}, minPrice=${param.minPrice})}"
-                       aria-label="Next" th:class="'page-link' + (${products.number} >= ${products.totalPages - 1} ? ' disabled-link' : '')">
+                       aria-label="Next" th:class="'page-link' + (${prodList.number} >= ${prodList.totalPages - 1} ? ' disabled-link' : '')">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
@@ -205,7 +204,7 @@
 
   <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
   <script type="text/javascript" src="/assets/lib/js/bootstrap.js"></script>
-  <script src="/static/assets/js/frontmain.js"></script>
+  <script src="/assets/js/frontmain.js"></script>
 
 </body>
 

@@ -59,33 +59,23 @@ public class WebSocketService extends TextWebSocketHandler {
             }
 
             Auction auction = auctionRepository.findById(Long.parseLong(data[0])).get();
-            UserAccount userAccount;
 
-            if (auction.getBidder() == null) {
-                // 새로 입찰 한 사람
-                userAccount = userAccountRepository.findByUserName(data[1]);
-                userAccount.setPoint(userAccount.getPoint()-Integer.parseInt(data[2]));
-                userAccountRepository.save(userAccount);
-                userAccountLogRepository.save(UserAccountLog.builder()
-                                .id(null).userEmail(userAccount.getUserEmail()).userGrade(userAccount.getUserGrade())
-                                .point(Long.parseLong(data[2])).usageDetail("차감").saleNumber("경매/"+data[0])
-                                .build());
-            } else {
-                // 새로 입찰 한 사람
-                userAccount = userAccountRepository.findByUserName(data[1]);
-                userAccount.setPoint(userAccount.getPoint()-Integer.parseInt(data[2]));
-                userAccountRepository.save(userAccount);
-                userAccountLogRepository.save(UserAccountLog.builder()
-                                .id(null).userEmail(userAccount.getUserEmail()).userGrade(userAccount.getUserGrade())
-                                .point(Long.parseLong(data[2])).usageDetail("차감").saleNumber("경매/"+data[0])
-                                .build());
+            // 새로 입찰 한 사람
+            UserAccount userAccount = userAccountRepository.findByUserName(data[1]);
+            userAccount.setPoint(userAccount.getPoint()-Integer.parseInt(data[2]));
+            userAccountRepository.save(userAccount);
+            userAccountLogRepository.save(UserAccountLog.builder()
+                    .id(null).userId(userAccount.getId()).orderId(auction.getId()).userGrade(userAccount.getUserGrade())
+                    .point(Long.parseLong(data[2])).usageDetail("차감").saleNumber("경매/"+data[0])
+                    .build());
 
+            if (auction.getBidder() != null) {
                 // 전에 입찰 한 사람
                 UserAccount beforeUserAccount = userAccountRepository.findByUserName(auction.getBidder());
                 beforeUserAccount.setPoint(beforeUserAccount.getPoint()+auction.getPresentPrice());
                 userAccountRepository.save(beforeUserAccount);
                 userAccountLogRepository.save(UserAccountLog.builder()
-                        .id(null).userEmail(userAccount.getUserEmail()).userGrade(userAccount.getUserGrade())
+                        .id(null).userId(beforeUserAccount.getId()).orderId(auction.getId()).userGrade(beforeUserAccount.getUserGrade())
                         .point(auction.getPresentPrice()).usageDetail("충전").saleNumber("경매/"+data[0])
                         .build());
             }

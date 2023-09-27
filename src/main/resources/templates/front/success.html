@@ -10,19 +10,19 @@
 
 <aside id="sidebar" class="mysidebar">
     <div id="accordion" class="sidebar-nav">
-        <div class="nav-item" th:each="bcategory : ${categoryList}">
-            <div class="nav-link collapsed flex" style="justify-content: space-between;" th:id="'heading'+${bcategoryStat.count}" data-toggle="collapse"
-                 th:data-target="'#collapse'+${bcategoryStat.count}" aria-expanded="true" th:aria-controls="'collapse'+${bcategoryStat.count}">
-                <h6 class="mb-0 font-weight-bold" th:text="${bcategory.categoryBName}">
+        <div class="nav-item" th:each="bCate : ${cateList}">
+            <div class="nav-link collapsed flex" style="justify-content: space-between;" th:id="'heading'+${bCateStat.count}" data-toggle="collapse"
+                 th:data-target="'#collapse'+${bCateStat.count}" aria-expanded="true" th:aria-controls="'collapse'+${bCateStat.count}">
+                <h6 class="mb-0 font-weight-bold" th:text="${bCate.cateBNm}">
                     상의
                 </h6>
                 <h6 class="mb-0 font-weight-bold">+</h6>
             </div>
-            <div th:id="'collapse'+${bcategoryStat.count}" class="collapse"
-                 th:aria-labelledby="'heading'+${bcategoryStat.count}" data-parent="#accordion">
-                <div class="nav-link collapsed" th:each="mcategory : ${bcategory.categoryMDtos()}">
+            <div th:id="'collapse'+${bCateStat.count}" class="collapse"
+                 th:aria-labelledby="'heading'+${bCateStat.count}" data-parent="#accordion">
+                <div class="nav-link collapsed" th:each="mCate : ${bCate.cateMList}">
                     <h6 class="mb-0" style="font-size:15px;">
-                        <a th:href="@{|/searchcate/${mcategory.id}|}" class="text-black-50" th:text="${mcategory.categoryMName()}">짧은 상의</a>
+                        <a th:href="@{|/searchcate/${mCate.id}|}" class="text-black-50" th:text="${mCate.cateMNm}">짧은 상의</a>
                     </h6>
                 </div>
             </div>
