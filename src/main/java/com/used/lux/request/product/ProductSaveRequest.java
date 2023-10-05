@@ -1,7 +1,9 @@
 package com.used.lux.request.product;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public record ProductSaveRequest(
@@ -18,6 +20,9 @@ public record ProductSaveRequest(
         String prodGradeId,
         Long prodPrice,
         String prodContent,
+        long startPrice,
+        String aucStartDate,
+        String aucEndDate,
         List<MultipartFile> images
 ) {
 }

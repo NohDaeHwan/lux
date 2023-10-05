@@ -331,13 +331,23 @@ INSERT INTO lux.brand
 (id, brand_name)
 VALUES(104, '빅터앤롤프');
 
-INSERT INTO user_account(id, user_email, user_password, user_name, phone_number, age, gender, user_grade, point, role, memo, created_at, created_by, modified_at, modified_by) VALUES
-(1,'qwer1234@naver.com','$2a$10$Cd4xXlpbYzq6zVvxBuFJZ.QNxADDn4u7/Q4.sICp39h42.nj/YUGi','다람쥐','010-1234-5678',25,'Male',4,1099999,'USER','TEST USER','2022-11-18 12:49:47.949772','SYSTEM','2022-11-18 16:43:53.082205','SYSTEM'),
-(2,'asdf1234@naver.com','$2a$10$y28559SHwV0M.zpp9bEWbu.mygAsnr.DVbNPGxeXif//osUNlA5U2','Admin다람쥐쥐','010-2345-6789',26,'남자',1,50000,'ADMIN','TEST USER','2022-11-18 14:14:01.213608','SYSTEM','2022-11-21 17:55:58.143390','SYSTEM');
+INSERT INTO user_account(id, user_email, user_password, user_name, phone_number, age, gender, user_grade, user_point, role, memo, created_at, created_by, modified_at, modified_by) VALUES
+(1,'qwer1234@naver.com','$2a$10$Cd4xXlpbYzq6zVvxBuFJZ.QNxADDn4u7/Q4.sICp39h42.nj/YUGi','다람쥐','010-1234-5678',25,'MALE',4, 1000000,'USER','TEST USER','2022-11-18 12:49:47.949772','SYSTEM','2022-11-18 16:43:53.082205','SYSTEM'),
+(2,'asdf1234@naver.com','$2a$10$y28559SHwV0M.zpp9bEWbu.mygAsnr.DVbNPGxeXif//osUNlA5U2','Admin다람쥐쥐','010-2345-6789',26,'MALE',1,50000,'ADMIN','TEST USER','2022-11-18 14:14:01.213608','SYSTEM','2022-11-21 17:55:58.143390','SYSTEM');
+
+INSERT INTO lux.user_account_log
+(id, created_at, created_by, modified_at, modified_by, order_id, `point`, sale_number, usage_detail, user_id, user_grade)
+VALUES(1, '2023-10-05 10:21:08.001151', 'SYSTEM', '2023-10-05 10:21:08.001151', 'SYSTEM', NULL, 1000000, '-', '충전', 1, 4);
+INSERT INTO lux.user_account_log
+(id, created_at, created_by, modified_at, modified_by, order_id, `point`, sale_number, usage_detail, user_id, user_grade)
+VALUES(2, '2023-10-05 10:21:08.001151', 'SYSTEM', '2023-10-05 10:21:08.001151', 'SYSTEM', NULL, 50000, '-', '충전', 2, 1);
 
 INSERT INTO lux.appraisal
 (id, created_at, created_by, modified_at, modified_by, app_color, app_gender, app_prod_nm, app_result_id, app_size, app_state, app_brand_id, user_account_id)
 VALUES(1, '2023-09-21 13:32:20.644660', 'SYSTEM', '2023-09-26 13:21:02.779323', 'SYSTEM', '화이트골드', 'FEMALE', '로렉스 69174 18K 화이트골드 블루판 스틸 데이져스트 10P 다이아', 1, '없음', 'REGISTER', 36, 1);
+INSERT INTO lux.appraisal
+(id, created_at, created_by, modified_at, modified_by, app_color, app_gender, app_prod_nm, app_result_id, app_size, app_state, app_brand_id, user_account_id)
+VALUES(2, '2023-10-04 15:33:17.421741', 'SYSTEM', '2023-10-04 15:39:25.115187', 'SYSTEM', '화이트골드', 'FEMALE', '까르띠에 베누아 다이아 골드 시계', 2, '약23*32㎜', 'SELL', 11, 1);
 
 INSERT INTO lux.appraisal_image
 (id, created_at, created_by, modified_at, modified_by, file_path, file_size, orig_file_name, appraisal_id)
@@ -354,14 +364,41 @@ VALUES(4, '2023-09-21 13:32:20.693635', 'SYSTEM', '2023-09-21 13:32:20.693635', 
 INSERT INTO lux.appraisal_image
 (id, created_at, created_by, modified_at, modified_by, file_path, file_size, orig_file_name, appraisal_id)
 VALUES(5, '2023-09-21 13:32:20.695671', 'SYSTEM', '2023-09-21 13:32:20.695671', 'SYSTEM', '/filepath/appraisal_img/20230921/672664668494900.jpg', 20261, 'Rorex5.jpg', 1);
+INSERT INTO lux.appraisal_image
+(id, created_at, created_by, modified_at, modified_by, file_path, file_size, orig_file_name, appraisal_id)
+VALUES(6, '2023-10-04 15:33:17.450715', 'SYSTEM', '2023-10-04 15:33:17.450715', 'SYSTEM', '/filepath/appraisal_img/20231004/1803128228827300.jpg', 24170, 'Cartier1.jpg', 2);
+INSERT INTO lux.appraisal_image
+(id, created_at, created_by, modified_at, modified_by, file_path, file_size, orig_file_name, appraisal_id)
+VALUES(7, '2023-10-04 15:33:17.452715', 'SYSTEM', '2023-10-04 15:33:17.452715', 'SYSTEM', '/filepath/appraisal_img/20231004/1803128230870000.jpg', 18020, 'Cartier2.jpg', 2);
+INSERT INTO lux.appraisal_image
+(id, created_at, created_by, modified_at, modified_by, file_path, file_size, orig_file_name, appraisal_id)
+VALUES(8, '2023-10-04 15:33:17.453714', 'SYSTEM', '2023-10-04 15:33:17.453714', 'SYSTEM', '/filepath/appraisal_img/20231004/1803128231392400.jpg', 16070, 'Cartier3.jpg', 2);
+INSERT INTO lux.appraisal_image
+(id, created_at, created_by, modified_at, modified_by, file_path, file_size, orig_file_name, appraisal_id)
+VALUES(9, '2023-10-04 15:33:17.455718', 'SYSTEM', '2023-10-04 15:33:17.455718', 'SYSTEM', '/filepath/appraisal_img/20231004/1803128232141100.jpg', 16638, 'Cartier4.jpg', 2);
+INSERT INTO lux.appraisal_image
+(id, created_at, created_by, modified_at, modified_by, file_path, file_size, orig_file_name, appraisal_id)
+VALUES(10, '2023-10-04 15:33:17.456715', 'SYSTEM', '2023-10-04 15:33:17.456715', 'SYSTEM', '/filepath/appraisal_img/20231004/1803128232666600.jpg', 15982, 'Cartier5.jpg', 2);
+INSERT INTO lux.appraisal_image
+(id, created_at, created_by, modified_at, modified_by, file_path, file_size, orig_file_name, appraisal_id)
+VALUES(11, '2023-10-04 15:33:17.458743', 'SYSTEM', '2023-10-04 15:33:17.458743', 'SYSTEM', '/filepath/appraisal_img/20231004/1803128233303400.jpg', 12944, 'Cartier6.jpg', 2);
+INSERT INTO lux.appraisal_image
+(id, created_at, created_by, modified_at, modified_by, file_path, file_size, orig_file_name, appraisal_id)
+VALUES(12, '2023-10-04 15:33:17.460718', 'SYSTEM', '2023-10-04 15:33:17.460718', 'SYSTEM', '/filepath/appraisal_img/20231004/1803128233834300.jpg', 7316, 'Cartier7.jpg', 2);
 
 INSERT INTO lux.appraisal_result
 (id, created_at, created_by, modified_at, modified_by, app_comment, app_grade, app_price)
 VALUES(1, '2023-09-22 10:29:06.087539', 'SYSTEM', '2023-09-22 10:29:06.087539', 'SYSTEM', '매입', 'A', 500000);
+INSERT INTO lux.appraisal_result
+(id, created_at, created_by, modified_at, modified_by, app_comment, app_grade, app_price)
+VALUES(2, '2023-10-04 15:39:05.494766', 'SYSTEM', '2023-10-04 15:39:05.494766', 'SYSTEM', '매입할게요~!!!', 'S', 26000000);
 
 INSERT INTO lux.product
 (id, created_at, created_by, modified_at, modified_by, prod_color, prod_content, prod_gender, prod_grade, prod_nm, prod_price, prod_size, prod_state, prod_view_cnt, cate_b_id, cate_m_id, prod_brand, prod_sell_type)
-VALUES(1, '2023-09-26 13:15:14.621925', 'SYSTEM', '2023-09-26 13:15:14.621925', 'SYSTEM', '화이트골드', '상태 최상~!!!', 'FEMALE', 'A', '로렉스 69174 18K 화이트골드 블루판 스틸 데이져스트 10P 다이아', 500000, '없음', 'WAITING', 0, 7, 70, 36, 'USED');
+VALUES(1, '2023-09-26 13:15:14.621925', 'SYSTEM', '2023-09-26 13:15:14.621925', 'SYSTEM', '화이트골드', '상태 최상~!!!', 'FEMALE', 'A', '로렉스 69174 18K 화이트골드 블루판 스틸 데이져스트 10P 다이아', 500000, '없음', 'SELL', 0, 7, 70, 36, 'USED');
+INSERT INTO lux.product
+(id, created_at, created_by, modified_at, modified_by, prod_color, prod_content, prod_gender, prod_grade, prod_nm, prod_price, prod_sell_type, prod_size, prod_state, prod_view_cnt, cate_b_id, cate_m_id, prod_brand)
+VALUES(2, '2023-10-04 16:43:27.696363', 'SYSTEM', '2023-10-04 16:43:27.696363', 'SYSTEM', '화이트골드', '좋은 시계입니다~!!!!', 'FEMALE', 'S', '까르띠에 베누아 다이아 골드 시계', 26000000, 'AUCTION', '약23*32㎜', 'WAITING', 0, 7, 70, 11);
 
 INSERT INTO lux.image
 (id, created_at, created_by, modified_at, modified_by, file_path, file_size, orig_file_name, product_id)
@@ -378,3 +415,28 @@ VALUES(4, '2023-09-26 13:15:14.675926', 'SYSTEM', '2023-09-26 13:15:14.675926', 
 INSERT INTO lux.image
 (id, created_at, created_by, modified_at, modified_by, file_path, file_size, orig_file_name, product_id)
 VALUES(5, '2023-09-26 13:15:14.678929', 'SYSTEM', '2023-09-26 13:15:14.678929', 'SYSTEM', '/filepath/product_img/20230926/1103640397414699.jpg', 13002, 'Rorex1.jpg', 1);
+INSERT INTO lux.image
+(id, created_at, created_by, modified_at, modified_by, file_path, file_size, orig_file_name, product_id)
+VALUES(6, '2023-10-04 16:43:27.740601', 'SYSTEM', '2023-10-04 16:43:27.740601', 'SYSTEM', '/filepath/product_img/20231004/1807338507844000.jpg', 24170, 'Cartier1.jpg', 2);
+INSERT INTO lux.image
+(id, created_at, created_by, modified_at, modified_by, file_path, file_size, orig_file_name, product_id)
+VALUES(7, '2023-10-04 16:43:27.743601', 'SYSTEM', '2023-10-04 16:43:27.743601', 'SYSTEM', '/filepath/product_img/20231004/1807338509982700.jpg', 18020, 'Cartier2.jpg', 2);
+INSERT INTO lux.image
+(id, created_at, created_by, modified_at, modified_by, file_path, file_size, orig_file_name, product_id)
+VALUES(8, '2023-10-04 16:43:27.745601', 'SYSTEM', '2023-10-04 16:43:27.745601', 'SYSTEM', '/filepath/product_img/20231004/1807338510757200.jpg', 16070, 'Cartier3.jpg', 2);
+INSERT INTO lux.image
+(id, created_at, created_by, modified_at, modified_by, file_path, file_size, orig_file_name, product_id)
+VALUES(9, '2023-10-04 16:43:27.746600', 'SYSTEM', '2023-10-04 16:43:27.746600', 'SYSTEM', '/filepath/product_img/20231004/1807338511566000.jpg', 16638, 'Cartier4.jpg', 2);
+INSERT INTO lux.image
+(id, created_at, created_by, modified_at, modified_by, file_path, file_size, orig_file_name, product_id)
+VALUES(10, '2023-10-04 16:43:27.748601', 'SYSTEM', '2023-10-04 16:43:27.748601', 'SYSTEM', '/filepath/product_img/20231004/1807338512246000.jpg', 15982, 'Cartier5.jpg', 2);
+INSERT INTO lux.image
+(id, created_at, created_by, modified_at, modified_by, file_path, file_size, orig_file_name, product_id)
+VALUES(11, '2023-10-04 16:43:27.750600', 'SYSTEM', '2023-10-04 16:43:27.750600', 'SYSTEM', '/filepath/product_img/20231004/1807338512974700.jpg', 12944, 'Cartier6.jpg', 2);
+INSERT INTO lux.image
+(id, created_at, created_by, modified_at, modified_by, file_path, file_size, orig_file_name, product_id)
+VALUES(12, '2023-10-04 16:43:27.752600', 'SYSTEM', '2023-10-04 16:43:27.752600', 'SYSTEM', '/filepath/product_img/20231004/1807338513740400.jpg', 7316, 'Cartier7.jpg', 2);
+
+INSERT INTO lux.auction
+(id, created_at, created_by, modified_at, modified_by, auc_end_date, auc_start_date, auc_state, user_id, bidding_cnt, end_price, present_price, start_price, prod_id)
+VALUES(1, '2023-10-04 16:43:27.763599', 'SYSTEM', '2023-10-04 16:43:27.763599', 'SYSTEM', '2023-10-06 20:00:00', '2023-10-04 20:00:00', 'WAITING', NULL, 0, 0, 25000000, 25000000, 2);

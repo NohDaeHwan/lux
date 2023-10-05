@@ -3,6 +3,7 @@ package com.used.lux.service.admin;
 import com.used.lux.component.FileHandler;
 import com.used.lux.domain.*;
 import com.used.lux.domain.appraisal.Appraisal;
+import com.used.lux.domain.auction.Auction;
 import com.used.lux.domain.constant.*;
 import com.used.lux.domain.product.Image;
 import com.used.lux.domain.product.Product;
@@ -27,10 +28,12 @@ import com.used.lux.request.product.ProductUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -49,6 +52,7 @@ public class AdProductService {
     private final ProductOrderLogMapper prodOrderLogMapper;
 
     private final AuctionLogRepository auctionLogRepository;
+    private final AuctionLogMapper auctionLogMapper;
 
     private final AppraisalRepository appraisalRepository;
 
@@ -91,9 +95,13 @@ public class AdProductService {
         // 주문내역
         List<ProductOrderLogDto> productOrderLogDtos = productOrderLogRepository.findByProdId(productId)
                 .stream().map(prodOrderLogMapper::toDto).toList();
+        Auction auction = auctionRepository.findByProd_Id(productId);
         // 경매내역
-        List<AuctionLogDto> auctionLogDtos = auctionLogRepository.findByProductId(productId)
-                .stream().map(AuctionLogDto::from).toList();
+        List<AuctionLogDto> auctionLogDtos = null;
+        if (auction != null) {
+            auctionLogDtos = auctionLogMapper.toDtoList(auctionLogRepository.findByAucId(auction.getId()));
+        }
+
         return AdProductDto.of(productDto, productLogDtos, productOrderLogDtos, auctionLogDtos);
     }
 
@@ -143,6 +151,25 @@ public class AdProductService {
                 System.out.println(image);
                 imageRepository.save(image); // 이미지 이름 및 경로 DB에 저장
             }
+        }
+
+        if (request.prodSellType().equals("AUCTION")) {
+            DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            String[] startResult = request.aucStartDate().split("T");
+            String[] endResult = request.aucEndDate().split("T");
+            LocalDateTime startDate = LocalDateTime.parse(startResult[0] + " " + startResult[1], format);
+            LocalDateTime endDate = LocalDateTime.parse(endResult[0] + " " + endResult[1], format);
+            Auction auction = Auction.builder()
+                    .id(null)
+                    .aucState(AuctionState.WAITING)
+                    .startPrice(request.startPrice())
+                    .presentPrice(request.startPrice())
+                    .endPrice(0)
+                    .aucStartDate(startDate)
+                    .aucEndDate(endDate)
+                    .prod(product)
+                    .build();
+            auctionRepository.save(auction);
         }
     }
 

@@ -132,19 +132,19 @@ public class MainController {
 
     @GetMapping("/search")
     public String search(@RequestParam(defaultValue = "") String query, ModelMap mm) {
-        List<ProductDto> productList = productService.productFind(query);
-        List<AuctionDto> auctionList = auctionService.productFind(query);
-        List<AppraisalDto> appraisalResponseList=appraiseService.productFind(query);
-        List<CategoryBDto> categoryList = categoryBService.categoryList();
+        List<ProductDto> prodList = productService.productFind(query);
+        List<AuctionDto> aucList = auctionService.productFind(query);
+        List<AppraisalDto> appList = appraiseService.productFind(query);
+        List<CategoryBDto> cateList = categoryBService.categoryList();
         List<BrandDto> brandList = brandService.brandList();
 
-        mm.addAttribute("productList", productList);
-        mm.addAttribute("auctionList", auctionList);
-        mm.addAttribute("categoryList", categoryList);
+        mm.addAttribute("prodList", prodList);
+        mm.addAttribute("aucList", aucList);
+        mm.addAttribute("cateList", cateList);
         mm.addAttribute("brandList", brandList);
-        mm.addAttribute("appraisalResponseList",appraisalResponseList);
+        mm.addAttribute("appList", appList);
 
-        return "/front/search"; // 회원가입 페이지를 보여줄 뷰 필요
+        return "/front/search";
     }
 
     @GetMapping("/searchcate/{mcategoryId}")
@@ -157,24 +157,24 @@ public class MainController {
                               @RequestParam(defaultValue = "10000000") String maxPrice,
                               @RequestParam(defaultValue = "1000") String minPrice,
                               @RequestParam(defaultValue = "") String query,
-                              @PageableDefault(size = 30) Pageable pageable,
-                              ModelMap mm) {
-        List<CategoryBDto> categoryList = categoryBService.categoryList();
+                              ModelMap mm
+    ) {
+        List<CategoryBDto> cateList = categoryBService.categoryList();
 
         List<BrandDto> brandList = brandService.brandList();
-        CategoryMDto categoryMDto =categoryMService.getMcategoryid(mcategoryId);
+        CategoryMDto cateM =categoryMService.getMcategoryid(mcategoryId);
 
-        List<ProductDto> products = productService.catesearch(mcategoryId,productColor,productBrand,productGender,
+        List<ProductDto> prodList = productService.catesearch(mcategoryId,productColor,productBrand,productGender,
                 productSize,productGrade,maxPrice,minPrice,query);
 
-        List<AuctionDto> auction= auctionService.searchcate(mcategoryId,productBrand,productColor,productGender,
+        List<AuctionDto> aucList = auctionService.searchcate(mcategoryId,productBrand,productColor,productGender,
                 productSize,productGrade,maxPrice,minPrice,query);
 
         mm.addAttribute("brandList", brandList);
-        mm.addAttribute("categoryList", categoryList);
-        mm.addAttribute("products", products);
-        mm.addAttribute("cateM",categoryMDto );
-        mm.addAttribute("a",auction);
+        mm.addAttribute("cateList", cateList);
+        mm.addAttribute("prodList", prodList);
+        mm.addAttribute("cateM", cateM);
+        mm.addAttribute("aucList", aucList);
 
         return "front/searchcate";
     }

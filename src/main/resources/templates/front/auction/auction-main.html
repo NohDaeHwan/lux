@@ -11,21 +11,21 @@
 <aside id="sidebar" class="mysidebar">
     <div id="accordion" class="sidebar-nav">
 
-        <div class="nav-item" th:each="bcategory : ${categoryList}">
+        <div class="nav-item" th:each="bCate : ${cateList}">
 
-            <div class="nav-link collapsed flex" style="justify-content: space-between;" th:id="'heading'+${bcategoryStat.count}" data-toggle="collapse"
-                 th:data-target="'#collapse'+${bcategoryStat.count}" aria-expanded="true" th:aria-controls="'collapse'+${bcategoryStat.count}">
-                <h6 class="mb-0 font-weight-bold" th:text="${bcategory.categoryBName}">
+            <div class="nav-link collapsed flex" style="justify-content: space-between;" th:id="'heading'+${bCateStat.count}" data-toggle="collapse"
+                 th:data-target="'#collapse'+${bCateStat.count}" aria-expanded="true" th:aria-controls="'collapse'+${bCateStat.count}">
+                <h6 class="mb-0 font-weight-bold" th:text="${bCate.cateBNm}">
                     상의
                 </h6>
                 <h6 class="mb-0 font-weight-bold">+</h6>
             </div>
 
-            <div th:id="'collapse'+${bcategoryStat.count}" class="collapse"
-                 th:aria-labelledby="'heading'+${bcategoryStat.count}" data-parent="#accordion">
-                <div class="nav-link collapsed" th:each="mcategory : ${bcategory.categoryMDtos()}">
+            <div th:id="'collapse'+${bCateStat.count}" class="collapse"
+                 th:aria-labelledby="'heading'+${bCateStat.count}" data-parent="#accordion">
+                <div class="nav-link collapsed" th:each="mCate : ${bCate.cateMList}">
                     <h6 class="mb-0" style="font-size:15px;">
-                        <a th:href="@{|/searchcate/${mcategory.id}|}" class="text-black-50" th:text="${mcategory.categoryMName()}">짧은 상의</a>
+                        <a th:href="@{|/searchcate/${mCate.id}|}" class="text-black-50" th:text="${mCate.cateMNm}">짧은 상의</a>
                     </h6>
                 </div>
             </div>
@@ -50,7 +50,7 @@
                                 <div class="col-sm-10">
                                     <select class="form-select form-control" name="auctionColor">
                                         <option value="" selected>전체</option>
-                                        <option th:each="auction : ${auctions}" th:value="${auction.productResponse.productColor}" th:text="${auction.productResponse.productColor}">example</option>
+                                        <option th:each="auc : ${aucList}" th:value="${auc.prod.prodColor}" th:text="${auc.prod.prodColor}">example</option>
                                     </select>
                                 </div>
                             </div>
@@ -59,7 +59,7 @@
                                 <div class="col-sm-10">
                                     <select class="form-select form-control" name="auctionBrand">
                                         <option value="" selected>전체</option>
-                                        <option th:each="brand : ${brandList}" th:value="${brand.brandName}" th:text="${brand.brandName}">example</option>
+                                        <option th:each="brand : ${brandList}" th:value="${brand.id}" th:text="${brand.brandName}">example</option>
                                     </select>
                                 </div>
                             </div>
@@ -68,9 +68,9 @@
                                 <div class="col-sm-10">
                                     <select class="form-select form-control" name="auctionGender">
                                         <option value="" selected>전체</option>
-                                        <option value="공용">공용</option>
-                                        <option value="남자">남자</option>
-                                        <option value="여자">여자</option>
+                                        <option value="COMMON">공용</option>
+                                        <option value="MALE">남자</option>
+                                        <option value="FEMALE">여자</option>
                                     </select>
                                 </div>
                             </div>
@@ -91,7 +91,6 @@
                                         <option value="S">S</option>
                                         <option value="A">A</option>
                                         <option value="B">B</option>
-                                        <option value="C">C</option>
                                     </select>
                                 </div>
                             </div>
@@ -131,7 +130,7 @@
                 <h3 class="custom_heading font-weight-light">
                     경매 탭 검색결과 >
                 </h3>
-                <p th:text="'전체결과: ' +${auctions.totalElements}+' 건'">
+                <p th:text="'전체결과: ' +${aucList.totalElements}+' 건'">
                     전체결과: n 건
                 </p>
             </div>
@@ -139,31 +138,31 @@
         <div class="album py-3 bg-light">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-2" th:each="auction: ${auctions}">
+                    <div class="col-md-2" th:each="auc: ${aucList}">
                         <div class="card mb-4 box-shadow">
-                            <div th:if="${auction.stateStep=='경매전' or auction.stateStep=='경매대기'}">
-                                    <img class="card-img-top p-1" th:src="${auction.productResponse.imageList[0].filePath}" alt="Card image cap">
+                            <div th:if="${auc.aucState == '경매전' or auc.aucState == '경매대기'}">
+                                    <img class="card-img-top p-1" th:src="${auc.prod.images[0].filePath}" alt="Card image cap">
                             </div>
-                            <div th:unless="${auction.stateStep=='경매전' or auction.stateStep=='경매대기'}">
-                                <a th:href="@{|/auction/detail/${auction.id}|}">
-                                    <img class="card-img-top p-1" th:src="${auction.productResponse.imageList[0].filePath}" alt="Card image cap">
+                            <div th:unless="${auc.aucState == '경매전' or auc.aucState == '경매대기'}">
+                                <a th:href="@{|/auction/${auc.id}|}">
+                                    <img class="card-img-top p-1" th:src="${auc.prod.images[0].filePath}" alt="Card image cap">
                                 </a>
                             </div>
                                 <div class="p-2">
-                                    <p class="card-text font-weight-lighter mb-1 text-black-50" th:text="${auction.productResponse.productBrandName}">브랜드</p>
-                                    <p class="card-text font-weight-light mb-1" th:if="${auction.productResponse.productName.length() >= 15}" th:text="${#strings.append(#strings.substring(auction.productResponse.productName, 0, 15), '...')}">상품명</p>
-                                    <p class="card-text font-weight-light mb-1" th:unless="${auction.productResponse.productName.length() >= 15}" th:text="${auction.productResponse.productName}">상품명</p>
-                                    <p class="card-text font-weight-light" th:text="${#numbers.formatInteger(auction.presentPrice(),3,'COMMA')}">40.000P</p>
-                                    <p class="card-text font-weight-light" th:text="${#temporals.format(auction.auctionStartDate(),'yyyy-MM-dd HH:mm:ss')}"></p>
-                                    <p class="card-text font-weight-light" th:text="${#temporals.format(auction.auctionClosingDate(),'yyyy-MM-dd HH:mm:ss')}"></p>
+                                    <p class="card-text font-weight-lighter mb-1 text-black-50" th:text="${auc.prod.prodBrand}">브랜드</p>
+                                    <p class="card-text font-weight-light mb-1" th:if="${auc.prod.prodNm.length() >= 15}" th:text="${#strings.append(#strings.substring(auc.prod.prodNm, 0, 15), '...')}">상품명</p>
+                                    <p class="card-text font-weight-light mb-1" th:unless="${auc.prod.prodNm.length() >= 15}" th:text="${auc.prod.prodNm}">상품명</p>
+                                    <p class="card-text font-weight-light" th:text="${#numbers.formatInteger(auc.presentPrice(),3,'COMMA')}">40.000P</p>
+                                    <p class="card-text font-weight-light" th:text="${#temporals.format(auc.aucStartDate,'yyyy-MM-dd HH:mm:ss')}"></p>
+                                    <p class="card-text font-weight-light" th:text="${#temporals.format(auc.aucEndDate,'yyyy-MM-dd HH:mm:ss')}"></p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="sec7-text-box">
-                                            <p class="time-title" th:id="'title'+${auctionStat.count}"></p>
+                                            <p class="time-title" th:id="'title'+${aucStat.count}"></p>
                                             <div class="time" >
-                                                <span th:id="'days'+${auctionStat.count}"></span>
-                                                <span th:id="'hours'+${auctionStat.count}"></span>
-                                                <span th:id="'minutes'+${auctionStat.count}"></span>
-                                                <span th:id="'seconds'+${auctionStat.count}"></span>
+                                                <span th:id="'days'+${aucStat.count}"></span>
+                                                <span th:id="'hours'+${aucStat.count}"></span>
+                                                <span th:id="'minutes'+${aucStat.count}"></span>
+                                                <span th:id="'seconds'+${aucStat.count}"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -181,28 +180,28 @@
     <nav id="pagination" aria-label="Page navigation example">
         <ul class="pagination">
             <li class="page-item">
-                <a class="page-link" th:href="@{/auction(page=${auctions.number - 1}, sort=(${param.sort} != null ? ${param.sort} : '') + (${auctions.sort.getOrderFor('param.sort')} != null ? (${auctions.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
+                <a class="page-link" th:href="@{/templates/front/auction(page=${aucList.number - 1}, sort=(${param.sort} != null ? ${param.sort} : '') + (${aucList.sort.getOrderFor('param.sort')} != null ? (${aucList.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
                       query=${param.query}, auctionColor=${param.auctionColor}, auctionBrand=${param.auctionBrand}, auctionGender=${param.auctionGender},
                           auctionSize=${param.auctionSize}, auctionGrade=${param.auctionGrade}, maxPrice=${param.maxPrice}, minPrice=${param.minPrice})}"
-                   aria-label="Previous" th:class="'page-link' + (${auctions.number} <= 0 ? ' disabled-link' : '')">
+                   aria-label="Previous" th:class="'page-link' + (${aucList.number} <= 0 ? ' disabled-link' : '')">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
             <li class="page-item" th:each="pageNumber : ${paginationBarNumbers}">
                 <a th:text="${pageNumber + 1}"
-                   th:href="@{/auction(page=${pageNumber},
-                          sort=(${param.sort} != null ? ${param.sort} : '') + (${auctions.sort.getOrderFor('param.sort')} != null ? (${auctions.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
+                   th:href="@{/templates/front/auction(page=${pageNumber},
+                          sort=(${param.sort} != null ? ${param.sort} : '') + (${aucList.sort.getOrderFor('param.sort')} != null ? (${aucList.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
                           query=${param.query}, auctionColor=${param.auctionColor}, auctionBrand=${param.auctionBrand}, auctionGender=${param.auctionGender},
                           auctionSize=${param.auctionSize}, auctionGrade=${param.auctionGrade}, maxPrice=${param.maxPrice}, minPrice=${param.minPrice}
                       )}"
-                   th:class="'page-link' + (${pageNumber} == ${auctions.number} <= 0 ? ' disabled-link' : '')">
+                   th:class="'page-link' + (${pageNumber} == ${aucList.number} <= 0 ? ' disabled-link' : '')">
                 </a>
             </li>
             <li class="page-item">
-                <a class="page-link" th:href="@{/auction(page=${auctions.number + 1}, sort=(${param.sort} != null ? ${param.sort} : '') + (${auctions.sort.getOrderFor('param.sort')} != null ? (${auctions.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
+                <a class="page-link" th:href="@{/templates/front/auction(page=${aucList.number + 1}, sort=(${param.sort} != null ? ${param.sort} : '') + (${aucList.sort.getOrderFor('param.sort')} != null ? (${aucList.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
                       query=${param.query}, auctionColor=${param.auctionColor}, auctionBrand=${param.auctionBrand}, auctionGender=${param.auctionGender},
                           auctionSize=${param.auctionSize}, auctionGrade=${param.auctionGrade}, maxPrice=${param.maxPrice}, minPrice=${param.minPrice})}"
-                   aria-label="Next" th:class="'page-link' + (${auctions.number} >= ${auctions.totalPages - 1} ? ' disabled-link' : '')">
+                   aria-label="Next" th:class="'page-link' + (${aucList.number} >= ${aucList.totalPages - 1} ? ' disabled-link' : '')">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>
@@ -226,33 +225,33 @@
 <!-- end info_section -->
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<script type="text/javascript" src="/assets/lib/js/bootstrap.js"></script>
-<script src="/static/assets/js/frontmain.js"></script>
+<script type="text/javascript" src="/static/assets/lib/js/bootstrap.js"></script>
+<script type="text/javascript" src="/static/assets/js/frontmain.js"></script>
 
 <script th:inline="javascript">
 
     function remaindTime() {
-        let auctions=[[${auctions.content}]];
+        let aucList = [[${aucList.content}]];
         //현재시간
-        var now = new Date();
+        let now = new Date();
 
-        for(i=0; i<auctions.length;i++){
-            var open = new Date([[${auctions.content}]][i].auctionStartDate);
+        for(let i = 0; i < aucList.length; i++){
+            let open = new Date(aucList[i].aucStartDate);
             //종료시간
-            var end = new Date([[${auctions.content}]][i].auctionClosingDate);
+            let end = new Date(aucList[i].aucEndDate);
 
-            var auctionId=[[${auctions.content}]][i].id;
+            let auctionId = aucList[i].id;
 
-            var statestep=[[${auctions.content}]][i].stateStep;
+            let aucState = aucList[i].aucState;
 
-            var nt = now.getTime();
-            var ot = open.getTime();
-            var et = end.getTime();
+            let nt = now.getTime();
+            let ot = open.getTime();
+            let et = end.getTime();
 
-            if(nt<ot){
+            if (nt<ot) {
                 //경매 전
                 $(".time").fadeIn();
-                document.getElementById("title"+(i+1)).innerHTML="경매 시작까지";
+                document.getElementById("title"+(i+1)).innerHTML = "경매 시작까지";
                 sec =parseInt(ot - nt) / 1000;
                 day  = parseInt(sec/60/60/24);
                 sec = (sec - (day * 60 * 60 * 24));
@@ -269,13 +268,13 @@
                 document.getElementById("minutes"+(i+1)).innerHTML = min+"분";
                 document.getElementById("seconds"+(i+1)).innerHTML = sec+"초";
 
-            } else if(nt>et){
+            } else if (nt>et) {
                 //후 경매 종료  최종가격,경매상태
 
-                if (statestep !="경매완료") {
+                if (aucState != "PAY_WAITING") {
                     $.ajax({
                         type: "POST",
-                        url: "/auction/after/" + auctionId + "/11",
+                        url: "/auction/after/" + auctionId + "/" + aucState,
                         contentType: "application/json; charset=utf-8",
                         dataType: "json"
                     }).done(function (res) {
@@ -288,15 +287,15 @@
                 }
 
                 $(".time").fadeOut();
-                document.getElementById("title"+(i+1)).innerHTML="경매 마감<br/><br/>";
+                document.getElementById("title"+(i+1)).innerHTML = "경매 마감<br/><br/>";
 
             } else {
                 //중  경매 상태를 경매전 -> 경매 중으로 변경
 
-                if (statestep !="경매중") {
+                if (aucState != "SELL") {
                     $.ajax({
                         type: "POST",
-                        url: "/auction/present/" + auctionId + "/10",
+                        url: "/auction/present/" + auctionId + "/" + aucState,
                         contentType: "application/json; charset=utf-8",
                         dataType: "json"
                     }).done(function (res) {
@@ -307,7 +306,7 @@
                     });
                 }
 
-                document.getElementById("title"+(i+1)).innerHTML=" 경매 마감까지";
+                document.getElementById("title"+(i+1)).innerHTML = " 경매 마감까지";
                 sec =parseInt(et - nt) / 1000;
                 day  = parseInt(sec/60/60/24);
                 sec = (sec - (day * 60 * 60 * 24));

@@ -42,12 +42,12 @@ public class AdAuctionController {
             return "redirect:/";
         }
 
-        Page<AuctionDto> auctionList = adAuctionService.getAuctionList(auctionState, auctionDate, query, pageable);
-        List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), auctionList.getTotalPages());
+        Page<AuctionDto> aucList = adAuctionService.getAuctionList(auctionState, auctionDate, query, pageable);
+        List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), aucList.getTotalPages());
 
         mm.addAttribute("paginationBarNumbers", barNumbers);
-        mm.addAttribute("auctionList", auctionList);
-        return "/admin/auction";
+        mm.addAttribute("aucList", aucList);
+        return "/admin/auction/auction-main";
     }
 
      //경매 상세정보

@@ -16,7 +16,7 @@
                 <h3 class="custom_heading">
                     경매 내역 조회
                 </h3>
-                    <p th:text="'전체결과: '+${auctionLog.size()}+' 건'">
+                    <p th:text="'전체결과: '+${aucLogList.totalElements}+' 건'">
                         전체결과: n 건
                     </p>
                 </div>
@@ -34,15 +34,15 @@
                     </thead>
                     <tbody>
                         <tbody>
-                        <tr th:each="auction : ${auctionLog}">
-                            <td th:text="${auction.productName}"></td>
-                            <td th:text="${#temporals.format(auction.createdAt,'yyyy-MM-dd HH:mm:ss')}"></td>
-                            <td th:text="${auction.auctionId}"></td>
-                            <td th:if="${(auction.bidder == auction.presentBidder) and (auction.closingPrice == 0)}"><div class="badge badge-primary">입찰</div></td>
-                            <td th:if="${(auction.bidder != auction.presentBidder) and (auction.closingPrice == 0)}"><div class="badge badge-danger">유찰</div></td>
-                            <td th:if="${(auction.bidder == auction.presentBidder) and (auction.presentPrice == auction.closingPrice) and (auction.closingPrice != 0)}"><div class="badge badge-success">낙찰</div></td>
-                            <td th:if="${(auction.bidder != auction.presentBidder) and (auction.presentPrice != auction.closingPrice) and (auction.closingPrice != 0)}"><div class="badge badge-danger">패찰</div></td>
-                            <td th:text="${auction.presentPrice}"></td>
+                        <tr th:each="aucLog : ${aucLogList}">
+                            <td th:text="${aucLog.prodNm}"></td>
+                            <td th:text="${#temporals.format(aucLog.createdAt,'yyyy-MM-dd HH:mm:ss')}"></td>
+                            <td th:text="${aucLog.aucId}"></td>
+                            <td th:if="${(aucLog.userId == aucLog.presentUserId) and (aucLog.endPrice == 0)}"><div class="badge badge-primary">입찰</div></td>
+                            <td th:if="${(aucLog.userId != aucLog.presentUserId) and (aucLog.endPrice == 0)}"><div class="badge badge-danger">유찰</div></td>
+                            <td th:if="${(aucLog.userId == aucLog.presentUserId) and (aucLog.presentPrice == aucLog.endPrice) and (aucLog.endPrice != 0)}"><div class="badge badge-success">낙찰</div></td>
+                            <td th:if="${(aucLog.userId != aucLog.presentUserId) and (aucLog.presentPrice != aucLog.endPrice) and (aucLog.endPrice != 0)}"><div class="badge badge-danger">패찰</div></td>
+                            <td th:text="${aucLog.presentPrice}"></td>
                         </tr>
                     </tbody>
                 </table>

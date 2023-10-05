@@ -8,21 +8,21 @@
 <aside id="sidebar" class="mysidebar">
     <div id="accordion" class="sidebar-nav">
 
-        <div class="nav-item" th:each="bcategory : ${categoryList}">
+        <div class="nav-item" th:each="bCate : ${cateList}">
 
-            <div class="nav-link collapsed flex" style="justify-content: space-between;" th:id="'heading'+${bcategoryStat.count}" data-toggle="collapse"
-                 th:data-target="'#collapse'+${bcategoryStat.count}" aria-expanded="true" th:aria-controls="'collapse'+${bcategoryStat.count}">
-                <h6 class="mb-0 font-weight-bold" th:text="${bcategory.categoryBName}">
+            <div class="nav-link collapsed flex" style="justify-content: space-between;" th:id="'heading'+${bCateStat.count}" data-toggle="collapse"
+                 th:data-target="'#collapse'+${bCateStat.count}" aria-expanded="true" th:aria-controls="'collapse'+${bCateStat.count}">
+                <h6 class="mb-0 font-weight-bold" th:text="${bCate.cateBNm}">
                     상의
                 </h6>
                 <h6 class="mb-0 font-weight-bold">+</h6>
             </div>
 
-            <div th:id="'collapse'+${bcategoryStat.count}" class="collapse"
-                 th:aria-labelledby="'heading'+${bcategoryStat.count}" data-parent="#accordion">
-                <div class="nav-link collapsed" th:each="mcategory : ${bcategory.categoryMDtos()}">
+            <div th:id="'collapse'+${bCateStat.count}" class="collapse"
+                 th:aria-labelledby="'heading'+${bCateStat.count}" data-parent="#accordion">
+                <div class="nav-link collapsed" th:each="mCate : ${bCate.cateMList}">
                     <h6 class="mb-0" style="font-size:15px;">
-                        <a th:href="@{|/searchcate/${mcategory.id}|}" class="text-black-50" th:text="${mcategory.categoryMName()}">짧은 상의</a>
+                        <a th:href="@{|/searchcate/${mCate.id}|}" class="text-black-50" th:text="${mCate.cateMNm}">짧은 상의</a>
                     </h6>
                 </div>
             </div>
@@ -54,7 +54,7 @@
                     </div>
                 </h3>
                 <div style="display: flex; justify-content: space-between;">
-                    <p th:text="'전체결과: ' + ${#lists.size(productList)} + ' 건'">
+                    <p th:text="'전체결과: ' + ${#lists.size(prodList)} + ' 건'">
                         중고탭 검색결과: n 건
                     </p>
                 </div>
@@ -64,15 +64,15 @@
         <div class="album py-3 bg-light">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-2" th:each="product: ${productList}">
+                    <div class="col-md-2" th:each="prod: ${prodList}">
                         <div class="card mb-4 box-shadow">
-                            <a th:href="@{|/product/${product.id}|}">
-                                <img class="card-img-top p-1" th:src="${product.imageList[0].filePath}" alt="Card image cap">
+                            <a th:href="@{|/product/${prod.id}|}">
+                                <img class="card-img-top p-1" th:src="${prod.images[0].filePath}" alt="Card image cap">
                                 <div class="p-2">
-                                    <p class="card-text font-weight-lighter mb-1 text-black-50" th:text="${product.productBrandName}">브랜드</p>
-                                    <p class="card-text font-weight-light mb-1"><a th:if="${product.productName().length()} > 10" th:href="@{|/product/${product.id}|}" th:text="${#strings.replace(product.productName,#strings.substring(product.productName,10,product.productName.length()),'...')}">상품명</a></p>
-                                    <p class="card-text font-weight-light mb-1"><a th:if="${product.productName().length()} <= 10" th:href="@{|/product/${product.id}|}" th:text="${product.productName}">상품명</a></p>
-                                    <p class="card-text font-weight-light" th:text="${#numbers.formatInteger(product.productPrice,3,'COMMA')}">40.000P</p>
+                                    <p class="card-text font-weight-lighter mb-1 text-black-50" th:text="${prod.prodBrand}">브랜드</p>
+                                    <p class="card-text font-weight-light mb-1"><a th:if="${prod.prodNm.length} > 10" th:href="@{|/product/${prod.id}|}" th:text="${#strings.replace(prod.prodNm,#strings.substring(prod.prodNm,10,prod.prodNm.length),'...')}">상품명</a></p>
+                                    <p class="card-text font-weight-light mb-1"><a th:if="${prod.prodNm.length} <= 10" th:href="@{|/product/${prod.id}|}" th:text="${prod.prodNm}">상품명</a></p>
+                                    <p class="card-text font-weight-light" th:text="${#numbers.formatInteger(prod.prodPrice,3,'COMMA')}">40.000P</p>
                                     <div class="d-flex justify-content-between align-items-center"></div>
                                 </div>
                             </a>
@@ -93,7 +93,7 @@
                     </div>
                 </h3>
                 <div style="display: flex; justify-content: space-between;">
-                      <p th:text="'전체결과: ' + ${#lists.size(auctionList)} + ' 건'">
+                      <p th:text="'전체결과: ' + ${#lists.size(aucList)} + ' 건'">
                         경매탭 검색결과: n 건
                     </p>
                 </div>
@@ -102,31 +102,31 @@
         <div class="album py-3 bg-light">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-2" th:each="auction: ${auctionList}">
+                    <div class="col-md-2" th:each="auc: ${aucList}">
                         <div class="card mb-4 box-shadow">
-                            <div th:if="${auction.stateStep=='경매전'}">
-                                <img class="card-img-top p-1" th:src="${auction.productResponse.imageList[0].filePath}" alt="Card image cap">
+                            <div th:if="${auc.aucState == '경매전'}">
+                                <img class="card-img-top p-1" th:src="${auc.prod.images[0].filePath}" alt="Card image cap">
                             </div>
-                            <div th:unless="${auction.stateStep=='경매전'}">
-                                <a th:href="@{|/auction/detail/${auction.id}|}">
-                                    <img class="card-img-top p-1" th:src="${auction.productResponse.imageList[0].filePath}" alt="Card image cap">
+                            <div th:unless="${auc.aucState == '경매전'}">
+                                <a th:href="@{|/auction/detail/${auc.id}|}">
+                                    <img class="card-img-top p-1" th:src="${auc.prod.images[0].filePath}" alt="Card image cap">
                                 </a>
                             </div>
                             <div class="p-2">
-                                <p class="card-text font-weight-lighter mb-1 text-black-50" th:text="${auction.productResponse.productBrandName}">브랜드</p>
-                                <p class="card-text font-weight-light mb-1"><a th:if="${auction.productResponse.productName.length()} > 10" th:href="@{|/auction/detail/${auction.id}|}" th:text="${#strings.replace(auction.productResponse.productName,#strings.substring(auction.productResponse.productName,10,auction.productResponse.productName.length()),'...')}">상품명</a></p>
-                                <p class="card-text font-weight-light mb-1"><a th:if="${auction.productResponse.productName.length()} <= 10" th:href="@{|/auction/detail/${auction.id}|}" th:text="${auction.productResponse().productName()}">상품명</a></p>
-                                <p class="card-text font-weight-light" th:text="${#numbers.formatInteger(auction.presentPrice(),3,'COMMA')}">40.000P</p>
-                                <p class="card-text font-weight-light" th:text="${#temporals.format(auction.auctionStartDate(),'yyyy-MM-dd HH:mm:ss')}"></p>
-                                <p class="card-text font-weight-light" th:text="${#temporals.format(auction.auctionClosingDate(),'yyyy-MM-dd HH:mm:ss')}"></p>
+                                <p class="card-text font-weight-lighter mb-1 text-black-50" th:text="${auc.prod.prodBrand}">브랜드</p>
+                                <p class="card-text font-weight-light mb-1"><a th:if="${auc.prod.prodNm.length} > 10" th:href="@{|/auction/detail/${auc.id}|}" th:text="${#strings.replace(auc.prod.prodNm,#strings.substring(auc.prod.prodNm,10,auc.prod.prodNm.length),'...')}">상품명</a></p>
+                                <p class="card-text font-weight-light mb-1"><a th:if="${auc.prod.prodNm.length} <= 10" th:href="@{|/auction/detail/${auc.id}|}" th:text="${auc.prod.prodNm}">상품명</a></p>
+                                <p class="card-text font-weight-light" th:text="${#numbers.formatInteger(auc.presentPrice(),3,'COMMA')}">40.000P</p>
+                                <p class="card-text font-weight-light" th:text="${#temporals.format(auc.aucStartDate,'yyyy-MM-dd HH:mm:ss')}"></p>
+                                <p class="card-text font-weight-light" th:text="${#temporals.format(auc.aucEndDate,'yyyy-MM-dd HH:mm:ss')}"></p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="sec7-text-box">
-                                        <p class="time-title" th:id="'title'+${auctionStat.count}"></p>
+                                        <p class="time-title" th:id="'title'+${aucStat.count}"></p>
                                         <div class="time" >
-                                            <span th:id="'days'+${auctionStat.count}"></span>
-                                            <span th:id="'hours'+${auctionStat.count}"></span>
-                                            <span th:id="'minutes'+${auctionStat.count}"></span>
-                                            <span th:id="'seconds'+${auctionStat.count}"></span>
+                                            <span th:id="'days'+${aucStat.count}"></span>
+                                            <span th:id="'hours'+${aucStat.count}"></span>
+                                            <span th:id="'minutes'+${aucStat.count}"></span>
+                                            <span th:id="'seconds'+${aucStat.count}"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -149,7 +149,7 @@
                      </div>
                 </h3>
                 <div style="display: flex; justify-content: space-between;">
-                    <p th:text="'전체결과: ' + ${#lists.size(appraisalResponseList)} + ' 건'">
+                    <p th:text="'전체결과: ' + ${#lists.size(appList)} + ' 건'">
                         검수탭 검색결과: n 건
                     </p>
                 </div>
@@ -158,16 +158,16 @@
         <div class="album py-3 bg-light">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-2" th:each="app: ${appraisalResponseList}">
+                    <div class="col-md-2" th:each="app: ${appList}">
                         <div class="card mb-4 box-shadow">
                             <div class="p-2">
-                                <a th:href="@{|/appraisalResult/${app.id}|}">
-                                    <img class="card-img-top p-1" th:src="${app.appraisal().imageList[0].filePath}" alt="Card image cap">
+                                <a th:href="@{|/appraisal/${app.id}|}">
+                                    <img class="card-img-top p-1" th:src="${app.imageList[0].filePath}" alt="Card image cap">
                                 </a>
                             <div class="p-2">
-                                <p class="card-text font-weight-lighter mb-1 text-black-50" th:text="${app.appraisal.appraisalBrandName()}">브랜드</p>
-                                <p class="card-text font-weight-light mb-1"><a th:if="${app.appraisal.appraisalProductName().length()} > 10" th:href="@{|/appraisalResult/${app.id}|}" th:text="${#strings.replace(app.appraisal.appraisalProductName(),#strings.substring(app.appraisal.appraisalProductName(),10,app.appraisal.appraisalProductName().length()),'...')}">상품명</a></p>
-                                <p class="card-text font-weight-light mb-1"><a th:if="${app.appraisal.appraisalProductName().length()} <= 10" th:href="@{|/appraisalResult/${app.id}|}" th:text="${app.appraisal.appraisalProductName()}">상품명</a></p>
+                                <p class="card-text font-weight-lighter mb-1 text-black-50" th:text="${app.appBrand}">브랜드</p>
+                                <p class="card-text font-weight-light mb-1"><a th:if="${app.appProdNm.length} > 10" th:href="@{|/appraisalResult/${app.id}|}" th:text="${#strings.replace(app.appProdNm,#strings.substring(app.appProdNm,10,app.appProdNm.length),'...')}">상품명</a></p>
+                                <p class="card-text font-weight-light mb-1"><a th:if="${app.appProdNm.length} <= 10" th:href="@{|/appraisalResult/${app.id}|}" th:text="${app.appProdNm}">상품명</a></p>
                             </div>
                         </div>
                     </div>
@@ -191,34 +191,34 @@
 <!-- end info_section -->
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<script type="text/javascript" src="/assets/lib/js/bootstrap.js"></script>
-<script src="/static/assets/js/frontmain.js"></script>
+<script type="text/javascript" src="/static/assets/lib/js/bootstrap.js"></script>
+<script type="text/javascript" src="/static/assets/js/frontmain.js"></script>
 
 <script th:inline="javascript">
     function remaindTime() {
-        let auctions=[[${auctionList}]];
+        let aucList = [[${aucList}]];
         //현재시간
-        var now = new Date();
+        let now = new Date();
 
-        for(i=0; i<auctions.length;i++){
-            var open = new Date([[${auctionList}]][i].auctionStartDate);
+        for(i = 0; i < aucList.length; i++){
+            let open = new Date(aucList[i].aucStartDate);
             //종료시간
-            var end = new Date([[${auctionList}]][i].auctionClosingDate);
+            let end = new Date(aucList[i].aucEndDate);
 
-            var auctionId=[[${auctionList}]][i].id;
+            let auctionId = aucList[i].id;
 
-            var statestep=[[${auctionList}]][i].stateStep;
+            let aucState = aucList[i].aucState;
 
-            var nt = now.getTime();
-            var ot = open.getTime();
-            var et = end.getTime();
+            let nt = now.getTime();
+            let ot = open.getTime();
+            let et = end.getTime();
 
             if(nt<ot){
                 //경매 전
                 $(".time").fadeIn();
-                document.getElementById("title"+(i+1)).innerHTML="경매 시작까지";
-                sec =parseInt(ot - nt) / 1000;
-                day  = parseInt(sec/60/60/24);
+                document.getElementById("title"+(i+1)).innerHTML = "경매 시작까지";
+                sec = parseInt(ot - nt) / 1000;
+                day = parseInt(sec/60/60/24);
                 sec = (sec - (day * 60 * 60 * 24));
                 hour = parseInt(sec/60/60);
                 sec = (sec - (hour*60*60));
@@ -233,10 +233,10 @@
                 document.getElementById("minutes"+(i+1)).innerHTML = min+"분";
                 document.getElementById("seconds"+(i+1)).innerHTML = sec+"초";
 
-            } else if(nt>et){
+            } else if (nt>et) {
                 //후 경매 종료  최종가격,경매상태
 
-                if (statestep !="경매완료") {
+                if (aucState != "경매완료") {
                     $.ajax({
                         type: "POST",
                         url: "/auction/after/" + auctionId + "/11",
@@ -254,10 +254,10 @@
                 $(".time").fadeOut();
                 document.getElementById("title"+(i+1)).innerHTML="경매 마감<br/><br/>";
 
-            }else {
+            } else {
                 //중  경매 상태를 경매전 -> 경매 중으로 변경
 
-                if (statestep !="경매중") {
+                if (aucState != "경매중") {
                     $.ajax({
                         type: "POST",
                         url: "/auction/present/" + auctionId + "/10",
@@ -272,7 +272,7 @@
                 }
 
                 $(".time").fadeIn();
-                document.getElementById("title"+(i+1)).innerHTML=" 경매 마감까지";
+                document.getElementById("title"+(i+1)).innerHTML = " 경매 마감까지";
                 sec =parseInt(et - nt) / 1000;
                 day  = parseInt(sec/60/60/24);
                 sec = (sec - (day * 60 * 60 * 24));

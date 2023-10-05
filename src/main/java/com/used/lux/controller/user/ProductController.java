@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -99,13 +101,12 @@ public class ProductController {
         return "front/product/product-order";
     }
 
-    @PostMapping("/{productId}/order/loading")
-    public String productOrder(@AuthenticationPrincipal Principal principal,
-                               @PathVariable Long productId,
-                               OrderCreateRequest orderCreateRequest){
-        productOrderService.createOrder(principal,productId,orderCreateRequest);
-
-        return "redirect:/product/success";
+    @ResponseBody
+    @PostMapping("/order/loading")
+    public ResponseEntity<?> productOrder(@AuthenticationPrincipal Principal principal,
+                                       @RequestBody OrderCreateRequest orderCreateRequest){
+        productOrderService.createOrder(principal, orderCreateRequest);
+        return ResponseEntity.status(HttpStatus.OK).body("성공");
     }
 
     @GetMapping("/success")

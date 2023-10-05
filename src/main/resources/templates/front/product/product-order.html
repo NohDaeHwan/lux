@@ -27,141 +27,140 @@
 <!-- brand section -->
 <main id="main" class="main p-5">
     <form th:action="@{|/product/${prod.id}/order/loading|}" method="post" onsubmit="return check()">
-    <section class="section mb-5">
-        <div class="row align-items-top">
-            <div class="col-lg-12">
+        <section class="section mb-5">
+            <div class="row align-items-top">
+                <div class="col-lg-12">
 
-                <!-- Card with header and footer -->
-                <div class="card">
-                    <div class="card-header">01. 주문정보입력
-                    </div>
-                    <div class="card-body">
-                        <div class="row gy-4" style="font-weight: 300;">
-                            <div class="col-lg-12">
+                    <!-- Card with header and footer -->
+                    <div class="card">
+                        <div class="card-header">01. 주문정보입력
+                        </div>
+                        <div class="card-body">
+                            <div class="row gy-4" style="font-weight: 300;">
+                                <div class="col-lg-12">
+                                        <table class="table table-bordered">
+                                            <tbody>
+                                            <tr>
+                                                <td class="w-25">받으시는 분*</td>
+                                                <td colspan="3">
+                                                    <input class="form-control input-sm" id="name" name="name" type="text" required/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="w-25">휴대폰번호*</td>
+                                                <td colspan="3">
+                                                    <input class="form-control input-sm" id="phoneNumber" name="phoneNumber" type="tel" required/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="w-25">배송지 주소*</td>
+                                                <td colspan="3">
+                                                    <div class="mb-2 d-flex align-items-center">
+                                                        <input class="form-control mr-2" style="width: 150px;" id="zoneCode" name="zoneCode" type="text" disabled required/>
+                                                        <button type="button" class="btn btn-sm btn-info" id="findAddrBtn">우편번호 찾기</button>
+                                                    </div>
+                                                    <input class="mb-2 form-control" id="addr" type="text" name="addr" disabled required/>
+                                                    <input class="form-control" id="addrDetail" type="text" name="addrDetail" required/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="w-25">배송시 요청사항</td>
+                                                <td colspan="3">
+                                                    <input class="form-control" id="requestTerm" name="requestTerm" type="text"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="w-25">당일배송 안내</td>
+                                                <td colspan="3">
+                                                    <ul>
+                                                        <li>
+                                                            본사, 압구정, 반포신세계, 서초강남역, 명동, 일산, 영등포신세계, 선릉점 상품을 주문하신 경우
+                                                            서울 및 경기일부지역에 한해 "당일배송" 서비스를 실시하고 있습니다.
+                                                        </li>
+                                                        <li>단, 당일배송은 "밤 늦게 배송"되는 관계로 익일배송을 원하시는 분께서는 익일배송을 클릭하세요.</li>
+                                                        <li>수령지가 회사 또는 복합상가일 경우 당일배송을 요청하셔도 익일배송이 될 수 있습니다.</li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="w-25">배송마감 안내</td>
+                                                <td colspan="3">
+                                                    <ul>
+                                                        <li>권역매장별 마감 안내</li>
+                                                        <li>수도권/충청권 : 월~금 오전 10시30분(일산, 송도점 토요일 발송)</li>
+                                                        <li>영남권 : 월~토 오전 10시30분</li>
+                                                        <li>온라인 판매점 :월~금(배송마감시간 상품별 고지)</li>
+                                                        <li style="color: red;">운송업체의 사정 또는 기상악화 시 익일 발송될 수 있습니다.</li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- End Card with header and footer -->
+                </div>
+            </div>
+        </section>
+        <section class="section mb-5">
+            <div class="row align-items-top">
+                <div class="col-lg-12">
+
+                    <!-- Card with header and footer -->
+                    <div class="card">
+                        <div class="card-header">02. 상품정보확인
+                        </div>
+                        <div class="card-body">
+                            <div class="row gy-4" style="font-weight: 300;">
+                                <div class="col-lg-12">
                                     <table class="table table-bordered">
                                         <tbody>
                                         <tr>
-                                            <td>받으시는 분*</td>
-                                            <td colspan="3">
-                                                <input class="form-control input-sm" id="name" name="name" type="text" required/>
-                                            </td>
+                                            <td>상품정보</td>
+                                            <td>상품가격</td>
+                                            <td>상품할인</td>
+                                            <td>상품그룹</td>
+                                            <td>주문금액</td>
                                         </tr>
                                         <tr>
-                                            <td>휴대폰번호*</td>
-                                            <td colspan="3">
-                                                <input class="form-control input-sm" id="phoneNumber" name="phoneNumber" type="tel" required/>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><label>배송지 주소*</label></td>
-                                            <td colspan="3">
-                                                <div class="mb-2 d-flex align-items-center">
-                                                    <input style="width: 100px;" name="name" type="text" disabled required/>
-                                                    <span>-</span>
-                                                    <input class="mr-1" style="width: 100px;" name="name" type="text" disabled required/>
-                                                    <button type="button" class="btn btn-sm btn-info" onclick="goPopup();">우편번호 찾기</button>
+                                            <th scope="row">
+                                                <div style="display:flex;" >
+                                                    <div class="mr-1">
+                                                        <img th:src="${prod.images[0].filePath}" style="width: 100px; height:100px;" alt="" class="" />
+                                                    </div>
+                                                    <div style="display: flex; flex-direction: column">
+                                                        <h6 th:text="${prod.prodBrand}">브랜드</h6>
+                                                        <h6>
+                                                            <a href="#" th:text="${prod.prodNm}">
+                                                                상품명
+                                                            </a>
+                                                        </h6>
+                                                        <h6 th:text="'옵션:'+${prod.prodSize} + ', ' + ${prod.prodColor}">옵션:사이즈,색상</h6>
+                                                        <h6 th:text="'성별:' + ${prod.prodGender}">성별:여자</h6>
+                                                        <h6 th:text="'상품등급:'+${prod.prodGrade}">상품등급:A</h6>
+                                                    </div>
                                                 </div>
-                                                <input class="form-control" id="address" type="text" name="address" required/>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>배송시 요청사항</td>
-                                            <td colspan="3">
-                                                <input class="form-control" id="requestedTerm" name="requestTerm" type="text"/>
-                                            </td>
-                                        </tr>
-                                            <input class="form-control" name="price" type="hidden" th:value="${#numbers.formatInteger((prod.prodPrice)-(principal.userGrade.getDiscount)*0.01*(prod.prodPrice),3)}"/>
-                                        <tr>
-                                            <td>당일배송 안내</td>
-                                            <td colspan="3">
-                                                <ul>
-                                                    <li>
-                                                        본사, 압구정, 반포신세계, 서초강남역, 명동, 일산, 영등포신세계, 선릉점 상품을 주문하신 경우
-                                                        서울 및 경기일부지역에 한해 "당일배송" 서비스를 실시하고 있습니다.
-                                                    </li>
-                                                    <li>단, 당일배송은 "밤 늦게 배송"되는 관계로 익일배송을 원하시는 분께서는 익일배송을 클릭하세요.</li>
-                                                    <li>수령지가 회사 또는 복합상가일 경우 당일배송을 요청하셔도 익일배송이 될 수 있습니다.</li>
-                                                </ul>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>배송마감 안내</td>
-                                            <td colspan="3">
-                                                <ul>
-                                                    <li>권역매장별 마감 안내</li>
-                                                    <li>수도권/충청권 : 월~금 오전 10시30분(일산, 송도점 토요일 발송)</li>
-                                                    <li>영남권 : 월~토 오전 10시30분</li>
-                                                    <li>온라인 판매점 :월~금(배송마감시간 상품별 고지)</li>
-                                                    <li style="color: red;">운송업체의 사정 또는 기상악화 시 익일 발송될 수 있습니다.</li>
-                                                </ul>
-                                            </td>
-                                        </tr>
+                                            </th>
+                                            <td style="vertical-align: middle;" th:text="${#numbers.formatInteger(prod.prodPrice,3,'COMMA')}+'원'"><h6>- 36,000원</h6></td>
+                                            <td style="vertical-align: middle;" th:text="'- '+ ${#numbers.formatInteger((principal.userGrade.discount)*0.01*(prod.prodPrice),3,'COMMA')}+'원'"><h6>- 36,000원</h6></td>
+                                            <td style="vertical-align: middle;" th:text="${prod.prodSellType}"><h6>중고</h6></td>
+                                            <td style="vertical-align: middle;" th:text="${#numbers.formatInteger((prod.prodPrice)-(principal.userGrade.getDiscount)*0.01*(prod.prodPrice),3,'COMMA')}+'원'"><h6>123,456,789원</h6></td>
                                         </tbody>
                                     </table>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div><!-- End Card with header and footer -->
+                    </div><!-- End Card with header and footer -->
+                </div>
             </div>
-        </div>
-    </section>
-    <section class="section mb-5">
-        <div class="row align-items-top">
-            <div class="col-lg-12">
+        </section>
 
-                <!-- Card with header and footer -->
-                <div class="card">
-                    <div class="card-header">02. 상품정보확인
-                    </div>
-                    <div class="card-body">
-                        <div class="row gy-4" style="font-weight: 300;">
-                            <div class="col-lg-12">
-                                <table class="table table-bordered">
-                                    <tbody>
-                                    <tr>
-                                        <td>상품정보</td>
-                                        <td>상품가격</td>
-                                        <td>상품할인</td>
-                                        <td>상품그룹</td>
-                                        <td>주문금액</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                            <div style="display:flex;" >
-                                                <div class="mr-1">
-                                                    <img th:src="${prod.images[0].filePath}" style="width: 100px; height:100px;" alt="" class="" />
-                                                </div>
-                                                <div style="display: flex; flex-direction: column">
-                                                    <h6 th:text="${prod.prodBrand}">브랜드</h6>
-                                                    <h6>
-                                                        <a href="#" th:text="${prod.prodNm}">
-                                                            상품명
-                                                        </a>
-                                                    </h6>
-                                                    <h6 th:text="'옵션:'+${prod.prodSize} + ', ' + ${prod.prodColor}">옵션:사이즈,색상</h6>
-                                                    <h6 th:text="'성별:' + ${prod.prodGender}">성별:여자</h6>
-                                                    <h6 th:text="'상품등급:'+${prod.prodGrade}">상품등급:A</h6>
-                                                </div>
-                                            </div>
-                                        </th>
-                                        <td style="vertical-align: middle;" th:text="${#numbers.formatInteger(prod.prodPrice,3,'COMMA')}+'원'"><h6>- 36,000원</h6></td>
-                                        <td style="vertical-align: middle;" th:text="'- '+ ${#numbers.formatInteger((principal.userGrade.discount)*0.01*(prod.prodPrice),3,'COMMA')}+'원'"><h6>- 36,000원</h6></td>
-                                        <td style="vertical-align: middle;" th:text="${prod.prodSellType}"><h6>중고</h6></td>
-                                        <td style="vertical-align: middle;" th:text="${#numbers.formatInteger((prod.prodPrice)-(principal.userGrade.getDiscount)*0.01*(prod.prodPrice),3,'COMMA')}+'원'"><h6>123,456,789원</h6></td>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div><!-- End Card with header and footer -->
-            </div>
+        <div class="section" style="font-weight: 300;">
+            <input type="hidden" name="payment" id="payment" th:value="${prod.prodPrice}-${(principal.userGrade.getDiscount)*0.01*(prod.prodPrice)}">
+            <input type="hidden" name="prodId" id="prodId" th:value="${prod.id}">
+            <button class="btn btn-info w-100" id="orderBtn" type="button" th:text="${#numbers.formatInteger((prod.prodPrice)-(principal.userGrade.getDiscount)*0.01*(prod.prodPrice),3,'COMMA')}+'원 결제하기'">123,456,789원 결제하기</button>
         </div>
-    </section>
-
-    <div class="section" style="font-weight: 300;">
-        <input type="hidden" name="payment" th:value="${prod.prodPrice}-${(principal.userGrade.getDiscount)*0.01*(prod.prodPrice)}">
-        <button class="btn btn-info w-100" type="submit" th:text="${#numbers.formatInteger((prod.prodPrice)-(principal.userGrade.getDiscount)*0.01*(prod.prodPrice),3,'COMMA')}+'원 결제하기'">123,456,789원 결제하기</button>
-    </div>
     </form>
 </main>
 
@@ -179,14 +178,18 @@
 
 <!-- end info_section -->
 
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<script type="text/javascript" src="/assets/lib/js/bootstrap.js"></script>
-<script src="/assets/js/frontmain.js"></script>
+<script type="text/javascript" src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="/static/assets/lib/js/bootstrap.js"></script>
+<script type="text/javascript" src="/static/assets/js/frontmain.js"></script>
+<script type="text/javascript" src="/static/assets/js/addrApi.js"></script>
+<script type="text/javascript" src="/static/assets/js/front/product/app-control.js"></script>
+<script type="text/javascript" src="/static/assets/js/front/service.js"></script>
 <script>
     function check() {
         let point=[[${principal.point}]];
-        let price=[[${productDto.productPrice}]];
-        let discount=[[${(principal.userGrade.getDiscount)*0.01*(productDto.productPrice)}]]
+        let price=[[${prod.prodPrice}]];
+        let discount=[[${(principal.userGrade.getDiscount)*0.01*(prod.prodPrice)}]]
         console.log(point);
         console.log(price);
         console.log(discount);

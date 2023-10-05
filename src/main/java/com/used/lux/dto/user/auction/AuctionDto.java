@@ -1,10 +1,14 @@
 package com.used.lux.dto.user.auction;
 
+import com.used.lux.dto.user.product.ProductDto;
+import lombok.Builder;
+
 import java.time.LocalDateTime;
 
 /**
  * DTO for {@link com.used.lux.domain.auction.Auction}
  */
+@Builder
 public record AuctionDto(
         LocalDateTime createdAt,
         String createdBy,
@@ -18,6 +22,8 @@ public record AuctionDto(
         LocalDateTime aucStartDate,
         LocalDateTime aucEndDate,
         int biddingCnt,
-        String bidder
+        Long userId,
+        String bidder,
+        ProductDto prod
 ) {
 }

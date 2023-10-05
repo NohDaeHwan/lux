@@ -123,9 +123,13 @@ public class AppraiseService {
     }
 
     public List<AppraisalDto> productFind(String query) {
-//        return appResultRepo.findByQuery(query).stream()
-//                .map(appMapper::toDto).limit(8).collect(Collectors.toUnmodifiableList());
-        return null;
+        return appRepo.findByQuery(query).stream()
+                .map((item) -> {
+                    if (item.getAppResultId() != null)
+                        return appMapper.toDtoCustom(item, appResultRepo.findById(item.getAppResultId()).orElse(null));
+                    else
+                        return appMapper.toDtoCustom(item, null);
+                }).limit(8).toList();
     }
 
     @Transactional

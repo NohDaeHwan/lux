@@ -41,7 +41,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="grade : ${grades}">
+                    <tr th:each="grade : ${gradeList}">
                         <td style="vertical-align: middle;" th:text="${grade.gradeName}"><h6>Lv.1 뉴비</h6></td>
                         <td style="vertical-align: middle;" th:if="${grade.rankUp} < 1000" th:text="'~'+${grade.rankUp}+'P'"><h6>~0P</h6></td>
                         <td style="vertical-align: middle;" th:if="${grade.rankUp} >= 1000" th:text="'~'+${#numbers.formatInteger(grade.rankUp,3,'COMMA')}+'P'"><h6>~100,000P</h6></td>
@@ -50,28 +50,7 @@
                     </tbody>
                 </table>
             </div>
-            <!-- <div class="container-fluid brand_item-container">
-                <h4>나의 등급내역</h4>
-                <table class="table table-bordered table-hover">
-                    <thead>
-                    <tr>
-                        <th scope="col">등급명</th>
-                        <th scope="col">포인트</th>
-                        <th scope="col">변경일자</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr each="brandlist : ${brandList}">
-                        <td style="vertical-align: middle;"><h6>Lv.1 뉴비</h6></td>
-                        <td style="vertical-align: middle;"><h6>~100,000P</h6></td>
-                        <td style="vertical-align: middle;"><h6>2%</h6></td>
-                    </tr>                
-                    </tbody>
-                </table>
-            </div> -->
-        
         </section>
-
     </main>
 <script>
     console.log(JSON.parse(sessionStorage.getItem("allEntries")));

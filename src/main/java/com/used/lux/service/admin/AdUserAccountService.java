@@ -54,6 +54,7 @@ public class AdUserAccountService {
     private final AppraisalResultRepository appResultRepo;
 
     private final AuctionLogRepository auctionLogRepository;
+    private final AuctionLogMapper auctionLogMapper;
 
     private final UserAccountLogRepository userAccountLogRepository;
 
@@ -86,8 +87,7 @@ public class AdUserAccountService {
                     return appMapper.toDtoCustom(item, appResultRepo.findById(item.getAppResultId()).orElse(null));
                 }).toList();
         // 경매 내역
-        List<AuctionLogDto> auctionLogDtos = auctionLogRepository.findByBidderList(userAccountDto.userName())
-                .stream().map(AuctionLogDto::from).collect(Collectors.toCollection(ArrayList::new));
+        List<AuctionLogDto> auctionLogDtos = auctionLogMapper.toDtoList(auctionLogRepository.findByAllId(userAccountDto.id()));
         // 포인트 내역
         List<UserAccountLogDto> userAccountLogDtos = userAccountLogRepository.findById(userAccountDto.id())
                 .stream().map(userAccountLogMapper::toDto).collect(Collectors.toCollection(ArrayList::new));

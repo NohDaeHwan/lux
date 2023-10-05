@@ -59,20 +59,21 @@ public class WebSocketService extends TextWebSocketHandler {
             }
 
             Auction auction = auctionRepository.findById(Long.parseLong(data[0])).get();
+            System.out.println(auction);
 
             // 새로 입찰 한 사람
             UserAccount userAccount = userAccountRepository.findByUserName(data[1]);
-            userAccount.setPoint(userAccount.getPoint()-Integer.parseInt(data[2]));
+            userAccount.setUserPoint(userAccount.getUserPoint()-Integer.parseInt(data[2]));
             userAccountRepository.save(userAccount);
             userAccountLogRepository.save(UserAccountLog.builder()
                     .id(null).userId(userAccount.getId()).orderId(auction.getId()).userGrade(userAccount.getUserGrade())
                     .point(Long.parseLong(data[2])).usageDetail("차감").saleNumber("경매/"+data[0])
                     .build());
 
-            if (auction.getBidder() != null) {
+            if (auction.getUserId() != null) {
                 // 전에 입찰 한 사람
-                UserAccount beforeUserAccount = userAccountRepository.findByUserName(auction.getBidder());
-                beforeUserAccount.setPoint(beforeUserAccount.getPoint()+auction.getPresentPrice());
+                UserAccount beforeUserAccount = userAccountRepository.findById(auction.getUserId()).get();
+                beforeUserAccount.setUserPoint(beforeUserAccount.getUserPoint()+auction.getPresentPrice());
                 userAccountRepository.save(beforeUserAccount);
                 userAccountLogRepository.save(UserAccountLog.builder()
                         .id(null).userId(beforeUserAccount.getId()).orderId(auction.getId()).userGrade(beforeUserAccount.getUserGrade())
@@ -81,11 +82,14 @@ public class WebSocketService extends TextWebSocketHandler {
             }
 
 
-            auction.setBidder(data[1]);
-            auction.setPresentPrice(Integer.parseInt(data[2]));
+            auction.setUserId(userAccount.getId());
+            auction.setPresentPrice(Long.parseLong(data[2]));
             auction.setBiddingCnt(auction.getBiddingCnt()+1);
             auctionRepository.save(auction);
-//            auctionLogRepository.save(AuctionLog.of(data[1], auction.getId(), auction.getProduct().getId(), "수정해야함", Integer.parseInt(data[2])));
+            auctionLogRepository.save(AuctionLog.builder()
+                            .id(null).userId(userAccount.getId()).aucId(Long.parseLong(data[0]))
+                            .prodNm(auction.getProd().getProdNm()).presentPrice(Long.parseLong(data[2]))
+                            .build());
     }
 
     /* Client가 접속 시 호출되는 메서드 */

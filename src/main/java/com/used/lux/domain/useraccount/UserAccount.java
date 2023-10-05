@@ -49,7 +49,7 @@ public class UserAccount extends AuditingFields {
 	private UserGrade userGrade;
 
 	@Setter
-	private Long point;
+	private long userPoint;
 
 	@Setter
 	@Enumerated(EnumType.STRING)

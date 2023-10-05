@@ -96,6 +96,10 @@ const prodRegister = (e) => {
     const prodPrice = document.querySelector('#prodPrice').value;
     const prodContent = document.querySelector('#prodContent').value;
 
+    const startPrice = document.querySelector('#startPrice').value;
+    const aucStartDate = document.querySelector('#aucStartDate').value;
+    const aucEndDate = document.querySelector('#aucEndDate').value;
+
     const form = new FormData();
     form.append("appraisalId", appraisal.split('-')[1]);
     form.append("prodSellType", selected.value);
@@ -109,6 +113,9 @@ const prodRegister = (e) => {
     form.append("prodGradeId", prodGradeId);
     form.append("prodPrice", prodPrice);
     form.append("prodContent", prodContent);
+    form.append("startPrice", startPrice);
+    form.append("aucStartDate", aucStartDate);
+    form.append("aucEndDate", aucEndDate);
     imageFileList.forEach(item => form.append("images", item));
 
     productSave(form).then((res) => {

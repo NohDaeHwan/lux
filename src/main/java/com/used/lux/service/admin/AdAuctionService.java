@@ -5,6 +5,7 @@ import com.used.lux.domain.constant.AuctionState;
 import com.used.lux.dto.user.auction.AuctionDto;
 import com.used.lux.dto.user.auction.AuctionLogDto;
 import com.used.lux.dto.admin.AdAuctionDto;
+import com.used.lux.mapper.AuctionLogMapper;
 import com.used.lux.mapper.AuctionMapper;
 import com.used.lux.repository.auction.AuctionLogRepository;
 import com.used.lux.repository.auction.AuctionRepository;
@@ -29,19 +30,12 @@ public class AdAuctionService {
     private final AuctionMapper auctionMapper;
 
     private final AuctionLogRepository auctionLogRepository;
+    private final AuctionLogMapper auctionLogMapper;
 
     // Admin 경매 리스트 조회(+검색)
     @Transactional(readOnly = true)
     public Page<AuctionDto> getAuctionList(String auctionState, String auctionDate, String query, Pageable pageable) {
-        if (auctionDate.equals("") && auctionState.equals("") && query.equals("")) {
-            return auctionRepository.findAll(pageable).map(auctionMapper::toDto);
-        } else if (auctionDate.equals("")) {
-            return auctionRepository.findByBackAuctionList(auctionState, query, pageable).map(auctionMapper::toDto);
-        }
-        String[] dateResult = auctionDate.split("-");
-        LocalDateTime date = LocalDateTime.of(Integer.parseInt(dateResult[0]),
-                Integer.parseInt(dateResult[1]), Integer.parseInt(dateResult[2]), 00, 00);
-        return auctionRepository.findByBackAuctionListDate(auctionState, date, query, pageable).map(auctionMapper::toDto);
+        return auctionRepository.findByBackAucList(auctionState, auctionDate, query, pageable).map(auctionMapper::toDto);
     }
 
     // Admin 경매 상세 조회(+경매로그)
@@ -50,8 +44,7 @@ public class AdAuctionService {
         // 경매 상세
         AuctionDto auctionDto = auctionMapper.toDto(auctionRepository.findById(auctionId).get());
         // 경매 로그
-        List<AuctionLogDto> auctionLogDtos = auctionLogRepository.findByAuctionId(auctionId)
-                .stream().map(AuctionLogDto::from).collect(Collectors.toCollection(ArrayList::new));
+        List<AuctionLogDto> auctionLogDtos = auctionLogMapper.toDtoList(auctionLogRepository.findByAucId(auctionId));
         return AdAuctionDto.of(auctionDto, auctionLogDtos);
     }
 

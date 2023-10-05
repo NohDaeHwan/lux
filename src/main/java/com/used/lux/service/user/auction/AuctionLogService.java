@@ -2,7 +2,9 @@ package com.used.lux.service.user.auction;
 
 import com.used.lux.dto.user.auction.AuctionLogDto;
 import com.used.lux.dto.user.auction.AuctionMypageLogDto;
+import com.used.lux.mapper.AuctionLogMapper;
 import com.used.lux.repository.auction.AuctionLogRepository;
+import com.used.lux.repository.useraccount.UserAccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,13 +19,17 @@ import java.util.stream.Collectors;
 public class AuctionLogService {
 
     private final AuctionLogRepository auctionLogRepository;
+    private final AuctionLogMapper auctionLogMapper;
+
+    private final UserAccountRepository userRepo;
 
     public List<AuctionLogDto> auctionLogList(Long auctionId) {
-        return auctionLogRepository.findByAuctionId(auctionId).stream()
-                .map(AuctionLogDto::from).collect(Collectors.toUnmodifiableList());
+        return auctionLogRepository.findByAucId(auctionId).stream().map((item) -> {
+            return auctionLogMapper.toDtoCustom(item, userRepo.findById(item.getUserId()).get());
+        }).toList();
     }
 
-    public Page<AuctionMypageLogDto> searchAuctionLog(String bidder, Pageable pageable){
-        return auctionLogRepository.findByBidder(bidder, pageable);
+    public Page<AuctionMypageLogDto> searchAuctionLog(Long userId, Pageable pageable){
+        return auctionLogRepository.findByUserId(userId, pageable);
     }
 }

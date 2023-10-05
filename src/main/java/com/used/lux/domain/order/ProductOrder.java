@@ -32,6 +32,10 @@ public class ProductOrder extends AuditingFields {
 	private String phoneNumber;
 
 	@Setter
+	@Column(nullable = false, length = 5)
+	private String zoneCode;
+
+	@Setter
 	@Column(nullable = false, length = 100)
 	private String address;
 

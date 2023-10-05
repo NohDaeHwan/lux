@@ -4,6 +4,7 @@ import com.querydsl.jpa.JPQLQuery;
 import com.used.lux.domain.constant.AppraisalGrade;
 import com.used.lux.domain.constant.GenterType;
 import com.used.lux.domain.constant.ProductState;
+import com.used.lux.domain.constant.SellType;
 import com.used.lux.domain.product.Product;
 import com.used.lux.domain.product.QProduct;
 import org.springframework.data.domain.Page;
@@ -68,22 +69,31 @@ public class ProductRepositoryCustomImpl extends QuerydslRepositorySupport imple
 
     // 카테고리 검색 중고
     @Override
-    public List<Product> findByCategoryQuery(Long mcategoryId, String productColor, String productBrand, String productGender, String productSize,
-                                             String productGrade, String maxPrice, String minPrice, String query, Pageable pageable) {
+    public List<Product> findByCateQuery(Long mcategoryId, String productColor, String productBrand, String productGender, String productSize,
+                                             String productGrade, long maxPrice, long minPrice, String query) {
         QProduct product = QProduct.product;
 
         JPQLQuery<Product> queryResult = from(product)
                 .select(product)
                 .where(product.prodColor.like("%"+productColor+"%"),
                         product.prodBrand.brandName.like("%"+productBrand+"%"),
-                        product.prodGender.eq(GenterType.valueOf(productGender)),
                         product.prodSize.like("%"+productSize+"%"),
                         product.prodNm.like("%"+query+"%"),
                         product.cateM.id.eq(mcategoryId),
-                        product.prodPrice.gt(Integer.parseInt(minPrice)),
-                        product.prodPrice.lt(Integer.parseInt(maxPrice)),
-                        product.prodState.eq(ProductState.SELL)).limit(10)
+                        product.prodPrice.gt(minPrice),
+                        product.prodPrice.lt(maxPrice),
+                        product.prodState.eq(ProductState.SELL),
+                        product.prodSellType.eq(SellType.USED)).limit(10)
                 .orderBy(product.createdAt.desc());
+
+        if (!Objects.equals(productGender, "")) {
+            queryResult.where(product.prodGender.eq(GenterType.valueOf(productGender)));
+        }
+
+        if (!Objects.equals(productGrade, "")) {
+            queryResult.where(product.prodGrade.eq(AppraisalGrade.valueOf(productGrade)));
+        }
+
         return queryResult.fetch();
     }
 

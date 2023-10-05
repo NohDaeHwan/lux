@@ -7,22 +7,21 @@ import java.time.LocalDateTime;
 @Builder
 public record AuctionMypageLogDto(
         Long id,
-        String bidder,
-        String presentBidder,
-        Long auctionId,
-        Long productId,
-        String productName,
+        Long userId,
+        Long presentUserId,
+        Long aucId,
+        String prodNm,
         long presentPrice,
-        long closingPrice,
+        long endPrice,
         LocalDateTime createdAt,
         String createdBy,
         LocalDateTime modifiedAt,
         String modifiedBy
 ) {
-    public static AuctionMypageLogDto of(Long id, String bidder, String presentBidder, Long auctionId, Long productId, String productName,
-                                         long presentPrice, long closingPrice, LocalDateTime createdAt, String createdBy,
+    public static AuctionMypageLogDto of(Long id, Long userId, Long presentUserId, Long aucId, String prodNm,
+                                         long presentPrice, long endPrice, LocalDateTime createdAt, String createdBy,
                                          LocalDateTime modifiedAt, String modifiedBy) {
-        return new AuctionMypageLogDto(id, bidder, presentBidder, auctionId, productId, productName, presentPrice,
-                closingPrice, createdAt, createdBy, modifiedAt, modifiedBy);
+        return new AuctionMypageLogDto(id, userId, presentUserId, aucId, prodNm, presentPrice,
+                endPrice, createdAt, createdBy, modifiedAt, modifiedBy);
     }
 }

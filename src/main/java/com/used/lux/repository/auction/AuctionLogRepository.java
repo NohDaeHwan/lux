@@ -11,17 +11,15 @@ import java.util.List;
 
 public interface AuctionLogRepository extends JpaRepository<AuctionLog, Long> {
 
-    @Query(nativeQuery = true, value ="SELECT * FROM auction_log WHERE bidder = :userName")
-    List<AuctionLog> findByBidderList(String userName);
+    @Query("SELECT a FROM AuctionLog a WHERE a.userId = :id")
+    List<AuctionLog> findByAllId(Long id);
 
-    List<AuctionLog> findByProductId(Long productId);
-
-    List<AuctionLog> findByAuctionId(Long auctionId);
+    List<AuctionLog> findByAucId(Long aucId);
 
     //마이페이지 경매 내역 조회
-    @Query(value="SELECT new com.used.lux.dto.user.auction.AuctionMypageLogDto(al.id, al.bidder, a.bidder, al.auctionId, al.productId, al.productName, al.presentPrice, " +
+    @Query(value="SELECT new com.used.lux.dto.user.auction.AuctionMypageLogDto(al.id, al.userId, a.userId, al.aucId, al.prodNm, al.presentPrice, " +
             "a.endPrice, al.createdAt, al.createdBy, al.modifiedAt, al.modifiedBy) " +
-            "FROM AuctionLog al INNER JOIN Auction a ON al.auctionId = a.id " +
-            "WHERE al.bidder = :bidder")
-    Page<AuctionMypageLogDto> findByBidder(String bidder, Pageable pageable);
+            "FROM AuctionLog al INNER JOIN Auction a ON al.aucId = a.id " +
+            "WHERE al.userId = :userId")
+    Page<AuctionMypageLogDto> findByUserId(Long userId, Pageable pageable);
 }

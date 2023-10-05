@@ -13,8 +13,8 @@ import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Long>, ProductRepositoryCustom {
 
-    @Query(value ="SELECT p FROM Product p WHERE p.prodNm LIKE %:query%")
-    List<Product> findByQuery(@Param("query") String query, Pageable pageable);
+    @Query(value ="SELECT p FROM Product p WHERE p.prodNm LIKE %:query% order by p.prodViewCnt desc")
+    List<Product> findByQuery(@Param("query") String query);
 
     /*@Query(value ="SELECT p FROM Product p WHERE p.prodBrand.brandName LIKE %:productBrand% AND " +
             "p.prodColor LIKE %:productColor% AND p.prodGender = :productGender " +
@@ -28,13 +28,6 @@ public interface ProductRepository extends JpaRepository<Product, Long>, Product
     Page<Product> findByFrontProductList(String productBrand,String productColor, String productGender,
                                          String productSize, String productGrade, int maxPrice, int minPrice,
                                          String query, Pageable pageable);*/
-
-    @Query(value ="SELECT p FROM Product p WHERE p.prodBrand.brandName LIKE %:productBrand% AND " +
-            "p.prodColor LIKE %:productColor% AND p.prodGender = :productGender " +
-            "AND p.prodSize LIKE %:productSize% AND p.prodNm LIKE %:query% " +
-            "AND p.prodGrade = :productGrade AND p.prodState = 'SELL' " +
-            "AND p.prodPrice BETWEEN :minPrice AND :maxPrice and p.cateM.id =:mcategoryId and p.prodNm LIKE %:query% ")
-    List<Product> searchProductBy(Long mcategoryId,String productColor,String productBrand,String productGender,String productSize,String productGrade, int maxPrice,int minPrice,String query);
 
     @Query(nativeQuery = true,value = "select * from product where prod_state = 6 and created_at < now() order by created_at desc limit 4")
     List<Product> findByState6AndRecent4List();

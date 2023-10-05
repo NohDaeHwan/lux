@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -22,4 +23,7 @@ public interface AppraisalRepository extends JpaRepository<Appraisal, Long>, App
     Page<Appraisal> findByUserAccountId(Long id, Pageable pageable);
 
     Page<Appraisal> findByAppState(AppraisalState sell, Pageable pageable);
+
+    @Query(value ="SELECT a FROM Appraisal a  WHERE a.appProdNm LIKE %:query% order by a.createdAt desc")
+    List<Appraisal> findByQuery(@Param("query") String query);
 }

@@ -16,7 +16,7 @@
                 <h3 class="custom_heading">
                     검수 요청 조회
                 </h3>
-                <p th:text="'전체결과: '+${appraisals.totalElements}+' 건'">
+                <p th:text="'전체결과: '+${appList.totalElements}+' 건'">
                     전체결과: n 건
                 </p>
                 </div>
@@ -33,35 +33,35 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="appraisalResult : ${appraisals}">
-                    <form th:action="@{|/appraisalResult/${appraisalResult.appraisal.id}/delete|}" method="post">
+                    <tr th:each="app : ${appList}">
+                    <form th:action="@{|/appraisal/${app.id}/delete|}" method="post">
                         <th scope="row">
                                 <div style="display:flex;">
                                     <div>
-                                        <img th:src="${appraisalResult.appraisal.imageList[0].filePath}" style="width: 100px; height:100px;" alt="" class="" />
+                                        <img th:src="${app.imageList[0].filePath}" style="width: 100px; height:100px;" alt="" class="" />
                                     </div>
                                     <div style="display: flex;flex-direction: column;justify-content: center;">
-                                        <h6 style="vertical-align: middle;" th:text="${appraisalResult.appraisal.appraisalBrandName}">브랜드</h6>
-                                        <h6 style="vertical-align: middle;" th:text="${appraisalResult.appraisal.appraisalProductName}">검수요청상품명</h6>
+                                        <h6 style="vertical-align: middle;" th:text="${app.appBrand}">브랜드</h6>
+                                        <h6 style="vertical-align: middle;" th:text="${app.appProdNm}">검수요청상품명</h6>
                                     </div>
                                 </div>
                         </th>
-                        <td style="vertical-align: middle;" th:if="${appraisalResult.appraisal.id == null}"><h6>-</h6></td>
-                        <td style="vertical-align: middle;" th:unless="${appraisalResult.appraisal.id == null}"><h6 th:text="${#temporals.format(appraisalResult.createdAt,'yyyy-MM-dd HH:mm:ss')}">-</h6></td>
-                        <td style="vertical-align: middle;" th:text="${appraisalResult.appraisal.id}"><h6>12345678</h6></td>
-                        <td style="vertical-align: middle;" th:if="${appraisalResult.appraisal.id == null}"><h6>-</h6></td>
-                        <td style="vertical-align: middle;" th:unless="${appraisalResult.appraisal.id == null}"><h6>4,500,000원</h6></td>
+                        <td style="vertical-align: middle;" th:if="${app.appResultId == null}"><h6>-</h6></td>
+                        <td style="vertical-align: middle;" th:unless="${app.appResultId == null}"><h6 th:text="${#temporals.format(app.createdAt,'yyyy-MM-dd HH:mm:ss')}">-</h6></td>
+                        <td style="vertical-align: middle;" th:text="${app.appResultId}"><h6>12345678</h6></td>
+                        <td style="vertical-align: middle;" th:if="${app.appResultId == null}"><h6>-</h6></td>
+                        <td style="vertical-align: middle;" th:unless="${app.appResultId == null}"><h6>4,500,000원</h6></td>
                         <td style="vertical-align: middle;">
                             <div style="display:flex; flex-direction: column; align-items: flex-start;">
-                                <h6 style="margin-left: 17px;" th:if="${appraisalResult.appraisal.appraisalStateStep} == '검수전'" th:text="${appraisalResult.appraisal.appraisalStateStep}">검수전</h6>
-                                <h6 style="margin-left: 17px;" th:if="(${appraisalResult.appraisal.appraisalStateStep} == '검수완료') and (${appraisalResult.appraisalGrade} == 'F')" th:text="${appraisalResult.appraisal.appraisalStateStep} + '(거절)'">검수전</h6>
-                                <h6 style="margin-left: 17px;" th:if="(${appraisalResult.appraisal.appraisalStateStep} == '검수완료') and (${appraisalResult.appraisalGrade} != 'F')" th:text="${appraisalResult.appraisal.appraisalStateStep} + '(매입)'">검수전</h6>
-                                <button th:if="${appraisalResult.appraisal.appraisalStateStep} == '검수전'" type="submit" class="btn btn-danger" >삭제하기</button>
-                                <button class="btn btn-danger" type="button" disabled  th:if="${appraisalResult.appraisal.appraisalStateStep} == '검수중'">
+                                <h6 style="margin-left: 17px;" th:if="${app.appState} == 'BEFORE'" th:text="${app.appState}">검수전</h6>
+                                <h6 style="margin-left: 17px;" th:if="(${app.appState} == 'COMPLETE')" th:text="'검수완료'">검수전</h6>
+                                <h6 style="margin-left: 17px;" th:if="(${app.appState} == 'REJECT')" th:text="'매입거부'">검수전</h6>
+                                <button th:if="${app.appState} == 'BEFORE'" type="submit" class="btn btn-danger" >삭제하기</button>
+                                <button class="btn btn-danger" type="button" disabled  th:if="${app.appState} == 'INSPECTION'">
                                     <span class="spinner-border spinner-border-sm " role="status" aria-hidden="true"></span>
                                     검수중..
                                 </button>
-                                <a style="margin-left: 17px;" th:if="${appraisalResult.appraisal.appraisalStateStep} == '검수완료'" th:href="@{|/appraisalResult/${appraisalResult.id}|}" >결과보기 ></a>
+                                <a style="margin-left: 17px;" th:if="${app.appState} != 'BEFORE' AND ${app.appState} != 'INSPECTION'" th:href="@{|/appraisal/${app.id}|}" >결과보기 ></a>
                             </div>
                         </td>
                     </form>
@@ -75,20 +75,20 @@
         <nav id="pagination" aria-label="Page navigation example">
             <ul class="pagination">
                 <li class="page-item">
-                    <a class="page-link" th:href="@{/mypage/appraise(page=${appraisals.number - 1})}"
-                       aria-label="Previous" th:class="'page-link' + (${appraisals.number} <= 0 ? ' disabled-link' : '')">
+                    <a class="page-link" th:href="@{/mypage/appraise(page=${appList.number - 1})}"
+                       aria-label="Previous" th:class="'page-link' + (${appList.number} <= 0 ? ' disabled-link' : '')">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
                 <li class="page-item" th:each="pageNumber : ${paginationBarNumbers}">
                     <a th:text="${pageNumber + 1}"
                        th:href="@{/mypage/appraise(page=${pageNumber})}"
-                       th:class="'page-link' + (${pageNumber} == ${appraisals.number} <= 0 ? ' disabled-link' : '')">
+                       th:class="'page-link' + (${pageNumber} == ${appList.number} <= 0 ? ' disabled-link' : '')">
                     </a>
                 </li>
                 <li class="page-item">
-                    <a class="page-link" th:href="@{/mypage/appraise(page=${appraisals.number + 1})}"
-                       aria-label="Next" th:class="'page-link' + (${appraisals.number} >= ${appraisals.totalPages - 1} ? ' disabled-link' : '')">
+                    <a class="page-link" th:href="@{/mypage/appraise(page=${appList.number + 1})}"
+                       aria-label="Next" th:class="'page-link' + (${appList.number} >= ${appList.totalPages - 1} ? ' disabled-link' : '')">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>

@@ -16,8 +16,8 @@ public interface ProductRepositoryCustom {
     Page<Product> findByQuery(String productColor, String productBrand, String productGender, String productSize,
                               String productGrade, String maxPrice, String minPrice, String query, Pageable pageable);
 
-    List<Product> findByCategoryQuery(Long mcategoryId, String productColor, String productBrand, String productGender, String productSize,
-                                      String productGrade, String maxPrice, String minPrice, String query, Pageable pageable);
+    List<Product> findByCateQuery(Long mcategoryId, String productColor, String productBrand, String productGender, String productSize,
+                                      String productGrade, long maxPrice, long minPrice, String query);
 
     Page<Product> findByBackProductList(String productBrand, String productGender, String productSize, String productGrade, String productState,
                                         LocalDateTime productDate, String query, Pageable pageable);

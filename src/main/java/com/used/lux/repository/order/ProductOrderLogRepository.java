@@ -14,16 +14,16 @@ public interface ProductOrderLogRepository extends JpaRepository<ProductOrderLog
 
     ProductOrderLog findByProdIdAndUserId(Long prodId, Long userId);
     
-    @Query(nativeQuery = true,value = "select sum(prod_price) from product_order_log where created_at >=:sD and created_at <= now() ;")
+    @Query(nativeQuery = true,value = "select sum(order_price) from product_order_log where created_at >=:sD and created_at <= now();")
     Long countPriceByCreatedAt(@Param("sD") String sectionStartDate);
 
-    @Query(nativeQuery = true,value = "select count(*) from product_order_log where created_at >=:sD and created_at <= now() ;")
+    @Query(nativeQuery = true,value = "select count(*) from product_order_log where created_at >=:sD and created_at <= now();")
     Long countOrderByCreatedAt(@Param("sD") String sectionStartDate);
 
     @Query(nativeQuery = true,value = "select count(*) from product_order_log where prod_state = 'COMPLETE';")
     Long countOrderByState11();
 
-    @Query(nativeQuery = true,value = "SELECT l.prod_sell_type from product_order_log l" +
+    @Query(nativeQuery = true,value = "SELECT l.prod_sell_type from product_order_log l " +
             "WHERE l.created_at >= :sD and l.created_at <= now() GROUP BY l.prod_sell_type order by count(*) DESC LIMIT 1;")
     String findBySellTypeOfState(@Param("sD") String sectionStartDate);
 
@@ -39,7 +39,7 @@ public interface ProductOrderLogRepository extends JpaRepository<ProductOrderLog
             "GROUP BY p.cate_m_id ORDER BY COUNT(*) DESC LIMIT 1;")
     String findBySellTypeOfCategoryM(@Param("sD") String sectionStartDate);
 
-    @Query(nativeQuery = true,value = "SELECT TRUNCATE(prod_price,-5) AS pricegroup " +
+    @Query(nativeQuery = true,value = "SELECT TRUNCATE(order_price,-5) AS pricegroup " +
             "FROM product_order_log " +
             "WHERE created_at >= :sD AND created_at <= NOW() " +
             "GROUP BY pricegroup ORDER BY COUNT(*) desc LIMIT 1;")
@@ -52,7 +52,7 @@ public interface ProductOrderLogRepository extends JpaRepository<ProductOrderLog
             "ORDER BY p.prod_view_cnt DESC LIMIT 1; ")
     String findByMostViewCount(@Param("sD") String sectionStartDate);
 
-    @Query(nativeQuery = true,value = "select sum(prod_price) " +
+    @Query(nativeQuery = true,value = "select sum(order_price) " +
             "FROM (SELECT * FROM product_order_log WHERE created_at >= :sD AND created_at <= NOW()) AS pl" +
             " WHERE pl.prod_state = 6; ")
     Long sumProfitByDate(@Param("sD") String sectionStartDate);

@@ -2,6 +2,7 @@ package com.used.lux.controller.admin;
 
 import com.used.lux.dto.admin.AdDashboardRequestDto;
 import com.used.lux.dto.admin.DashBoardResponseVO;
+import com.used.lux.dto.user.useraccount.UserAccountDto;
 import com.used.lux.service.admin.DashBoardRequestService;
 import com.used.lux.dto.security.Principal;
 import com.used.lux.response.useraccount.UserAccountResponse;
@@ -40,7 +41,7 @@ public class AdMainController {
             return "redirect:/";
         }
 
-        UserAccountResponse adminDetail = UserAccountResponse.from(adUserAccountService.getUserMemo(principal.id()));
+        UserAccountDto adminDetail = adUserAccountService.getUserMemo(principal.id());
         mm.addAttribute("adminDetail", adminDetail);
         return "/admin/admin-detail";
     }

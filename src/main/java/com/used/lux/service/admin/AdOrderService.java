@@ -87,7 +87,7 @@ public class AdOrderService {
 //                product.getProductSellType()));
         product.setProdState(ProductState.WAITING);
         productRepository.save(product);
-        userAccount.setPoint(userAccount.getPoint() + productOrder.getPayment());
+        userAccount.setUserPoint(userAccount.getUserPoint() + productOrder.getPayment());
         userAccountRepository.save(userAccount);
 //        userAccountLogRepository.save(UserAccountLog.of(null, userAccount.getUserEmail(), userAccount.getUserGrade(),
 //                userAccount.getPoint() + product.getProdPrice(), "충전", "주문번호" + orderId + "/상품환불"));

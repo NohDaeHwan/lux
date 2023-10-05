@@ -4,8 +4,10 @@ import com.used.lux.domain.auction.Auction;
 import com.used.lux.domain.constant.AuctionState;
 import com.used.lux.dto.user.auction.AuctionDto;
 import com.used.lux.mapper.AuctionMapper;
+import com.used.lux.mapper.ProductMapper;
 import com.used.lux.repository.auction.AuctionRepository;
 import com.used.lux.repository.product.ProductRepository;
+import com.used.lux.repository.useraccount.UserAccountRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -28,30 +30,35 @@ public class AuctionService {
     private final AuctionMapper auctionMapper;
 
     private final ProductRepository productRepository;
+    private final ProductMapper productMapper;
+
+    private final UserAccountRepository userRepo;
 
     @Transactional(readOnly = true)
     public Page<AuctionDto> auctionListFind(Pageable pageable) {
-        return auctionRepository.findByAuctionStartDate(pageable).map(auctionMapper::toDto);
+        return auctionRepository.findAll(pageable).map(auctionMapper::toDto);
     }
 
 
     @Transactional(readOnly = true)
     public List<AuctionDto> productFind(String query) {
-        return auctionRepository.findByQuery(query, PageRequest.of(0, 10)).stream()
+        return auctionRepository.findByQuery(query).stream()
                 .map(auctionMapper::toDto).limit(8).toList();
     }
 
     @Transactional(readOnly = true)
-    public  List<AuctionDto> searchcate(Long mcategoryId, String productColor,String brandName,String productGender,String productSize,String productGrade ,String maxPrice,String minPrice,String query){
-
-        return auctionRepository.searchAuctionBy(mcategoryId,productColor,brandName,productGender,productSize,productGrade,Integer.parseInt(maxPrice),Integer.parseInt(minPrice),query).stream().map(auctionMapper::toDto).collect(Collectors.toList());
+    public  List<AuctionDto> searchcate(Long mcategoryId, String productColor,String brandName,String productGender,
+                                        String productSize,String productGrade ,String maxPrice,String minPrice,String query){
+        return auctionRepository.findByCateQuery(mcategoryId,productColor,brandName,productGender,productSize,productGrade,
+                Long.parseLong(maxPrice),Long.parseLong(minPrice),query).stream().map(auctionMapper::toDto).toList();
     }
 
     public AuctionDto auctionFind(Long id) {
         Auction auction = auctionRepository.getReferenceById(id);
         auction.getProd().setProdViewCnt(auction.getProd().getProdViewCnt()+1);
         productRepository.save(auction.getProd());
-        return auctionMapper.toDto(auction);
+        return auctionMapper.toDtoCustom(auction, productMapper.toDtoCustom(auction.getProd()),
+                auction.getUserId() != null ? userRepo.findById(auction.getUserId()).orElse(null): null);
     }
 
     /*public Integer auctionUpdate(Long auctionId, AuctionDto auctionDto, String userEmail) {
@@ -120,17 +127,14 @@ public class AuctionService {
         return auctionRepository.sumProfitByDate(sectionStartDate.toString());
     }
 
-
-
-
-    public  void  presentTimer(Long auctionId, Long stateId){
+    public  void  presentTimer(Long auctionId, String aucState){
         Auction auction = auctionRepository.getReferenceById(auctionId);
-        auction.setAucState(AuctionState.valueOf("stateId"));
+        auction.setAucState(AuctionState.SELL);
         auctionRepository.save(auction);
     }
-    public  void  afterTimer(Long auctionId, Long stateId){
+    public  void  afterTimer(Long auctionId, String aucState){
         Auction auction = auctionRepository.getReferenceById(auctionId);
-        auction.setAucState(AuctionState.valueOf("stateId"));
+        auction.setAucState(AuctionState.PAY_WAITING);
         auction.setEndPrice(auction.getPresentPrice());
         auctionRepository.save(auction);
     }

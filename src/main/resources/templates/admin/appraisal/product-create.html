@@ -187,23 +187,21 @@
 
                         <div>
                             <div class="row mb-3">
-                                <label for="appraisalPrice" class="col-sm-2 col-form-label">매입가격(원)</label>
+                                <label class="col-sm-2 col-form-label" for="startPrice">시작가격(원)</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="appraisalPrice" id="appraisalPrice" class="form-control">
+                                    <input type="text" class="form-control" id="startPrice" name="startPrice" placeholder="가격을 입력하세요">
                                 </div>
                             </div>
-                            <div class="row mb-3">
-                                <label for="appraisalGrade" class="col-sm-2 col-form-label">검수등급</label>
-                                <div class="col-sm-10">
-                                    <input type="text" name="appraisalGrade" id="appraisalGrade" class="form-control">
+                            <div class="row mb-3" >
+                                <label class="col-sm-2 col-form-label" for="aucStartDate">시작시간</label>
+                                <div class="col-sm-5" style="display:flex; " >
+                                    <input type="datetime-local" class="form-control" style="margin-right: 8px;" id="aucStartDate" name="aucStartDate">
                                 </div>
                             </div>
-                            <div class="row mb-3">
-                                <label for="appraisalComment" class="col-sm-2 col-form-label">검수 코멘트</label>
-                                <div class="col-sm-10">
-                                    <div class="form-floating mb-3">
-                                        <textarea name='appraisalComment' id="appraisalComment" class="form-control" placeholder="손상상태/담당자 이름 등 검수 코멘트를 기록해주세요." style="height: 100px;"></textarea>
-                                    </div>
+                            <div class="row mb-3" >
+                                <label class="col-sm-2 col-form-label" for="aucEndDate">종료시간</label>
+                                <div class="col-sm-5" style="display:flex;">
+                                    <input type="datetime-local" class="form-control" style="margin-right: 8px;"id="aucEndDate" name="aucEndDate">
                                 </div>
                             </div>
                             <div class="row mb-3">

@@ -124,7 +124,7 @@
                                     th:text="${#numbers.formatInteger(appraisal.appPrice,3,'COMMA')}+'원'">28</td>
                                 <td th:if="${appraisal.appState} != '검수완료' and ${appraisal.appState} != '판매거절' and ${appraisal.appState} != '매입완료' and ${appraisal.appState} != '상품등록'"
                                     th:text="'-'">28</td>
-                                <td th:if="${appraisal.appState} == '검수완료' or ${appraisal.appState} == '판매거절' or ${appraisal.appState} == '매입완료' and ${appraisal.appState} != '상품등록'"
+                                <td th:if="${appraisal.appState} == '검수완료' or ${appraisal.appState} == '판매거절' or ${appraisal.appState} == '매입완료' and ${appraisal.appState} == '상품등록'"
                                     th:text="${appraisal.appGrade}">28</td>
                                 <td th:if="${appraisal.appState} != '검수완료' and ${appraisal.appState} != '판매거절' and ${appraisal.appState} != '매입완료' and ${appraisal.appState} != '상품등록'"
                                     th:text="'-'">28</td>

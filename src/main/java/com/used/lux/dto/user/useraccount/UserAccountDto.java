@@ -13,7 +13,7 @@ public record UserAccountDto(
         String phoneNumber,
         int age,
         String gender,
-        int userPoint,
+        Long userPoint,
         UserGrade userGrade,
         RoleType role,
         String memo,

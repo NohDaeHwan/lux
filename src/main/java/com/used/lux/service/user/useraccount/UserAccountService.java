@@ -17,9 +17,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,6 +40,10 @@ public class UserAccountService {
     private final UserAccountLogRepository userAccountLogRepository;
 
     private final UserAccountMapper userAccountMapper;
+
+    private final UserDetailsService userDetailsService;
+
+    private final PasswordEncoder passwordEncoder;
 
     public  boolean exsistByUserEmail(String userName) {
         return userAccountRepo.existsByUserEmail(userName);
@@ -59,7 +66,7 @@ public class UserAccountService {
     @Transactional
     public void userPointUpdate(Principal principal, UserUpdateRequest userUpdateRequest){
         UserAccount userAccount = userAccountRepo.getReferenceById(principal.id());
-        userAccount.setPoint(userUpdateRequest.userPoint()+ userAccount.getPoint());
+        userAccount.setUserPoint(userUpdateRequest.userPoint()+ userAccount.getUserPoint());
         userAccountLogRepository.save(UserAccountLog.builder()
                         .id(null).orderId(null)
                         .userId(userAccount.getId()).userGrade(userAccount.getUserGrade())
@@ -67,11 +74,11 @@ public class UserAccountService {
                         .build());
         // 시큐리티 인증 재설정
         SecurityContextHolder.getContext().setAuthentication(
-                createNewAuthentication(SecurityContextHolder.getContext().getAuthentication(), userAccount.getUserEmail()));
+                createNewAuthentication(SecurityContextHolder.getContext().getAuthentication(), userAccount));
     }
 
-    private Authentication createNewAuthentication(Authentication currentAuth, String username) {
-        Principal newPrincipal = Principal.from(userAccountRepo.findByUserEmail(username).get());
+    private Authentication createNewAuthentication(Authentication currentAuth, UserAccount user) {
+        Principal newPrincipal = Principal.from(user);
         UsernamePasswordAuthenticationToken newAuth = new UsernamePasswordAuthenticationToken(newPrincipal, currentAuth.getCredentials(), newPrincipal.getAuthorities());
         newAuth.setDetails(currentAuth.getDetails());
         return newAuth;
@@ -86,15 +93,16 @@ public class UserAccountService {
     public  void deleteUser(Principal principal){
        userAccountRepo.deleteById(principal.id());
        SecurityContextHolder.clearContext();
-
     }
 
-    public void userNameUpdate(Principal principal,UserNameUpdateRequest userNameUpdateRequest) {
-
-        UserAccount userAccount =userAccountRepo.findByUserName(principal.userName());
-        userAccount.setUserName(userNameUpdateRequest.userName());
-        userAccountRepo.save(userAccount);
-
+    @Transactional
+    public void userNameUpdate(Principal principal, UserNameUpdateRequest userNameUpdateRequest) {
+        UserAccount user = userAccountRepo.findByUserName(principal.userName());
+        user.setUserName(userNameUpdateRequest.userName());
+        userAccountRepo.save(user);
+        // 시큐리티 인증 재설정
+        SecurityContextHolder.getContext().setAuthentication(
+                createNewAuthentication(SecurityContextHolder.getContext().getAuthentication(), user));
     }
 
     public boolean exsistByUserName(String name) {

@@ -7,19 +7,19 @@
 
 <aside id="sidebar" class="mysidebar">
     <div id="accordion" class="sidebar-nav">
-        <div class="nav-item" th:each="bcategory : ${categoryList}">
-            <div class="nav-link collapsed flex" style="justify-content: space-between;" th:id="'heading'+${bcategoryStat.count}" data-toggle="collapse"
-                 th:data-target="'#collapse'+${bcategoryStat.count}" aria-expanded="true" th:aria-controls="'collapse'+${bcategoryStat.count}">
-                <h6 class="mb-0 font-weight-bold" th:text="${bcategory.categoryBName}">
+        <div class="nav-item" th:each="bCate : ${cateList}">
+            <div class="nav-link collapsed flex" style="justify-content: space-between;" th:id="'heading'+${bCateStat.count}" data-toggle="collapse"
+                 th:data-target="'#collapse'+${bCateStat.count}" aria-expanded="true" th:aria-controls="'collapse'+${bCateStat.count}">
+                <h6 class="mb-0 font-weight-bold" th:text="${bCate.cateBNm}">
                     상의
                 </h6>
                 <h6 class="mb-0 font-weight-bold">+</h6>
             </div>
-            <div th:id="'collapse'+${bcategoryStat.count}" class="collapse"
-                 th:aria-labelledby="'heading'+${bcategoryStat.count}" data-parent="#accordion">
-                <div class="nav-link collapsed" th:each="mcategory : ${bcategory.categoryMDtos()}">
+            <div th:id="'collapse'+${bCateStat.count}" class="collapse"
+                 th:aria-labelledby="'heading'+${bCateStat.count}" data-parent="#accordion">
+                <div class="nav-link collapsed" th:each="mCate : ${bCate.cateMList}">
                     <h6 class="mb-0" style="font-size:15px;">
-                        <a th:href="@{|/searchcate/${mcategory.id}|}" class="text-black-50" th:text="${mcategory.categoryMName()}">짧은 상의</a>
+                        <a th:href="@{|/searchcate/${mCate.id}|}" class="text-black-50" th:text="${mCate.cateMNm}">짧은 상의</a>
                     </h6>
                 </div>
             </div>
@@ -34,7 +34,7 @@
                     <!-- Card with header and footer -->
                     <div class="card">
                         <div class="card-header">
-                            <h2 th:text="${cateM.categoryMName()}"></h2>
+                            <h2 th:text="${cateM.cateMNm}"></h2>
                         </div>
                         <div class="card-body">
                             <h5 class="card-title">상세 조건</h5>
@@ -44,7 +44,7 @@
                                     <div class="col-sm-10">
                                         <select class="form-select form-control" name="productColor">
                                             <option value="" selected>전체</option>
-                                            <option th:each="product : ${products}" th:value="${product.productColor}" th:text="${product.productColor}">example</option>
+                                            <option th:each="prod : ${prodList}" th:value="${prod.prodColor}" th:text="${prod.prodColor}">example</option>
                                         </select>
                                     </div>
                                 </div>
@@ -53,7 +53,7 @@
                                     <div class="col-sm-10">
                                         <select class="form-select form-control" name="productBrand">
                                             <option value="" selected>전체</option>
-                                            <option th:each="brand : ${brandList}" th:value="${brand.brandName()}" th:text="${brand.brandName}">example</option>
+                                            <option th:each="brand : ${brandList}" th:value="${brand.brandName}" th:text="${brand.brandName}">example</option>
                                         </select>
                                     </div>
                                 </div>
@@ -81,10 +81,9 @@
                                     <div class="col-sm-10">
                                         <select class="form-select form-control" name="productGrade">
                                             <option value="" selected>전체</option>
-                                            <option value="1">S</option>
-                                            <option value="2">A</option>
-                                            <option value="3">B</option>
-                                            <option value="3">C</option>
+                                            <option value="S">S</option>
+                                            <option value="A">A</option>
+                                            <option value="B">B</option>
                                         </select>
                                     </div>
                                 </div>
@@ -130,14 +129,14 @@
             <div class="album py-3 bg-light">
                 <div class="container-fluid">
                   <div class="row d-flex justify-content-start">
-                    <div class="col-md-2" th:each="product: ${products}">
+                    <div class="col-md-2" th:each="prod: ${prodList}">
                       <div class="card mb-4 box-shadow">
-                        <a th:href="@{|/product/${product.id()}|}">
-                        <img class="card-img-top p-1" th:src="${product.imageList[0].filePath}" alt="Card image cap">
+                        <a th:href="@{|/product/${prod.id}|}">
+                        <img class="card-img-top p-1" th:src="${prod.images[0].filePath}" alt="Card image cap">
                         <div class="p-2">
-                          <p class="card-text font-weight-lighter mb-1 text-black-50" th:text="${product.productBrandName}">브랜드</p>
-                          <p class="card-text font-weight-light mb-1"><a th:href="@{|/product/${product.id}|}" th:text="${product.productName}">상품명</a></p>
-                          <p class="card-text font-weight-light" th:text="${#numbers.formatInteger(product.productPrice,3,'COMMA')}">40.000P</p>
+                          <p class="card-text font-weight-lighter mb-1 text-black-50" th:text="${prod.prodBrand}">브랜드</p>
+                          <p class="card-text font-weight-light mb-1"><a th:href="@{|/product/${prod.id}|}" th:text="${prod.prodNm}">상품명</a></p>
+                          <p class="card-text font-weight-light" th:text="${#numbers.formatInteger(prod.prodPrice,3,'COMMA')}">40.000P</p>
                           <div class="d-flex justify-content-between align-items-center"></div>
                         </div>
                         </a>
@@ -160,27 +159,27 @@
             <div class="album py-3 bg-light">
                 <div class="container-fluid">
                     <div class="row d-flex justify-content-start">
-                        <div class="col-md-2" th:each="auction: ${a}">
+                        <div class="col-md-2" th:each="auc: ${aucList}">
                             <div class="card mb-4 box-shadow">
-                                <a th:href="@{|/auction/detail/${auction.id}|}">
-                                    <img class="card-img-top p-1" th:src="${auction.productResponse.imageList[0].filePath}" alt="Card image cap">
+                                <a th:href="@{|/auction/detail/${auc.id}|}">
+                                    <img class="card-img-top p-1" th:src="${auc.prod.images[0].filePath}" alt="Card image cap">
                                     <div class="p-2">
-                                        <p class="card-text font-weight-lighter mb-1 text-black-50" th:text="${auction.productResponse.productBrandName}">브랜드</p>
+                                        <p class="card-text font-weight-lighter mb-1 text-black-50" th:text="${auc.prod.prodBrand}">브랜드</p>
                                         <p class="card-text font-weight-light mb-1">
-                                            <a th:if="${auction.productResponse.productName.length() >= 15}" th:href="@{|/auctions/detail/${auction.id}|}" th:text="${#strings.append(#strings.substring(auction.productResponse.productName, 0, 15), '...')}">상품명</a>
-                                            <a th:unless="${auction.productResponse.productName.length() >= 15}" th:href="@{|/auctions/detail/${auction.id}|}" th:text="${auction.productResponse.productName}">상품명</a>
+                                            <a th:if="${auc.prod.prodNm.length() >= 15}" th:href="@{|/auctions/detail/${auc.id}|}" th:text="${#strings.append(#strings.substring(auc.prod.prodNm, 0, 15), '...')}">상품명</a>
+                                            <a th:unless="${auc.prod.prodNm.length() >= 15}" th:href="@{|/auctions/detail/${auc.id}|}" th:text="${auc.prod.prodNm}">상품명</a>
                                         </p>
-                                        <p class="card-text font-weight-light" th:text="${#numbers.formatInteger(auction.presentPrice(),3,'COMMA')}">40.000P</p>
-                                        <p class="card-text font-weight-light" th:text="${#temporals.format(auction.auctionStartDate(),'yyyy-MM-dd HH:mm:ss')}"></p>
-                                        <p class="card-text font-weight-light" th:text="${#temporals.format(auction.auctionClosingDate(),'yyyy-MM-dd HH:mm:ss')}"></p>
+                                        <p class="card-text font-weight-light" th:text="${#numbers.formatInteger(auc.presentPrice,3,'COMMA')}">40.000P</p>
+                                        <p class="card-text font-weight-light" th:text="${#temporals.format(auc.aucStartDate,'yyyy-MM-dd HH:mm:ss')}"></p>
+                                        <p class="card-text font-weight-light" th:text="${#temporals.format(auc.aucEndDate,'yyyy-MM-dd HH:mm:ss')}"></p>
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div class="sec7-text-box">
-                                                <p class="time-title" th:id="'title'+${auctionStat.count}"></p>
+                                                <p class="time-title" th:id="'title'+${aucStat.count}"></p>
                                                 <div class="time" >
-                                                    <span th:id="'days'+${auctionStat.count}"></span>
-                                                    <span th:id="'hours'+${auctionStat.count}"></span>
-                                                    <span th:id="'minutes'+${auctionStat.count}"></span>
-                                                    <span th:id="'seconds'+${auctionStat.count}"></span>
+                                                    <span th:id="'days'+${aucStat.count}"></span>
+                                                    <span th:id="'hours'+${aucStat.count}"></span>
+                                                    <span th:id="'minutes'+${aucStat.count}"></span>
+                                                    <span th:id="'seconds'+${aucStat.count}"></span>
 
                                                 </div>
                                             </div>
@@ -208,109 +207,108 @@
   <!-- end info_section -->
 
   <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-  <script type="text/javascript" src="/assets/lib/js/bootstrap.js"></script>
-  <script src="/static/assets/js/frontmain.js"></script>
+  <script type="text/javascript" src="/static/assets/lib/js/bootstrap.js"></script>
+  <script type="text/javascript" src="/static/assets/js/frontmain.js"></script>
 
 <script th:inline="javascript">
-            function remaindTime() {
-            let auctions=[[${a}]];
-            //현재시간
-            var now = new Date();
+    function remaindTime() {
+        let aucList = [[${aucList}]];
+        //현재시간
+        let now = new Date();
 
-            for(i=0; i<auctions.length;i++){
-            var open = new Date([[${a}]][i].auctionStartDate);
+        for(i = 0; i < aucList.length;i++){
+            let open = new Date(aucList[i].aucStartDate);
             //종료시간
-            var end = new Date([[${a}]][i].auctionClosingDate);
+            let end = new Date(aucList[i].aucEndDate);
 
-            var auctionId=[[${a}]][i].id;
+            let auctionId = aucList[i].id;
 
-            var statestep=[[${a}]][i].stateStep;
+            let aucState = aucList[i].aucState;
 
-            var nt = now.getTime();
-            var ot = open.getTime();
-            var et = end.getTime();
+            let nt = now.getTime();
+            let ot = open.getTime();
+            let et = end.getTime();
 
-            if(nt<ot){
-            //경매 전
-            $(".time").fadeIn();
-            document.getElementById("title"+(i+1)).innerHTML="경매 시작까지";
-            sec =parseInt(ot - nt) / 1000;
-            day  = parseInt(sec/60/60/24);
-            sec = (sec - (day * 60 * 60 * 24));
-            hour = parseInt(sec/60/60);
-            sec = (sec - (hour*60*60));
-            min = parseInt(sec/60);
-            sec = parseInt(sec-(min*60));
-            if(hour<10){hour="0"+hour;}
-            if(min<10){min="0"+min;}
-            if(sec<10){sec="0"+sec;}
+            if (nt<ot) {
+                //경매 전
+                $(".time").fadeIn();
+                document.getElementById("title"+(i+1)).innerHTML = "경매 시작까지";
+                sec = parseInt(ot - nt) / 1000;
+                day  = parseInt(sec/60/60/24);
+                sec = (sec - (day * 60 * 60 * 24));
+                hour = parseInt(sec/60/60);
+                sec = (sec - (hour*60*60));
+                min = parseInt(sec/60);
+                sec = parseInt(sec-(min*60));
+                if(hour<10){hour="0"+hour;}
+                if(min<10){min="0"+min;}
+                if(sec<10){sec="0"+sec;}
 
-            document.getElementById("days"+(i+1)).innerHTML = day+"일";
-            document.getElementById("hours"+(i+1)).innerHTML = hour+"시";
-            document.getElementById("minutes"+(i+1)).innerHTML = min+"분";
-            document.getElementById("seconds"+(i+1)).innerHTML = sec+"초";
+                document.getElementById("days"+(i+1)).innerHTML = day+"일";
+                document.getElementById("hours"+(i+1)).innerHTML = hour+"시";
+                document.getElementById("minutes"+(i+1)).innerHTML = min+"분";
+                document.getElementById("seconds"+(i+1)).innerHTML = sec+"초";
 
-            } else if(nt>et){
-            //후 경매 종료  최종가격,경매상태
+            } else if (nt>et) {
+                //후 경매 종료  최종가격,경매상태
 
-            if (statestep !="경매완료") {
-            $.ajax({
-            type: "POST",
-            url: "/auction/after/" + auctionId + "/11",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json"
-            }).done(function (res) {
-            location.href = "/auction";
-            console.log("완료");
-            }).fail(function (error) {
-            console.log("function error : " + error);
-            });
+                if (aucState !="경매완료") {
+                    $.ajax({
+                        type: "POST",
+                        url: "/auction/after/" + auctionId + "/11",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json"
+                    }).done(function (res) {
+                        location.href = "/auction";
+                        console.log("완료");
+                    }).fail(function (error) {
+                        console.log("function error : " + error);
+                    });
 
-            }
+                }
 
-            $(".time").fadeOut();
-            document.getElementById("title"+(i+1)).innerHTML="경매 마감<br/><br/>";
+                $(".time").fadeOut();
+                document.getElementById("title"+(i+1)).innerHTML = "경매 마감<br/><br/>";
 
-            }else {
-            //중  경매 상태를 경매전 -> 경매 중으로 변경
+            } else {
+                //중  경매 상태를 경매전 -> 경매 중으로 변경
 
-            if (statestep !="경매중") {
-            $.ajax({
-            type: "POST",
-            url: "/auction/present/" + auctionId + "/10",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json"
-            }).done(function (res) {
-            location.href = "/auction";
-            console.log("완료");
-            }).fail(function (error) {
-            console.log("function error : " + error);
-            });
-            }
+                if (aucState !="경매중") {
+                    $.ajax({
+                        type: "POST",
+                        url: "/auction/present/" + auctionId + "/10",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json"
+                    }).done(function (res) {
+                        location.href = "/auction";
+                        console.log("완료");
+                    }).fail(function (error) {
+                        console.log("function error : " + error);
+                    });
+                }
 
-            $(".time").fadeIn();
-            document.getElementById("title"+(i+1)).innerHTML=" 경매 마감까지";
-            sec =parseInt(et - nt) / 1000;
-            day  = parseInt(sec/60/60/24);
-            sec = (sec - (day * 60 * 60 * 24));
-            hour = parseInt(sec/60/60);
-            sec = (sec - (hour*60*60));
-            min = parseInt(sec/60);
-            sec = parseInt(sec-(min*60));
-            if(hour<10){hour="0"+hour;}
-            if(min<10){min="0"+min;}
-            if(sec<10){sec="0"+sec;}
+                $(".time").fadeIn();
+                document.getElementById("title"+(i+1)).innerHTML = " 경매 마감까지";
+                sec =parseInt(et - nt) / 1000;
+                day  = parseInt(sec/60/60/24);
+                sec = (sec - (day * 60 * 60 * 24));
+                hour = parseInt(sec/60/60);
+                sec = (sec - (hour*60*60));
+                min = parseInt(sec/60);
+                sec = parseInt(sec-(min*60));
+                if(hour<10){hour="0"+hour;}
+                if(min<10){min="0"+min;}
+                if(sec<10){sec="0"+sec;}
 
-            document.getElementById("days"+(i+1)).innerHTML = day+"일";
-            document.getElementById("hours"+(i+1)).innerHTML = hour+"시";
-            document.getElementById("minutes"+(i+1)).innerHTML = min+"분";
-            document.getElementById("seconds"+(i+1)).innerHTML = sec+"초";
-
-            }
-            }
+                document.getElementById("days"+(i+1)).innerHTML = day+"일";
+                document.getElementById("hours"+(i+1)).innerHTML = hour+"시";
+                document.getElementById("minutes"+(i+1)).innerHTML = min+"분";
+                document.getElementById("seconds"+(i+1)).innerHTML = sec+"초";
 
             }
-            setInterval(remaindTime,1000);
+        }
+    }
+    setInterval(remaindTime,1000);
 </script>
 
 </body>

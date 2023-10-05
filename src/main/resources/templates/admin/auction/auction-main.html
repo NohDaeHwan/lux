@@ -35,8 +35,8 @@
                                 <div class="col-sm-10">
                                     <select class="form-select" name="auctionState">
                                         <option value="" selected>전체</option>
-                                        <option th:each="state : ${stateList}" th:if="${state.stateName().contains('경매')}"
-                                                th:value="${state.stateStep()}" th:text="${state.stateStep}">example</option>
+<!--                                        <option th:each="state : ${stateList}" th:if="${state.stateName().contains('경매')}"-->
+<!--                                                th:value="${state.stateStep()}" th:text="${state.stateStep}">example</option>-->
                                     </select>
                                 </div>
                             </div>
@@ -62,7 +62,7 @@
         <nav style="--bs-breadcrumb-divider: '|';">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item active">검색결과</li>
-                <li class="breadcrumb-item active" th:text="'('+${auctionList.totalElements}+') 건'">(3) 건</li>
+                <li class="breadcrumb-item active" th:text="'('+${aucList.totalElements}+') 건'">(3) 건</li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
@@ -90,14 +90,14 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="auctionlist : ${auctionList}">
-                                <th scope="row"><a th:href="@{|/admin/auction/${auctionlist.id}/|}" th:text="${auctionlist.id}">user1@mail.com</a></th>
-                                <td th:text="${auctionlist.productResponse.productName}">Brandon Jacob</td>
-                                <td th:text="${#numbers.formatInteger(auctionlist.presentPrice,3,'COMMA')}+'원'">dfd</td>
-                                <td th:text="${#numbers.formatInteger(auctionlist.startPrice,3,'COMMA')}+'원'">Designer</td>
-                                <td th:text="${#numbers.formatInteger(auctionlist.closingPrice,3,'COMMA')}+'원'">28</td>
-                                <td th:text="${auctionlist.stateStep}">28</td>
-                                <td th:text="${#temporals.format(auctionlist.auctionStartDate,'yyyy-MM-dd HH:mm')}">28</td>
+                            <tr th:each="auc : ${aucList}">
+                                <th scope="row"><a th:href="@{|/admin/auction/${auc.id}/|}" th:text="${auc.id}">user1@mail.com</a></th>
+                                <td th:text="${auc.prod.prodNm}">Brandon Jacob</td>
+                                <td th:text="${#numbers.formatInteger(auc.presentPrice,3,'COMMA')}+'원'">dfd</td>
+                                <td th:text="${#numbers.formatInteger(auc.startPrice,3,'COMMA')}+'원'">Designer</td>
+                                <td th:text="${#numbers.formatInteger(auc.endPrice,3,'COMMA')}+'원'">28</td>
+                                <td th:text="${auc.aucState}">28</td>
+                                <td th:text="${#temporals.format(auc.aucStartDate,'yyyy-MM-dd HH:mm')}">28</td>
                             </tr>
                             </tbody>
                         </table>
@@ -115,23 +115,23 @@
     <nav id="pagination" aria-label="Page navigation example">
         <ul class="pagination">
             <li class="page-item">
-                <a class="page-link" th:href="@{/admin/auction(page=${auctionList.number - 1}, sort=(${param.sort} != null ? ${param.sort} : '') + (${auctionList.sort.getOrderFor('param.sort')} != null ? (${auctionList.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
-                      query=${param.query})}" aria-label="Previous" th:class="'page-link' + (${auctionList.number} <= 0 ? ' disabled' : '')">
+                <a class="page-link" th:href="@{/templates/admin/auction(page=${aucList.number - 1}, sort=(${param.sort} != null ? ${param.sort} : '') + (${aucList.sort.getOrderFor('param.sort')} != null ? (${aucList.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
+                      query=${param.query})}" aria-label="Previous" th:class="'page-link' + (${aucList.number} <= 0 ? ' disabled' : '')">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
             <li class="page-item" th:each="pageNumber : ${paginationBarNumbers}">
                 <a th:text="${pageNumber + 1}"
-                   th:href="@{/admin/auction(page=${pageNumber},
-                          sort=(${param.sort} != null ? ${param.sort} : '') + (${auctionList.sort.getOrderFor('param.sort')} != null ? (${auctionList.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
+                   th:href="@{/templates/admin/auction(page=${pageNumber},
+                          sort=(${param.sort} != null ? ${param.sort} : '') + (${aucList.sort.getOrderFor('param.sort')} != null ? (${aucList.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
                           query=${param.query}
                       )}"
-                   th:class="'page-link' + (${pageNumber} == ${auctionList.number} <= 0 ? ' disabled' : '')">
+                   th:class="'page-link' + (${pageNumber} == ${aucList.number} <= 0 ? ' disabled' : '')">
                 </a>
             </li>
             <li class="page-item">
-                <a class="page-link" th:href="@{/admin/auction(page=${auctionList.number + 1}, sort=(${param.sort} != null ? ${param.sort} : '') + (${auctionList.sort.getOrderFor('param.sort')} != null ? (${auctionList.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
-                      query=${param.query})}" aria-label="Next" th:class="'page-link' + (${auctionList.number} >= ${auctionList.totalPages - 1} ? ' disabled' : '')">
+                <a class="page-link" th:href="@{/templates/admin/auction(page=${aucList.number + 1}, sort=(${param.sort} != null ? ${param.sort} : '') + (${aucList.sort.getOrderFor('param.sort')} != null ? (${aucList.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
+                      query=${param.query})}" aria-label="Next" th:class="'page-link' + (${aucList.number} >= ${aucList.totalPages - 1} ? ' disabled' : '')">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>

@@ -31,7 +31,7 @@ public class ProductService {
 
     @Transactional(readOnly = true)
     public List<ProductDto> productFind(String query) {
-        return productRepository.findByQuery(query, PageRequest.of(0, 10)).stream()
+        return productRepository.findByQuery(query).stream()
                 .map(productMapper::toDtoCustom).limit(8).toList();
     }
 
@@ -44,8 +44,8 @@ public class ProductService {
     @Transactional(readOnly = true)
     public List<ProductDto> catesearch(Long mcategoryId,String productColor, String productBrand, String productGender, String productSize
                                              ,String productGrade, String maxPrice, String minPrice, String query) {
-        return productRepository.searchProductBy(mcategoryId,productBrand,productColor,productGender,productSize,productGrade,Integer.parseInt(maxPrice),Integer.parseInt(minPrice),query).stream()
-                .map(productMapper::toDtoCustom).toList();
+        return productRepository.findByCateQuery(mcategoryId,productBrand,productColor,productGender,productSize,productGrade,
+                        Long.parseLong(maxPrice),Long.parseLong(minPrice),query).stream().map(productMapper::toDtoCustom).toList();
     }
 
     public List<ProductDto> findByState6AndRecent4List() {

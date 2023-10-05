@@ -49,17 +49,18 @@ public class ProductOrderService {
     }
 
     @Transactional
-    public void createOrder(Principal principal, Long productId, OrderCreateRequest request) {
-        Product product = productRepository.getReferenceById(productId);
+    public void createOrder(Principal principal, OrderCreateRequest request) {
+        Product product = productRepository.getReferenceById(request.prodId());
         UserAccount userAccount = userAccountRepository.getReferenceById(principal.id());
-        Long payment = userAccount.getPoint()- request.payment();
+        Long payment = userAccount.getUserPoint()- request.payment();
 
         product.setProdState(ProductState.COMPLETE);
-        userAccount.setPoint(payment);
+        userAccount.setUserPoint(payment);
         productOrderRepository.save(ProductOrder.builder()
                         .name(request.name())
                         .phoneNumber(request.phoneNumber())
-                        .address(request.address())
+                        .zoneCode(request.zoneCode())
+                        .address(request.addr())
                         .payment(request.payment())
                         .requestedTerm(request.requestTerm())
                         .orderState(OrderState.PAYMENT)
@@ -74,7 +75,7 @@ public class ProductOrderService {
                         .prodId(product.getId())
                         .prodNm(product.getProdNm())
                         .prodState(ProductState.COMPLETE)
-                        .orderPrice(payment)
+                        .orderPrice(request.payment())
                         .prodSellType(product.getProdSellType())
                         .build());
 

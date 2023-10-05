@@ -52,8 +52,8 @@ public class Auction extends AuditingFields {
 	private int biddingCnt; // 입찰수
 
 	@Setter
-	@Column(length = 100)
-	private String bidder; // 입찰자
+	@Column(name="user_id")
+	private Long userId; // 입찰자
 
 	@Setter
 	@OneToOne(fetch = FetchType.EAGER)

@@ -7,19 +7,19 @@
 
 <aside id="sidebar" class="mysidebar">
     <div id="accordion" class="sidebar-nav">
-        <div class="nav-item" th:each="bcategory : ${categoryList}">
-            <div class="nav-link collapsed flex" style="justify-content: space-between;" th:id="'heading'+${bcategoryStat.count}" data-toggle="collapse"
-                 th:data-target="'#collapse'+${bcategoryStat.count}" aria-expanded="true" th:aria-controls="'collapse'+${bcategoryStat.count}">
-            <h6 class="mb-0 font-weight-bold" th:text="${bcategory.categoryBName}">
+        <div class="nav-item" th:each="bCate : ${cateList}">
+            <div class="nav-link collapsed flex" style="justify-content: space-between;" th:id="'heading'+${bCateStat.count}" data-toggle="collapse"
+                 th:data-target="'#collapse'+${bCateStat.count}" aria-expanded="true" th:aria-controls="'collapse'+${bCateStat.count}">
+            <h6 class="mb-0 font-weight-bold" th:text="${bCate.cateBNm}">
                 상의
             </h6>
             <h6 class="mb-0 font-weight-bold">+</h6>
           </div>
-          <div th:id="'collapse'+${bcategoryStat.count}" class="collapse"
-               th:aria-labelledby="'heading'+${bcategoryStat.count}" data-parent="#accordion">
-            <div class="nav-link collapsed" th:each="mcategory : ${bcategory.categoryMDtos}">
+          <div th:id="'collapse'+${bCateStat.count}" class="collapse"
+               th:aria-labelledby="'heading'+${bCateStat.count}" data-parent="#accordion">
+            <div class="nav-link collapsed" th:each="mCate : ${bCate.cateMList}">
                 <h6 class="mb-0" style="font-size:15px;">
-                    <a th:href="@{|/searchcate/${mcategory.id}|}" class="text-black-50" th:text="${mcategory.categoryMName()}">짧은 상의</a>
+                    <a th:href="@{|/searchcate/${mCate.id}|}" class="text-black-50" th:text="${mCate.cateMNm}">짧은 상의</a>
                 </h6>
             </div>
           </div>
@@ -39,7 +39,7 @@
                             <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
                         </div>
                         <div class="carousel-inner">
-                            <div data-bs-interval="2000" th:each="img : ${auction.productResponse.imageList}" th:class="${'carousel-item' + (imgStat.count == 1 ? ' active' : '')}">
+                            <div data-bs-interval="2000" th:each="img : ${auc.prod.images}" th:class="${'carousel-item' + (imgStat.count == 1 ? ' active' : '')}">
                                 <img th:src="${img.filePath()}" class="d-block w-100" alt="...">
                                 <div class="carousel-caption d-none d-md-block">
                                 </div>
@@ -62,38 +62,38 @@
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">상품명</label>
                                 <div class="col-sm-10" style="padding: 7px 12px;">
-                                    <div class="col-sm-10" style="font-weight: 300;" th:text="${auction.productResponse.productName}" th:value="${auction.productResponse.productName}" id="FUN" value="a">Fresh Blueberry Antibacterial Foaming Hand Wash</div>
+                                    <div class="col-sm-10" style="font-weight: 300;" th:text="${auc.prod.prodNm}" th:value="${auc.prod.prodNm}" id="FUN" value="a">Fresh Blueberry Antibacterial Foaming Hand Wash</div>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">브랜드</label>
                                 <div class="col-sm-10" style="padding: 7px 12px;">
-                                    <div class="col-sm-10" style="font-weight: 300;" th:text="${auction.productResponse.productBrandName}" id="LOVE">끌로엦</div>
+                                    <div class="col-sm-10" style="font-weight: 300;" th:text="${auc.prod.prodBrand}" id="LOVE">끌로엦</div>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">카테고리</label>
                                 <div class="col-sm-10" style="padding: 7px 12px;">
-                                    <div class="col-sm-10" style="font-weight: 300;" th:text="${auction.productResponse.categoryBName} + ' > ' + ${auction.productResponse.categoryMName}">악세서리 > 넥타이</div>
+                                    <div class="col-sm-10" style="font-weight: 300;" th:text="${auc.prod.prodCateB} + ' > ' + ${auc.prod.prodCateM}">악세서리 > 넥타이</div>
                                 </div>
                             </div>
                             <div class="bg-light">
                                 <div class="row mb-3">
                                     <label class="col-sm-2 col-form-label">시작가격</label>
                                     <div class="col-sm-10" style="padding: 7px 12px;">
-                                        <div class="col-sm-10" style="font-weight: 300;" th:text="${#numbers.formatInteger(auction.startPrice,3,'COMMA')} +'원'">1,996,460원</div>
+                                        <div class="col-sm-10" style="font-weight: 300;" th:text="${#numbers.formatInteger(auc.startPrice,3,'COMMA')} +'원'">1,996,460원</div>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <label class="col-sm-2 col-form-label">현재가격</label>
                                     <div class="col-sm-10" style="padding: 7px 12px;">
-                                        <div class="col-sm-10" style="font-weight: 300;" id="presentPrice" th:text="${#numbers.formatInteger(auction.presentPrice,3,'COMMA')} +'원'">1,996,460원</div>
+                                        <div class="col-sm-10" style="font-weight: 300;" id="presentPrice" th:text="${#numbers.formatInteger(auc.presentPrice,3,'COMMA')} +'원'">1,996,460원</div>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <label class="col-sm-2 col-form-label">경매 열린시간</label>
                                     <div class="col-sm-10" style="padding: 7px 12px;">
-                                        <div class="col-sm-10" style="font-weight: 300;" th:text="${#temporals.format(auction.auctionStartDate,'yyyy-MM-dd HH:mm:ss')}">몇날몇시몇분</div>
+                                        <div class="col-sm-10" style="font-weight: 300;" th:text="${#temporals.format(auc.aucStartDate,'yyyy-MM-dd HH:mm:ss')}">몇날몇시몇분</div>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
@@ -110,13 +110,13 @@
                                 <div class="row mb-3">
                                     <label class="col-sm-2 col-form-label" style="color:red;">마지막 입찰자</label>
                                     <div class="col-sm-10" style="padding: 7px 12px;">
-                                        <div class="col-sm-10" style="font-weight: 300;" id="bidder" th:text="${auction.bidder == null} ? '입찰이 없음' : ${#strings.replace(auction.bidder,#strings.substring(auction.bidder,0,3),'***')}">입찰자</div>
+                                        <div class="col-sm-10" style="font-weight: 300;" id="bidder" th:text="${auc.bidder == null} ? '입찰이 없음' : ${#strings.replace(auc.bidder,#strings.substring(auc.bidder,0,3),'***')}">입찰자</div>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <label class="col-sm-2 col-form-label">참여인원</label>
                                     <div class="col-sm-10" style="padding: 7px 12px;">
-                                        <div class="col-sm-10" style="font-weight: 300;" th:text="${auctionLogList.size}+'명'">5명</div>
+                                        <div class="col-sm-10" style="font-weight: 300;" th:text="${aucLogList.size}+'명'">5명</div>
                                     </div>
                                 </di>
                             </div>
@@ -129,10 +129,10 @@
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label"></label>
                                 <div class="col-sm-10">
-                                    <button th:if="${auction.stateStep == '경매중'}" class="btn btn-info w-100 button-send">
+                                    <button th:if="${auc.aucState == 'SELL'}" class="btn btn-info w-100 button-send">
                                         입찰하기
                                     </button>
-                                    <button th:unless="${auction.stateStep == '경매중'}" disabled class="btn btn-info w-100 button-send">
+                                    <button th:unless="${auc.aucState == 'SELL'}" disabled class="btn btn-info w-100 button-send">
                                         경매 종료
                                     </button>
                                 </div>
@@ -141,6 +141,8 @@
                         </div>
                     </div>
                 </div>
+
+            </div>
 
             </div>
         </section>
@@ -180,14 +182,14 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="auctionLog : ${auctionLogList}">
+                        <tr th:each="aucLog : ${aucLogList}">
                             <th scope="row">
-                                <h6 style="vertical-align: middle; color:blue; font-weight: 300;" th:text="${#temporals.format(auctionLog.createdAt,'yyyy-MM-dd HH:mm:ss')}">2022-11-17 15:27:45</h6>
+                                <h6 style="vertical-align: middle; color:blue; font-weight: 300;" th:text="${#temporals.format(aucLog.createdAt,'yyyy-MM-dd HH:mm:ss')}">2022-11-17 15:27:45</h6>
                             </th>
-                            <td style="vertical-align: middle;color:blue; font-weight: 300;" th:text="${#strings.replace(auctionLog.bidder,#strings.substring(auctionLog.bidder,0,3),'***')}"><h6>***n</h6></td>
-                            <td style="vertical-align: middle;color:red; font-weight: 300;" th:if="${auctionLog.presentPrice == auction.closingPrice}"><h6>낙찰자</h6></td>
-                            <td style="vertical-align: middle;color:red; font-weight: 300;" th:unless="${auctionLog.presentPrice == auction.closingPrice}"><h6>입찰</h6></td>
-                            <td style="vertical-align: middle;color:blue; font-weight: 300;" th:text="${#numbers.formatInteger(auctionLog.presentPrice,3,'COMMA')}+'원'"><h6>100,000P</h6></td>
+                            <td style="vertical-align: middle;color:blue; font-weight: 300;" th:text="${#strings.replace(aucLog.bidder,#strings.substring(aucLog.bidder,0,3),'***')}"><h6>***n</h6></td>
+                            <td style="vertical-align: middle;color:red; font-weight: 300;" th:if="${aucLog.presentPrice == auc.endPrice}"><h6>낙찰자</h6></td>
+                            <td style="vertical-align: middle;color:red; font-weight: 300;" th:unless="${aucLog.presentPrice == auc.endPrice}"><h6>입찰</h6></td>
+                            <td style="vertical-align: middle;color:blue; font-weight: 300;" th:text="${#numbers.formatInteger(aucLog.presentPrice,3,'COMMA')}+'원'"><h6>100,000P</h6></td>
                         </tr>
                         </tbody>
                     </table>
@@ -206,8 +208,8 @@
                     <div class="gy-4 mb-5 bg-light" style="display:flex;justify-content: center">
                         <div>
                             <div class="mt-3 mb-3 text-center"><strong>상품설명💁🏻‍️</strong></div>
-                            <div class="mb-3 text-center" th:text="${auction.productResponse.productContent}">상품설명입니다~~</div>
-                            <div class="mb-3" th:each="img:${auction.productResponse.imageList}" style="display:flex;justify-content: center"> <img src="#" th:src="${img.filePath}"></div>
+                            <div class="mb-3 text-center" th:text="${auc.prod.prodContent}">상품설명입니다~~</div>
+                            <div class="mb-3" th:each="img:${auc.prod.images}" style="display:flex;justify-content: center"> <img src="#" th:src="${img.filePath}"></div>
                         </div>
                     </div>
                     <!--문의사항 -->
@@ -540,18 +542,18 @@
   <!-- end info_section -->
 
   <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-  <script type="text/javascript" src="/assets/lib/js/bootstrap.js"></script>
-  <script src="/assets/js/frontmain.js"></script>
+  <script type="text/javascript" src="/static/assets/lib/js/bootstrap.js"></script>
+  <script type="text/javascript" src="/static/assets/js/frontmain.js"></script>
 
 <script th:inline="javascript">
 
     let existingEntries = JSON.parse(sessionStorage.getItem("allEntries"));
     if(existingEntries == null) existingEntries = [];
-    let image =[[${auction.productResponse.imageList}]];
-    let id=[[${auction.productResponse.id}]];
-    let name = [[${auction.productResponse.productBrandName}]];
+    let image =[[${auc.prod.images}]];
+    let id=[[${auc.prod.id}]];
+    let name = [[${auc.prod.prodBrand}]];
     let date = new Date();
-    let state= [[${auction.productResponse.productSellType}]];
+    let state= [[${auc.prod.prodSellType}]];
     let entry = {
         "image":image[0]["filePath"],
         "id":id,
@@ -572,8 +574,8 @@
 
         const username = [[${#authentication.principal.userName}]];
         const userPoint = [[${#authentication.principal.point}]];
-        const auctionId = [[${auction.id}]];
-        let presentPrice = [[${auction.presentPrice}]];
+        const auctionId = [[${auc.id}]];
+        let presentPrice = [[${auc.presentPrice}]];
 
         $("#disconn").on("click", (e) => {
             disconnect();
@@ -620,14 +622,14 @@
         }
 
         function onMessage(msg) {
-            var data = msg.data;
+            let data = msg.data;
             //데이터를 보낸 사람
-            var sessionId = null;
-            var message = null;
-            var arr = data.split(":");
+            let sessionId = null;
+            let message = null;
+            let arr = data.split(":");
 
             //현재 세션에 로그인 한 사람
-            var cur_session = username;
+            let cur_session = username;
 
             sessionId = arr[1];
             message = arr[2];
@@ -636,43 +638,32 @@
 
             document.getElementById("presentPrice").innerHTML = message+" 원";
             document.getElementById("bidder").innerHTML = sessionId;
-
-            //로그인 한 클라이언트와 타 클라이언트를 분류하기 위함
-            /*if(sessionId == cur_session){
-                var str = "<div class='col-6'>";
-                str += "<div class='alert alert-secondary'>";
-                str += "<b>" + sessionId + " : " + message + "</b>";
-                str += "</div></div>";
-                $("#msgArea").append(str);
-            }
-            else{
-                var str = "<div class='col-6'>";
-                str += "<div class='alert alert-warning'>";
-                str += "<b>" + sessionId + " : " + message + "</b>";
-                str += "</div></div>";
-                $("#msgArea").append(str);
-            }*/
         }
 
         function remaindTime() {
 
             //현재시간
-            var now = new Date();
+            let now = new Date();
 
-                var open = new Date([[${auction.auctionStartDate}]]);
-                //종료시간
-                var end = new Date([[${auction.auctionClosingDate}]]);
+            let open = new Date([[${auc.aucStartDate}]]);
+            //종료시간
+            let end = new Date([[${auc.aucEndDate}]]);
 
-                var statestep=[[${auction.stateStep}]];
+            let aucState = [[${auc.aucState}]];
 
-                var nt = now.getTime();
-                var ot = open.getTime();
-                var et = end.getTime();
+            let nt = now.getTime();
+            let ot = open.getTime();
+            let et = end.getTime();
 
-                if(nt<ot){
+            console.log(aucState);
+            console.log(nt);
+            console.log(ot);
+            console.log(et);
+
+                if (nt < ot) {
                     //경매 전
                     // $(".time").fadeIn();
-                    document.getElementById("auction-title").innerHTML="경매 시작까지";
+                    document.getElementById("auction-title").innerHTML = "경매 시작까지";
                     sec =parseInt(ot - nt) / 1000;
                     day  = parseInt(sec/60/60/24);
                     sec = (sec - (day * 60 * 60 * 24));
@@ -690,17 +681,17 @@
                     document.getElementById("minutes").innerHTML = min+"분";
                     document.getElementById("seconds").innerHTML = sec+"초";
 
-                } else if(nt>et){
+                } else if (nt > et) {
                     //후 경매 종료  최종가격,경매상태
 
-                    if (statestep != "경매완료") {
+                    if (aucState !== "PAY_WAITING") {
                         $.ajax({
                             type: "POST",
-                            url: "/auction/after/" + auctionId + "/11",
+                            url: "/auction/after/" + auctionId + "/" + aucState,
                             contentType: "application/json; charset=utf-8",
                             dataType: "json"
                         }).done(function (res) {
-                            location.href = "/auction/detail/" + auctionId;
+                            location.href = "/auction/" + auctionId;
                             console.log("완료");
                         }).fail(function (error) {
                             console.log("function error : " + error);
@@ -713,17 +704,17 @@
                     document.querySelector(".auction-title").innerHTML="경매 종료";
                     document.getElementById("auction-title").innerHTML="경매 종료";
 
-                }else {
+                } else {
                     //중  경매 상태를 경매전 -> 경매 중으로 변경
 
-                    if (statestep !="경매중") {
+                    if (aucState !== "SELL") {
                         $.ajax({
                             type: "POST",
-                            url: "/auction/present/" + auctionId + "/10",
+                            url: "/auction/present/" + auctionId + "/" + aucState,
                             contentType: "application/json; charset=utf-8",
                             dataType: "json"
                         }).done(function (res) {
-                            location.href = "/auction/detail/" + auctionId;
+                            location.href = "/auction/" + auctionId;
                             console.log("완료");
                         }).fail(function (error) {
                             console.log("function error : " + error);
@@ -731,7 +722,7 @@
                     }
 
                     // $(".time").fadeIn();
-                    document.getElementById("auction-title").innerHTML="경매 종료까지";
+                    document.getElementById("auction-title").innerHTML = "경매 종료까지";
                     sec =parseInt(et - nt) / 1000;
                     day  = parseInt(sec/60/60/24);
                     sec = (sec - (day * 60 * 60 * 24));
@@ -748,14 +739,9 @@
                     document.getElementById("hours").innerHTML = hour+"시";
                     document.getElementById("minutes").innerHTML = min+"분";
                     document.getElementById("seconds").innerHTML = sec+"초";
-
             }
-
         }
-
-
         setInterval(remaindTime,1000);
-
     })
 
     //타이머

@@ -40,7 +40,7 @@ public record Principal(
                 entity.getAge(),
                 entity.getGender(),
                 entity.getUserGrade(),
-                entity.getPoint(),
+                entity.getUserPoint(),
                 entity.getRole(),
                 entity.getMemo()
         );

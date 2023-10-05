@@ -19,7 +19,6 @@ public class AppraisalResult extends AuditingFields {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	// 관리자 컬럼
 	@Setter
 	@Column(name="app_grade")
 	@Enumerated(EnumType.STRING)

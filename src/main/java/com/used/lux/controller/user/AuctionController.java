@@ -44,52 +44,51 @@ public class AuctionController {
 
     @GetMapping
     public String auctionList(@PageableDefault(size = 30) Pageable pageable, ModelMap mm) {
-        Page<AuctionDto> auctions = auctionService.auctionListFind(pageable);
-        List<CategoryBDto> categoryList = categoryBService.categoryList();
+        Page<AuctionDto> aucList = auctionService.auctionListFind(pageable);
+        List<CategoryBDto> cateList = categoryBService.categoryList();
         List<BrandDto> brandList = brandService.brandList();
         List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(),
-                auctions.getTotalPages());
+                aucList.getTotalPages());
 
         mm.addAttribute("paginationBarNumbers", barNumbers);
-        mm.addAttribute("auctions", auctions);
-        mm.addAttribute("categoryList", categoryList);
+        mm.addAttribute("aucList", aucList);
+        mm.addAttribute("cateList", cateList);
         mm.addAttribute("brandList", brandList);
 
-        return "/front/auction";
+        return "/front/auction/auction-main";
     }
 
     @ResponseBody
-    @PostMapping("/present/{auctionId}/{stateId}")
-    public ResponseEntity<Integer> presentAuction(@PathVariable Long auctionId, @PathVariable Long stateId) {
-        auctionService.presentTimer(auctionId, stateId);
+    @PostMapping("/present/{auctionId}/{aucState}")
+    public ResponseEntity<Integer> presentAuction(@PathVariable Long auctionId, @PathVariable String aucState) {
+        auctionService.presentTimer(auctionId, aucState);
         return ResponseEntity.status(HttpStatus.OK).body(1);
     }
 
     @ResponseBody
-    @PostMapping("/after/{auctionId}/{stateId}")
-    public ResponseEntity<Integer> afterAuction(@PathVariable Long auctionId, @PathVariable Long stateId) {
-        auctionService.afterTimer(auctionId, stateId);
+    @PostMapping("/after/{auctionId}/{aucState}")
+    public ResponseEntity<Integer> afterAuction(@PathVariable Long auctionId, @PathVariable String aucState) {
+        auctionService.afterTimer(auctionId, aucState);
         return ResponseEntity.status(HttpStatus.OK).body(1);
     }
 
     // 경매 상세 페이지
-    @GetMapping("/detail/{auctionId}")
+    @GetMapping("/{auctionId}")
     public String auctionDetail(@PathVariable Long auctionId,
                                 @AuthenticationPrincipal Principal principal, ModelMap mm
-                                ) {
-
-        List<CategoryBDto> categoryList = categoryBService.categoryList();
+    ) {
+        List<CategoryBDto> cateList = categoryBService.categoryList();
         List<UserGradeDto> gradeList = userGradeService.getGradeList();
-        AuctionDto auction = auctionService.auctionFind(auctionId);
-        List<AuctionLogDto> auctionLogList = auctionLogService.auctionLogList(auctionId);
+        AuctionDto auc = auctionService.auctionFind(auctionId);
+        List<AuctionLogDto> aucLogList = auctionLogService.auctionLogList(auctionId);
 
-        mm.addAttribute("principal",principal);
-        mm.addAttribute("categoryList", categoryList);
+        mm.addAttribute("principal", principal);
+        mm.addAttribute("cateList", cateList);
         mm.addAttribute("gradeList", gradeList);
-        mm.addAttribute("auction",auction);
-        mm.addAttribute("auctionLogList", auctionLogList);
+        mm.addAttribute("auc", auc);
+        mm.addAttribute("aucLogList", aucLogList);
 
-        return "/front/auction-detail";
+        return "/front/auction/auction-detail";
     }
 
 }
