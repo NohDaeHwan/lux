@@ -29,8 +29,9 @@
                                 <div class="col-sm-10">
                                     <select class="form-select" name="gender">
                                         <option value="" selected>전체</option>
-                                        <option value="Male">Male</option>
-                                        <option value="FeMale">Female</option>
+                                        <option value="COMMON" selected>공용</option>
+                                        <option value="Male">남자</option>
+                                        <option value="FeMale">여자</option>
                                     </select>
                                 </div>
                             </div>
@@ -48,7 +49,7 @@
                                 <div class="col-sm-10">
                                     <select class="form-select" name="grade">
                                         <option value="" selected>전체</option>
-                                        <option th:each="list : ${userGradeList}" th:value="${list.gradeName()}" th:text="${list.gradeName()}">example</option>
+                                        <option th:each="list : ${userGradeList}" th:value="${list.gradeName}" th:text="${list.gradeName}">example</option>
                                     </select>
                                 </div>
                             </div>
@@ -122,14 +123,14 @@
     <nav id="pagination" aria-label="Page navigation example">
         <ul class="pagination">
             <li class="page-item">
-                <a class="page-link" th:href="@{/admin/user(page=${userList.number - 1}, sort=(${param.sort} != null ? ${param.sort} : '') + (${userList.sort.getOrderFor('param.sort')} != null ? (${userList.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
+                <a class="page-link" th:href="@{/templates/admin/user(page=${userList.number - 1}, sort=(${param.sort} != null ? ${param.sort} : '') + (${userList.sort.getOrderFor('param.sort')} != null ? (${userList.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
                       query=${param.query})}" aria-label="Previous" th:class="'page-link' + (${userList.number} <= 0 ? ' disabled' : '')">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
             <li class="page-item" th:each="pageNumber : ${paginationBarNumbers}">
                 <a th:text="${pageNumber + 1}"
-                   th:href="@{/admin/user(page=${pageNumber},
+                   th:href="@{/templates/admin/user(page=${pageNumber},
                           sort=(${param.sort} != null ? ${param.sort} : '') + (${userList.sort.getOrderFor('param.sort')} != null ? (${userList.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
                           query=${param.query}
                       )}"
@@ -137,7 +138,7 @@
                 </a>
             </li>
             <li class="page-item">
-                <a class="page-link" th:href="@{/admin/user(page=${userList.number + 1}, sort=(${param.sort} != null ? ${param.sort} : '') + (${userList.sort.getOrderFor('param.sort')} != null ? (${userList.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
+                <a class="page-link" th:href="@{/templates/admin/user(page=${userList.number + 1}, sort=(${param.sort} != null ? ${param.sort} : '') + (${userList.sort.getOrderFor('param.sort')} != null ? (${userList.sort.getOrderFor('param.sort').direction.name} != 'DESC' ? ',desc' : '') : ''),
                       query=${param.query})}" aria-label="Next" th:class="'page-link' + (${userList.number} >= ${userList.totalPages - 1} ? ' disabled' : '')">
                     <span aria-hidden="true">&raquo;</span>
                 </a>

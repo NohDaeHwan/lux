@@ -44,10 +44,10 @@
                             <div class="tab-pane fade show active profile-overview" id="profile-overview">
                                 <h5 class="card-title">특이사항</h5>
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label " th:text="${userDetail.userAccountDto.memo}"></div>
+                                    <div class="col-lg-3 col-md-4 label " th:text="${userDetail.user.memo}"></div>
                                     <div class="col-lg-9 col-md-8">
                                         <button type="submit" class="btn btn-primary" style="float: right;">
-                                        <a th:href="@{|/admin/user/${userDetail.userAccountDto.id}/memo|}" stlye="color:#ffffff !important">
+                                        <a th:href="@{|/admin/user/${userDetail.user.id}/memo|}" stlye="color:#ffffff !important">
                                             특이사항 등록
                                         </a>
                                          </button>
@@ -57,31 +57,31 @@
 
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label ">이름</div>
-                                    <div class="col-lg-9 col-md-8" th:text="${userDetail.userAccountDto.userName}"> </div>
+                                    <div class="col-lg-9 col-md-8" th:text="${userDetail.user.userName}"> </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">나이</div>
-                                    <div class="col-lg-9 col-md-8" th:text="${userDetail.userAccountDto.age()}"></div>
+                                    <div class="col-lg-9 col-md-8" th:text="${userDetail.user.age}"></div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">성별</div>
-                                    <div class="col-lg-9 col-md-8" th:text="${userDetail.userAccountDto.gender()}"></div>
+                                    <div class="col-lg-9 col-md-8" th:text="${userDetail.user.gender}"></div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">연락처</div>
-                                    <div class="col-lg-9 col-md-8" th:text="${userDetail.userAccountDto.phoneNumber()}"></div>
+                                    <div class="col-lg-9 col-md-8" th:text="${userDetail.user.phoneNumber}"></div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">이메일</div>
-                                    <div class="col-lg-9 col-md-8" th:text="${userDetail.userAccountDto.userEmail()}"></div>
+                                    <div class="col-lg-9 col-md-8" th:text="${userDetail.user.userEmail()}"></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">현재등급</div>
-                                    <div class="col-lg-9 col-md-8" th:text="${userDetail.userAccountDto.userGrade().getGradeName()}"></div>
+                                    <div class="col-lg-9 col-md-8" th:text="${userDetail.user.userGrade().getGradeName()}"></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">잔여포인트</div>
@@ -102,6 +102,7 @@
     <div>
         <div class="col-lg-12">
 
+            <!--포인트 사용내역 -->
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">포인트 사용내역(productlog)</h5>
@@ -118,7 +119,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="point : ${userDetail.userAccountLogDtos()}">
+                        <tr th:each="point : ${userDetail.userLogList}">
                             <td scope="row">
                                 <h6 th:if="${point.usageDetail} == '충전'" style="vertical-align: middle; color:blue; font-weight: 300;">충전</h6>
                                 <h6 th:if="${point.usageDetail} != '충전'" style="vertical-align: middle; color:red; font-weight: 300;">차감</h6>
@@ -149,6 +150,7 @@
                     </div>
                 </div>
             </div>
+
             <!--검수내역 -->
             <div class="card">
                 <div class="card-body">
@@ -165,14 +167,14 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="userapp : ${userDetail.appraisalRequestLogDtos}">
-                            <th scope="row"><a th:href="@{|/admin/appraise/${userapp.appraisalId}/new|}" th:text="${userapp.appraisalProductName}"></a></th>
-                            <td th:if="${userapp.appraisalState.stateStep} == '검수전'">-</td>
-                            <td th:if="${userapp.appraisalState.stateStep} != '검수전'" th:text="${userapp.appraisalGrade}"></td>
-                            <td th:if="${userapp.appraisalState.stateStep} == '검수전'">-</td>
-                            <td th:if="(${userapp.appraisalState.stateStep} != '검수전') and (${userapp.appraisalPrice} >= 1000)" th:text="${#numbers.formatInteger(userapp.appraisalPrice,3,'COMMA')} + '원'"></td>
-                            <td th:if="(${userapp.appraisalState.stateStep} != '검수전') and (${userapp.appraisalPrice} < 1000)" th:text="${userapp.appraisalPrice} + '원'"></td>
-                            <td th:text="${userapp.appraisalState.stateStep}"></td>
+                        <tr th:each="userapp : ${userDetail.appList}">
+                            <th scope="row"><a th:href="@{|/admin/appraise/${userapp.id}|}" th:text="${userapp.appProdNm}"></a></th>
+                            <td th:if="${userapp.appState} == 'BEFORE'">-</td>
+                            <td th:if="${userapp.appState} != 'BEFORE'" th:text="${userapp.appGrade}"></td>
+                            <td th:if="${userapp.appState} == 'BEFORE'">-</td>
+                            <td th:if="(${userapp.appState} != 'BEFORE') and (${userapp.appPrice} >= 1000)" th:text="${#numbers.formatInteger(userapp.appPrice,3,'COMMA')} + '원'"></td>
+                            <td th:if="(${userapp.appState} != 'BEFORE') and (${userapp.appPrice} < 1000)" th:text="${userapp.appPrice} + '원'"></td>
+                            <td th:text="${userapp.appState}"></td>
                             <td th:text="${#temporals.format(userapp.modifiedAt,'yyyy-MM-dd HH:mm:ss')}"></td>
                         </tr>
                         </tbody>
@@ -193,6 +195,8 @@
                     </div>
                 </div>
             </div>
+
+            <!--주문내역 -->
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">주문내역(productlog)</h5>
@@ -209,12 +213,12 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="userorder : ${userDetail.productOrderLogDtos}">
-                            <th scope="row"><a th:text="${userorder.userEmail}"></a></th>
-                            <td th:text="${userorder.productName}"></td>
-                            <td th:text="${#numbers.formatInteger(userorder.productPrice,3,'COMMA')} + '원'"></td>
-                            <td th:text="${userorder.productSellType}"></td>
-                            <td th:text="${userorder.productState.stateStep}"></td>
+                        <tr th:each="userorder : ${userDetail.prodOrderLogList}">
+                            <th scope="row"><a th:text="${userorder.userId}"></a></th>
+                            <td th:text="${userorder.prodNm}"></td>
+                            <td th:text="${#numbers.formatInteger(userorder.orderPrice,3,'COMMA')} + '원'"></td>
+                            <td th:text="${userorder.prodSellType}"></td>
+                            <td th:text="${userorder.prodState}"></td>
                             <td th:text="${#temporals.format(userorder.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
                         </tr>
                         </tbody>
@@ -251,10 +255,10 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="usercancel : ${userDetail.productOrderCancelDtos}">
-                            <th scope="row"><a th:text="${usercancel.userName}"></a></th>
-                            <td th:text="${usercancel.productName}"></td>
-                            <td th:text="${#numbers.formatInteger(usercancel.productPrice,3,'COMMA')} + '원'"></td>
+                        <tr th:each="usercancel : ${userDetail.prodOrderCancelList}">
+                            <th scope="row"><a th:text="${usercancel.userNm}"></a></th>
+                            <td th:text="${usercancel.prodNm}"></td>
+                            <td th:text="${#numbers.formatInteger(usercancel.prodPrice,3,'COMMA')} + '원'"></td>
                             <td th:text="${#temporals.format(usercancel.modifiedAt,'yyyy-MM-dd HH:mm:ss')}"></td>
                         </tr>
                         </tbody>
@@ -290,10 +294,10 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="auction : ${userDetail.auctionLogDtos()}">
-                            <th scope="row"><a th:href="@{|/admin/auction/${auction.id}/|}" th:text="${auction.productName()}"></a></th>
-                            <td th:text="${#numbers.formatInteger(auction.presentPrice,3,'COMMA')} + '원'"></td>
-                            <td th:text="${#temporals.format(auction.createdAt,'yyyy-MM-dd HH:mm:ss')}"></td>
+                        <tr th:each="auc : ${userDetail.aucLogList()}">
+                            <th scope="row"><a th:href="@{|/admin/auction/${auc.id}|}" th:text="${auc.prodNm}"></a></th>
+                            <td th:text="${#numbers.formatInteger(auc.presentPrice,3,'COMMA')} + '원'"></td>
+                            <td th:text="${#temporals.format(auc.createdAt,'yyyy-MM-dd HH:mm:ss')}"></td>
                         </tr>
                         </tbody>
 

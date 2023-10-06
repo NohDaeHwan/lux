@@ -35,7 +35,7 @@ public interface AuctionRepository extends JpaRepository<Auction, Long>, Auction
     @Query(nativeQuery = true,value = "select sum(end_price) FROM (SELECT * FROM auction WHERE auc_end_date >= :sD AND auc_end_date <= NOW()) AS au WHERE au.auc_state = 10; ")
     Long sumProfitByDate(@Param("sD") String sectionStartDate);
 
-    @Query(nativeQuery = true, value = "select * from auction where auc_state = 10 and auc_start_date < now() order by auc_start_date desc limit 4")
+    @Query(nativeQuery = true, value = "select * from auction where auc_state = 'SELL' and auc_start_date < now() order by auc_start_date desc limit 4")
     List<Auction> findByState10AndRecent4List();
 
     Auction findByProd_Id(Long productId);

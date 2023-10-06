@@ -3,10 +3,12 @@ package com.used.lux.service.admin;
 import com.used.lux.domain.constant.OrderState;
 import com.used.lux.domain.constant.ProductState;
 import com.used.lux.domain.order.ProductOrder;
+import com.used.lux.domain.order.ProductOrderCancel;
 import com.used.lux.domain.product.Product;
 import com.used.lux.domain.useraccount.UserAccount;
 import com.used.lux.dto.user.order.ProductOrderCancelDto;
 import com.used.lux.dto.user.order.ProductOrderDto;
+import com.used.lux.mapper.ProductOrderCancelMapper;
 import com.used.lux.mapper.ProductOrderMapper;
 import com.used.lux.repository.order.ProductOrderCancelRepository;
 import com.used.lux.repository.order.ProductOrderLogRepository;
@@ -32,6 +34,8 @@ public class AdOrderService {
     private final ProductOrderLogRepository productOrderLogRepository;
 
     private final ProductOrderCancelRepository productOrderCancelRepository;
+    private final ProductOrderCancelMapper prodOrderCancelMapper;
+
     private final ProductRepository productRepository;
     private final ProductLogRepository productLogRepository;
     private final UserAccountRepository userAccountRepository;
@@ -53,9 +57,12 @@ public class AdOrderService {
     }
 
     public ProductOrderCancelDto getOrderCancel(Long orderId) {
-        ProductOrderCancelDto productOrderCancelDto = ProductOrderCancelDto
-                .from(productOrderCancelRepository.findByOrderId(orderId));
-        return productOrderCancelDto;
+        ProductOrderCancel cancel = productOrderCancelRepository.findByOrderId(orderId);
+        return prodOrderCancelMapper.toDtoCustom(
+                cancel,
+                userAccountRepository.findById(cancel.getUserId()).get(),
+                productRepository.findById(cancel.getOrderId()).get()
+        );
     }
 
     public void updateCancel(Long orderId, OrderUpdateRequest orderUpdateRequest) {

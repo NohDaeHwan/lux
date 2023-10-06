@@ -2,6 +2,7 @@ package com.used.lux.service.user.product;
 
 import com.used.lux.domain.constant.AppraisalGrade;
 import com.used.lux.domain.constant.ProductState;
+import com.used.lux.domain.product.Product;
 import com.used.lux.dto.user.product.ProductDto;
 import com.used.lux.mapper.ProductMapper;
 import com.used.lux.repository.product.ProductRepository;
@@ -35,9 +36,13 @@ public class ProductService {
                 .map(productMapper::toDtoCustom).limit(8).toList();
     }
 
-
+    @Transactional
     public ProductDto productDetail(Long productId) {
-        return productMapper.toDtoCustom(productRepository.findById(productId).get());
+        Product product = productRepository.findById(productId).orElse(null);
+        assert product != null;
+        product.setProdViewCnt(product.getProdViewCnt()+1);
+        productRepository.save(product);
+        return productMapper.toDtoCustom(product);
     }
 
     //카테고리 중고 검색

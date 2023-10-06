@@ -19,6 +19,7 @@ import com.used.lux.repository.appraisal.AppraisalResultRepository;
 import com.used.lux.repository.auction.AuctionLogRepository;
 import com.used.lux.repository.order.ProductOrderCancelRepository;
 import com.used.lux.repository.order.ProductOrderLogRepository;
+import com.used.lux.repository.product.ProductRepository;
 import com.used.lux.repository.useraccount.UserAccountLogRepository;
 import com.used.lux.repository.useraccount.UserAccountRepository;
 import com.used.lux.repository.useraccount.UserWithdrawalRepository;
@@ -47,6 +48,7 @@ public class AdUserAccountService {
     private final ProductOrderLogMapper prodOrderLogMapper;
 
     private final ProductOrderCancelRepository productOrderCancelRepository;
+    private final ProductOrderCancelMapper prodOrderCancelMapper;
 
     private final AppraisalRepository appRepo;
     private final AppraisalMapper appMapper;
@@ -62,6 +64,7 @@ public class AdUserAccountService {
     private final UserGradeMapper userGradeMapper;
 
     private final UserWithdrawalRepository userWithdrawalRepository;
+    private final ProductRepository productRepository;
 
     @Transactional(readOnly = true)
     public Page<UserAccountDto> getUserList(Pageable pageable, String gender, String age, String grade,
@@ -72,30 +75,31 @@ public class AdUserAccountService {
     @Transactional(readOnly = true)
     public AdUserAccountDto getUserDetail(Long userId) {
         // 회원 상세
-        UserAccountDto userAccountDto = userAccountMapper.toDto(userAccountRepo.findById(userId).get());
+        UserAccountDto userList = userAccountMapper.toDto(userAccountRepo.findById(userId).get());
         // 주문내역
-        List<ProductOrderLogDto> productOrderLogDtos = productOrderLogRepository.findById(userAccountDto.id())
-                .stream().map(prodOrderLogMapper::toDto).collect(Collectors.toCollection(ArrayList::new));
+        List<ProductOrderLogDto> prodOrderLogList = productOrderLogRepository.findById(userList.id())
+                .stream().map(prodOrderLogMapper::toDto).toList();
         // 취소내역
-        List<ProductOrderCancelDto> productOrderCancelDtos = productOrderCancelRepository.findByUserName(userAccountDto.userName())
-                .stream().map(ProductOrderCancelDto::from).collect(Collectors.toCollection(ArrayList::new));
+        List<ProductOrderCancelDto> prodOrderCancelList = productOrderCancelRepository.findByUserId(userList.id())
+                .stream().map((item) -> {
+                    return prodOrderCancelMapper.toDtoCustom(
+                            item,
+                            userAccountRepo.findById(item.getUserId()).get(),
+                            productRepository.findById(item.getOrderId()).get()
+                    );
+                }).toList();
         // 검수내역
-        // pageable일땐 stream이어도 map만해줘도된다. 상관없음.
-        // list, arraylist, collection 등 다른 리스트 형태들은 파이프(stream) 역할을 해줘야한다.
-        List<AppraisalDto> appraisalDtos = appRepo.findByUserAccountId2(userAccountDto.id())
+        List<AppraisalDto> appList = appRepo.findByUserAccountId2(userList.id())
                 .stream().map((item) -> {
                     return appMapper.toDtoCustom(item, appResultRepo.findById(item.getAppResultId()).orElse(null));
                 }).toList();
         // 경매 내역
-        List<AuctionLogDto> auctionLogDtos = auctionLogMapper.toDtoList(auctionLogRepository.findByAllId(userAccountDto.id()));
+        List<AuctionLogDto> aucLogList = auctionLogMapper.toDtoList(auctionLogRepository.findByAllId(userList.id()));
         // 포인트 내역
-        List<UserAccountLogDto> userAccountLogDtos = userAccountLogRepository.findById(userAccountDto.id())
-                .stream().map(userAccountLogMapper::toDto).collect(Collectors.toCollection(ArrayList::new));
+        List<UserAccountLogDto> userLogList = userAccountLogRepository.findByUserId(userList.id())
+                .stream().map(userAccountLogMapper::toDto).toList();
 
-        List<AppraisalRequestLogDto> userAppraisalLogDtos = appraisalRequestLogRepository.findByUserIdOrderByModifiedAtDesc(userAccountDto.id())
-                .stream().map(AppraisalRequestLogDto::from).collect(Collectors.toCollection(ArrayList::new));
-        return AdUserAccountDto.of(userAccountDto, productOrderLogDtos, productOrderCancelDtos,
-                appraisalDtos, auctionLogDtos, userAccountLogDtos, userAppraisalLogDtos);
+        return AdUserAccountDto.of(userList, prodOrderLogList, prodOrderCancelList, appList, aucLogList, userLogList);
     }
 
     @Transactional(readOnly = true)

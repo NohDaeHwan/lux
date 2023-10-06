@@ -13,7 +13,7 @@ import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Long>, ProductRepositoryCustom {
 
-    @Query(value ="SELECT p FROM Product p WHERE p.prodNm LIKE %:query% order by p.prodViewCnt desc")
+    @Query(value ="SELECT p FROM Product p WHERE p.prodNm LIKE %:query% AND p.prodSellType = 'USED' order by p.prodViewCnt desc")
     List<Product> findByQuery(@Param("query") String query);
 
     /*@Query(value ="SELECT p FROM Product p WHERE p.prodBrand.brandName LIKE %:productBrand% AND " +
@@ -29,7 +29,6 @@ public interface ProductRepository extends JpaRepository<Product, Long>, Product
                                          String productSize, String productGrade, int maxPrice, int minPrice,
                                          String query, Pageable pageable);*/
 
-    @Query(nativeQuery = true,value = "select * from product where prod_state = 6 and created_at < now() order by created_at desc limit 4")
+    @Query(nativeQuery = true, value = "select * from product where prod_state = 'SELL' and prod_sell_type = 'USED' order by prod_view_cnt desc limit 4")
     List<Product> findByState6AndRecent4List();
-    
 }

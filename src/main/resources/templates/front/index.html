@@ -28,7 +28,7 @@
                 🙆🏻‍♀️ : 모든 LUX 구매활동은 포인트 충전을 통해서만 가능합니다!
               </p>
               <div>
-                <a href="#">
+                <a href="/register">
                   LUX 회원가입 >
                 </a>
               </div>
@@ -57,19 +57,19 @@
         </div>
       </div>
       <div class="container brand_item-container" style="display: flex; justify-content: flex-start;">
-        <div class="brand_item-box" th:each="auction : ${auctions}">
-          <div class="brand_img-box" th:style="${'background-image: url('+auction.productResponse.imageList[0].filePath+');'}">
-            <a th:href="@{|/auction/detail/${auction.id()}|}" >
-              마감 <p th:text="${#temporals.format(auction.auctionClosingDate(),'yyyy-MM-dd HH:mm')}"> 04시 20분 10초 전</p><br>
+        <div class="brand_item-box" th:each="auc : ${aucList}">
+          <div class="brand_img-box" th:style="${'background-image: url('+auc.prod.images[0].filePath+');'}">
+            <a th:href="@{|/auction/${auc.id()}|}" >
+              마감 <p th:text="${#temporals.format(auc.aucEndDate,'yyyy-MM-dd HH:mm')}"> 04시 20분 10초 전</p><br>
               상세보기 >
             </a>
           </div>
           <div class="brand_detail-box">
-            <h6 class="font-weight-light" th:text="${auction.productResponse().productName()}">
+            <h6 class="font-weight-light" th:text="${auc.prod.prodNm}">
               고야드 클러치백
             </h6>
             <h6 class="font-weight-normal" >
-              💸 마지막 입찰가: <p th:text="${auction.presentPrice()}">40,000P</p>
+              💸 마지막 입찰가: <strong th:text="${auc.presentPrice}">40,000P</strong>
             </h6>
           </div>
         </div>
@@ -90,18 +90,18 @@
         </div>
       </div>
       <div class="container brand_item-container"  style="display: flex; justify-content: flex-start;" >
-        <div class="brand_item-box" th:each="product : ${products}">
-          <div class="brand_img-box" th:style="${'background-image: url('+product.imageList[0].filePath+');'}">
-            <a th:href="@{|/product/${product.id()}|}">
+        <div class="brand_item-box" th:each="prod : ${prodList}">
+          <div class="brand_img-box" th:style="${'background-image: url('+prod.images[0].filePath+');'}">
+            <a th:href="@{|/product/${prod.id()}|}">
               상세보기 >
             </a>
           </div>
           <div class="brand_detail-box">
-            <h6 class="font-weight-light text-black-50" th:text="${product.productName()}">
+            <h6 class="font-weight-light text-black-50" th:text="${prod.prodNm}">
               고야드 클러치백
             </h6>
             <h6 class="font-weight-normal text-black-50" >
-              💸 판매가격: <p th:text="${product.productPrice()}">40,000P</p>
+              💸 판매가격: <strong th:text="${prod.prodPrice}">40,000P</strong>
             </h6>
           </div>
         </div>

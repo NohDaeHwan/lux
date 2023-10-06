@@ -7,8 +7,10 @@ import com.used.lux.dto.user.auction.AuctionLogDto;
 import com.used.lux.dto.admin.AdAuctionDto;
 import com.used.lux.mapper.AuctionLogMapper;
 import com.used.lux.mapper.AuctionMapper;
+import com.used.lux.mapper.ProductMapper;
 import com.used.lux.repository.auction.AuctionLogRepository;
 import com.used.lux.repository.auction.AuctionRepository;
+import com.used.lux.repository.useraccount.UserAccountRepository;
 import com.used.lux.request.auction.AuctionUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -31,6 +33,9 @@ public class AdAuctionService {
 
     private final AuctionLogRepository auctionLogRepository;
     private final AuctionLogMapper auctionLogMapper;
+    private final UserAccountRepository userAccountRepository;
+
+    private final ProductMapper prodMapper;
 
     // Admin 경매 리스트 조회(+검색)
     @Transactional(readOnly = true)
@@ -41,11 +46,19 @@ public class AdAuctionService {
     // Admin 경매 상세 조회(+경매로그)
     @Transactional(readOnly = true)
     public AdAuctionDto getAuctionDetail(Long auctionId) {
+        Auction auction = auctionRepository.findById(auctionId).get();
         // 경매 상세
-        AuctionDto auctionDto = auctionMapper.toDto(auctionRepository.findById(auctionId).get());
+        AuctionDto auc = auctionMapper.toDtoCustom(
+                auction,
+                prodMapper.toDtoCustom(auction.getProd()),
+                userAccountRepository.findById(auction.getUserId()).get()
+
+        );
         // 경매 로그
-        List<AuctionLogDto> auctionLogDtos = auctionLogMapper.toDtoList(auctionLogRepository.findByAucId(auctionId));
-        return AdAuctionDto.of(auctionDto, auctionLogDtos);
+        List<AuctionLogDto> aucLogList = auctionLogRepository.findByAucId(auctionId).stream().map((item) -> {
+            return auctionLogMapper.toDtoCustom(item, userAccountRepository.findById(item.getUserId()).get());
+        }).toList();
+        return AdAuctionDto.of(auc, aucLogList);
     }
 
     // 업데이트

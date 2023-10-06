@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Arrays;
 import java.util.List;
 
 public interface UserAccountLogRepository extends JpaRepository<UserAccountLog, Long> {
@@ -21,4 +22,6 @@ public interface UserAccountLogRepository extends JpaRepository<UserAccountLog, 
 
     @Query(nativeQuery = true,value = "select count(*) from user_account_log where created_at >=:sD and created_at <= now() ;")
     Long countOrderByCreatedAt(@Param("sD") String sectionStartDate);
+
+    List<UserAccountLog> findByUserId(Long userId);
 }

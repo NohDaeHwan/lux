@@ -116,7 +116,7 @@
                                 <div class="row mb-3">
                                     <label class="col-sm-2 col-form-label">참여인원</label>
                                     <div class="col-sm-10" style="padding: 7px 12px;">
-                                        <div class="col-sm-10" style="font-weight: 300;" th:text="${aucLogList.size}+'명'">5명</div>
+                                        <div class="col-sm-10" id="bidderCnt" style="font-weight: 300;" th:text="${aucLogList.size}+'명'">5명</div>
                                     </div>
                                 </di>
                             </div>
@@ -626,6 +626,7 @@
             //데이터를 보낸 사람
             let sessionId = null;
             let message = null;
+            let bidderCnt = null;
             let arr = data.split(":");
 
             //현재 세션에 로그인 한 사람
@@ -633,11 +634,13 @@
 
             sessionId = arr[1];
             message = arr[2];
+            bidderCnt = arr[3];
 
             presentPrice = message;
 
-            document.getElementById("presentPrice").innerHTML = message+" 원";
-            document.getElementById("bidder").innerHTML = sessionId;
+            document.getElementById("presentPrice").innerHTML = Number(message).toLocaleString('ko-KR')+"원";
+            document.getElementById("bidder").innerHTML = sessionId.replace(sessionId.slice(0, 3), "***");
+            document.getElementById("bidderCnt").innerHTML = Number(bidderCnt)+"명";
         }
 
         function remaindTime() {
@@ -654,11 +657,6 @@
             let nt = now.getTime();
             let ot = open.getTime();
             let et = end.getTime();
-
-            console.log(aucState);
-            console.log(nt);
-            console.log(ot);
-            console.log(et);
 
                 if (nt < ot) {
                     //경매 전
@@ -691,7 +689,6 @@
                             contentType: "application/json; charset=utf-8",
                             dataType: "json"
                         }).done(function (res) {
-                            location.href = "/auction/" + auctionId;
                             console.log("완료");
                         }).fail(function (error) {
                             console.log("function error : " + error);
@@ -714,7 +711,6 @@
                             contentType: "application/json; charset=utf-8",
                             dataType: "json"
                         }).done(function (res) {
-                            location.href = "/auction/" + auctionId;
                             console.log("완료");
                         }).fail(function (error) {
                             console.log("function error : " + error);

@@ -7,7 +7,6 @@ import com.used.lux.dto.admin.AdUserAccountDto;
 import com.used.lux.dto.security.Principal;
 import com.used.lux.request.GradeCreateRequest;
 import com.used.lux.request.useraccount.UserMemoUpdateRequest;
-import com.used.lux.response.useraccount.UserAccountResponse;
 import com.used.lux.service.PaginationService;
 import com.used.lux.service.UserGradeService;
 import com.used.lux.service.admin.AdUserAccountService;
@@ -54,7 +53,7 @@ public class AdUserAccountController {
         mm.addAttribute("userGradeList", userGradeList);
         mm.addAttribute("userList", userList);
 
-        return "/admin/user";
+        return "/admin/user/user-main";
     }
 
     // 회원 상세정보
@@ -68,7 +67,7 @@ public class AdUserAccountController {
 
         AdUserAccountDto userDetail = adUserAccountService.getUserDetail(userId);
         mm.addAttribute("userDetail", userDetail);
-        return "/admin/user-detail";
+        return "/admin/user/user-detail";
     }
 
     // 회원 메모 추가 페이지
@@ -82,7 +81,7 @@ public class AdUserAccountController {
 
         UserAccountDto userDetail = adUserAccountService.getUserMemo(userId);
         mm.addAttribute("userDetail", userDetail);
-        return "/admin/user-memo-create-form";
+        return "/admin/user/user-memo-create-form";
     }
 
     // 회원 메모 추가
@@ -109,7 +108,7 @@ public class AdUserAccountController {
 
         List<UserGradeDto> userGrades = adUserAccountService.getUserGrade();
         mm.addAttribute("userGrade", userGrades);
-        return "/admin/user-grade";
+        return "/admin/user/user-grade";
     }
 
     // 회원 등급 종류 추가 페이지
@@ -154,7 +153,7 @@ public class AdUserAccountController {
 
         List<UserWithdrawalDto> userWithdrawals = adUserAccountService.getUserWithdrawal();
         mm.addAttribute("userWithdrawals", userWithdrawals);
-        return "/admin/user-withdrawal";
+        return "/admin/user/user-withdrawal";
     }
 
 }

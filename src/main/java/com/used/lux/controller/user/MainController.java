@@ -55,13 +55,12 @@ public class MainController {
 
     @GetMapping("/")
     public String index(ModelMap mm) {
-        List<AuctionDto> auctions = auctionService.findByState10AndRecent4List();
-        List<ProductDto> products = productService.findByState6AndRecent4List();
+        List<AuctionDto> aucList = auctionService.findByState10AndRecent4List();
+        List<ProductDto> prodList = productService.findByState6AndRecent4List();
 
-        mm.addAttribute("auctions",auctions);
-        mm.addAttribute("products",products);
+        mm.addAttribute("aucList", aucList);
+        mm.addAttribute("prodList", prodList);
         return "/front/index";
-        // 루트 페이지를 보여줄 뷰 필요
     }
 
     @GetMapping("/login")
@@ -116,7 +115,7 @@ public class MainController {
         }
 
         userAccountService.addUser(UserAccount.builder()
-                .userName(joinMemberDto.getUserName())
+                .userEmail(joinMemberDto.getUserName())
                 .userPassword(passwordEncoder.encode(joinMemberDto.getPassword()))
                 .userName(joinMemberDto.getName())
                 .phoneNumber(joinMemberDto.getPhoneNumber())
@@ -154,7 +153,7 @@ public class MainController {
                               @RequestParam(defaultValue = "") String productGender,
                               @RequestParam(defaultValue = "") String productSize,
                               @RequestParam(defaultValue = "") String productGrade,
-                              @RequestParam(defaultValue = "10000000") String maxPrice,
+                              @RequestParam(defaultValue = "10000000000") String maxPrice,
                               @RequestParam(defaultValue = "1000") String minPrice,
                               @RequestParam(defaultValue = "") String query,
                               ModelMap mm

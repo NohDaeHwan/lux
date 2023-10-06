@@ -11,24 +11,21 @@ import com.used.lux.dto.user.useraccount.UserAccountLogDto;
 import java.util.List;
 
 public record AdUserAccountDto(
-        UserAccountDto userAccountDto,
-        List<ProductOrderLogDto> productOrderLogDtos,
-        List<ProductOrderCancelDto> productOrderCancelDtos,
-        List<AppraisalDto> appraisalDtos,
-        List<AuctionLogDto> auctionLogDtos,
-        List<UserAccountLogDto> userAccountLogDtos,
-        Long totalPoint,
-        List<AppraisalRequestLogDto> appraisalRequestLogDtos
+        UserAccountDto user,
+        List<ProductOrderLogDto> prodOrderLogList,
+        List<ProductOrderCancelDto> prodOrderCancelList,
+        List<AppraisalDto> appList,
+        List<AuctionLogDto> aucLogList,
+        List<UserAccountLogDto> userLogList,
+        Long totalPoint
 ) {
-    public static AdUserAccountDto of(UserAccountDto userAccountDto, List<ProductOrderLogDto> productOrderLogDtos,
-                            List<ProductOrderCancelDto> productOrderCancelDtos, List<AppraisalDto> appraisalDtos,
-                            List<AuctionLogDto> auctionLogDtos, List<UserAccountLogDto> userAccountLogDtos, List<AppraisalRequestLogDto> appraisalRequestLogDtos) {
+    public static AdUserAccountDto of(UserAccountDto user, List<ProductOrderLogDto> prodOrderLogList,
+                            List<ProductOrderCancelDto> prodOrderCancelList, List<AppraisalDto> appList,
+                            List<AuctionLogDto> aucLogList, List<UserAccountLogDto> userLogList) {
         Long totalPoint = 0L;
-        for (int i = 0; i < userAccountLogDtos.size(); i++) {
-            totalPoint += userAccountLogDtos.get(i).point();
+        for (int i = 0; i < userLogList.size(); i++) {
+            totalPoint += userLogList.get(i).point();
         }
-        return new AdUserAccountDto(userAccountDto, productOrderLogDtos, productOrderCancelDtos,
-                appraisalDtos, auctionLogDtos, userAccountLogDtos, totalPoint, appraisalRequestLogDtos);
+        return new AdUserAccountDto(user, prodOrderLogList, prodOrderCancelList, appList, aucLogList, userLogList, totalPoint);
     }
-
 }

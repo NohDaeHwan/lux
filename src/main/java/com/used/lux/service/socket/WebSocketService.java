@@ -53,13 +53,13 @@ public class WebSocketService extends TextWebSocketHandler {
                 log.info(d);
             }
 
-            for(WebSocketSession sess: list) {
-                System.out.println(sess.getPrincipal().getName());
-                sess.sendMessage(message);
-            }
-
             Auction auction = auctionRepository.findById(Long.parseLong(data[0])).get();
             System.out.println(auction);
+
+            for(WebSocketSession sess: list) {
+                System.out.println(sess.getPrincipal().getName());
+                sess.sendMessage(new TextMessage(message.getPayload()+":"+auction.getBiddingCnt()+1));
+            }
 
             // 새로 입찰 한 사람
             UserAccount userAccount = userAccountRepository.findByUserName(data[1]);

@@ -33,12 +33,12 @@ public class ProductOrderCancelService {
 //                principal.id()
 //        ));
 
-        productOrderCancelRepository.save(ProductOrderCancel.of(
-                orderId,
-                principal.userName(),
-                "",
-                order.getPayment(),
-                "주문취소할래용!")
+        productOrderCancelRepository.save(ProductOrderCancel.builder()
+                        .id(null)
+                        .userId(principal.id())
+                        .orderId(orderId)
+                        .cancelTerm("주문취소할래용!")
+                        .build()
         );
 
     }

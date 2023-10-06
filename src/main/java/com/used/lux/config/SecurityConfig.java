@@ -28,9 +28,9 @@ public class SecurityConfig {
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         .antMatchers(
                                 "/mypage/**", "/admin/**", "/product/**/order",
-                                "/appraisal/new", "/auction/detail/**"
+                                "/appraisal/new", "/auction/*"
                         ).authenticated()
-                        .antMatchers("/admin/appraise/**/new/loading")
+                        .antMatchers("/admin/appraise/**/new/loading", "/auction")
                         .permitAll()
                         .antMatchers("/admin/**").hasRole("ROLE_ADMIN")
                         .anyRequest().permitAll()

@@ -331,9 +331,15 @@ INSERT INTO lux.brand
 (id, brand_name)
 VALUES(104, '빅터앤롤프');
 
-INSERT INTO user_account(id, user_email, user_password, user_name, phone_number, age, gender, user_grade, user_point, role, memo, created_at, created_by, modified_at, modified_by) VALUES
-(1,'qwer1234@naver.com','$2a$10$Cd4xXlpbYzq6zVvxBuFJZ.QNxADDn4u7/Q4.sICp39h42.nj/YUGi','다람쥐','010-1234-5678',25,'MALE',4, 1000000,'USER','TEST USER','2022-11-18 12:49:47.949772','SYSTEM','2022-11-18 16:43:53.082205','SYSTEM'),
-(2,'asdf1234@naver.com','$2a$10$y28559SHwV0M.zpp9bEWbu.mygAsnr.DVbNPGxeXif//osUNlA5U2','Admin다람쥐쥐','010-2345-6789',26,'MALE',1,50000,'ADMIN','TEST USER','2022-11-18 14:14:01.213608','SYSTEM','2022-11-21 17:55:58.143390','SYSTEM');
+INSERT INTO lux.user_account
+(id, created_at, created_by, modified_at, modified_by, age, gender, memo, phone_number, `role`, user_email, user_name, user_password, user_point, user_grade)
+VALUES(1, '2022-11-18 12:49:47.949772', 'SYSTEM', '2023-10-06 09:39:38.101926', 'SYSTEM', 25, 'MALE', 'TEST USER', '010-1234-5678', 'USER', 'qwer1234@naver.com', '다람쥐', '$2a$10$Cd4xXlpbYzq6zVvxBuFJZ.QNxADDn4u7/Q4.sICp39h42.nj/YUGi', 27000000, 4);
+INSERT INTO lux.user_account
+(id, created_at, created_by, modified_at, modified_by, age, gender, memo, phone_number, `role`, user_email, user_name, user_password, user_point, user_grade)
+VALUES(2, '2022-11-18 14:14:01.213608', 'SYSTEM', '2022-11-21 17:55:58.143390', 'SYSTEM', 26, 'MALE', 'TEST USER', '010-2345-6789', 'ADMIN', 'asdf1234@naver.com', 'Admin다람쥐쥐', '$2a$10$y28559SHwV0M.zpp9bEWbu.mygAsnr.DVbNPGxeXif//osUNlA5U2', 50000, 1);
+INSERT INTO lux.user_account
+(id, created_at, created_by, modified_at, modified_by, age, gender, memo, phone_number, `role`, user_email, user_name, user_password, user_point, user_grade)
+VALUES(3, '2023-10-06 09:38:14.565756', 'SYSTEM', '2023-10-06 09:39:38.087105', 'SYSTEM', 24, 'male', 'TEST USER', '010-4538-5687', 'USER', 'zxcv1234@naver.com', '개발자의삶', '$2a$10$HmCgohQWpkLUOabBBuqmPOsaIQPPwks3GTookm0E3594.Y827jG4C', 3500000, 1);
 
 INSERT INTO lux.user_account_log
 (id, created_at, created_by, modified_at, modified_by, order_id, `point`, sale_number, usage_detail, user_id, user_grade)
@@ -341,6 +347,21 @@ VALUES(1, '2023-10-05 10:21:08.001151', 'SYSTEM', '2023-10-05 10:21:08.001151', 
 INSERT INTO lux.user_account_log
 (id, created_at, created_by, modified_at, modified_by, order_id, `point`, sale_number, usage_detail, user_id, user_grade)
 VALUES(2, '2023-10-05 10:21:08.001151', 'SYSTEM', '2023-10-05 10:21:08.001151', 'SYSTEM', NULL, 50000, '-', '충전', 2, 1);
+INSERT INTO lux.user_account_log
+(id, created_at, created_by, modified_at, modified_by, order_id, `point`, sale_number, usage_detail, user_id, user_grade)
+VALUES(3, '2023-10-05 15:18:24.743040', 'SYSTEM', '2023-10-05 15:18:24.743040', 'SYSTEM', NULL, 26000000, '-', '충전', 1, 4);
+INSERT INTO lux.user_account_log
+(id, created_at, created_by, modified_at, modified_by, order_id, `point`, sale_number, usage_detail, user_id, user_grade)
+VALUES(4, '2023-10-05 15:18:38.904025', 'SYSTEM', '2023-10-05 15:18:38.904025', 'SYSTEM', 1, 26000000, '경매/1', '차감', 1, 4);
+INSERT INTO lux.user_account_log
+(id, created_at, created_by, modified_at, modified_by, order_id, `point`, sale_number, usage_detail, user_id, user_grade)
+VALUES(5, '2023-10-06 09:39:06.067453', 'SYSTEM', '2023-10-06 09:39:06.067453', 'SYSTEM', NULL, 30000000, '-', '충전', 3, 1);
+INSERT INTO lux.user_account_log
+(id, created_at, created_by, modified_at, modified_by, order_id, `point`, sale_number, usage_detail, user_id, user_grade)
+VALUES(6, '2023-10-06 09:39:38.092928', 'SYSTEM', '2023-10-06 09:39:38.092928', 'SYSTEM', 1, 26500000, '경매/1', '차감', 3, 1);
+INSERT INTO lux.user_account_log
+(id, created_at, created_by, modified_at, modified_by, order_id, `point`, sale_number, usage_detail, user_id, user_grade)
+VALUES(7, '2023-10-06 09:39:38.106955', 'SYSTEM', '2023-10-06 09:39:38.106955', 'SYSTEM', 1, 26000000, '경매/1', '충전', 1, 4);
 
 INSERT INTO lux.appraisal
 (id, created_at, created_by, modified_at, modified_by, app_color, app_gender, app_prod_nm, app_result_id, app_size, app_state, app_brand_id, user_account_id)
@@ -438,5 +459,13 @@ INSERT INTO lux.image
 VALUES(12, '2023-10-04 16:43:27.752600', 'SYSTEM', '2023-10-04 16:43:27.752600', 'SYSTEM', '/filepath/product_img/20231004/1807338513740400.jpg', 7316, 'Cartier7.jpg', 2);
 
 INSERT INTO lux.auction
-(id, created_at, created_by, modified_at, modified_by, auc_end_date, auc_start_date, auc_state, user_id, bidding_cnt, end_price, present_price, start_price, prod_id)
-VALUES(1, '2023-10-04 16:43:27.763599', 'SYSTEM', '2023-10-04 16:43:27.763599', 'SYSTEM', '2023-10-06 20:00:00', '2023-10-04 20:00:00', 'WAITING', NULL, 0, 0, 25000000, 25000000, 2);
+(id, created_at, created_by, modified_at, modified_by, auc_end_date, auc_start_date, auc_state, bidding_cnt, end_price, present_price, start_price, user_id, prod_id)
+VALUES(1, '2023-10-04 16:43:27.763599', 'SYSTEM', '2023-10-06 09:39:38.122739', 'SYSTEM', '2023-10-06 20:00:00', '2023-10-04 20:00:00', 'SELL', 2, 0, 26500000, 25000000, 3, 2);
+
+INSERT INTO lux.auction_log
+(id, created_at, created_by, modified_at, modified_by, auc_id, present_price, prod_nm, user_id)
+VALUES(1, '2023-10-06 09:30:52.030554', 'SYSTEM', '2023-10-06 09:30:52.030554', 'SYSTEM', 1, 26000000, '까르띠에 베누아 다이아 골드 시계', 1);
+INSERT INTO lux.auction_log
+(id, created_at, created_by, modified_at, modified_by, auc_id, present_price, prod_nm, user_id)
+VALUES(2, '2023-10-06 09:39:38.134017', 'SYSTEM', '2023-10-06 09:39:38.134017', 'SYSTEM', 1, 26500000, '까르띠에 베누아 다이아 골드 시계', 3);
+

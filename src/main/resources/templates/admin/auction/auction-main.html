@@ -20,13 +20,7 @@
 
                 <!-- Card with header and footer -->
                 <div class="card">
-                    <div class="card-header">경매목록
-<!--                        <button type="submit" class="btn btn-primary" style="float: right;">-->
-<!--                            <a th:href="@{/admin/appraise/new}" stlye="color:#ffffff !important">-->
-<!--                                새 경매등록-->
-<!--                            </a>-->
-<!--                        </button>-->
-                    </div>
+                    <div class="card-header">경매목록</div>
                     <div class="card-body">
                         <h5 class="card-title">검색 조건</h5>
                         <form class="search-form" action="/admin/auction">
@@ -91,7 +85,7 @@
                             </thead>
                             <tbody>
                             <tr th:each="auc : ${aucList}">
-                                <th scope="row"><a th:href="@{|/admin/auction/${auc.id}/|}" th:text="${auc.id}">user1@mail.com</a></th>
+                                <th scope="row"><a th:href="@{|/admin/auction/${auc.id}|}" th:text="${auc.id}">user1@mail.com</a></th>
                                 <td th:text="${auc.prod.prodNm}">Brandon Jacob</td>
                                 <td th:text="${#numbers.formatInteger(auc.presentPrice,3,'COMMA')}+'원'">dfd</td>
                                 <td th:text="${#numbers.formatInteger(auc.startPrice,3,'COMMA')}+'원'">Designer</td>

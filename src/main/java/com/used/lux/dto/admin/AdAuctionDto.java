@@ -6,10 +6,10 @@ import com.used.lux.dto.user.auction.AuctionLogDto;
 import java.util.List;
 
 public record AdAuctionDto(
-        AuctionDto auctionDto,
-        List<AuctionLogDto> auctionLogDtos
+        AuctionDto auc,
+        List<AuctionLogDto> aucLogList
 ) {
-    public static AdAuctionDto of(AuctionDto auctionDto, List<AuctionLogDto> auctionLogDtos) {
-        return new AdAuctionDto(auctionDto, auctionLogDtos);
+    public static AdAuctionDto of(AuctionDto auc, List<AuctionLogDto> aucLogList) {
+        return new AdAuctionDto(auc, aucLogList);
     }
 }

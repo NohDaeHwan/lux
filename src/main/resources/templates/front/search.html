@@ -236,14 +236,13 @@
             } else if (nt>et) {
                 //후 경매 종료  최종가격,경매상태
 
-                if (aucState != "경매완료") {
+                if (aucState != "PAY_WAITING") {
                     $.ajax({
                         type: "POST",
-                        url: "/auction/after/" + auctionId + "/11",
+                        url: "/auction/after/" + auctionId + "/" + aucState,
                         contentType: "application/json; charset=utf-8",
                         dataType: "json"
                     }).done(function (res) {
-                        location.href = "/auction";
                         console.log("완료");
                     }).fail(function (error) {
                         console.log("function error : " + error);
@@ -257,14 +256,13 @@
             } else {
                 //중  경매 상태를 경매전 -> 경매 중으로 변경
 
-                if (aucState != "경매중") {
+                if (aucState != "SELL") {
                     $.ajax({
                         type: "POST",
-                        url: "/auction/present/" + auctionId + "/10",
+                        url: "/auction/present/" + auctionId + "/" + aucState,
                         contentType: "application/json; charset=utf-8",
                         dataType: "json"
                     }).done(function (res) {
-                        location.href = "/auction";
                         console.log("완료");
                     }).fail(function (error) {
                         console.log("function error : " + error);

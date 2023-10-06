@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ProductOrderCancelRepository extends JpaRepository<ProductOrderCancel, Long> {
-    List<ProductOrderCancel> findByUserName(String userEmail);
+    List<ProductOrderCancel> findByUserId(Long userId);
     ProductOrderCancel findByOrderId(Long orderId);
 }

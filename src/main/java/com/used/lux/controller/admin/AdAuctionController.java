@@ -58,14 +58,10 @@ public class AdAuctionController {
         if (principal.role().getName() != "ROLE_ADMIN") {
             return "redirect:/";
         }
-
         AdAuctionDto auctionDetail = adAuctionService.getAuctionDetail(auctionId);
-        mm.addAttribute("auctionDetail", auctionDetail);
 
-        if (auctionDetail.auctionDto().aucState().equals("WAITING")){
-            return  "/admin/auction-create-form";
-        }
-        return "/admin/auction-detail";
+        mm.addAttribute("auctionDetail", auctionDetail);
+        return "/admin/auction/auction-detail";
     }
 
     // 경매 수정 업데이트
